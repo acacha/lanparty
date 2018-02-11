@@ -11,18 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/main', 'ParticipantsMainPageController@index');
+    Route::get('/home', 'ParticipantsMainPageController@index');
     Route::get('/manage/participants', 'ManageParticipantsController@index');
-
 });
 
 // Administrators
