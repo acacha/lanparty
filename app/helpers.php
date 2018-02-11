@@ -2,6 +2,7 @@
 
 use App\Event;
 use App\InscriptionType;
+use App\Number;
 use App\User;
 use Spatie\Permission\Models\Role;
 
@@ -95,5 +96,25 @@ if (!function_exists('first_user_as_manager')) {
     {
         $firstUser = User::all()->first();
         $firstUser->assignRole('Manager');
+    }
+}
+
+if (!function_exists('seed_example_database')) {
+    function seed_example_database()
+    {
+        $user = User::find(1);
+        $numbers = factory(Number::class,3)->create();
+        foreach ($numbers as $number) {
+            $number->assignUser($user);
+        }
+
+        $users = factory(User::class,10)->create();
+
+        seed_database();
+
+        $numbers = factory(Number::class, 10)->create();
+        foreach ($numbers as $number) {
+            $number->assignUser($users->random());
+        }
     }
 }

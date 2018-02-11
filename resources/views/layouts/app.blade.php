@@ -12,10 +12,7 @@
 </head>
 <body>
     <div id="app">
-
-
-
-            <v-app id="inspire">
+        <v-app id="inspire">
                 <v-navigation-drawer
                         fixed
                         clipped
@@ -32,7 +29,7 @@
                             >
                                 <v-flex xs6>
                                     <v-subheader v-if="item.heading">
-                                        {{ item.heading }}
+                                        @{{ item.heading }}
                                     </v-subheader>
                                 </v-flex>
                                 <v-flex xs6 class="text-xs-center">
@@ -42,11 +39,11 @@
                             <v-list-group v-else-if="item.children" v-model="item.model" no-action>
                                 <v-list-tile slot="item" @click="">
                                     <v-list-tile-action>
-                                        <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
+                                        <v-icon>@{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
                                     </v-list-tile-action>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            {{ item.text }}
+                                            @{{ item.text }}
                                         </v-list-tile-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
@@ -56,22 +53,22 @@
                                         @click=""
                                 >
                                     <v-list-tile-action v-if="child.icon">
-                                        <v-icon>{{ child.icon }}</v-icon>
+                                        <v-icon>@{{ child.icon }}</v-icon>
                                     </v-list-tile-action>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            {{ child.text }}
+                                            @{{ child.text }}
                                         </v-list-tile-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                             </v-list-group>
                             <v-list-tile v-else @click="">
                                 <v-list-tile-action>
-                                    <v-icon>{{ item.icon }}</v-icon>
+                                    <v-icon>@{{ item.icon }}</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-content>
                                     <v-list-tile-title>
-                                        {{ item.text }}
+                                        @{{ item.text }}
                                     </v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
