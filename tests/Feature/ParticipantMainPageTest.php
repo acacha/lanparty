@@ -23,7 +23,7 @@ class ParticipantMainPageTest extends TestCase
      */
     public function see_user_numbers_and_events_info_at_main_page()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
@@ -52,7 +52,6 @@ class ParticipantMainPageTest extends TestCase
         $response->assertSee($user->givenName);
         $response->assertSee($user->sn1);
         $response->assertSee($user->sn2);
-        $response->assertSee($user->identifier);
         $response->assertSee($user->formatted_created_at_date);
 
         foreach ($events as $event) {
@@ -63,6 +62,5 @@ class ParticipantMainPageTest extends TestCase
             $response->assertSee((String) $number->value);
         }
 
-        $this->assertTrue(true);
     }
 }

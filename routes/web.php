@@ -20,8 +20,15 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/main', 'ParticipantsMainPageController@index');
+
 });
 
 // Administrators
 // Route::post('/numbers', 'NumbersController@post');
+
+Route::get('/main', 'ParticipantsMainPageController@index');
+
+Route::get('/manage/participants', 'ManageParticipantsController@index');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

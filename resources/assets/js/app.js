@@ -7,16 +7,54 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import UsersSearch from './components/UsersSearchComponent.vue'
+import NumbersSearch from './components/NumbersSearchComponent.vue'
+import ManageUser from './components/ManageUserComponent.vue'
+import LandingPage from './components/LandingPageComponent.vue'
+
+import store from './store'
 
 const app = new Vue({
-    el: '#app'
-});
+  el: '#app',
+  store,
+  data: () => ({
+    dialog: false,
+    drawer: null,
+    drawerRight: false,
+    items: [
+      { icon: 'home', text: 'Home' },
+      { icon: 'contacts', text: 'Col·laboradors' },
+      { icon: 'favorite_border', text: 'Premis' },
+      { icon: 'settings', text: 'Settings' },
+      { icon: 'chat_bubble', text: 'Contact' },
+      { heading: 'Links'},
+      { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', new: true },
+      { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
+      { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , new: true },
+      { icon: 'link', text: 'Streaming (Twitch)', href: 'https://www.twitch.tv/iesebrelanparty' , new: true },
+      { heading: 'Administració'},
+      { icon: 'face', text: 'Participants', href: '/manage/participants' },
+    ]
+  }),
+  components: { UsersSearch, NumbersSearch, ManageUser, LandingPage },
+  methods: {
+    menuItemSelected(item) {
+      if (item.href) {
+        if (item.new) {
+          window.open(item.href)
+        } else {
+          window.location.href = item.href;
+        }
+      }
+    }
+  },
+  props: {
+    source: String
+  }
+})

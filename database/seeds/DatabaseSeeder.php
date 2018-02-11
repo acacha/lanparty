@@ -15,5 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         seed_database();
+
+        initialize_roles();
+
+        create_admin_user();
+
+        first_user_as_manager();
     }
 }

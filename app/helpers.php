@@ -2,6 +2,8 @@
 
 use App\Event;
 use App\InscriptionType;
+use App\User;
+use Spatie\Permission\Models\Role;
 
 if (!function_exists('create_inscription_types')) {
     function create_inscription_types() {
@@ -60,10 +62,17 @@ if (!function_exists('assignPermission')) {
     }
 }
 
-if (!function_exists('initialize_permissions')) {
-    function initialize_permissions()
+if (!function_exists('initialize_roles')) {
+    function initialize_roles()
     {
-        initialize_relationships_management_permissions();
+        $roles = [
+            'Participant',
+            'Manager'
+        ];
+
+        foreach ($roles as $role) {
+            $role = Role::firstOrCreate(['name' => $role]);
+        }
     }
 }
 
@@ -71,9 +80,12 @@ if (!function_exists('create_admin_user')) {
     function create_admin_user()
     {
         factory(User::class)->create([
-            'name'     => env('ADMIN_USER_NAME', 'Sergi Tur Badenas'),
-            'email'    => env('ADMIN_USER_EMAIL', 'sergiturbadenas@gmail.com'),
-            'password' => bcrypt(env('ADMIN_USER_PASSWORD')),
+            'name'      => config('lanparty.admin_username'),
+            'email'     => config('lanparty.admin_email'),
+            'password'  => bcrypt(config('lanparty.admin_password')),
+            'givenName' => config('lanparty.admin_givenName'),
+            'sn1' => config('lanparty.admin_sn1'),
+            'sn2' => config('lanparty.admin_sn2'),
         ]);
     }
 }
@@ -82,7 +94,6 @@ if (!function_exists('first_user_as_manager')) {
     function first_user_as_manager()
     {
         $firstUser = User::all()->first();
-        $firstUser->assignRole('manage-relationships');
-        $firstUser->givePermissionTo('disable-validation');
+        $firstUser->assignRole('Manager');
     }
 }
