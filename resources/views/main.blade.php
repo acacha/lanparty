@@ -39,6 +39,4 @@
             </v-flex>
         </v-layout>
     </v-container>
-
-
 @endsection

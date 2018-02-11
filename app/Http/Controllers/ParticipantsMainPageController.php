@@ -23,7 +23,7 @@ class ParticipantsMainPageController extends Controller
         $events = Event::all();
         return view('main', [
             'events' => $events,
-            'user' => Auth::user(),
+            'user' => Auth::user()->with('numbers'),
         ]);
     }
 }
