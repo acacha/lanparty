@@ -32,9 +32,6 @@
                                         @{{ item.heading }}
                                     </v-subheader>
                                 </v-flex>
-                                <v-flex xs6 class="text-xs-center">
-                                    <a href="#!" class="body-2 black--text">EDIT</a>
-                                </v-flex>
                             </v-layout>
                             <v-list-group v-else-if="item.children" v-model="item.model" no-action>
                                 <v-list-tile slot="item" @click="">
@@ -84,19 +81,9 @@
                 >
                     <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
                         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-                        <span class="hidden-xs-only">Google Contacts</span>
+                        <span class="hidden-xs-only">{{ config('app.shortname', 'Laravel') }}</span>
                     </v-toolbar-title>
-                    <v-text-field
-                            light
-                            solo
-                            prepend-icon="search"
-                            placeholder="Search"
-                            style="max-width: 500px; min-width: 128px"
-                    ></v-text-field>
                     <div class="d-flex align-center" style="margin-left: auto">
-                        <v-btn icon>
-                            <v-icon>apps</v-icon>
-                        </v-btn>
                         <v-btn icon>
                             <v-icon>notifications</v-icon>
                         </v-btn>
