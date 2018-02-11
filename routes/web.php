@@ -11,6 +11,8 @@
 |
 */
 
+Auth::loginUsingId(1);
+
 Route::get('/', 'WelcomeController@index');
 
 Auth::routes();

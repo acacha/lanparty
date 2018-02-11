@@ -17,6 +17,8 @@ class User extends Authenticatable
 
     protected $appends = ['formatted_created_at_date','full_search'];
 
+    public $with = ['numbers'];
+
     /**
      * The attributes that are mass assignable.
      *

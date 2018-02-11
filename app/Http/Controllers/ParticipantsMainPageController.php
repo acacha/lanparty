@@ -21,9 +21,9 @@ class ParticipantsMainPageController extends Controller
     public function index()
     {
         $events = Event::all();
-        return view('main', [
+        return view('home', [
             'events' => $events,
-            'user' => Auth::user()->with('numbers'),
+            'user' => Auth::user(),
         ]);
     }
 }

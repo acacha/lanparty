@@ -11,7 +11,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <div id="app">
-    <landing-page></landing-page>
+    <landing-page user="{{ $user }}"></landing-page>
 </div>
 @stack('beforeScripts')
 <script src="{{ mix('js/app.js') }}"></script>

@@ -3,7 +3,7 @@
         <v-toolbar class="white">
             <v-toolbar-title>Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-show="logged" v-model="loginDialog" persistent max-width="500px">
+            <v-dialog v-show="!logged" v-model="loginDialog" persistent max-width="500px">
                 <v-btn color="primary" dark slot="activator">Entrar</v-btn>
                 <v-card>
                     <v-card-title>
@@ -44,7 +44,7 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <v-dialog v-if="logged" v-model="registerDialog" persistent max-width="500px">
+            <v-dialog v-if="!logged" v-model="registerDialog" persistent max-width="500px">
                 <v-btn slot="activator">Registra't</v-btn>
                 <v-card>
                     <v-card-title>
@@ -281,6 +281,8 @@
 
 <script>
   import * as actions from '../store/action-types'
+  import * as mutations from '../store/mutation-types'
+
   import { mapGetters } from 'vuex'
   export default {
     name: 'LandingPage',
@@ -312,6 +314,19 @@
         sn2: ''
       }
     },
+    props: {
+      user: {
+        required: true
+      },
+      showLogin: {
+        type: Boolean,
+        default: false
+      },
+      showRegister: {
+        type: Boolean,
+        default: false
+      }
+    },
     computed: {
       ...mapGetters([
         'logged'
@@ -326,7 +341,6 @@
         }
         this.$store.dispatch(actions.LOGIN, credentials).then(response => {
           console.log(response)
-          console.log('PROVA!!!!!!!!!!!!!!!!!!!!!!!!')
           this.loginLoading = false
           this.loginDialog = false
           window.location = '/home'
@@ -338,6 +352,16 @@
           this.loginLoading = false
         })
       }
+    },
+    mounted () {
+      if (this.user) this.$store.commit(mutations.LOGGED, true)
+      else this.$store.commit(mutations.LOGGED, false)
+      console.log('Show Login:')
+      console.log(this.showLogin)
+      console.log('Register:')
+      console.log(this.showRegister)
+      console.log('User:')
+      console.log(this.user)
     }
   }
 </script>
