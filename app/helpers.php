@@ -118,3 +118,10 @@ if (!function_exists('seed_example_database')) {
         }
     }
 }
+
+if (!function_exists('logged_user')) {
+    function logged_user()
+    {
+        return Auth::user();
+    }
+}

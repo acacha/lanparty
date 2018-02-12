@@ -282,6 +282,7 @@
 <script>
   import * as actions from '../store/action-types'
   import * as mutations from '../store/mutation-types'
+  import _ from 'lodash'
 
   import { mapGetters } from 'vuex'
   export default {
@@ -340,22 +341,19 @@
           'password': this.password
         }
         this.$store.dispatch(actions.LOGIN, credentials).then(response => {
-          console.log(response)
           this.loginLoading = false
           this.loginDialog = false
           window.location = '/home'
         }).catch(error => {
+          console.log(error)
           this.loginErrorMessage = error.response.data.message
           this.loginErrors = error.response.data.errors
-          console.log(error)
         }).then(() => {
           this.loginLoading = false
         })
       }
     },
     mounted () {
-      if (this.user) this.$store.commit(mutations.LOGGED, true)
-      else this.$store.commit(mutations.LOGGED, false)
       console.log('Show Login:')
       console.log(this.showLogin)
       console.log('Register:')

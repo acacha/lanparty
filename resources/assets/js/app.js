@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -20,6 +20,11 @@ import LandingPage from './components/LandingPageComponent.vue'
 import Gravatar from './components/GravatarComponent.vue'
 
 import store from './store'
+import * as actions from './store/action-types'
+import * as mutations from './store/mutation-types'
+
+store.commit(mutations.USER,  user)
+if (window.user ) store.commit(mutations.LOGGED, true)
 
 const app = new Vue({
   el: '#app',
@@ -28,6 +33,7 @@ const app = new Vue({
     dialog: false,
     drawer: null,
     drawerRight: false,
+    logoutLoading: false,
     items: [
       { icon: 'home', text: 'Home' },
       { icon: 'contacts', text: 'Col·laboradors' },
@@ -45,6 +51,17 @@ const app = new Vue({
   }),
   components: { UsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar },
   methods: {
+    logout() {
+      this.logoutLoading = true
+      this.$store.dispatch(actions.LOGOUT).then(response => {
+        console.log(response)
+        window.location = '/'
+      }).catch(error => {
+        console.log(error)
+      }).then(() => {
+        this.logoutLoading = false
+      })
+    },
     toogleRightDrawer() {
       this.drawerRight = ! this.drawerRight
     },

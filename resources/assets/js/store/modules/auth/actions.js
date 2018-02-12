@@ -12,5 +12,16 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.LOGOUT ] (context) {
+    return new Promise((resolve, reject) => {
+      auth.logout().then(response => {
+        context.commit(mutations.LOGGED, false)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
+
 }

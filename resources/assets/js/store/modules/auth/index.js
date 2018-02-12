@@ -4,6 +4,7 @@ import mutations from './mutations'
 
 const state = {
   token: null,
+  user: null,
   logged: false
 }
 
