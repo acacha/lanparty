@@ -65,4 +65,12 @@ class User extends Authenticatable
     {
         return "$this->name $this->email $this->givenName $this->sn1 $this->sn2 $this->formatted_created_at_date $this->id";
     }
+
+    /**
+     * Get all of the events the user has been registered
+     */
+    public function events()
+    {
+        return $this->morphToMany(Event::class, 'registration');
+    }
 }

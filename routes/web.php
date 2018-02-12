@@ -20,6 +20,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'ParticipantsHomePageController@index');
     Route::get('/manage/participants', 'ManageParticipantsController@index');
+
+    Route::post('/events/{event}/register', 'RegisterToEventController@store');
 });
 
 // Administrators

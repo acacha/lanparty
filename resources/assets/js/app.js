@@ -18,6 +18,7 @@ import NumbersSearch from './components/NumbersSearchComponent.vue'
 import ManageUser from './components/ManageUserComponent.vue'
 import LandingPage from './components/LandingPageComponent.vue'
 import Gravatar from './components/GravatarComponent.vue'
+import Events from './components/EventsComponent.vue'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -49,7 +50,7 @@ const app = new Vue({
       { icon: 'face', text: 'Participants', href: '/manage/participants' },
     ]
   }),
-  components: { UsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar },
+  components: { UsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar, Events },
   methods: {
     logout() {
       this.logoutLoading = true

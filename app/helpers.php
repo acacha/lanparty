@@ -23,19 +23,23 @@ if (!function_exists('create_events')) {
         $events = [
             [
               'name' => 'League Of Legends',
-              'inscription_type' => 'group'
+              'inscription_type' => 'group',
+              'image' => 'img/LoL.jpeg'
             ],
             [
                 'name' => 'Overwatch',
-                'inscription_type' => 'group'
+                'inscription_type' => 'group',
+                'image' => 'img/Overwatch.jpeg'
             ],
             [
                 'name' => 'Counter Strike',
-                'inscription_type' => 'individual'
+                'inscription_type' => 'individual',
+                'image' => 'img/CounterStrike.jpeg'
             ],
             [
-                'name' => 'FIFA 17',
-                'inscription_type' => 'individual'
+                'name' => 'FIFA 18',
+                'inscription_type' => 'individual',
+                'image' => 'img/Fifa18.jpeg'
             ]
         ];
 
@@ -43,6 +47,7 @@ if (!function_exists('create_events')) {
             Event::firstOrCreate([
                 'name' => $event['name'],
                 'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
+                'image' => $event['image']
             ]);
         }
     }
