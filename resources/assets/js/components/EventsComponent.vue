@@ -20,7 +20,10 @@
                             </template>
                         </v-list-tile-title>
                     </v-list-tile-content>
-                    <v-list-tile-action><v-switch @change="toogleRegisterToEvent(event)"></v-switch></v-list-tile-action>
+                    <v-list-tile-action>
+                        <v-list-tile-action-text>Inscrit</v-list-tile-action-text>
+                        <v-icon>done</v-icon>
+                    </v-list-tile-action>
                 </v-list-tile>
             </v-list>
         </v-card-text>
