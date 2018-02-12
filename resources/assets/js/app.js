@@ -54,7 +54,6 @@ const app = new Vue({
     logout() {
       this.logoutLoading = true
       this.$store.dispatch(actions.LOGOUT).then(response => {
-        console.log(response)
         window.location = '/'
       }).catch(error => {
         console.log(error)

@@ -3,14 +3,14 @@
         <v-toolbar class="white">
             <v-toolbar-title>Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-show="!logged" v-model="loginDialog" persistent max-width="500px">
+            <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px">
                 <v-btn color="primary" dark slot="activator">Entrar</v-btn>
                 <v-card>
                     <v-card-title>
                         <span class="headline">Login</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true" class="">
+                        <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true">
                             <h3>{{loginErrorMessage}}</h3>
                             <p v-for="(error, errorKey) in loginErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
@@ -39,21 +39,25 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="loginDialog = false">Tancar</v-btn>
+                        <v-btn color="blue darken-1" flat @click.native="showLogin = false">Tancar</v-btn>
                         <v-btn color="blue darken-1" flat @click.native="login" :loading="loginLoading">Entrar</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <v-dialog v-if="!logged" v-model="registerDialog" persistent max-width="500px">
+            <v-dialog v-if="!logged" v-model="showRegister" persistent max-width="500px">
                 <v-btn slot="activator">Registra't</v-btn>
                 <v-card>
                     <v-card-title>
                         <span class="headline">Alta d'usuari</span>
                     </v-card-title>
                     <v-card-text>
+                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
+                            <h3>{{registerErrorMessage}}</h3>
+                            <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
+                        </v-alert>
                         <v-form v-model="valid">
                             <v-text-field
-                                    label="Name"
+                                    label="User name"
                                     v-model="name"
                                     :rules="nameRules"
                                     :counter="10"
@@ -61,24 +65,45 @@
                             ></v-text-field>
                             <v-text-field
                                     label="E-mail"
-                                    v-model="email"
+                                    v-model="registerEmail"
                                     :rules="emailRules"
+                                    required
+                            ></v-text-field>
+                            <v-text-field
+                                    name="password"
+                                    label="Paraula de pas"
+                                    v-model="registerPassword"
+                                    :rules="passwordRules"
+                                    hint="Com a mínim 6 caràcters"
+                                    min="6"
+                                    type="password"
+                                    required
+                            ></v-text-field>
+                            <v-text-field
+                                    name="password"
+                                    label="Confirmació paraula de pas"
+                                    v-model="passwordConfirmation"
+                                    :rules="passwordConfirmationRules"
+                                    hint="Com a mínim 6 caràcters"
+                                    min="6"
+                                    type="password"
                                     required
                             ></v-text-field>
                             <v-text-field
                                     label="Nom"
                                     v-model="givenName"
+                                    :rules="givenNameRules"
                                     required
                             ></v-text-field>
                             <v-text-field
                                     label="Cognom"
                                     v-model="sn1"
+                                    :rules="sn1Rules"
                                     required
                             ></v-text-field>
                             <v-text-field
                                     label="2n Cognom"
                                     v-model="sn2"
-                                    required
                             ></v-text-field>
                         </v-form>
                         <v-btn color="blue darken-2" class="white--text">
@@ -87,8 +112,8 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="registerDialog = false">Tancar</v-btn>
-                        <v-btn color="blue darken-1" flat @click.native="registerDialog = false">Registrar-se</v-btn>
+                        <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
+                        <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Registra'm</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -110,7 +135,7 @@
                                 class="orange darken-3 mt-2"
                                 dark
                                 large
-                                @click.native="registerDialog = true"
+                                @click.native="showRegister = true"
                         >
                             Registra't
                         </v-btn>
@@ -280,38 +305,51 @@
 </style>
 
 <script>
-  import * as actions from '../store/action-types'
-  import * as mutations from '../store/mutation-types'
-  import _ from 'lodash'
-
   import { mapGetters } from 'vuex'
+  import * as actions from '../store/action-types'
+
   export default {
     name: 'LandingPage',
     data () {
       return {
-        loginDialog: false,
+        internalAction: this.action,
         loginLoading: false,
         loginErrorMessage: '',
         loginErrors: [],
-        registerDialog: false,
+        registerLoading: false,
+        registerErrorMessage: '',
+        registerErrors: [],
         valid: false,
         name: '',
         nameRules: [
-          (v) => !!v || 'Name is required',
-          (v) => v.length <= 10 || 'Name must be less than 10 characters'
+          (v) => !!v || 'El nom d\'usuari és un camp obligatori',
+          (v) => v.length <= 10 || 'El nom d\'usuari ha de tenir com a màxim 10 caracters'
         ],
         email: '',
         emailRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+          (v) => !!v || 'El email és obligatori',
+          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'S\'ha d\'indicar un email vàlid'
         ],
         password: '',
         passwordRules: [
-          (v) => !!v || 'Password is required',
-          (v) => v.length >= 6 || 'Password must be greater than 6 characters'
+          (v) => !!v || 'La paraula de pas és obligatòria',
+          (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
         ],
+        passwordConfirmation: '',
+        passwordConfirmationRules: [
+          (v) => !!v || 'La paraula de pas és obligatòria',
+          (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
+        ],
+        registerEmail: '',
+        registerPassword: '',
         givenName: '',
+        givenNameRules: [
+          (v) => !!v || 'El nom és obligatori'
+        ],
         sn1: '',
+        sn1Rules: [
+          (v) => !!v || 'El segon cognom és obligatori'
+        ],
         sn2: ''
       }
     },
@@ -319,21 +357,60 @@
       user: {
         required: true
       },
-      showLogin: {
-        type: Boolean,
-        default: false
-      },
-      showRegister: {
-        type: Boolean,
-        default: false
+      action: {
+        type: String,
+        default: null
       }
     },
     computed: {
       ...mapGetters([
         'logged'
-      ])
+      ]),
+      showRegister: {
+        get () {
+          if (this.internalAction && this.internalAction === 'register') return true
+          return false
+        },
+        set (value) {
+          if (value) this.internalAction = 'register'
+          else this.internalAction = null
+        }
+      },
+      showLogin: {
+        get () {
+          if (this.internalAction && this.internalAction === 'login') return true
+          return false
+        },
+        set (value) {
+          if (value) this.internalAction = 'login'
+          else this.internalAction = null
+        }
+      }
     },
     methods: {
+      register () {
+        this.registerLoading = true
+        const user = {
+          'name': this.name,
+          'email': this.registerEmail,
+          'password': this.registerPassword,
+          'password_confirmation': this.passwordConfirmation,
+          'givenName': this.givenName,
+          'sn1': this.sn1,
+          'sn2': this.sn2
+        }
+        this.$store.dispatch(actions.REGISTER, user).then(response => {
+          this.registerLoading = false
+          this.showRegister = false
+          window.location = '/home'
+        }).catch(error => {
+          console.log(error)
+          this.registerErrorMessage = error.response.data.message
+          this.registerErrors = error.response.data.errors
+        }).then(() => {
+          this.registerLoading = false
+        })
+      },
       login () {
         this.loginLoading = true
         const credentials = {
@@ -342,7 +419,7 @@
         }
         this.$store.dispatch(actions.LOGIN, credentials).then(response => {
           this.loginLoading = false
-          this.loginDialog = false
+          this.showLogin = false
           window.location = '/home'
         }).catch(error => {
           console.log(error)
@@ -352,14 +429,6 @@
           this.loginLoading = false
         })
       }
-    },
-    mounted () {
-      console.log('Show Login:')
-      console.log(this.showLogin)
-      console.log('Register:')
-      console.log(this.showRegister)
-      console.log('User:')
-      console.log(this.user)
     }
   }
 </script>
