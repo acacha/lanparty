@@ -44,8 +44,8 @@ class WelcomePageTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertViewIs('welcome');
-        $response->assertViewHas( function ($userView) use ($user) {
-            return $userView->id = $user->id;
+        $response->assertViewHas('user', function ($userView) use ($user) {
+            return $userView->id == $user->id;
         });
     }
 

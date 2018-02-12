@@ -17,6 +17,7 @@ import UsersSearch from './components/UsersSearchComponent.vue'
 import NumbersSearch from './components/NumbersSearchComponent.vue'
 import ManageUser from './components/ManageUserComponent.vue'
 import LandingPage from './components/LandingPageComponent.vue'
+import Gravatar from './components/GravatarComponent.vue'
 
 import store from './store'
 
@@ -42,8 +43,11 @@ const app = new Vue({
       { icon: 'face', text: 'Participants', href: '/manage/participants' },
     ]
   }),
-  components: { UsersSearch, NumbersSearch, ManageUser, LandingPage },
+  components: { UsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar },
   methods: {
+    toogleRightDrawer() {
+      this.drawerRight = ! this.drawerRight
+    },
     menuItemSelected(item) {
       if (item.href) {
         if (item.new) {

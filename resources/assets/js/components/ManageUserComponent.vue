@@ -7,9 +7,7 @@
                     <v-container fluid grid-list-md class="grey lighten-4" v-show="show">
                         <v-layout row wrap>
                             <v-flex xs12 md4>
-                                <v-avatar class="mt-1 mb-1" size="100px" >
-                                    <img :src="gravatarURL(selectedUser.email)" alt="avatar">
-                                </v-avatar>
+                                <gravatar :user="selectedUser" size="100px"></gravatar>
                             </v-flex>
                             <v-flex xs12 md8>
                                 <h3>{{ selectedUser.name }}</h3>
@@ -18,7 +16,7 @@
                         </v-layout>
                     </v-container>
                     <v-card-text class="px-0 grey lighten-3">
-                        <v-form v-model="valid" class="pl-3 pr-1 ma-0">
+                        <v-form class="pl-3 pr-1 ma-0">
                             <v-text-field readonly
                                   label="Email"
                                   :value="selectedUser.email"
@@ -133,10 +131,12 @@
   import { mapGetters } from 'vuex'
   import _ from 'lodash'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
+  import Gravatar from './GravatarComponent.vue'
 
   export default {
     name: 'ManageUser',
     mixins: [ interactsWithGravatar ],
+    components: { Gravatar },
     data () {
       return {
         payed: 'false'
@@ -147,9 +147,6 @@
       show () {
         return !_.isEmpty(this.selectedUser)
       }
-    },
-    mounted () {
-      console.log('Mounted ok')
     }
   }
 </script>

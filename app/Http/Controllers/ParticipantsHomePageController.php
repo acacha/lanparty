@@ -7,11 +7,11 @@ use Auth;
 use Illuminate\Http\Request;
 
 /**
- * Class ParticipantsMainPageController.
+ * Class ParticipantsHomePageController.
  *
  * @package App\Http\Controllers
  */
-class ParticipantsMainPageController extends Controller
+class ParticipantsHomePageController extends Controller
 {
     /**
      * Main view.
@@ -22,8 +22,7 @@ class ParticipantsMainPageController extends Controller
     {
         $events = Event::all();
         return view('home', [
-            'events' => $events,
-            'user' => Auth::user(),
+            'events' => $events
         ]);
     }
 }

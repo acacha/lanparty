@@ -14,14 +14,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  *
  * @package Tests\Feature
  */
-class ParticipantMainPageTest extends TestCase
+class ParticipantHomePageTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
      * @test
      */
-    public function see_user_numbers_and_events_info_at_main_page()
+    public function see_user_numbers_and_events_info_at_home_page()
     {
 //        $this->withoutExceptionHandling();
 
@@ -39,10 +39,10 @@ class ParticipantMainPageTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->get('/main');
+        $response = $this->get('/home');
 
         $response->assertSuccessful();
-        $response->assertViewIs('main');
+        $response->assertViewIs('home');
         $response->assertViewHas([
             'events' => $events
         ]);

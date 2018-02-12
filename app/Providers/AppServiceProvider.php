@@ -2,8 +2,16 @@
 
 namespace App\Providers;
 
+use Acacha\User\GuestUser;
+use Auth;
 use Illuminate\Support\ServiceProvider;
+use View;
 
+/**
+ * Class AppServiceProvider
+ *
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +21,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('*', function($view) {
+            if (Auth::user()) {
+                $view->with('user',Auth::user());
+            } else {
+                $view->with('user',new GuestUser);
+            }
+        });
     }
 
     /**

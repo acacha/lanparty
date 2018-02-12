@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c73ed52d011d203d56fbc7fd734face",
+    "content-hash": "36b3b82c2c9a6e13bbaefa6b9f4990a0",
     "packages": [
+        {
+            "name": "acacha/user",
+            "version": "0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/acacha/user.git",
+                "reference": "4c70815d20ae5c5035e5cfa137bfab0a0a3b9922"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/acacha/user/zipball/4c70815d20ae5c5035e5cfa137bfab0a0a3b9922",
+                "reference": "4c70815d20ae5c5035e5cfa137bfab0a0a3b9922",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.3",
+                "php": "~5.6|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0||~5.0",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Acacha\\User\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergi Tur Badenas",
+                    "email": "sergiturbadenas@gmail.com",
+                    "homepage": "https://github.com/acacha",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A boosted User for Laravel",
+            "homepage": "https://github.com/acacha/user",
+            "keywords": [
+                "acacha",
+                "user"
+            ],
+            "time": "2016-12-05T13:39:37+00:00"
+        },
         {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.1.1",

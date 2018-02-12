@@ -12,7 +12,8 @@
 </head>
 <body>
     <div id="app">
-        <v-app id="inspire">
+
+   <v-app id="inspire">
                 <v-navigation-drawer
                         fixed
                         clipped
@@ -77,6 +78,7 @@
                         dark
                         app
                         clipped-left
+                        clipped-right
                         fixed
                 >
                     <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
@@ -87,16 +89,65 @@
                         <v-btn icon>
                             <v-icon>notifications</v-icon>
                         </v-btn>
-                        <v-btn icon large>
-                            <v-avatar size="32px" tile>
-                                <img
-                                        src="https://vuetifyjs.com/static/doc-images/logo.svg"
-                                        alt="Vuetify"
-                                >
-                            </v-avatar>
+                        <v-btn icon large @click="toogleRightDrawer">
+                            <gravatar :user="{{ $user }}" size="52px"></gravatar>
                         </v-btn>
                     </div>
                 </v-toolbar>
+               <v-navigation-drawer
+                       fixed
+                       v-model="drawerRight"
+                       right
+                       clipped
+                       app
+               >
+                   <v-card>
+                       <v-container fluid grid-list-md class="grey lighten-4">
+                           <v-layout row wrap>
+                               <v-flex xs12 md4>
+                                   <gravatar :user="{{ $user }}" size="100px"></gravatar>
+                               </v-flex>
+                               <v-flex xs12 md8>
+                                   <h3>{{ $user->name }}</h3>
+                               </v-flex>
+                           </v-layout>
+                       </v-container>
+                       <v-card-text class="px-0 grey lighten-3">
+                           <v-form class="pl-3 pr-1 ma-0">
+                               <v-text-field readonly
+                                             label="Email"
+                                             value="{{ $user->email }}"
+                                             readonly
+                               ></v-text-field>
+                               <v-text-field readonly
+                                             label="Nom usuari"
+                                             value="{{ $user->name }}"
+                                             readonly
+                               ></v-text-field>
+                               <v-text-field readonly
+                                             label="Nom"
+                                             value="{{ $user->givenName }}"
+                                             readonly
+                               ></v-text-field>
+                               <v-text-field readonly
+                                             label="1r Cognom"
+                                             value="{{ $user->sn1 }}"
+                                             readonly
+                               ></v-text-field>
+                               <v-text-field readonly
+                                             label="2n Cognom"
+                                             value="{{ $user->sn2 }}"
+                                             readonly
+                               ></v-text-field>
+                           </v-form>
+                       </v-card-text>
+                       <v-card-actions>
+                           <v-btn flat color="orange">Editar</v-btn>
+                           <v-btn flat color="orange">Sortir</v-btn>
+                       </v-card-actions>
+                   </v-card>
+
+               </v-navigation-drawer>
                 <v-content>
                     @yield('content')
                 </v-content>

@@ -11,14 +11,14 @@
 |
 */
 
-Auth::loginUsingId(1);
+//Auth::loginUsingId(1);
 
 Route::get('/', 'WelcomeController@index');
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', 'ParticipantsMainPageController@index');
+    Route::get('/home', 'ParticipantsHomePageController@index');
     Route::get('/manage/participants', 'ManageParticipantsController@index');
 });
 
