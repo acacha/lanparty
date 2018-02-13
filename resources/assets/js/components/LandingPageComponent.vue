@@ -33,7 +33,7 @@
                                     required
                             ></v-text-field>
                         </v-form>
-                        <v-btn color="blue darken-2" class="white--text">
+                        <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
                             Entra amb Facebook
                         </v-btn>
                     </v-card-text>
@@ -106,7 +106,7 @@
                                     v-model="sn2"
                             ></v-text-field>
                         </v-form>
-                        <v-btn color="blue darken-2" class="white--text">
+                        <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
                             Entra amb Facebook
                         </v-btn>
                     </v-card-text>

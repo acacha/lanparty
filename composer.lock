@@ -60,16 +60,16 @@
         },
         {
             "name": "acacha/laravel-social",
-            "version": "0.1.9",
+            "version": "0.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/acacha/laravel-social.git",
-                "reference": "1dbf29695045eea4e2c6fd72656f61b48e575164"
+                "reference": "9c41bd205351549675bb4d4a44511d19ed04e71f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/acacha/laravel-social/zipball/1dbf29695045eea4e2c6fd72656f61b48e575164",
-                "reference": "1dbf29695045eea4e2c6fd72656f61b48e575164",
+                "url": "https://api.github.com/repos/acacha/laravel-social/zipball/9c41bd205351549675bb4d4a44511d19ed04e71f",
+                "reference": "9c41bd205351549675bb4d4a44511d19ed04e71f",
                 "shasum": ""
             },
             "require": {
@@ -112,7 +112,7 @@
                 "acacha",
                 "laravel-social"
             ],
-            "time": "2017-04-02T10:04:43+00:00"
+            "time": "2018-02-13T15:52:00+00:00"
         },
         {
             "name": "acacha/user",
