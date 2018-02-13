@@ -57,14 +57,14 @@
                         </v-alert>
                         <v-form v-model="valid">
                             <v-text-field
-                                    label="User name"
+                                    label="Nom d'usuari"
                                     v-model="name"
                                     :rules="nameRules"
                                     :counter="10"
                                     required
                             ></v-text-field>
                             <v-text-field
-                                    label="E-mail"
+                                    label="Correu electrònic"
                                     v-model="registerEmail"
                                     :rules="emailRules"
                                     required
@@ -96,13 +96,13 @@
                                     required
                             ></v-text-field>
                             <v-text-field
-                                    label="Cognom"
+                                    label="1r cognom"
                                     v-model="sn1"
                                     :rules="sn1Rules"
                                     required
                             ></v-text-field>
                             <v-text-field
-                                    label="2n Cognom"
+                                    label="2n cognom"
                                     v-model="sn2"
                             ></v-text-field>
                         </v-form>
