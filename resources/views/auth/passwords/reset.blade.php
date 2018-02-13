@@ -2,10 +2,11 @@
 
 @section('content')
 <div class="container">
+    AAAAAAAAAA
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card card-default">
-                <div class="card-header">Reset Password</div>
+                <div class="card-header">Reset Password AAAAAaa</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.request') }}">

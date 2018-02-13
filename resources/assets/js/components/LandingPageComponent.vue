@@ -118,17 +118,43 @@
                 </v-card>
             </v-dialog>
             <v-btn v-else href="/home">Home</v-btn>
+            <v-dialog v-model="showRememberPassword" persistent max-width="500px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">Recordeu-me la paraula de pas</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
+                            <h3>{{registerErrorMessage}}</h3>
+                            <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
+                        </v-alert>
+                        <v-form v-model="valid">
+                            <v-text-field
+                                    label="Correu electrònic"
+                                    v-model="registerEmail"
+                                    :rules="emailRules"
+                                    required
+                            ></v-text-field>
+                        </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
+                        <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Enviar</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </v-toolbar>
         <v-content>
             <section>
-                <v-parallax src="img/LanpartyLanding.jpg" height="600">
+                <v-parallax src="/img/LanpartyLanding.jpg" height="600">
                     <v-layout
                             column
                             align-center
                             justify-center
                             class="white--text"
                     >
-                        <img src="img/logo.png" alt="Vuetify.js" height="200">
+                        <img src="/img/logo.png" alt="Vuetify.js" height="200">
                         <div class="subheading mb-3 text-xs-center">
                             Departament d'Informàtica</div>
                         <v-btn
@@ -213,7 +239,7 @@
             </section>
 
             <section>
-                <v-parallax src="img/LanpartyLanding2.jpg" height="380">
+                <v-parallax src="/img/LanpartyLanding2.jpg" height="380">
                     <v-layout column align-center justify-center>
                         <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                         <em>Kick-start your application today</em>
@@ -366,6 +392,16 @@
       ...mapGetters([
         'logged'
       ]),
+      showRememberPassword: {
+        get () {
+          if (this.internalAction && this.internalAction === 'request_new_password') return true
+          return false
+        },
+        set (value) {
+          if (value) this.internalAction = 'request_new_password'
+          else this.internalAction = null
+        }
+      },
       showRegister: {
         get () {
           if (this.internalAction && this.internalAction === 'register') return true
