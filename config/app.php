@@ -189,6 +189,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Acacha\LaravelSocial\Providers\LaravelSocialServiceProvider::class,
 
         /*
          * Application Service Providers...
