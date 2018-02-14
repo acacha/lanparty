@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Acacha\User\GuestUser;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use View;
 
@@ -27,7 +28,18 @@ class AppServiceProvider extends ServiceProvider
             } else {
                 $view->with('user',new GuestUser);
             }
+            $view->with('registrations_enabled', $this->registrationsAreEnabled() ? 'true' : 'false');
         });
+    }
+
+    /**
+     * Check if registrations are enabled.
+     *
+     * @return bool
+     */
+    protected function registrationsAreEnabled()
+    {
+        return Carbon::parse(config('lanparty.registration_start_date'))->isPast();
     }
 
     /**

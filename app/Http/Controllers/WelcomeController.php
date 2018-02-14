@@ -19,16 +19,6 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return view('welcome', ['registrations_enabled' => $this->registrationsAreEnabled() ? 'true' : 'false']);
-    }
-
-    /**
-     * Check if registrations are enabled.
-     *
-     * @return bool
-     */
-    protected function registrationsAreEnabled()
-    {
-        return Carbon::parse(config('lanparty.registration_start_date'))->isPast();
+        return view('welcome');
     }
 }
