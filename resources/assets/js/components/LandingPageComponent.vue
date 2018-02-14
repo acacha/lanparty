@@ -3,147 +3,149 @@
         <v-toolbar class="white">
             <v-toolbar-title>Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px">
-                <v-btn color="primary" dark slot="activator">Entrar</v-btn>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Login</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true">
-                            <h3>{{loginErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in loginErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
-                        <v-form v-model="valid">
-                            <v-text-field
-                                    name="email"
-                                    label="E-mail"
-                                    v-model="email"
-                                    :rules="emailRules"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    name="password"
-                                    label="Paraula de pas"
-                                    v-model="password"
-                                    :rules="passwordRules"
-                                    hint="At least 6 characters"
-                                    min="6"
-                                    type="password"
-                                    required
-                            ></v-text-field>
-                        </v-form>
-                        <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
-                            Entra amb Facebook
-                        </v-btn>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showLogin = false">Tancar</v-btn>
-                        <v-btn color="blue darken-1" flat @click.native="login" :loading="loginLoading">Entrar</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <v-dialog v-if="!logged" v-model="showRegister" persistent max-width="500px">
-                <v-btn slot="activator">Registra't</v-btn>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Alta d'usuari</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
-                            <h3>{{registerErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
-                        <v-form v-model="valid">
-                            <v-text-field
-                                    label="Nom d'usuari"
-                                    v-model="name"
-                                    :rules="nameRules"
-                                    :counter="10"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    label="Correu electrònic"
-                                    v-model="registerEmail"
-                                    :rules="emailRules"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    name="password"
-                                    label="Paraula de pas"
-                                    v-model="registerPassword"
-                                    :rules="passwordRules"
-                                    hint="Com a mínim 6 caràcters"
-                                    min="6"
-                                    type="password"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    name="password"
-                                    label="Confirmació paraula de pas"
-                                    v-model="passwordConfirmation"
-                                    :rules="passwordConfirmationRules"
-                                    hint="Com a mínim 6 caràcters"
-                                    min="6"
-                                    type="password"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    label="Nom"
-                                    v-model="givenName"
-                                    :rules="givenNameRules"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    label="1r cognom"
-                                    v-model="sn1"
-                                    :rules="sn1Rules"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    label="2n cognom"
-                                    v-model="sn2"
-                            ></v-text-field>
-                        </v-form>
-                        <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
-                            Entra amb Facebook
-                        </v-btn>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
-                        <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Registra'm</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <v-btn v-else href="/home">Home</v-btn>
-            <v-dialog v-model="showRememberPassword" persistent max-width="500px">
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Recordeu-me la paraula de pas</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
-                            <h3>{{registerErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
-                        <v-form v-model="valid">
-                            <v-text-field
-                                    label="Correu electrònic"
-                                    v-model="registerEmail"
-                                    :rules="emailRules"
-                                    required
-                            ></v-text-field>
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
-                        <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Enviar</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+            <template v-if="registrationsEnabled">
+                <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px">
+                    <v-btn color="primary" dark slot="activator">Entrar</v-btn>
+                    <v-card>
+                        <v-card-title>
+                            <span class="headline">Login</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true">
+                                <h3>{{loginErrorMessage}}</h3>
+                                <p v-for="(error, errorKey) in loginErrors">{{errorKey}} : {{ error[0] }}</p>
+                            </v-alert>
+                            <v-form v-model="valid">
+                                <v-text-field
+                                        name="email"
+                                        label="E-mail"
+                                        v-model="email"
+                                        :rules="emailRules"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        name="password"
+                                        label="Paraula de pas"
+                                        v-model="password"
+                                        :rules="passwordRules"
+                                        hint="At least 6 characters"
+                                        min="6"
+                                        type="password"
+                                        required
+                                ></v-text-field>
+                            </v-form>
+                            <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
+                                Entra amb Facebook
+                            </v-btn>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" flat @click.native="showLogin = false">Tancar</v-btn>
+                            <v-btn color="blue darken-1" flat @click.native="login" :loading="loginLoading">Entrar</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <v-dialog v-if="!logged" v-model="showRegister" persistent max-width="500px">
+                    <v-btn slot="activator">Registra't</v-btn>
+                    <v-card>
+                        <v-card-title>
+                            <span class="headline">Alta d'usuari</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
+                                <h3>{{registerErrorMessage}}</h3>
+                                <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
+                            </v-alert>
+                            <v-form v-model="valid">
+                                <v-text-field
+                                        label="Nom d'usuari"
+                                        v-model="name"
+                                        :rules="nameRules"
+                                        :counter="10"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        label="Correu electrònic"
+                                        v-model="registerEmail"
+                                        :rules="emailRules"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        name="password"
+                                        label="Paraula de pas"
+                                        v-model="registerPassword"
+                                        :rules="passwordRules"
+                                        hint="Com a mínim 6 caràcters"
+                                        min="6"
+                                        type="password"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        name="password"
+                                        label="Confirmació paraula de pas"
+                                        v-model="passwordConfirmation"
+                                        :rules="passwordConfirmationRules"
+                                        hint="Com a mínim 6 caràcters"
+                                        min="6"
+                                        type="password"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        label="Nom"
+                                        v-model="givenName"
+                                        :rules="givenNameRules"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        label="1r cognom"
+                                        v-model="sn1"
+                                        :rules="sn1Rules"
+                                        required
+                                ></v-text-field>
+                                <v-text-field
+                                        label="2n cognom"
+                                        v-model="sn2"
+                                ></v-text-field>
+                            </v-form>
+                            <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
+                                Entra amb Facebook
+                            </v-btn>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
+                            <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Registra'm</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <v-btn v-else href="/home">Home</v-btn>
+                <v-dialog v-model="showRememberPassword" persistent max-width="500px">
+                    <v-card>
+                        <v-card-title>
+                            <span class="headline">Recordeu-me la paraula de pas</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
+                                <h3>{{registerErrorMessage}}</h3>
+                                <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
+                            </v-alert>
+                            <v-form v-model="valid">
+                                <v-text-field
+                                        label="Correu electrònic"
+                                        v-model="registerEmail"
+                                        :rules="emailRules"
+                                        required
+                                ></v-text-field>
+                            </v-form>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
+                            <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Enviar</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </template>
         </v-toolbar>
         <v-content>
             <section>
@@ -157,14 +159,50 @@
                         <img src="/img/logo.png" alt="Vuetify.js" height="200">
                         <div class="subheading mb-3 text-xs-center">
                             Departament d'Informàtica</div>
-                        <v-btn
-                                class="orange darken-3 mt-2"
-                                dark
-                                large
-                                @click.native="showRegister = true"
-                        >
-                            Registra't
-                        </v-btn>
+                        <template v-if="registrationsEnabled">
+                            <v-btn
+                                    class="orange darken-3 mt-2"
+                                    dark
+                                    large
+                                    @click.native="showRegister = true"
+                            >
+                                Registra't
+                            </v-btn>
+                        </template>
+                        <template v-else>
+                            <v-card class="elevation-0 text-xs-center" style="width: 400px;">
+                                <v-card-text>
+                                    <v-form v-model="valid">
+                                        <v-text-field
+                                                name="email"
+                                                label="E-mail"
+                                                v-model="emailMailingList"
+                                                :rules="emailRules"
+                                                required
+                                                box
+                                                autofocus
+                                                auto-grow
+                                        ></v-text-field>
+                                    </v-form>
+                                    <template v-if="newsletterSubscriptionDone">Comproveu el vostre email i seguiu les passes indicades!</template>
+                                    <v-btn
+                                            :loading="newsLetterLoading"
+                                            class="darken-3 mt-2"
+                                            :class="{ green: newsletterSubscriptionDone, orange: !newsletterSubscriptionDone }"
+                                            dark
+                                            large
+                                            @click.native="addEmailToMailingList"
+                                    >
+                                        <v-icon v-if="!newsletterSubscriptionDone">mail_outline</v-icon>
+                                        <v-icon v-else>done</v-icon>
+                                        &nbsp;
+                                        <template v-if="!newsletterSubscriptionDone">Apunta'm</template>
+                                        <template v-else>Fet</template>
+
+                                    </v-btn>
+                                </v-card-text>
+                            </v-card>
+                        </template>
                     </v-layout>
                 </v-parallax>
             </section>
@@ -351,6 +389,9 @@
           (v) => !!v || 'El nom d\'usuari és un camp obligatori',
           (v) => v.length <= 10 || 'El nom d\'usuari ha de tenir com a màxim 10 caracters'
         ],
+        newsLetterLoading: false,
+        newsletterSubscriptionDone: false,
+        emailMailingList: '',
         email: '',
         emailRules: [
           (v) => !!v || 'El email és obligatori',
@@ -386,6 +427,10 @@
       action: {
         type: String,
         default: null
+      },
+      registrationsEnabled: {
+        type: Boolean,
+        default: true
       }
     },
     computed: {
@@ -424,6 +469,17 @@
       }
     },
     methods: {
+      addEmailToMailingList () {
+        this.newsLetterLoading = true
+        this.$store.dispatch(actions.SUBSCRIBE_TO_NEWSLETTER, this.emailMailingList).then(response => {
+          this.newsletterSubscriptionDone = true
+        }).catch(error => {
+          console.log(error)
+          this.newsletterSubscriptionDone = true
+        }).then(() => {
+          this.newsLetterLoading = false
+        })
+      },
       register () {
         this.registerLoading = true
         const user = {

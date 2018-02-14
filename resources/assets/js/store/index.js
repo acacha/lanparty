@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import users from './modules/users'
 import numbers from './modules/numbers'
 import auth from './modules/auth'
+import newsletter from './modules/newsletter'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
   modules: {
     users,
     numbers,
-    auth
+    auth,
+    newsletter
   },
   strict: debug
 })

@@ -4,3 +4,6 @@ export const SELECTED_USER = 'SELECTED_USER'
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 export const REGISTER = 'REGISTER'
+
+// NEWLETTER MODULE
+export const SUBSCRIBE_TO_NEWSLETTER = 'SUBSCRIBE_TO_NEWSLETTER'

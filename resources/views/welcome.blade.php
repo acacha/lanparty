@@ -12,7 +12,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <div id="app">
-    <landing-page user="{{ $user }}" action="{{ $action or null }}"></landing-page>
+    <landing-page user="{{ $user }}" action="{{ $action or null }}" :registrations-enabled="{{ $registrations_enabled }}"></landing-page>
 </div>
 @stack('beforeScripts')
 <script src="{{ mix('js/app.js') }}"></script>

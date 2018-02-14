@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -12,8 +12,23 @@ use Illuminate\Http\Request;
  */
 class WelcomeController extends Controller
 {
+    /**
+     * Welcome page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        return view('welcome', [ 'user' => Auth::user()]);
+        return view('welcome', ['registrations_enabled' => $this->registrationsAreEnabled() ? 'true' : 'false']);
+    }
+
+    /**
+     * Check if registrations are enabled.
+     *
+     * @return bool
+     */
+    protected function registrationsAreEnabled()
+    {
+        return Carbon::parse(config('lanparty.registration_start_date'))->isPast();
     }
 }
