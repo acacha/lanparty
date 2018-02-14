@@ -27,6 +27,6 @@ class NewsletterController extends Controller
 
         return Response::json([
             'message' => 'User already registered'
-        ], 422);
+        ], 423);
     }
 }
