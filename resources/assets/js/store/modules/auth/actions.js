@@ -32,5 +32,23 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.REMEMBER_PASSWORD ] (context, email) {
+    return new Promise((resolve, reject) => {
+      auth.remember(email).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.RESET_PASSWORD ] (context, user) {
+    return new Promise((resolve, reject) => {
+      auth.reset(user).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }

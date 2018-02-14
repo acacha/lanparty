@@ -38,6 +38,12 @@
                         <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
                             Entra amb Facebook
                         </v-btn>
+                        <a href="/password/reset" color="blue darken-2">
+                            Recorda'm la paraula de pas
+                        </a> &nbsp; |
+                        <a href="/register" color="blue darken-2">
+                            Registra't
+                        </a>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -113,6 +119,9 @@
                         <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
                             Entra amb Facebook
                         </v-btn>
+                        <a href="/login" color="blue darken-2">
+                            Ja tinc un usuari
+                        </a>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -128,23 +137,75 @@
                         <span class="headline">Recordeu-me la paraula de pas</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
-                            <h3>{{registerErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
+                        <v-alert v-if="rememberErrorMessage" color="error" icon="warning" value="true" >
+                            <h3>{{rememberErrorMessage}}</h3>
+                            <p v-for="(error, errorKey) in rememberErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
                         <v-form v-model="valid">
                             <v-text-field
                                     label="Correu electrònic"
-                                    v-model="registerEmail"
+                                    v-model="emailRememberPassword"
                                     :rules="emailRules"
+                                    required
+                            ></v-text-field>
+                        </v-form>
+                        <a href="/login" color="blue darken-2">
+                            Entrar
+                        </a> &nbsp; |
+                        <a href="/register" color="blue darken-2">
+                            Registra't
+                        </a>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" flat @click.native="showRememberPassword = false">Tancar</v-btn>
+                        <v-btn :loading="rememberPasswordLoading" color="blue darken-1" flat @click.native="rememberPassword">Enviar</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+            <v-dialog v-model="showResetPassword" persistent max-width="500px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">Restaureu la paraula de pas</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-alert v-if="rememberErrorMessage" color="error" icon="warning" value="true" >
+                            <h3>{{rememberErrorMessage}}</h3>
+                            <p v-for="(error, errorKey) in rememberErrors">{{errorKey}} : {{ error[0] }}</p>
+                        </v-alert>
+                        <v-form v-model="valid">
+                            <v-text-field
+                                    label="Correu electrònic"
+                                    v-model="internalResetPasswordEmail"
+                                    :rules="emailRules"
+                                    required
+                            ></v-text-field>
+                            <v-text-field
+                                    name="resetPassword"
+                                    label="Paraula de pas"
+                                    v-model="resetPassword"
+                                    :rules="passwordRules"
+                                    hint="Com a mínim 6 caràcters"
+                                    min="6"
+                                    type="password"
+                                    required
+                            ></v-text-field>
+                            <v-text-field
+                                    name="resetPasswordConfirmation"
+                                    label="Confirmació paraula de pas"
+                                    v-model="resetPasswordConfirmation"
+                                    :rules="passwordConfirmationRules"
+                                    hint="Com a mínim 6 caràcters"
+                                    min="6"
+                                    type="password"
                                     required
                             ></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
-                        <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Enviar</v-btn>
+                        <v-btn color="blue darken-1" flat @click.native="showResetPassword = false">Tancar</v-btn>
+                        <v-btn :loading="resetPasswordLoading" color="blue darken-1" flat @click.native="resetPassword">Enviar</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -393,6 +454,14 @@
         newsLetterLoading: false,
         newsletterSubscriptionDone: false,
         emailMailingList: '',
+        emailRememberPassword: '',
+        rememberPasswordLoading: false,
+        rememberErrorMessage: '',
+        rememberErrors: [],
+        resetPasswordLoading: false,
+        resetErrorMessage: '',
+        resetErrors: [],
+        internalResetPasswordEmail: this.resetPasswordEmail,
         email: '',
         emailRules: [
           (v) => !!v || 'El email és obligatori',
@@ -432,12 +501,30 @@
       registrationsEnabled: {
         type: Boolean,
         default: true
+      },
+      resetPasswordToken: {
+        type: String,
+        default: null
+      },
+      resetPasswordEmail: {
+        type: String,
+        default: null
       }
     },
     computed: {
       ...mapGetters([
         'logged'
       ]),
+      showResetPassword: {
+        get () {
+          if (this.internalAction && this.internalAction === 'reset_password') return true
+          return false
+        },
+        set (value) {
+          if (value) this.internalAction = 'reset_password'
+          else this.internalAction = null
+        }
+      },
       showRememberPassword: {
         get () {
           if (this.internalAction && this.internalAction === 'request_new_password') return true
@@ -522,6 +609,38 @@
           this.loginErrors = error.response.data.errors
         }).then(() => {
           this.loginLoading = false
+        })
+      },
+      rememberPassword () {
+        this.rememberPasswordLoading = true
+        this.$store.dispatch(actions.REMEMBER_PASSWORD, this.emailRememberPassword).then(response => {
+          this.rememberPasswordLoading = false
+          this.showRememberPassword = false
+        }).catch(error => {
+          this.rememberErrorMessage = error.response.data.message
+          this.rememberErrors = error.response.data.errors
+          console.log(error)
+        }).then(() => {
+          this.rememberPasswordLoading = false
+        })
+      },
+      resetPassword () {
+        const user = {
+          'email': this.internalResetPasswordEmail,
+          'password': this.resetPassword,
+          'password_confirmation': this.resetPasswordConfirmation,
+          'token': this.resetPasswordToken
+        }
+        this.resetPasswordLoading = true
+        this.$store.dispatch(actions.RESET_PASSWORD, user).then(response => {
+          this.resetPasswordLoading = false
+          this.showResetPassword = false
+        }).catch(error => {
+          this.resetErrorMessage = error.response.data.message
+          this.resetErrors = error.response.data.errors
+          console.log(error)
+        }).then(() => {
+          this.resetPasswordLoading = false
         })
       }
     }
