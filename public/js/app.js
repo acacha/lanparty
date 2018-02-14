@@ -375,6 +375,24 @@ module.exports = {
 
 /***/ }),
 /* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SELECTED_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGGED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return NEWSLETTER_EMAIL; });
+var SELECTED_USER = 'SELECTED_USER';
+
+// AUTH
+var LOGGED = 'LOGGED';
+var USER = 'USER';
+
+// NEWSLETTER
+var NEWSLETTER_EMAIL = 'NEWSLETTER_EMAIL';
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -483,7 +501,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -491,6 +509,7 @@ module.exports = function normalizeComponent (
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGIN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LOGOUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return REGISTER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return SUBSCRIBE_TO_NEWSLETTER; });
 var SELECTED_USER = 'SELECTED_USER';
 
 // AUTH MODULE
@@ -498,19 +517,8 @@ var LOGIN = 'LOGIN';
 var LOGOUT = 'LOGOUT';
 var REGISTER = 'REGISTER';
 
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SELECTED_USER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGGED; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return USER; });
-var SELECTED_USER = 'SELECTED_USER';
-
-// AUTH
-var LOGGED = 'LOGGED';
-var USER = 'USER';
+// NEWLETTER MODULE
+var SUBSCRIBE_TO_NEWSLETTER = 'SUBSCRIBE_TO_NEWSLETTER';
 
 /***/ }),
 /* 4 */
@@ -853,6 +861,12 @@ function applyToTag (styleElement, obj) {
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(26);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -947,10 +961,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -967,7 +981,7 @@ module.exports = defaults;
 });
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1912,7 +1926,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12729,7 +12743,7 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(23).setImmediate))
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -12917,12 +12931,6 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(26);
 
 /***/ }),
 /* 13 */
@@ -13208,7 +13216,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(62)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(64)
 /* template */
@@ -13255,7 +13263,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(21);
-module.exports = __webpack_require__(88);
+module.exports = __webpack_require__(93);
 
 
 /***/ }),
@@ -13279,8 +13287,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_EventsComponent_vue__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_EventsComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_EventsComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__store__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__store_action_types__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__store_mutation_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__store_action_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__store_mutation_types__ = __webpack_require__(1);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13307,7 +13315,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_7__store__["a" /* default */].commit(__WEBPACK_IMPORTED_MODULE_9__store_mutation_types__["c" /* USER */], user);
+__WEBPACK_IMPORTED_MODULE_7__store__["a" /* default */].commit(__WEBPACK_IMPORTED_MODULE_9__store_mutation_types__["d" /* USER */], user);
 if (window.user) __WEBPACK_IMPORTED_MODULE_7__store__["a" /* default */].commit(__WEBPACK_IMPORTED_MODULE_9__store_mutation_types__["a" /* LOGGED */], true);
 
 var app = new Vue({
@@ -13364,7 +13372,7 @@ var app = new Vue({
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(10);
+window.Vue = __webpack_require__(11);
 window.Vuetify = __webpack_require__(25);
 
 Vue.use(Vuetify);
@@ -13375,7 +13383,7 @@ Vue.use(Vuetify);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(12);
+window.axios = __webpack_require__(7);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -13671,7 +13679,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(12)))
 
 /***/ }),
 /* 25 */
@@ -32723,7 +32731,7 @@ function install(Vue) {
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(13);
 var Axios = __webpack_require__(28);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 
 /**
  * Create an instance of Axios
@@ -32806,7 +32814,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(37);
 var dispatchRequest = __webpack_require__(38);
@@ -33347,7 +33355,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(39);
 var isCancel = __webpack_require__(16);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 var isAbsoluteURL = __webpack_require__(40);
 var combineURLs = __webpack_require__(41);
 
@@ -33602,7 +33610,7 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(45)
 /* template */
@@ -33650,8 +33658,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_action_types__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_interactsWithGravatar__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_action_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_interactsWithGravatar__ = __webpack_require__(9);
 //
 //
 //
@@ -34410,7 +34418,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(53)
 /* template */
@@ -34712,7 +34720,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(56)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(59)
 /* template */
@@ -34833,10 +34841,10 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_interactsWithGravatar__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_interactsWithGravatar__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GravatarComponent_vue__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GravatarComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__GravatarComponent_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -52172,7 +52180,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_interactsWithGravatar__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_interactsWithGravatar__ = __webpack_require__(9);
 //
 //
 //
@@ -52630,7 +52638,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(68)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(70)
 /* template */
@@ -52707,7 +52715,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52718,10 +52726,74 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_action_types__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_action_types__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -53050,6 +53122,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       }, function (v) {
         return v.length <= 10 || 'El nom d\'usuari ha de tenir com a màxim 10 caracters';
       }],
+      newsLetterLoading: false,
+      newsletterSubscriptionDone: false,
+      emailMailingList: '',
       email: '',
       emailRules: [function (v) {
         return !!v || 'El email és obligatori';
@@ -53090,9 +53165,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     action: {
       type: String,
       default: null
+    },
+    registrationsEnabled: {
+      type: Boolean,
+      default: true
     }
   },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['logged']), {
+    showRememberPassword: {
+      get: function get() {
+        if (this.internalAction && this.internalAction === 'request_new_password') return true;
+        return false;
+      },
+      set: function set(value) {
+        if (value) this.internalAction = 'request_new_password';else this.internalAction = null;
+      }
+    },
     showRegister: {
       get: function get() {
         if (this.internalAction && this.internalAction === 'register') return true;
@@ -53113,8 +53201,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }
   }),
   methods: {
-    register: function register() {
+    addEmailToMailingList: function addEmailToMailingList() {
       var _this = this;
+
+      this.newsLetterLoading = true;
+      this.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_action_types__["e" /* SUBSCRIBE_TO_NEWSLETTER */], this.emailMailingList).then(function (response) {
+        _this.newsletterSubscriptionDone = true;
+      }).catch(function (error) {
+        console.log(error);
+        _this.newsletterSubscriptionDone = true;
+      }).then(function () {
+        _this.newsLetterLoading = false;
+      });
+    },
+    register: function register() {
+      var _this2 = this;
 
       this.registerLoading = true;
       var user = {
@@ -53127,19 +53228,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         'sn2': this.sn2
       };
       this.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_action_types__["c" /* REGISTER */], user).then(function (response) {
-        _this.registerLoading = false;
-        _this.showRegister = false;
+        _this2.registerLoading = false;
+        _this2.showRegister = false;
         window.location = '/home';
       }).catch(function (error) {
         console.log(error);
-        _this.registerErrorMessage = error.response.data.message;
-        _this.registerErrors = error.response.data.errors;
+        _this2.registerErrorMessage = error.response.data.message;
+        _this2.registerErrors = error.response.data.errors;
       }).then(function () {
-        _this.registerLoading = false;
+        _this2.registerLoading = false;
       });
     },
     login: function login() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loginLoading = true;
       var credentials = {
@@ -53147,15 +53248,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         'password': this.password
       };
       this.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_action_types__["a" /* LOGIN */], credentials).then(function (response) {
-        _this2.loginLoading = false;
-        _this2.showLogin = false;
+        _this3.loginLoading = false;
+        _this3.showLogin = false;
         window.location = '/home';
       }).catch(function (error) {
         console.log(error);
-        _this2.loginErrorMessage = error.response.data.message;
-        _this2.loginErrors = error.response.data.errors;
+        _this3.loginErrorMessage = error.response.data.message;
+        _this3.loginErrors = error.response.data.errors;
       }).then(function () {
-        _this2.loginLoading = false;
+        _this3.loginLoading = false;
       });
     }
   }
@@ -53181,441 +53282,591 @@ var render = function() {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          _c(
-            "v-dialog",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: !_vm.logged,
-                  expression: "!logged"
-                }
-              ],
-              attrs: { persistent: "", "max-width": "500px" },
-              model: {
-                value: _vm.showLogin,
-                callback: function($$v) {
-                  _vm.showLogin = $$v
-                },
-                expression: "showLogin"
-              }
-            },
-            [
-              _c(
-                "v-btn",
-                {
-                  attrs: { slot: "activator", color: "primary", dark: "" },
-                  slot: "activator"
-                },
-                [_vm._v("Entrar")]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card",
-                [
-                  _c("v-card-title", [
-                    _c("span", { staticClass: "headline" }, [_vm._v("Login")])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-text",
-                    [
-                      _vm.loginErrorMessage
-                        ? _c(
-                            "v-alert",
-                            {
-                              attrs: {
-                                color: "error",
-                                icon: "warning",
-                                value: "true"
-                              }
-                            },
-                            [
-                              _c("h3", [_vm._v(_vm._s(_vm.loginErrorMessage))]),
-                              _vm._v(" "),
-                              _vm._l(_vm.loginErrors, function(
-                                error,
-                                errorKey
-                              ) {
-                                return _c("p", [
-                                  _vm._v(
-                                    _vm._s(errorKey) + " : " + _vm._s(error[0])
-                                  )
-                                ])
-                              })
-                            ],
-                            2
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "v-form",
-                        {
-                          model: {
-                            value: _vm.valid,
-                            callback: function($$v) {
-                              _vm.valid = $$v
-                            },
-                            expression: "valid"
-                          }
-                        },
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              name: "email",
-                              label: "E-mail",
-                              rules: _vm.emailRules,
-                              required: ""
-                            },
-                            model: {
-                              value: _vm.email,
-                              callback: function($$v) {
-                                _vm.email = $$v
-                              },
-                              expression: "email"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              name: "password",
-                              label: "Paraula de pas",
-                              rules: _vm.passwordRules,
-                              hint: "At least 6 characters",
-                              min: "6",
-                              type: "password",
-                              required: ""
-                            },
-                            model: {
-                              value: _vm.password,
-                              callback: function($$v) {
-                                _vm.password = $$v
-                              },
-                              expression: "password"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "white--text",
-                          attrs: {
-                            href: "/auth/facebook",
-                            color: "blue darken-2"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Entra amb Facebook\n                    "
-                          )
-                        ]
-                      )
+          _vm.registrationsEnabled
+            ? [
+                _c(
+                  "v-dialog",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.logged,
+                        expression: "!logged"
+                      }
                     ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "blue darken-1", flat: "" },
-                          nativeOn: {
-                            click: function($event) {
-                              _vm.showLogin = false
-                            }
-                          }
+                    attrs: { persistent: "", "max-width": "500px" },
+                    model: {
+                      value: _vm.showLogin,
+                      callback: function($$v) {
+                        _vm.showLogin = $$v
+                      },
+                      expression: "showLogin"
+                    }
+                  },
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          slot: "activator",
+                          color: "primary",
+                          dark: ""
                         },
-                        [_vm._v("Tancar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: {
-                            color: "blue darken-1",
-                            flat: "",
-                            loading: _vm.loginLoading
-                          },
-                          nativeOn: {
-                            click: function($event) {
-                              _vm.login($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Entrar")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          !_vm.logged
-            ? _c(
-                "v-dialog",
-                {
-                  attrs: { persistent: "", "max-width": "500px" },
-                  model: {
-                    value: _vm.showRegister,
-                    callback: function($$v) {
-                      _vm.showRegister = $$v
-                    },
-                    expression: "showRegister"
-                  }
-                },
-                [
-                  _c(
-                    "v-btn",
-                    { attrs: { slot: "activator" }, slot: "activator" },
-                    [_vm._v("Registra't")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-card",
-                    [
-                      _c("v-card-title", [
-                        _c("span", { staticClass: "headline" }, [
-                          _vm._v("Alta d'usuari")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-text",
-                        [
-                          _vm.registerErrorMessage
-                            ? _c(
-                                "v-alert",
-                                {
+                        slot: "activator"
+                      },
+                      [_vm._v("Entrar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-card",
+                      [
+                        _c("v-card-title", [
+                          _c("span", { staticClass: "headline" }, [
+                            _vm._v("Login")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-card-text",
+                          [
+                            _vm.loginErrorMessage
+                              ? _c(
+                                  "v-alert",
+                                  {
+                                    attrs: {
+                                      color: "error",
+                                      icon: "warning",
+                                      value: "true"
+                                    }
+                                  },
+                                  [
+                                    _c("h3", [
+                                      _vm._v(_vm._s(_vm.loginErrorMessage))
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.loginErrors, function(
+                                      error,
+                                      errorKey
+                                    ) {
+                                      return _c("p", [
+                                        _vm._v(
+                                          _vm._s(errorKey) +
+                                            " : " +
+                                            _vm._s(error[0])
+                                        )
+                                      ])
+                                    })
+                                  ],
+                                  2
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "v-form",
+                              {
+                                model: {
+                                  value: _vm.valid,
+                                  callback: function($$v) {
+                                    _vm.valid = $$v
+                                  },
+                                  expression: "valid"
+                                }
+                              },
+                              [
+                                _c("v-text-field", {
                                   attrs: {
-                                    color: "error",
-                                    icon: "warning",
-                                    value: "true"
+                                    name: "email",
+                                    label: "E-mail",
+                                    rules: _vm.emailRules,
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.email,
+                                    callback: function($$v) {
+                                      _vm.email = $$v
+                                    },
+                                    expression: "email"
                                   }
-                                },
-                                [
-                                  _c("h3", [
-                                    _vm._v(_vm._s(_vm.registerErrorMessage))
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.registerErrors, function(
-                                    error,
-                                    errorKey
-                                  ) {
-                                    return _c("p", [
-                                      _vm._v(
-                                        _vm._s(errorKey) +
-                                          " : " +
-                                          _vm._s(error[0])
-                                      )
-                                    ])
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "v-form",
-                            {
-                              model: {
-                                value: _vm.valid,
-                                callback: function($$v) {
-                                  _vm.valid = $$v
-                                },
-                                expression: "valid"
-                              }
-                            },
-                            [
-                              _c("v-text-field", {
+                                }),
+                                _vm._v(" "),
+                                _c("v-text-field", {
+                                  attrs: {
+                                    name: "password",
+                                    label: "Paraula de pas",
+                                    rules: _vm.passwordRules,
+                                    hint: "At least 6 characters",
+                                    min: "6",
+                                    type: "password",
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.password,
+                                    callback: function($$v) {
+                                      _vm.password = $$v
+                                    },
+                                    expression: "password"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "white--text",
                                 attrs: {
-                                  label: "User name",
-                                  rules: _vm.nameRules,
-                                  counter: 10,
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.name,
-                                  callback: function($$v) {
-                                    _vm.name = $$v
-                                  },
-                                  expression: "name"
+                                  href: "/auth/facebook",
+                                  color: "blue darken-2"
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "E-mail",
-                                  rules: _vm.emailRules,
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.registerEmail,
-                                  callback: function($$v) {
-                                    _vm.registerEmail = $$v
-                                  },
-                                  expression: "registerEmail"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  name: "password",
-                                  label: "Paraula de pas",
-                                  rules: _vm.passwordRules,
-                                  hint: "Com a mínim 6 caràcters",
-                                  min: "6",
-                                  type: "password",
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.registerPassword,
-                                  callback: function($$v) {
-                                    _vm.registerPassword = $$v
-                                  },
-                                  expression: "registerPassword"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  name: "password",
-                                  label: "Confirmació paraula de pas",
-                                  rules: _vm.passwordConfirmationRules,
-                                  hint: "Com a mínim 6 caràcters",
-                                  min: "6",
-                                  type: "password",
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.passwordConfirmation,
-                                  callback: function($$v) {
-                                    _vm.passwordConfirmation = $$v
-                                  },
-                                  expression: "passwordConfirmation"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "Nom",
-                                  rules: _vm.givenNameRules,
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.givenName,
-                                  callback: function($$v) {
-                                    _vm.givenName = $$v
-                                  },
-                                  expression: "givenName"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "Cognom",
-                                  rules: _vm.sn1Rules,
-                                  required: ""
-                                },
-                                model: {
-                                  value: _vm.sn1,
-                                  callback: function($$v) {
-                                    _vm.sn1 = $$v
-                                  },
-                                  expression: "sn1"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: { label: "2n Cognom" },
-                                model: {
-                                  value: _vm.sn2,
-                                  callback: function($$v) {
-                                    _vm.sn2 = $$v
-                                  },
-                                  expression: "sn2"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "white--text",
-                              attrs: {
-                                href: "/auth/facebook",
-                                color: "blue darken-2"
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                        Entra amb Facebook\n                    "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { color: "blue darken-1", flat: "" },
-                              nativeOn: {
-                                click: function($event) {
-                                  _vm.showRegister = false
-                                }
-                              }
-                            },
-                            [_vm._v("Tancar")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: {
-                                loading: _vm.registerLoading,
-                                color: "blue darken-1",
-                                flat: ""
                               },
-                              nativeOn: {
-                                click: function($event) {
-                                  _vm.register($event)
+                              [
+                                _vm._v(
+                                  "\n                            Entra amb Facebook\n                        "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-card-actions",
+                          [
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "blue darken-1", flat: "" },
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.showLogin = false
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("Registra'm")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            : _c("v-btn", { attrs: { href: "/home" } }, [_vm._v("Home")])
+                              },
+                              [_vm._v("Tancar")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  color: "blue darken-1",
+                                  flat: "",
+                                  loading: _vm.loginLoading
+                                },
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.login($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Entrar")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                !_vm.logged
+                  ? _c(
+                      "v-dialog",
+                      {
+                        attrs: { persistent: "", "max-width": "500px" },
+                        model: {
+                          value: _vm.showRegister,
+                          callback: function($$v) {
+                            _vm.showRegister = $$v
+                          },
+                          expression: "showRegister"
+                        }
+                      },
+                      [
+                        _c(
+                          "v-btn",
+                          { attrs: { slot: "activator" }, slot: "activator" },
+                          [_vm._v("Registra't")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-card",
+                          [
+                            _c("v-card-title", [
+                              _c("span", { staticClass: "headline" }, [
+                                _vm._v("Alta d'usuari")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "v-card-text",
+                              [
+                                _vm.registerErrorMessage
+                                  ? _c(
+                                      "v-alert",
+                                      {
+                                        attrs: {
+                                          color: "error",
+                                          icon: "warning",
+                                          value: "true"
+                                        }
+                                      },
+                                      [
+                                        _c("h3", [
+                                          _vm._v(
+                                            _vm._s(_vm.registerErrorMessage)
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(_vm.registerErrors, function(
+                                          error,
+                                          errorKey
+                                        ) {
+                                          return _c("p", [
+                                            _vm._v(
+                                              _vm._s(errorKey) +
+                                                " : " +
+                                                _vm._s(error[0])
+                                            )
+                                          ])
+                                        })
+                                      ],
+                                      2
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "v-form",
+                                  {
+                                    model: {
+                                      value: _vm.valid,
+                                      callback: function($$v) {
+                                        _vm.valid = $$v
+                                      },
+                                      expression: "valid"
+                                    }
+                                  },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Nom d'usuari",
+                                        rules: _vm.nameRules,
+                                        counter: 10,
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.name,
+                                        callback: function($$v) {
+                                          _vm.name = $$v
+                                        },
+                                        expression: "name"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Correu electrònic",
+                                        rules: _vm.emailRules,
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.registerEmail,
+                                        callback: function($$v) {
+                                          _vm.registerEmail = $$v
+                                        },
+                                        expression: "registerEmail"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        name: "password",
+                                        label: "Paraula de pas",
+                                        rules: _vm.passwordRules,
+                                        hint: "Com a mínim 6 caràcters",
+                                        min: "6",
+                                        type: "password",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.registerPassword,
+                                        callback: function($$v) {
+                                          _vm.registerPassword = $$v
+                                        },
+                                        expression: "registerPassword"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        name: "password",
+                                        label: "Confirmació paraula de pas",
+                                        rules: _vm.passwordConfirmationRules,
+                                        hint: "Com a mínim 6 caràcters",
+                                        min: "6",
+                                        type: "password",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.passwordConfirmation,
+                                        callback: function($$v) {
+                                          _vm.passwordConfirmation = $$v
+                                        },
+                                        expression: "passwordConfirmation"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Nom",
+                                        rules: _vm.givenNameRules,
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.givenName,
+                                        callback: function($$v) {
+                                          _vm.givenName = $$v
+                                        },
+                                        expression: "givenName"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "1r cognom",
+                                        rules: _vm.sn1Rules,
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.sn1,
+                                        callback: function($$v) {
+                                          _vm.sn1 = $$v
+                                        },
+                                        expression: "sn1"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("v-text-field", {
+                                      attrs: { label: "2n cognom" },
+                                      model: {
+                                        value: _vm.sn2,
+                                        callback: function($$v) {
+                                          _vm.sn2 = $$v
+                                        },
+                                        expression: "sn2"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "white--text",
+                                    attrs: {
+                                      href: "/auth/facebook",
+                                      color: "blue darken-2"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            Entra amb Facebook\n                        "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-card-actions",
+                              [
+                                _c("v-spacer"),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "blue darken-1", flat: "" },
+                                    nativeOn: {
+                                      click: function($event) {
+                                        _vm.showRegister = false
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Tancar")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      loading: _vm.registerLoading,
+                                      color: "blue darken-1",
+                                      flat: ""
+                                    },
+                                    nativeOn: {
+                                      click: function($event) {
+                                        _vm.register($event)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Registra'm")]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  : _c("v-btn", { attrs: { href: "/home" } }, [_vm._v("Home")]),
+                _vm._v(" "),
+                _c(
+                  "v-dialog",
+                  {
+                    attrs: { persistent: "", "max-width": "500px" },
+                    model: {
+                      value: _vm.showRememberPassword,
+                      callback: function($$v) {
+                        _vm.showRememberPassword = $$v
+                      },
+                      expression: "showRememberPassword"
+                    }
+                  },
+                  [
+                    _c(
+                      "v-card",
+                      [
+                        _c("v-card-title", [
+                          _c("span", { staticClass: "headline" }, [
+                            _vm._v("Recordeu-me la paraula de pas")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-card-text",
+                          [
+                            _vm.registerErrorMessage
+                              ? _c(
+                                  "v-alert",
+                                  {
+                                    attrs: {
+                                      color: "error",
+                                      icon: "warning",
+                                      value: "true"
+                                    }
+                                  },
+                                  [
+                                    _c("h3", [
+                                      _vm._v(_vm._s(_vm.registerErrorMessage))
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.registerErrors, function(
+                                      error,
+                                      errorKey
+                                    ) {
+                                      return _c("p", [
+                                        _vm._v(
+                                          _vm._s(errorKey) +
+                                            " : " +
+                                            _vm._s(error[0])
+                                        )
+                                      ])
+                                    })
+                                  ],
+                                  2
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "v-form",
+                              {
+                                model: {
+                                  value: _vm.valid,
+                                  callback: function($$v) {
+                                    _vm.valid = $$v
+                                  },
+                                  expression: "valid"
+                                }
+                              },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    label: "Correu electrònic",
+                                    rules: _vm.emailRules,
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.registerEmail,
+                                    callback: function($$v) {
+                                      _vm.registerEmail = $$v
+                                    },
+                                    expression: "registerEmail"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-card-actions",
+                          [
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "blue darken-1", flat: "" },
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.showRegister = false
+                                  }
+                                }
+                              },
+                              [_vm._v("Tancar")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  loading: _vm.registerLoading,
+                                  color: "blue darken-1",
+                                  flat: ""
+                                },
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.register($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Enviar")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            : _vm._e()
         ],
-        1
+        2
       ),
       _vm._v(" "),
       _c(
@@ -53626,7 +53877,7 @@ var render = function() {
             [
               _c(
                 "v-parallax",
-                { attrs: { src: "img/LanpartyLanding.jpg", height: "600" } },
+                { attrs: { src: "/img/LanpartyLanding.jpg", height: "600" } },
                 [
                   _c(
                     "v-layout",
@@ -53641,7 +53892,7 @@ var render = function() {
                     [
                       _c("img", {
                         attrs: {
-                          src: "img/logo.png",
+                          src: "/img/logo.png",
                           alt: "Vuetify.js",
                           height: "200"
                         }
@@ -53657,25 +53908,122 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "orange darken-3 mt-2",
-                          attrs: { dark: "", large: "" },
-                          nativeOn: {
-                            click: function($event) {
-                              _vm.showRegister = true
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Registra't\n                    "
-                          )
-                        ]
-                      )
+                      _vm.registrationsEnabled
+                        ? [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "orange darken-3 mt-2",
+                                attrs: { dark: "", large: "" },
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.showRegister = true
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            Registra't\n                        "
+                                )
+                              ]
+                            )
+                          ]
+                        : [
+                            _c(
+                              "v-card",
+                              {
+                                staticClass: "elevation-0 text-xs-center",
+                                staticStyle: { width: "400px" }
+                              },
+                              [
+                                _c(
+                                  "v-card-text",
+                                  [
+                                    _c(
+                                      "v-form",
+                                      {
+                                        model: {
+                                          value: _vm.valid,
+                                          callback: function($$v) {
+                                            _vm.valid = $$v
+                                          },
+                                          expression: "valid"
+                                        }
+                                      },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            name: "email",
+                                            label: "E-mail",
+                                            rules: _vm.emailRules,
+                                            required: "",
+                                            box: "",
+                                            autofocus: "",
+                                            "auto-grow": ""
+                                          },
+                                          model: {
+                                            value: _vm.emailMailingList,
+                                            callback: function($$v) {
+                                              _vm.emailMailingList = $$v
+                                            },
+                                            expression: "emailMailingList"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _vm.newsletterSubscriptionDone
+                                      ? [
+                                          _vm._v(
+                                            "Comproveu el vostre email i seguiu les passes indicades!"
+                                          )
+                                        ]
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        staticClass: "darken-3 mt-2",
+                                        class: {
+                                          green: _vm.newsletterSubscriptionDone,
+                                          orange: !_vm.newsletterSubscriptionDone
+                                        },
+                                        attrs: {
+                                          loading: _vm.newsLetterLoading,
+                                          dark: "",
+                                          large: ""
+                                        },
+                                        nativeOn: {
+                                          click: function($event) {
+                                            _vm.addEmailToMailingList($event)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        !_vm.newsletterSubscriptionDone
+                                          ? _c("v-icon", [
+                                              _vm._v("mail_outline")
+                                            ])
+                                          : _c("v-icon", [_vm._v("done")]),
+                                        _vm._v(
+                                          "\n                                     \n                                    "
+                                        ),
+                                        !_vm.newsletterSubscriptionDone
+                                          ? [_vm._v("Apunta'm")]
+                                          : [_vm._v("Fet")]
+                                      ],
+                                      2
+                                    )
+                                  ],
+                                  2
+                                )
+                              ],
+                              1
+                            )
+                          ]
                     ],
-                    1
+                    2
                   )
                 ],
                 1
@@ -53908,7 +54256,7 @@ var render = function() {
             [
               _c(
                 "v-parallax",
-                { attrs: { src: "img/LanpartyLanding2.jpg", height: "380" } },
+                { attrs: { src: "/img/LanpartyLanding2.jpg", height: "380" } },
                 [
                   _c(
                     "v-layout",
@@ -54222,7 +54570,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(73)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(75)
 /* template */
@@ -54468,12 +54816,14 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_numbers__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_auth__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_newsletter__ = __webpack_require__(88);
+
 
 
 
@@ -54488,7 +54838,8 @@ var debug = "development" !== 'production';
   modules: {
     users: __WEBPACK_IMPORTED_MODULE_2__modules_users__["a" /* default */],
     numbers: __WEBPACK_IMPORTED_MODULE_3__modules_numbers__["a" /* default */],
-    auth: __WEBPACK_IMPORTED_MODULE_4__modules_auth__["a" /* default */]
+    auth: __WEBPACK_IMPORTED_MODULE_4__modules_auth__["a" /* default */],
+    newsletter: __WEBPACK_IMPORTED_MODULE_5__modules_newsletter__["a" /* default */]
   },
   strict: debug
 }));
@@ -54532,15 +54883,15 @@ var state = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__action_types__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__action_types__ = __webpack_require__(3);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = (_defineProperty({}, __WEBPACK_IMPORTED_MODULE_1__action_types__["d" /* SELECTED_USER */], function (context, user) {
-  context.commit(__WEBPACK_IMPORTED_MODULE_0__mutation_types__["b" /* SELECTED_USER */], user);
+  context.commit(__WEBPACK_IMPORTED_MODULE_0__mutation_types__["c" /* SELECTED_USER */], user);
 }));
 
 /***/ }),
@@ -54548,12 +54899,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(1);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = (_defineProperty({}, __WEBPACK_IMPORTED_MODULE_0__mutation_types__["b" /* SELECTED_USER */], function (state, user) {
+/* harmony default export */ __webpack_exports__["a"] = (_defineProperty({}, __WEBPACK_IMPORTED_MODULE_0__mutation_types__["c" /* SELECTED_USER */], function (state, user) {
   state.selected_user = user;
 }));
 
@@ -54638,8 +54989,8 @@ var state = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__action_types__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__action_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api_auth__ = __webpack_require__(86);
 var _actions$LOGIN$action;
 
@@ -54683,7 +55034,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
@@ -54712,7 +55063,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(1);
 var _types$LOGGED$types$U;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -54721,12 +55072,100 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["a"] = (_types$LOGGED$types$U = {}, _defineProperty(_types$LOGGED$types$U, __WEBPACK_IMPORTED_MODULE_0__mutation_types__["a" /* LOGGED */], function (state, logged) {
   state.logged = logged;
-}), _defineProperty(_types$LOGGED$types$U, __WEBPACK_IMPORTED_MODULE_0__mutation_types__["c" /* USER */], function (state, user) {
+}), _defineProperty(_types$LOGGED$types$U, __WEBPACK_IMPORTED_MODULE_0__mutation_types__["d" /* USER */], function (state, user) {
   state.user = user;
 }), _types$LOGGED$types$U);
 
 /***/ }),
 /* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mutations__ = __webpack_require__(92);
+
+
+
+
+var state = {
+  email: null
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  state: state,
+  getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
+  actions: __WEBPACK_IMPORTED_MODULE_1__actions__["a" /* default */],
+  mutations: __WEBPACK_IMPORTED_MODULE_2__mutations__["a" /* default */]
+});
+
+/***/ }),
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  email: function email(state) {
+    return state.email;
+  }
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__action_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api_newsletter__ = __webpack_require__(91);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = (_defineProperty({}, __WEBPACK_IMPORTED_MODULE_1__action_types__["e" /* SUBSCRIBE_TO_NEWSLETTER */], function (context, email) {
+  return new Promise(function (resolve, reject) {
+    __WEBPACK_IMPORTED_MODULE_2__api_newsletter__["a" /* default */].subscribe(email).then(function (response) {
+      context.commit(__WEBPACK_IMPORTED_MODULE_0__mutation_types__["b" /* NEWSLETTER_EMAIL */], email);
+      resolve(response);
+    }).catch(function (error) {
+      reject(error);
+    });
+  });
+}));
+
+/***/ }),
+/* 91 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  subscribe: function subscribe(email) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/v1/newsletter', { 'email': email });
+  }
+});
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutation_types__ = __webpack_require__(1);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = (_defineProperty({}, __WEBPACK_IMPORTED_MODULE_0__mutation_types__["b" /* NEWSLETTER_EMAIL */], function (state, email) {
+  state.email = email;
+}));
+
+/***/ }),
+/* 93 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
