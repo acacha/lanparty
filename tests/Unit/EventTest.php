@@ -27,11 +27,8 @@ class EventTest extends TestCase
     public function can_register_users()
     {
         seed_database();
-<<<<<<< HEAD
         $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->get()->first();
-=======
-        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
->>>>>>> 6f311db0efe35bddfa6752b9cd5315be58ab9892
+//        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
         $this->user = factory(User::class)->create();
         $this->event->inscribeUser($this->user);
         $this->assertEquals($this->event->users->first()->id, $this->user->id);
@@ -68,8 +65,6 @@ class EventTest extends TestCase
     }
 
     /** @test */
-<<<<<<< HEAD
-=======
     public function cannot_register_groups_to_events_of_type_individual()
     {
         seed_database();
@@ -87,16 +82,11 @@ class EventTest extends TestCase
     }
 
     /** @test */
->>>>>>> 6f311db0efe35bddfa6752b9cd5315be58ab9892
     function can_determine_if_logged_user_is_subscribed_to_event()
     {
         seed_database();
         $this->user = factory(User::class)->create();
         $this->actingAs($this->user);
-<<<<<<< HEAD
-        seed_database();
-=======
->>>>>>> 6f311db0efe35bddfa6752b9cd5315be58ab9892
         $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
         $this->event->inscribeUser($this->user);
 
