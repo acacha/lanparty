@@ -29,7 +29,7 @@ class RegisterToEventTest extends TestCase
 
         $participant = factory(User::class)->create();
         $this->actingAs($participant);
-        $event = Event::inRandomOrder()->get()->first();
+        $event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
 
         $response = $this->post('/events/' . $event->id . '/register');
 
