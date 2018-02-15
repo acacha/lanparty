@@ -704,7 +704,10 @@
         this.$store.dispatch(actions.RESET_PASSWORD, user).then(response => {
           this.resetPasswordLoading = false
           this.resetPasswordLoadingDone = true
-          sleep(10000).then(() => { this.showRememberPassword = false })
+          sleep(4000).then(() => {
+            this.showRememberPassword = false
+            window.location = '/home'
+          })
         }).catch(error => {
           this.resetErrorMessage = error.response.data.message
           this.resetErrors = error.response.data.errors
