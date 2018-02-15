@@ -44,7 +44,7 @@ class ResetPasswordNotification extends Notification
     {
         return (new MailMessage)
                 ->greeting('Hola!')
-                ->line('Heu rebut aquest correu perquè hem rebut una petició de restauració de la paraula de pas del vostre compte.')
+                ->line('Heu rebut aquest correu perquè algú ha generat una petició de restauració de la paraula de pas del vostre compte.')
                 ->action('Restaurar la paraula de pas', url(config('app.url').route('password.reset', $this->token, false)))
                 ->line('Si no heu demanat aquesta petició de restauració de la paraula de pas no cal realitzar cap acció extra (ignoreu aquest correu).')
                 ->subject('Notificació de restauració de la paraula de pas')

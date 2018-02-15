@@ -12,7 +12,7 @@
                         <span class="headline">Login</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true">
+                        <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true" dismissible>
                             <h3>{{loginErrorMessage}}</h3>
                             <p v-for="(error, errorKey) in loginErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
@@ -61,7 +61,7 @@
                         <span class="headline">Alta d'usuari</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" >
+                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" dismissible>
                             <h3>{{registerErrorMessage}}</h3>
                             <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
@@ -137,7 +137,7 @@
                         <span class="headline">Recordeu-me la paraula de pas</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="rememberErrorMessage" color="error" icon="warning" value="true" >
+                        <v-alert v-if="rememberErrorMessage" color="error" icon="warning" value="true" dismissible>
                             <h3>{{rememberErrorMessage}}</h3>
                             <p v-for="(error, errorKey) in rememberErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
@@ -159,7 +159,18 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" flat @click.native="showRememberPassword = false">Tancar</v-btn>
-                        <v-btn :loading="rememberPasswordLoading" color="blue darken-1" flat @click.native="rememberPassword">Enviar</v-btn>
+                        <v-btn
+                                :loading="rememberPasswordLoading"
+                                flat
+                                :color="rememberPasswordLoadingDone ? 'green' : 'blue'"
+                                @click.native="rememberPassword"
+                        >
+                            <v-icon v-if="!rememberPasswordLoadingDone">mail_outline</v-icon>
+                            <v-icon v-else>done</v-icon>
+                            &nbsp;
+                            <template v-if="!rememberPasswordLoadingDone">Enviar</template>
+                            <template v-else>Fet</template>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -169,9 +180,9 @@
                         <span class="headline">Restaureu la paraula de pas</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="rememberErrorMessage" color="error" icon="warning" value="true" >
-                            <h3>{{rememberErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in rememberErrors">{{errorKey}} : {{ error[0] }}</p>
+                        <v-alert v-if="resetErrorMessage" color="error" icon="warning" value="true" dismissible>
+                            <h3>{{resetErrorMessage}}</h3>
+                            <p v-for="(error, errorKey) in resetErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
                         <v-form v-model="valid">
                             <v-text-field
@@ -205,7 +216,17 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" flat @click.native="showResetPassword = false">Tancar</v-btn>
-                        <v-btn :loading="resetPasswordLoading" color="blue darken-1" flat @click.native="resetPassword">Enviar</v-btn>
+                        <v-btn
+                                :loading="resetPasswordLoading"
+                                flat
+                                :color="resetPasswordLoadingDone ? 'green' : 'blue'"
+                                @click.native="reset"
+                        >
+                            <v-icon v-if="resetPasswordLoadingDone">done</v-icon>
+                            &nbsp;
+                            <template v-if="!resetPasswordLoadingDone">Restaurar</template>
+                            <template v-else>Fet</template>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -220,8 +241,7 @@
                             class="white--text"
                     >
                         <img src="/img/logo.png" alt="Vuetify.js" height="200">
-                        <div class="subheading mb-3 text-xs-center">
-                            Departament d'Informàtica</div>
+
                         <template v-if="registrationsEnabled">
                             <v-btn
                                     class="orange darken-3 mt-2"
@@ -234,6 +254,10 @@
                         </template>
                         <template v-else>
                             <v-card class="elevation-0 text-xs-center" style="width: 400px;">
+                                <v-card-title style="align-items: center;justify-content: center;">
+                                    <span class="title">Llista de correu electrònic</span>
+                                    <em class="subheading">Apunta't i sigues el primer en rebre tota la informació de la LAN party!</em>
+                                </v-card-title>
                                 <v-card-text>
                                     <v-form v-model="valid">
                                         <v-text-field
@@ -269,7 +293,7 @@
                 </v-parallax>
             </section>
 
-            <section>
+            <section style="background-color: white">
                 <v-layout
                         column
                         wrap
@@ -278,22 +302,35 @@
                 >
                     <v-flex xs12 sm4 class="my-3">
                         <div class="text-xs-center">
-                            <h2 class="headline">The best way to start developing</h2>
+                            <h2 class="display-1">Competicions</h2>
                             <span class="subheading">
-                Cras facilisis mi vitae nunc
-              </span>
+                              Posa a prova les teves habilitats!
+                            </span>
                         </div>
                     </v-flex>
                     <v-flex xs12>
                         <v-container grid-list-xl>
                             <v-layout row wrap align-center>
-                                <v-flex xs12 md4>
+                                <v-flex xs12 md3>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
+                                            <img src="/img/LeagueofLegends.png" alt="League of Legends" width="200px;">
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline text-xs-center">Material Design</div>
+                                            <div class="headline text-xs-center">League of Legends</div>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            Apunta't a la lliga i converteix-te en una llegenda. Crush YOUR enemies!. Més informació sobre el LoL a la <a href="http://leagueoflegends.com">pàgina oficial</a>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-flex>
+                                <v-flex xs12 md3>
+                                    <v-card class="elevation-0 transparent">
+                                        <v-card-text class="text-xs-center">
+                                            <img src="/img/Overwatch.jpeg" alt="Overwatch" width="200px;">
+                                        </v-card-text>
+                                        <v-card-title primary-title class="layout justify-center">
+                                            <div class="headline">Overwatch</div>
                                         </v-card-title>
                                         <v-card-text>
                                             Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -302,13 +339,13 @@
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
-                                <v-flex xs12 md4>
+                                <v-flex xs12 md3>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
+                                            <img src="/img/FIFA18.png" alt="FIFA 18" width="200px;">
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline">Fast development</div>
+                                            <div class="headline text-xs-center">FIFA 18</div>
                                         </v-card-title>
                                         <v-card-text>
                                             Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -317,13 +354,13 @@
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
-                                <v-flex xs12 md4>
+                                <v-flex xs12 md3>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
+                                            <img src="/img/CounterStrike.jpeg" alt="Counter Strike" width="200px;">
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline text-xs-center">Completely Open Sourced</div>
+                                            <div class="headline text-xs-center">Counter Strike</div>
                                         </v-card-title>
                                         <v-card-text>
                                             Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -341,16 +378,42 @@
             <section>
                 <v-parallax src="/img/LanpartyLanding2.jpg" height="380">
                     <v-layout column align-center justify-center>
-                        <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
-                        <em>Kick-start your application today</em>
-                        <v-btn
-                                class="blue lighten-2 mt-5"
-                                dark
-                                large
-                                href="/pre-made-themes"
-                        >
-                            Get Started
-                        </v-btn>
+                        <template v-if="registrationsEnabled">
+                            <v-card class="elevation-0 text-xs-center" style="width: 400px;">
+                                <v-card-title style="align-items: center;justify-content: center;">
+                                    <span class="title">Llista de correu electrònic</span>
+                                    <em class="subheading mt-3">Apunta't i sigues el primer en rebre tota la informació de la LAN party!</em>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-form v-model="valid">
+                                        <v-text-field
+                                                name="email"
+                                                label="E-mail"
+                                                v-model="emailMailingList"
+                                                :rules="emailRules"
+                                                required
+                                                box
+                                                auto-grow
+                                        ></v-text-field>
+                                    </v-form>
+                                    <template v-if="newsletterSubscriptionDone">Comproveu el vostre email i seguiu les passes indicades!</template>
+                                    <v-btn
+                                            :loading="newsLetterLoading"
+                                            class="darken-3 mt-2"
+                                            :class="{ green: newsletterSubscriptionDone, orange: !newsletterSubscriptionDone }"
+                                            dark
+                                            large
+                                            @click.native="addEmailToMailingList"
+                                    >
+                                        <v-icon v-if="!newsletterSubscriptionDone">mail_outline</v-icon>
+                                        <v-icon v-else>done</v-icon>
+                                        &nbsp;
+                                        <template v-if="!newsletterSubscriptionDone">Apunta'm</template>
+                                        <template v-else>Fet</template>
+                                    </v-btn>
+                                </v-card-text>
+                            </v-card>
+                        </template>
                     </v-layout>
                 </v-parallax>
             </section>
@@ -433,6 +496,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import * as actions from '../store/action-types'
+  import sleep from '../utils/sleep'
 
   export default {
     name: 'LandingPage',
@@ -456,12 +520,16 @@
         emailMailingList: '',
         emailRememberPassword: '',
         rememberPasswordLoading: false,
+        rememberPasswordLoadingDone: false,
         rememberErrorMessage: '',
         rememberErrors: [],
         resetPasswordLoading: false,
+        resetPasswordLoadingDone: false,
         resetErrorMessage: '',
         resetErrors: [],
         internalResetPasswordEmail: this.resetPasswordEmail,
+        resetPassword: '',
+        resetPasswordConfirmation: '',
         email: '',
         emailRules: [
           (v) => !!v || 'El email és obligatori',
@@ -615,7 +683,8 @@
         this.rememberPasswordLoading = true
         this.$store.dispatch(actions.REMEMBER_PASSWORD, this.emailRememberPassword).then(response => {
           this.rememberPasswordLoading = false
-          this.showRememberPassword = false
+          this.rememberPasswordLoadingDone = true
+          sleep(4000).then(() => { this.showRememberPassword = false })
         }).catch(error => {
           this.rememberErrorMessage = error.response.data.message
           this.rememberErrors = error.response.data.errors
@@ -624,7 +693,7 @@
           this.rememberPasswordLoading = false
         })
       },
-      resetPassword () {
+      reset () {
         const user = {
           'email': this.internalResetPasswordEmail,
           'password': this.resetPassword,
@@ -634,7 +703,8 @@
         this.resetPasswordLoading = true
         this.$store.dispatch(actions.RESET_PASSWORD, user).then(response => {
           this.resetPasswordLoading = false
-          this.showResetPassword = false
+          this.resetPasswordLoadingDone = true
+          sleep(10000).then(() => { this.showRememberPassword = false })
         }).catch(error => {
           this.resetErrorMessage = error.response.data.message
           this.resetErrors = error.response.data.errors

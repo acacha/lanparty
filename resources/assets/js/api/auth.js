@@ -25,7 +25,8 @@ export default {
     return axios.post('/password/reset', {
       'email': user.email,
       'password': user.password,
-      'password_confirmation': user.password_confirmation
+      'password_confirmation': user.password_confirmation,
+      'token': user.token
     })
   }
 }
