@@ -23,7 +23,7 @@ class ParticipantHomePageTest extends TestCase
      */
     public function see_user_numbers_and_events_info_at_home_page()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
@@ -43,9 +43,11 @@ class ParticipantHomePageTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertViewIs('home');
-        $response->assertViewHas([
-            'events' => $events
-        ]);
+
+        $response->assertViewHas('events', function ($viewEvents) use ($events) {
+            if ($events->pluck('id')->diff($viewEvents->pluck('id'))->count() != 0) return false;
+            return true;
+        });
 
         $response->assertSee($user->email);
         $response->assertSee($user->name);

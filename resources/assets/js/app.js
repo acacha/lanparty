@@ -36,7 +36,7 @@ const app = new Vue({
     drawerRight: false,
     logoutLoading: false,
     items: [
-      { icon: 'home', text: 'Home' },
+      { icon: 'home', text: 'Home', href: '/home' },
       { icon: 'contacts', text: 'Col·laboradors' },
       { icon: 'favorite_border', text: 'Premis' },
       { icon: 'settings', text: 'Settings' },

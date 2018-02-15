@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
+    protected $appends = ['inscribed'];
+
     protected $guarded = [];
 
     /**
@@ -24,11 +27,21 @@ class Event extends Model
     }
 
     /**
+     * Alias for registerUser.
+     *
+     * @param User $user
+     */
+    public function inscribeUser(User $user)
+    {
+        $this->registerUser($user);
+    }
+
+    /**
      * Get all of the users that are registered to this event.
      */
     public function users()
     {
-        return $this->morphedByMany(User::class, 'registration');
+        return $this->morphedByMany(User::class, 'registration')->orderBy('sn1');
     }
 
     /**
@@ -37,5 +50,16 @@ class Event extends Model
     public function groups()
     {
         // return $this->morphedByMany(Group::class, 'registration');
+    }
+
+    /**
+     * Is current logged user inscribed.
+     *
+     * @return string
+     */
+    public function getInscribedAttribute()
+    {
+        if (Auth::user()) return $this->users->pluck('id')->search(Auth::user()->id) === false ? false : true;
+        return false;
     }
 }
