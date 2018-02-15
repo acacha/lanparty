@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\InscriptionException;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,9 @@ class Event extends Model
 
     protected $guarded = [];
 
+    public $with = ['users','groups'];
+
+
     /**
      * Register user to event.
      *
@@ -23,6 +27,7 @@ class Event extends Model
      */
     public function registerUser(User $user)
     {
+       if ($this->inscription_type_id == 1) throw new InscriptionException;
        $this->users()->save($user);
     }
 
@@ -34,6 +39,25 @@ class Event extends Model
     public function inscribeUser(User $user)
     {
         $this->registerUser($user);
+    }
+
+    /**
+     * Register group to event
+     */
+    public function registerGroup(Group $group)
+    {
+        if ($this->inscription_type_id == 2) throw new InscriptionException;
+        $this->groups()->save($group);
+    }
+
+    /**
+     * Alias for registerGroup.
+     * s
+     * @param Group $group
+     */
+    public function inscribeGroup(Group $group)
+    {
+        $this->registerGroup($group);
     }
 
     /**
@@ -49,7 +73,7 @@ class Event extends Model
      */
     public function groups()
     {
-        // return $this->morphedByMany(Group::class, 'registration');
+        return $this->morphedByMany(Group::class, 'registration')->orderBy('name');
     }
 
     /**

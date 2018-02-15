@@ -38,11 +38,11 @@
                                     <template v-for="(group, index) in props.item.groups">
                                         <v-list-tile avatar :key="group.title" @click="">
                                             <v-list-tile-avatar>
-                                                <img :src="group.image">
+                                                <img :src="avatar(group.avatar)">
                                             </v-list-tile-avatar>
                                             <v-list-tile-content>
                                                 <v-list-tile-title>{{group.name}}</v-list-tile-title>
-                                                <v-list-tile-sub-title>TODO</v-list-tile-sub-title>
+                                                <v-list-tile-sub-title>{{group.leader.sn1}} {{group.leader.sn2}},{{group.leader.givenName}} ({{group.leader.name}})</v-list-tile-sub-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                     </template>
@@ -98,6 +98,10 @@
       }
     },
     methods: {
+      avatar (path) {
+        // TODO If path not exists then use custom default image
+        return path
+      },
       populateInscriptions () {
         const inscriptions = {}
 
