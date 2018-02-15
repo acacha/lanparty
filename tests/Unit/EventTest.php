@@ -27,10 +27,13 @@ class EventTest extends TestCase
     public function can_register_users()
     {
         seed_database();
+<<<<<<< HEAD
         $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->get()->first();
+=======
+        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
+>>>>>>> 6f311db0efe35bddfa6752b9cd5315be58ab9892
         $this->user = factory(User::class)->create();
         $this->event->inscribeUser($this->user);
-
         $this->assertEquals($this->event->users->first()->id, $this->user->id);
         $this->assertEquals($this->user->events->first()->id, $this->event->id);
     }
@@ -65,11 +68,35 @@ class EventTest extends TestCase
     }
 
     /** @test */
+<<<<<<< HEAD
+=======
+    public function cannot_register_groups_to_events_of_type_individual()
+    {
+        seed_database();
+        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
+        $group = factory(Group::class)->create();
+        try {
+            $this->event->inscribeGroup($group);
+        } catch (InscriptionException $exception) {
+            $this->assertEquals(count($this->event->group), 0);
+            $this->assertEquals(count($group->events), 0);
+            return;
+        }
+
+        $this->fail('An group cannot be assigned to an event of type individual');
+    }
+
+    /** @test */
+>>>>>>> 6f311db0efe35bddfa6752b9cd5315be58ab9892
     function can_determine_if_logged_user_is_subscribed_to_event()
     {
+        seed_database();
         $this->user = factory(User::class)->create();
         $this->actingAs($this->user);
+<<<<<<< HEAD
         seed_database();
+=======
+>>>>>>> 6f311db0efe35bddfa6752b9cd5315be58ab9892
         $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
         $this->event->inscribeUser($this->user);
 
@@ -79,12 +106,8 @@ class EventTest extends TestCase
     /** @test */
     function can_determine_if_logged_user_is_no_subscribed_to_event()
     {
-        $this->randomEvent();
-        $this->assertFalse($this->event->inscribed);
-    }
-
-    protected function randomEvent() {
         seed_database();
         $this->event = Event::inRandomOrder()->get()->first();
+        $this->assertFalse($this->event->inscribed);
     }
 }

@@ -17,6 +17,9 @@ class Event extends Model
 
     protected $guarded = [];
 
+    public $with = ['users','groups'];
+
+
     /**
      * Register user to event.
      *
