@@ -4,6 +4,7 @@ namespace App;
 
 use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
+use App\Exceptions\NotEnoughTicketsException;
 use App\Exceptions\UserAlreadyInscribedException;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -64,7 +65,19 @@ class Event extends Model
     {
         if ($this->inscription_type_id == 1) throw new InscriptionException('Cannot register an user in an event for groups');
         if ($this->userAlreadyInscribed($user)) throw new UserAlreadyInscribedException;
-        $this->users()->save($user);
+
+        $tickets = $this->registrations()->available()->take(1)->get();
+
+        if ($tickets->count() == 0) {
+            throw new NotEnoughTicketsException;
+        }
+
+        $tickets->first()->update([
+            'registration_type' => User::class,
+            'registration_id' => $user->id
+        ]);
+//
+//        $this->users()->save($user);
     }
 
     /**
@@ -124,7 +137,7 @@ class Event extends Model
      */
     public function users()
     {
-        return $this->morphedByMany(User::class, 'registration')->orderBy('sn1');
+        return $this->morphedByMany(User::class, 'registration')->withTimestamps()->orderBy('sn1');
     }
 
     /**
@@ -132,7 +145,7 @@ class Event extends Model
      */
     public function groups()
     {
-        return $this->morphedByMany(Group::class, 'registration')->orderBy('name');
+        return $this->morphedByMany(Group::class, 'registration')->withTimestamps()->orderBy('name');
     }
 
     /**

@@ -28,6 +28,7 @@ if (!function_exists('create_events')) {
               'inscription_type' => 'group',
               'image' => 'img/LoL.jpeg',
               'tickets' => 10, // Número de grups,
+              'reglament' => 'https://docs.google.com/document/d/1lO-twh_U-wGS7jNQJu_B6yhqq-E5RbQacOX-3AiRZmA/edit',
               'published_at' => '2018-01-15 12:00:00'
             ],
             [
@@ -35,6 +36,7 @@ if (!function_exists('create_events')) {
                 'inscription_type' => 'group',
                 'image' => 'img/Overwatch.jpeg',
                 'tickets' => 10, // Número de grups
+                'regulation' => 'https://docs.google.com/document/d/1OlM3ZcxyxiIz51R_tYeYiA1-lfiK-lyG-tMhRm8DHSk/edit',
                 'published_at' => '2018-01-15 12:00:00'
             ],
             [
@@ -42,32 +44,37 @@ if (!function_exists('create_events')) {
                 'inscription_type' => 'individual',
                 'image' => 'img/CounterStrike.jpeg',
                 'tickets' => 20, // Número d'usuaris es poden inscriure
-                'published_at' => '2018-01-15 12:00:00'
+                'regulation' => 'https://docs.google.com/document/d/1ZMUBSAYHz79JSWkbv9Ra0HLfO2WGJHkLW6xDYHa4Pks/edit',
+                'published_at' => '2018-01-15 12:00:00',
+
             ],
             [
                 'name' => 'FIFA 18',
                 'inscription_type' => 'individual',
                 'image' => 'img/Fifa18.jpeg',
                 'tickets' => 15, // Número d'usuaris es poden inscriure
-                'published_at' => '2018-01-15 12:00:00'
+                'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
+                'published_at' => '2018-01-15 12:00:00',
             ],
             [
-                'name' => 'Prova esborrany',
+                'name' => 'Muntatge equips ESBORRANY',
                 'inscription_type' => 'individual',
                 'image' => 'img/Fifa18.jpeg',
                 'tickets' => 15, // Número d'usuaris es poden inscriure
+                'regulation' => 'https://docs.google.com/document/d/15M_Acf3hBp0E7k2bCB8LwJV1ZZuiXx0B_w4SEZtY5DA/edit',
                 'published_at' => null
             ]
         ];
 
         foreach ($events as $event) {
-            $event = Event::firstOrCreate([
+            $createdEvent = Event::firstOrCreate([
                 'name' => $event['name'],
                 'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
                 'image' => $event['image'],
                 'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null
             ]);
-            $event->addTickets($event->tickets);
+//            dump('Adding ' . $event['tickets'] . ' tickets to event ' . $event['name'] );
+            $createdEvent->addTickets($event['tickets']);
         }
     }
 }
