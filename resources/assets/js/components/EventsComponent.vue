@@ -18,12 +18,15 @@
                         </td>
                         <td class="text-xs-left">
                             <template v-if="props.item.inscription_type_id == 1">
-                                Competició en grup
+                                Grup
                             </template>
                             <template v-else>
-                                Competició individual
+                                Individual
                             </template>
                         </td>
+                        <td class="text-xs-left">{{ props.item.tickets }}</td>
+                        <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
+                        <td class="text-xs-left">{{ props.item.available_tickets }}</td>
                         <td class="text-xs-left">TODO</td>
                         <td class="text-xs-right">
                             <v-switch v-model="inscriptions[props.item.id]"></v-switch>
@@ -38,11 +41,23 @@
                                     <template v-for="(group, index) in props.item.groups">
                                         <v-list-tile avatar :key="group.title" @click="">
                                             <v-list-tile-avatar>
-                                                <img :src="avatar(group.avatar)">
+                                                <template v-if="group.avatar">
+                                                    <img :src="group.avatar">
+                                                </template>
+                                                <template v-else>
+                                                    <img src="/img/groupPlaceholder.jpg">
+                                                </template>
                                             </v-list-tile-avatar>
                                             <v-list-tile-content>
                                                 <v-list-tile-title>{{group.name}}</v-list-tile-title>
-                                                <v-list-tile-sub-title>{{group.leader.sn1}} {{group.leader.sn2}},{{group.leader.givenName}} ({{group.leader.name}})</v-list-tile-sub-title>
+                                                <v-list-tile-sub-title>
+                                                    Leader:
+                                                    <template v-if="group.leader">{{group.leader.sn1}} {{group.leader.sn2}},{{group.leader.givenName}} ({{group.leader.name}})</template>
+                                                    <template v-else>No leader assigned</template>
+                                                    | Team members:
+                                                    <template v-if="group.users">{{group.leader.sn1}} {{group.leader.sn2}},{{group.leader.givenName}} ({{group.leader.name}})</template>
+                                                    <template v-else>No members assigned</template>
+                                                </v-list-tile-sub-title>
                                             </v-list-tile-content>
                                         </v-list-tile>
                                     </template>
@@ -77,6 +92,7 @@
 
 <script>
   import InteractsWithGravatar from './mixins/interactsWithGravatar'
+
   export default {
     name: 'Events',
     mixins: [InteractsWithGravatar],
@@ -86,6 +102,9 @@
         headers: [
           { text: 'Nom', align: 'left', value: 'name' },
           { text: 'Tipus', value: 'inscription_type_id' },
+          { text: 'Places', value: 'tickets' },
+          { text: 'Inscrits', value: 'assigned_tickets' },
+          { text: 'Disponibles', value: 'available_tickets' },
           { text: 'Reglament', value: 'rules_link' },
           { text: 'Inscrit', value: 'fat' }
         ]
@@ -98,10 +117,6 @@
       }
     },
     methods: {
-      avatar (path) {
-        // TODO If path not exists then use custom default image
-        return path
-      },
       populateInscriptions () {
         const inscriptions = {}
 

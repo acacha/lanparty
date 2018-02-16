@@ -29,7 +29,7 @@ class ParticipantHomePageTest extends TestCase
 
         seed_database();
 
-        $events = Event::all();
+        $events = Event::published();
 
         $numbers = factory(Number::class, 3)->create();
 

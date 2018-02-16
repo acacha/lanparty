@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
+use App\Exceptions\UserAlreadyInscribedException;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,9 +15,45 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
-    protected $appends = ['inscribed'];
+    protected $appends = ['inscribed','tickets','available_tickets','assigned_tickets'];
 
     protected $guarded = [];
+
+    /**
+     * Add registrations (tickets available) for event
+     *
+     * @param $quantity
+     * @return $this
+     */
+    public function addRegistrations($quantity)
+    {
+        foreach (range(1, $quantity) as $i) {
+            $this->registrations()->create([]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Alias for addRegistrations.
+     *
+     * @param $quantity
+     * @return Event
+     */
+    public function addTickets($quantity)
+    {
+        return $this->addRegistrations($quantity);
+    }
+
+    /**
+     * Tickets/registrations assigned to this event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
 
     /**
      * Register user to event.
@@ -24,7 +62,8 @@ class Event extends Model
      */
     public function registerUser(User $user)
     {
-        if ($this->inscription_type_id == 1) throw new InscriptionException;
+        if ($this->inscription_type_id == 1) throw new InscriptionException('Cannot register an user in an event for groups');
+        if ($this->userAlreadyInscribed($user)) throw new UserAlreadyInscribedException;
         $this->users()->save($user);
     }
 
@@ -39,11 +78,23 @@ class Event extends Model
     }
 
     /**
+     * Check if user is already registered to the event.
+     *
+     * @param User $user
+     * @return bool
+     */
+    protected function userAlreadyInscribed(User $user)
+    {
+        return in_array($user->id, $this->users->pluck('id')->all());
+    }
+
+    /**
      * Register group to event
      */
     public function registerGroup(Group $group)
     {
-        if ($this->inscription_type_id == 2) throw new InscriptionException;
+        if ($this->inscription_type_id == 2) throw new InscriptionException('Cannot register a group in an event for individuals');
+        if ($this->groupAlreadyInscribed($group)) throw new GroupAlreadyInscribedException;
         $this->groups()->save($group);
     }
 
@@ -55,6 +106,17 @@ class Event extends Model
     public function inscribeGroup(Group $group)
     {
         $this->registerGroup($group);
+    }
+
+    /**
+     * Check if group is already registered to the event.
+     *
+     * @param Group $group
+     * @return bool
+     */
+    protected function groupAlreadyInscribed(Group $group)
+    {
+        return in_array($group->id, $this->groups->pluck('id')->all());
     }
 
     /**
@@ -82,5 +144,45 @@ class Event extends Model
     {
         if (Auth::user()) return $this->users->pluck('id')->search(Auth::user()->id) === false ? false : true;
         return false;
+    }
+
+    /**
+     * Get total number of tickets/registrations.
+     *
+     * @return string
+     */
+    public function getTicketsAttribute()
+    {
+        return count($this->registrations);
+    }
+
+    /**
+     * Get available number of tickets/registrations.
+     *
+     * @return string
+     */
+    public function getAvailableTicketsAttribute()
+    {
+        return $this->registrations()->available()->count();
+    }
+
+    /**
+     * Get assigned number of tickets/registrations.
+     *
+     * @return string
+     */
+    public function getAssignedTicketsAttribute()
+    {
+        return $this->registrations()->assigned()->count();
+    }
+
+    /**
+     * Published scope.
+     *
+     * @return string
+     */
+    public function scopePublished($query)
+    {
+        return $query->whereNotNull('published_at');
     }
 }

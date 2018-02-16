@@ -3,7 +3,9 @@
 namespace Tests\Unit;
 
 use App\Event;
+use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
+use App\Exceptions\UserAlreadyInscribedException;
 use App\Group;
 use App\User;
 use Tests\TestCase;
@@ -17,35 +19,81 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class EventTest extends TestCase
 {
-    protected $event;
-
     protected $user;
 
     use RefreshDatabase;
 
     /** @test */
+    public function can_add_tickets_to_events()
+    {
+        $event = Event::firstOrCreate([
+            'name' => 'League Of Legends',
+            'inscription_type_id' => 1,
+            'image' => 'img/LoL.jpeg'
+        ]);
+        $event->addTickets(50);
+        $this->assertEquals(count($event->registrations), 50);
+    }
+
+    /** @test */
+    public function can_get_total_tickets()
+    {
+        $event = Event::firstOrCreate([
+            'name' => 'League Of Legends',
+            'inscription_type_id' => 1,
+            'image' => 'img/LoL.jpeg'
+        ]);
+        $event->addTickets(50);
+        $this->assertEquals($event->tickets, 50);
+    }
+
+    /** @test */
+    public function can_get_available_tickets()
+    {
+        $event = Event::firstOrCreate([
+            'name' => 'League Of Legends',
+            'inscription_type_id' => 1,
+            'image' => 'img/LoL.jpeg'
+        ]);
+        $event->addTickets(50);
+        $this->assertEquals($event->available_tickets, 50);
+    }
+
+    /** @test */
+    public function can_get_assigned_tickets()
+    {
+        $event = Event::firstOrCreate([
+            'name' => 'League Of Legends',
+            'inscription_type_id' => 1,
+            'image' => 'img/LoL.jpeg'
+        ]);
+        $event->addTickets(50);
+        $this->assertSame($event->assigned_tickets, 0);
+    }
+
+    /** @test */
     public function can_register_users()
     {
         seed_database();
-        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->get()->first();
-//        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
-        $this->user = factory(User::class)->create();
-        $this->event->inscribeUser($this->user);
-        $this->assertEquals($this->event->users->first()->id, $this->user->id);
-        $this->assertEquals($this->user->events->first()->id, $this->event->id);
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->get()->first();
+        $user = factory(User::class)->create();
+        $event->inscribeUser($user);
+        $event = $event->fresh();
+        $this->assertEquals($event->users->first()->id, $user->id);
+        $this->assertEquals($user->events->first()->id, $event->id);
     }
 
     /** @test */
     public function cannot_register_users_to_events_of_type_groupal()
     {
         seed_database();
-        $this->event = Event::inRandomOrder()->where('inscription_type_id',1)->first();
-        $this->user = factory(User::class)->create();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+        $user = factory(User::class)->create();
         try {
-            $this->event->inscribeUser($this->user);
+            $event->inscribeUser($user);
         } catch (InscriptionException $exception) {
-            $this->assertEquals(count($this->event->users), 0);
-            $this->assertEquals(count($this->user->events), 0);
+            $this->assertEquals(count($event->users), 0);
+            $this->assertEquals(count($user->events), 0);
             return;
         }
 
@@ -53,27 +101,47 @@ class EventTest extends TestCase
     }
 
     /** @test */
+    public function cannot_register_user_already_registered()
+    {
+        seed_database();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->get()->first();
+        $user = factory(User::class)->create();
+        $event->inscribeUser($user);
+        $event = $event->fresh();
+        try {
+            $event->inscribeUser($user);
+        } catch (UserAlreadyInscribedException $exception) {
+            $this->assertEquals(count($event->users), 1);
+            $this->assertEquals(count($user->events), 1);
+            return;
+        }
+
+        $this->fail('An user cannot be registered two times to an event');
+    }
+
+    /** @test */
     public function can_register_groups()
     {
         seed_database();
-        $this->event = Event::inRandomOrder()->where('inscription_type_id',1)->first();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
         $group = factory(Group::class)->create();
-        $this->event->inscribeGroup($group);
+        $event->inscribeGroup($group);
+        $event = $event->fresh();
 
-        $this->assertEquals($this->event->groups->first()->id, $group->id);
-        $this->assertEquals($group->events->first()->id, $this->event->id);
+        $this->assertEquals($event->groups->first()->id, $group->id);
+        $this->assertEquals($group->events->first()->id, $event->id);
     }
 
     /** @test */
     public function cannot_register_groups_to_events_of_type_individual()
     {
         seed_database();
-        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->first();
         $group = factory(Group::class)->create();
         try {
-            $this->event->inscribeGroup($group);
+            $event->inscribeGroup($group);
         } catch (InscriptionException $exception) {
-            $this->assertEquals(count($this->event->group), 0);
+            $this->assertEquals(count($event->group), 0);
             $this->assertEquals(count($group->events), 0);
             return;
         }
@@ -82,22 +150,41 @@ class EventTest extends TestCase
     }
 
     /** @test */
+    public function cannot_register_group_already_registered()
+    {
+        seed_database();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->get()->first();
+        $group = factory(Group::class)->create();
+        $event->inscribeGroup($group);
+        $event = $event->fresh();
+        try {
+            $event->inscribeGroup($group);
+        } catch (GroupAlreadyInscribedException $exception) {
+            $this->assertEquals(count($event->groups), 1);
+            $this->assertEquals(count($group->events), 1);
+            return;
+        }
+
+        $this->fail('A group cannot be registered two times to an event');
+    }
+
+    /** @test */
     function can_determine_if_logged_user_is_subscribed_to_event()
     {
         seed_database();
-        $this->user = factory(User::class)->create();
-        $this->actingAs($this->user);
-        $this->event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
-        $this->event->inscribeUser($this->user);
-
-        $this->assertTrue($this->event->inscribed);
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->first();
+        $event->inscribeUser($user);
+        $event = Event::find($event->id);
+        $this->assertTrue($event->inscribed);
     }
 
     /** @test */
     function can_determine_if_logged_user_is_no_subscribed_to_event()
     {
         seed_database();
-        $this->event = Event::inRandomOrder()->get()->first();
-        $this->assertFalse($this->event->inscribed);
+        $event = Event::published()->inRandomOrder()->get()->first();
+        $this->assertFalse($event->inscribed);
     }
 }

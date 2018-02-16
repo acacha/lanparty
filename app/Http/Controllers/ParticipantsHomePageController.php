@@ -20,7 +20,7 @@ class ParticipantsHomePageController extends Controller
      */
     public function index()
     {
-        $events = Event::with('groups')->get();
+        $events = Event::published()->with('groups')->get();
         return view('home', [
             'events' => $events
         ]);

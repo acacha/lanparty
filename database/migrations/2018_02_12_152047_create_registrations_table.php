@@ -19,7 +19,8 @@ class CreateRegistrationsTable extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('event_id');
-            $table->morphs('registration');
+            $table->string('registration_type')->nullable();
+            $table->unsignedInteger('registration_id')->nullable();
             $table->timestamps();
         });
     }

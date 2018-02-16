@@ -1,9 +1,11 @@
 <?php
 
 use App\Event;
+use App\Group;
 use App\InscriptionType;
 use App\Number;
 use App\User;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 
 if (!function_exists('create_inscription_types')) {
@@ -24,31 +26,48 @@ if (!function_exists('create_events')) {
             [
               'name' => 'League Of Legends',
               'inscription_type' => 'group',
-              'image' => 'img/LoL.jpeg'
+              'image' => 'img/LoL.jpeg',
+              'tickets' => 10, // Número de grups,
+              'published_at' => '2018-01-15 12:00:00'
             ],
             [
                 'name' => 'Overwatch',
                 'inscription_type' => 'group',
-                'image' => 'img/Overwatch.jpeg'
+                'image' => 'img/Overwatch.jpeg',
+                'tickets' => 10, // Número de grups
+                'published_at' => '2018-01-15 12:00:00'
             ],
             [
                 'name' => 'Counter Strike',
                 'inscription_type' => 'individual',
-                'image' => 'img/CounterStrike.jpeg'
+                'image' => 'img/CounterStrike.jpeg',
+                'tickets' => 20, // Número d'usuaris es poden inscriure
+                'published_at' => '2018-01-15 12:00:00'
             ],
             [
                 'name' => 'FIFA 18',
                 'inscription_type' => 'individual',
-                'image' => 'img/Fifa18.jpeg'
+                'image' => 'img/Fifa18.jpeg',
+                'tickets' => 15, // Número d'usuaris es poden inscriure
+                'published_at' => '2018-01-15 12:00:00'
+            ],
+            [
+                'name' => 'Prova esborrany',
+                'inscription_type' => 'individual',
+                'image' => 'img/Fifa18.jpeg',
+                'tickets' => 15, // Número d'usuaris es poden inscriure
+                'published_at' => null
             ]
         ];
 
         foreach ($events as $event) {
-            Event::firstOrCreate([
+            $event = Event::firstOrCreate([
                 'name' => $event['name'],
                 'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
-                'image' => $event['image']
+                'image' => $event['image'],
+                'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null
             ]);
+            $event->addTickets($event->tickets);
         }
     }
 }
@@ -113,7 +132,7 @@ if (!function_exists('seed_example_database')) {
             $number->assignUser($user);
         }
 
-        $users = factory(User::class,10)->create();
+        $users = factory(User::class,100)->create();
 
         seed_database();
 
@@ -121,6 +140,77 @@ if (!function_exists('seed_example_database')) {
         foreach ($numbers as $number) {
             $number->assignUser($users->random());
         }
+
+        $events = Event::published()->get();
+        seed_groups();
+        $groups = Group::all();
+        foreach ($events as $event) {
+            if ($event->inscription_type_id == 2) {
+                foreach (range(1,5) as $i) {
+                    $user = $users->pop();
+                    dump('Adding user ' . $user->name . ' to event ' . $event->name);
+                    $event->inscribeUser($user);
+                }
+            } else {
+                foreach (range(1,5) as $i) {
+                    $group = $groups->pop();
+                    dump('Adding group ' . $group->name . ' to event ' . $event->name);
+                    $event->inscribeGroup($group);
+                }
+            }
+        }
+
+    }
+}
+
+if (!function_exists('seed_groups')) {
+    function seed_groups()
+    {
+        Group::create( [
+            'name' => 'Fire Breathing Rubber Duckies'
+        ]);
+
+        Group::create( [
+            'name' => 'e-LEMON-ators'
+        ]);
+
+        Group::create( [
+            'name' => 'Straight off the Couch'
+        ]);
+
+        Group::create( [
+            'name' => 'Cereal Killers'
+        ]);
+
+        Group::create( [
+            'name' => 'Podunk Hopscotch Mafia',
+            'avatar' => 'img/group5.jpg'
+        ]);
+
+        Group::create( [
+            'name' => 'Not Fast, Just Furious'
+        ]);
+
+        Group::create( [
+            'name' => 'Super Heroes In Training',
+            'avatar' => 'img/group4.jpg'
+        ]);
+
+        Group::create( [
+            'name' => 'Smells Like Team Spirit',
+            'avatar' => 'img/group3.jpg'
+        ]);
+
+        Group::create( [
+            'name' => 'Victorious Secret',
+            'avatar' => 'img/group2.jpg'
+        ]);
+
+        Group::create( [
+            'name' => 'Our Uniforms Match',
+            'avatar' => 'img/group1.jpg'
+        ]);
+
     }
 }
 

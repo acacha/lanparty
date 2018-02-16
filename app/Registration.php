@@ -11,5 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Registration extends Model
 {
-    //
+    public function scopeAvailable($query)
+    {
+        return $query->whereNull('registration_id');
+    }
+
+    public function scopeAssigned($query)
+    {
+        return $query->whereNotNull('registration_id');
+    }
 }
