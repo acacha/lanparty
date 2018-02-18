@@ -3,8 +3,8 @@
         <v-layout row wrap>
             <v-flex xs12>
                 <v-select
-                        label="Seleccioneu un usuari"
-                        v-bind:items="users"
+                        :label="label"
+                        v-bind:items="internalUsers"
                         v-model="selected_user_id"
                         item-text="full_search"
                         max-height="auto"
@@ -53,13 +53,18 @@
     mixins: [ interactsWithGravatar ],
     data () {
       return {
-        selected_user_id: null
+        selected_user_id: null,
+        internalUsers: []
       }
     },
     props: {
       users: {
         type: Array,
-        required: true
+        required: false
+      },
+      label: {
+        type: String,
+        default: 'Seleccioneu un usuari'
       }
     },
     methods: {
@@ -68,6 +73,10 @@
         if (user) this.$store.dispatch(actions.SELECTED_USER, user)
         else this.$store.dispatch(actions.SELECTED_USER, {})
       }
+    },
+    mounted () {
+      if (this.users) this.internalUsers = this.users
+      else this.internalUsers = actions
     }
   }
 </script>

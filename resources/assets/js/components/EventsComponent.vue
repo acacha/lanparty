@@ -1,7 +1,11 @@
 <template>
     <div>
         <v-dialog v-model="showInscribeToGroupEvent" max-width="500px">
-            <group :event="currentEvent" @close="showInscribeToGroupEvent=false;inscriptions[currentEvent.id] = false;" :dialog="true"></group>
+            <group
+                :event="currentEvent"
+                @close="showInscribeToGroupEvent=false;inscriptions[currentEvent.id] = false;"
+                :dialog="true"
+            ></group>
         </v-dialog>
         <v-card>
             <v-card-title class="blue darken-3 white--text"><h2>Events</h2></v-card-title>

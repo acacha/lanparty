@@ -13,11 +13,24 @@
             <v-form v-model="valid">
                 <v-text-field
                         label="Nom del grup"
-                        v-model="groupName"
+                        v-model="name"
                         :rules="nameRules"
                         :counter="30"
                         required
                 ></v-text-field>
+
+                <upload label="Escolliu un avatar pel grup"></upload>
+
+                <v-text-field
+                        label="Líder"
+                        v-model="lider"
+                        readonly
+                ></v-text-field>
+
+                <template v-for="n in 4">
+                    <users-search :label="'Membre del grup ' + n"></users-search>
+                </template>
+
             </v-form>
         </v-card-text>
         <v-card-actions>
@@ -32,8 +45,12 @@
 </style>
 
 <script>
+  import UsersSearch from './UsersSearchComponent'
+  import Upload from './UploadComponent'
+
   export default {
     name: 'Group',
+    components: { UsersSearch, Upload },
     data () {
       return {
         name: '',
