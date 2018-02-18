@@ -19,5 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=>'v1'], function() {
     Route::post('/newsletter', 'NewsletterController@store');
+
+    Route::get('/users', 'UsersController@index');
+
 });
 
