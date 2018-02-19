@@ -4,7 +4,7 @@
             <v-flex xs12>
                 <v-select
                         :label="label"
-                        v-bind:items="internalUsers"
+                        :items="users"
                         v-model="selected_user_id"
                         item-text="full_search"
                         max-height="auto"
@@ -46,15 +46,13 @@
 </template>
 
 <script>
-  import * as actions from '../store/action-types'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   export default {
-    name: 'UsersSearch',
+    name: 'VUsersSearch',
     mixins: [ interactsWithGravatar ],
     data () {
       return {
-        selected_user_id: null,
-        internalUsers: []
+        selected_user_id: null
       }
     },
     props: {
@@ -69,13 +67,8 @@
     },
     methods: {
       input (user) {
-        if (user) this.$store.dispatch(actions.SELECTED_USER, user)
-        else this.$store.dispatch(actions.SELECTED_USER, {})
+        this.$emit('input', user)
       }
-    },
-    mounted () {
-      if (this.users) this.internalUsers = this.users
-      else this.internalUsers = actions
     }
   }
 </script>
