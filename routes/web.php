@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/manage/participants', 'ManageParticipantsController@index');
 
     Route::post('/events/{event}/register', 'RegisterToEventController@store');
+
+    Route::post('/manage/events/{event}/messages', 'ParticipantMessagesController@store')
+        ->name('manage.event-messages.store');
+
 });
 
 // Administrators
