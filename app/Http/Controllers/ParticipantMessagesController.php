@@ -25,6 +25,6 @@ class ParticipantMessagesController extends Controller
         ]);
 
         return redirect()->route('manage.event-messages.store',$event->id)
-            ->with('flash','Your message has been sent');
+            ->with('flash','Your message has been sent!');
     }
 }

@@ -42,6 +42,6 @@ class ParticipantMessageTest extends TestCase
         $this->assertEquals($event->id, $message->event_id);
 
         $response->assertRedirect("/manage/events/{$event->id}/messages");
-        $response->assertSessionHas('flash');
+        $response->assertSessionHas('flash','Your message has been sent!');
     }
 }
