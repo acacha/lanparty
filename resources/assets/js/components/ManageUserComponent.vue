@@ -2,8 +2,8 @@
     <v-container fluid grid-list-md class="grey lighten-4" v-show="show">
         <v-layout row wrap>
             <v-flex xs12 md4>
-                <v-card>
-                    <v-card-title class="blue darken-1 white--text"><h4>User</h4></v-card-title>
+                <v-card flat>
+                    <v-card-title class="blue darken-3 white--text"><h4>User</h4></v-card-title>
                     <v-container fluid grid-list-md class="grey lighten-4" v-show="show">
                         <v-layout row wrap>
                             <v-flex xs12 md4>
@@ -57,7 +57,7 @@
             </v-flex>
             <v-flex xs12 md8>
                 <v-card class="mb-2">
-                    <v-card-title class="blue darken-1 white--text"><h4>Numbers</h4></v-card-title>
+                    <v-card-title class="blue darken-3 white--text"><h4>Numbers</h4></v-card-title>
                         <v-list>
                             <v-list-tile v-for="numbers in selectedUser.numbers" v-bind:key="numbers.title" @click="">
                                 <v-list-tile-content>
@@ -89,7 +89,7 @@
                     </v-card-actions>
                 </v-card>
                 <v-card>
-                    <v-card-title class="blue darken-1 white--text"><h4>Inscripcions</h4></v-card-title>
+                    <v-card-title class="blue darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
                     <v-list>
                         <v-list-tile avatar v-for="numbers in selectedUser.numbers" v-bind:key="numbers.title" @click="">
                             <v-list-tile-avatar>

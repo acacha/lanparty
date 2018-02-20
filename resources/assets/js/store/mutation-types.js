@@ -1,4 +1,6 @@
+// USERS
 export const SELECTED_USER = 'SELECTED_USER'
+export const SET_USERS = 'SET_USERS'
 
 // AUTH
 export const LOGGED = 'LOGGED'
