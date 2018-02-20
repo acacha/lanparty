@@ -2,11 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Mail\ParticipantMessageEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Mail;
 
 /**
  * Class SendParticipantMessage
@@ -35,6 +37,6 @@ class SendParticipantMessage implements ShouldQueue
      */
     public function handle()
     {
-        //
+        Mail::send(new ParticipantMessageEmail($this->message));
     }
 }
