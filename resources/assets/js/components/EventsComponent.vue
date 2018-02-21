@@ -1,5 +1,14 @@
 <template>
     <div>
+        <v-snackbar
+                timeout="6000"
+                :color="snackbarColor"
+                v-model="snackbar"
+                :vertical="true"
+        >
+            {{ snackbarText }}
+            <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
         <v-dialog v-model="showInscribeToGroupEvent" max-width="500px">
             <group
                 :event="currentEvent"
@@ -36,7 +45,7 @@
                             <td class="text-xs-left">{{ props.item.tickets }}</td>
                             <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
                             <td class="text-xs-left">{{ props.item.available_tickets }}</td>
-                            <td class="text-xs-left">{{ props.item.inscribed }} | {{ props.item.loading }}</td>
+                            <td class="text-xs-left"><a :href="props.item.regulation">Clica'm</a></td>
                             <td class="text-xs-right">
                                 <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
                                 <v-switch v-else :input-value="props.item.inscribed" @change="toogleInscription(props.item)"></v-switch>
@@ -116,7 +125,9 @@
     mixins: [InteractsWithGravatar],
     data () {
       return {
-        incriptionLoadingId: null,
+        snackbarColor: 'error',
+        snackbarText: 'An error occurred',
+        snackbar: false,
         showInscribeToGroupEvent: false,
         currentEvent: null,
         inscriptions: [],
@@ -144,6 +155,14 @@
       })
     },
     methods: {
+      showError (message) {
+        this.showSnackBar(message, 'error')
+      },
+      showSnackBar (message, color) {
+        this.snackbar = true
+        this.snackbarText = message
+        this.snackbarColor = color || this.snackbarColor
+      },
       expand (event, props) {
         if (this.avoidExpand) {
           this.avoidExpand = false
@@ -157,35 +176,23 @@
         else this.unregisterToEvent(event)
       },
       registerToEvent (event) {
-        console.log('registerToEvent')
         if (event.inscription_type_id === GROUP) {
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
-          event.loading = true
-          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, event).then(result => {
-            console.log(result)
-          }).catch(error => {
-            console.log(error)
-          }).then(() => {
-            console.log('LOADING TO FALSE!!!!!')
-            event.loading = false
+          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, event).catch(error => {
+            console.dir(error)
+            this.showError(error.message)
           })
         }
       },
       unregisterToEvent (event) {
-        console.log('unregisterToEvent')
         if (event.inscription_type_id === GROUP) {
           console.log('unregister to group event')
         } else {
-          event.loading = true
-          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, event).then(result => {
-            console.log(result)
-          }).catch(error => {
-            console.log(error)
-          }).then(() => {
-            console.log('LOADING TO FALSE!!!!!')
-            event.loading = false
+          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, event).catch(error => {
+            console.dir(error)
+            this.showError(error.message)
           })
         }
       }
