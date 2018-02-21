@@ -12,5 +12,31 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.REGISTER_CURRENT_USER_TO_EVENT ] (context, event) {
+    return new Promise((resolve, reject) => {
+      context.commit(mutations.SET_EVENT_AS_LOADING, event)
+      events.register(event).then(response => {
+        context.commit(mutations.SET_EVENT_AS_INSCRIBED, event)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      }).then(() => {
+        context.commit(mutations.UNSET_EVENT_AS_LOADING, event)
+      })
+    })
+  },
+  [ actions.UNREGISTER_CURRENT_USER_TO_EVENT ] (context, event) {
+    return new Promise((resolve, reject) => {
+      context.commit(mutations.SET_EVENT_AS_LOADING, event)
+      events.unregister(event).then(response => {
+        context.commit(mutations.SET_EVENT_AS_UNSCRIBED, event)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      }).then(() => {
+        context.commit(mutations.UNSET_EVENT_AS_LOADING, event)
+      })
+    })
   }
 }

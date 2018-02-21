@@ -36,9 +36,10 @@
                             <td class="text-xs-left">{{ props.item.tickets }}</td>
                             <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
                             <td class="text-xs-left">{{ props.item.available_tickets }}</td>
-                            <td class="text-xs-left">{{ props.item.inscribed }}</td>
+                            <td class="text-xs-left">{{ props.item.inscribed }} | {{ props.item.loading }}</td>
                             <td class="text-xs-right">
-                                <v-switch v-model="props.item.inscribed" @change="toogleInscription(props.item)"></v-switch>
+                                <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
+                                <v-switch v-else :input-value="props.item.inscribed" @change="toogleInscription(props.item)"></v-switch>
                             </td>
                         </tr>
                     </template>
@@ -105,6 +106,7 @@
   import Group from './GroupComponent.vue'
   import * as mutations from '../store/mutation-types'
   import * as actions from '../store/action-types'
+  import { mapGetters } from 'vuex'
 
   const GROUP = '1'
 
@@ -114,6 +116,7 @@
     mixins: [InteractsWithGravatar],
     data () {
       return {
+        incriptionLoadingId: null,
         showInscribeToGroupEvent: false,
         currentEvent: null,
         inscriptions: [],
@@ -136,10 +139,9 @@
       }
     },
     computed: {
-      internalEvents () {
-        if (this.events) return this.events
-        return this.$store.getters.events
-      }
+      ...mapGetters({
+        internalEvents: 'events'
+      })
     },
     methods: {
       expand (event, props) {
@@ -149,50 +151,48 @@
         }
         props.expanded = !props.expanded
       },
-      stopPropagation (event) {
-        console.log('stopPropagation')
-        console.log(event)
-        event.stopPropagation()
-      },
       toogleInscription (event) {
         this.avoidExpand = true
-        if (event.inscribed) this.registerToEvent(event)
+        if (!event.inscribed) this.registerToEvent(event)
         else this.unregisterToEvent(event)
       },
       registerToEvent (event) {
+        console.log('registerToEvent')
         if (event.inscription_type_id === GROUP) {
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
-          console.log(actions.REGISTER_CURRENT_USER_TO_EVENT)
+          event.loading = true
           this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, event).then(result => {
             console.log(result)
           }).catch(error => {
             console.log(error)
+          }).then(() => {
+            console.log('LOADING TO FALSE!!!!!')
+            event.loading = false
           })
         }
       },
       unregisterToEvent (event) {
+        console.log('unregisterToEvent')
         if (event.inscription_type_id === GROUP) {
           console.log('unregister to group event')
         } else {
-          console.log('unregister to individual event')
+          event.loading = true
+          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, event).then(result => {
+            console.log(result)
+          }).catch(error => {
+            console.log(error)
+          }).then(() => {
+            console.log('LOADING TO FALSE!!!!!')
+            event.loading = false
+          })
         }
-      },
-      populateInscriptions () {
-        const inscriptions = {}
-
-        this.internalEvents.forEach(event => {
-          inscriptions[event.id] = event.inscribed
-        })
-
-        return inscriptions
       }
     },
     created () {
       if (this.events) this.$store.commit(mutations.SET_EVENTS, this.events)
       else this.$store.dispatch(actions.FETCH_EVENTS)
-      this.inscriptions = this.populateInscriptions()
     }
   }
 </script>
