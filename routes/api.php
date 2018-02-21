@@ -19,8 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=>'v1'], function() {
     Route::post('/newsletter', 'NewsletterController@store');
+    Route::get('/events', 'EventsController@index');
+});
+
+Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     Route::get('/users', 'UsersController@index');
-
+    Route::post('/events/{event}/register', 'RegisterToEventController@store');
+    Route::delete('/events/{event}/register', 'RegisterToEventController@destroy');
 });
 

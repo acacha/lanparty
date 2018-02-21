@@ -9,8 +9,6 @@ export default {
   [ actions.FETCH_USERS ] (context) {
     return new Promise((resolve, reject) => {
       users.fetch().then(response => {
-        console.log(response)
-        console.log(response.data)
         context.commit(mutations.SET_USERS, response.data)
         resolve(response)
       }).catch(error => {

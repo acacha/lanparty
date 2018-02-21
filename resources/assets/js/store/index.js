@@ -4,6 +4,8 @@ import users from './modules/users'
 import numbers from './modules/numbers'
 import auth from './modules/auth'
 import newsletter from './modules/newsletter'
+import events from './modules/events'
+import eventRegistration from './modules/events-registration'
 
 Vue.use(Vuex)
 
@@ -14,7 +16,9 @@ export default new Vuex.Store({
     users,
     numbers,
     auth,
-    newsletter
+    newsletter,
+    events,
+    eventRegistration
   },
   strict: debug
 })

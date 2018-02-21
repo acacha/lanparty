@@ -18,7 +18,8 @@ class UsersControllerTest extends TestCase
     /** @test */
     public function can_retrieve_all_users()
     {
-        factory(User::class,5)->create();
+        $users = factory(User::class,5)->create();
+        $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
         $response->assertSuccessful();
         $this->assertCount(5,json_decode($response->getContent()));

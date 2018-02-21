@@ -57,6 +57,20 @@ class Event extends Model
     }
 
     /**
+     * Unregister user.
+     *
+     * @param $user
+     */
+    public function unregisterUser($user)
+    {
+        if ($this->inscription_type_id == 1) throw new InscriptionException('Cannot unregister an user in an event for groups');
+
+        $this->users()->detach($user->id);
+
+    }
+
+
+    /**
      * Register user to event.
      *
      * @param User $user
@@ -76,8 +90,6 @@ class Event extends Model
             'registration_type' => User::class,
             'registration_id' => $user->id
         ]);
-//
-//        $this->users()->save($user);
     }
 
     /**

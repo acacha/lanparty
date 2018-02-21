@@ -20,4 +20,12 @@ class RegisterToEventController extends Controller
     {
         $event->registerUser(Auth::user());
     }
+
+    /**
+     * Register current logged user to an event
+     */
+    public function destroy(Event $event)
+    {
+        $event->unregisterUser(Auth::user());
+    }
 }

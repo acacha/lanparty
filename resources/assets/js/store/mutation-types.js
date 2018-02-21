@@ -8,3 +8,6 @@ export const USER = 'USER'
 
 // NEWSLETTER
 export const NEWSLETTER_EMAIL = 'NEWSLETTER_EMAIL'
+
+// EVENTS
+export const SET_EVENTS = 'SET_EVENTS'

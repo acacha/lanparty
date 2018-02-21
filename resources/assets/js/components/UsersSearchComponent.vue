@@ -50,9 +50,7 @@
     },
     mounted () {
       if (this.users) this.internalUsers = this.users
-      else {
-        this.$store.dispatch(actions.FETCH_USERS)
-      }
+      else this.$store.dispatch(actions.FETCH_USERS)
     }
   }
 </script>

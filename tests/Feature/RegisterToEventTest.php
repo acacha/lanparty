@@ -28,14 +28,35 @@ class RegisterToEventTest extends TestCase
         seed_database();
 
         $participant = factory(User::class)->create();
-        $this->actingAs($participant);
+        $this->actingAs($participant,'api');
         $event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
 
-        $response = $this->post('/events/' . $event->id . '/register');
+        $response = $this->post('/api/v1/events/' . $event->id . '/register');
 
         $response->assertSuccessful();
         $this->assertEquals($event->users()->first()->id, $participant->id);
         $this->assertEquals($participant->events()->first()->id, $event->id);
+
+    }
+
+    /**
+     * @test
+     */
+    public function logged_user_can_unregister_to_an_event()
+    {
+        $this->withoutExceptionHandling();
+
+        seed_database();
+
+        $participant = factory(User::class)->create();
+        $this->actingAs($participant,'api');
+        $event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
+
+        $response = $this->delete('/api/v1/events/' . $event->id . '/register');
+
+        $response->assertSuccessful();
+        $this->assertCount(0,$event->users);
+        $this->assertCount(0,$participant->events);
 
     }
 }

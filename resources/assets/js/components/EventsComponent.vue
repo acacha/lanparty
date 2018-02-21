@@ -3,7 +3,7 @@
         <v-dialog v-model="showInscribeToGroupEvent" max-width="500px">
             <group
                 :event="currentEvent"
-                @close="showInscribeToGroupEvent=false;inscriptions[currentEvent.id] = false;"
+                @close="showInscribeToGroupEvent=false;"
                 :dialog="true"
             ></group>
         </v-dialog>
@@ -12,13 +12,13 @@
             <v-card-text class="px-0 mb-2">
                 <v-data-table
                         :headers="headers"
-                        :items="events"
+                        :items="internalEvents"
                         hide-actions
                         item-key="name"
                         expand
                 >
                     <template slot="items" slot-scope="props">
-                        <tr @click="props.expanded = !props.expanded">
+                        <tr @click="expand($event, props)">
                             <td class="text-xs-left">
                                 <v-avatar>
                                     <img :src="props.item.image">
@@ -36,9 +36,9 @@
                             <td class="text-xs-left">{{ props.item.tickets }}</td>
                             <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
                             <td class="text-xs-left">{{ props.item.available_tickets }}</td>
-                            <td class="text-xs-left">TODO</td>
+                            <td class="text-xs-left">{{ props.item.inscribed }}</td>
                             <td class="text-xs-right">
-                                <v-switch v-model="inscriptions[props.item.id]" @click.native.stop="return;" @change="toogleInscription(props.item)"></v-switch>
+                                <v-switch v-model="props.item.inscribed" @change="toogleInscription(props.item)"></v-switch>
                             </td>
                         </tr>
                     </template>
@@ -103,6 +103,8 @@
 <script>
   import InteractsWithGravatar from './mixins/interactsWithGravatar'
   import Group from './GroupComponent.vue'
+  import * as mutations from '../store/mutation-types'
+  import * as actions from '../store/action-types'
 
   const GROUP = '1'
 
@@ -114,7 +116,8 @@
       return {
         showInscribeToGroupEvent: false,
         currentEvent: null,
-        inscriptions: this.populateInscriptions(),
+        inscriptions: [],
+        avoidExpand: false,
         headers: [
           { text: 'Nom', align: 'left', value: 'name' },
           { text: 'Tipus', value: 'inscription_type_id' },
@@ -129,25 +132,44 @@
     props: {
       events: {
         type: Array,
-        required: true
+        required: false
+      }
+    },
+    computed: {
+      internalEvents () {
+        if (this.events) return this.events
+        return this.$store.getters.events
       }
     },
     methods: {
-      toogleInscription (event) {
-        if (this.inscriptions[event.id]) {
-          console.log('Register to event ' + event.name)
-          this.registerToEvent(event)
-        } else {
-          console.log('Unregister to event ' + event.name)
-          this.unregisterToEvent(event)
+      expand (event, props) {
+        if (this.avoidExpand) {
+          this.avoidExpand = false
+          return
         }
+        props.expanded = !props.expanded
+      },
+      stopPropagation (event) {
+        console.log('stopPropagation')
+        console.log(event)
+        event.stopPropagation()
+      },
+      toogleInscription (event) {
+        this.avoidExpand = true
+        if (event.inscribed) this.registerToEvent(event)
+        else this.unregisterToEvent(event)
       },
       registerToEvent (event) {
         if (event.inscription_type_id === GROUP) {
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
-          console.log('register to individual event')
+          console.log(actions.REGISTER_CURRENT_USER_TO_EVENT)
+          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, event).then(result => {
+            console.log(result)
+          }).catch(error => {
+            console.log(error)
+          })
         }
       },
       unregisterToEvent (event) {
@@ -160,12 +182,17 @@
       populateInscriptions () {
         const inscriptions = {}
 
-        this.events.forEach(event => {
+        this.internalEvents.forEach(event => {
           inscriptions[event.id] = event.inscribed
         })
 
         return inscriptions
       }
+    },
+    created () {
+      if (this.events) this.$store.commit(mutations.SET_EVENTS, this.events)
+      else this.$store.dispatch(actions.FETCH_EVENTS)
+      this.inscriptions = this.populateInscriptions()
     }
   }
 </script>

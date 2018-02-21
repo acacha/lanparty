@@ -6,6 +6,7 @@ use App\Event;
 use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
 use App\Exceptions\UserAlreadyInscribedException;
+use App\Exceptions\UserAlreadyUnregisteredException;
 use App\Group;
 use App\User;
 use Tests\TestCase;
@@ -187,4 +188,37 @@ class EventTest extends TestCase
         $event = Event::published()->inRandomOrder()->get()->first();
         $this->assertFalse($event->inscribed);
     }
+
+    /** @test */
+    public function can_unregister_users()
+    {
+        seed_database();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->get()->first();
+        $user = factory(User::class)->create();
+        $event->inscribeUser($user);
+        $event = $event->fresh();
+
+        $event->unregisterUser($user);
+        $event = $event->fresh();
+        $this->assertCount(0,$event->users);
+        $this->assertCount(0,$user->events);
+    }
+
+    /** @test */
+    public function cannot_unregister_users_to_events_of_type_groupal()
+    {
+        seed_database();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+        $user = factory(User::class)->create();
+        try {
+            $event->inscribeUser($user);
+        } catch (InscriptionException $exception) {
+            $this->assertEquals(count($event->users), 0);
+            $this->assertEquals(count($user->events), 0);
+            return;
+        }
+
+        $this->fail('An user cannot be unregistered to an event of type groupal');
+    }
+
 }

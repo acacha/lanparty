@@ -55,7 +55,6 @@ class ParticipantMessageTest extends TestCase
         });
     }
 
-    /** @test */
     function subject_is_required()
     {
         Queue::fake();
@@ -79,7 +78,6 @@ class ParticipantMessageTest extends TestCase
         Queue::assertNotPushed(SendParticipantMessage::class);
     }
 
-    /** @test */
     function message_is_required()
     {
         Queue::fake();
