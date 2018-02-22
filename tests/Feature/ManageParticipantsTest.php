@@ -29,9 +29,9 @@ class ManageParticipantsTest extends TestCase
         initialize_roles();
 
         $users = factory(User::class,5)->create();
-        $numbers = factory(Number::class,10)->create();
-        foreach ($numbers as $number) {
-            $number->assignUser($users->random());
+
+        foreach ( range(1,10) as $i) {
+            Number::firstAvailableNumber()->assignUser($users->random());
         }
 
         $manager = factory(User::class)->create();
@@ -47,6 +47,7 @@ class ManageParticipantsTest extends TestCase
             return true;
         });
 
+        $numbers = Number::available()->get();
         $response->assertViewHas('numbers', function ($viewNumbers) use ($numbers) {
             if ($numbers->pluck('id')->diff($viewNumbers->pluck('id'))->count() != 0) return false;
             return true;

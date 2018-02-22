@@ -1,8 +1,15 @@
 <template>
-    <v-card>
-        <v-card-title>
-            Inscripció
-        </v-card-title>
+    <v-card tile>
+        <v-toolbar card dark color="primary">
+            <v-btn icon @click.native="close" dark>
+                <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Inscripció a una competició de grup</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn dark flat @click.native="showInscribeToGroupEvent = false">Guardar</v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
         <v-card-text>
             <v-alert type="error" :value="true" class="mb-3">
                 Les inscripcions a una competició les ha de realitzar només el lider del grup!
@@ -33,10 +40,6 @@
 
             </v-form>
         </v-card-text>
-        <v-card-actions>
-            <v-btn color="primary" flat @click.stop="close" v-if="dialog" >Close</v-btn>
-            <v-btn color="primary" dark @click.stop="">Inscriure el grup</v-btn>
-        </v-card-actions>
     </v-card>
 </template>
 

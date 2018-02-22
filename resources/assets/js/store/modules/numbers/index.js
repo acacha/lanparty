@@ -1,24 +1,9 @@
-// import shop from '../../api/shop'
+import getters from './getters'
+import actions from './actions'
+import mutations from './mutations'
 
 const state = {
-  prova: []
-}
-
-const getters = {
-  prova: state => state.prova
-}
-
-const actions = {
-  prova ({ commit, state }, prova) {
-    // TODO
-    commit('prova', prova)
-  }
-}
-
-const mutations = {
-  prova (state, prova) {
-    state.prova = prova
-  }
+  last_assigned_number: {}
 }
 
 export default {

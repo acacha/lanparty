@@ -9,11 +9,13 @@
             {{ snackbarText }}
             <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
-        <v-dialog v-model="showInscribeToGroupEvent" max-width="500px">
-            <group
-                :event="currentEvent"
-                @close="showInscribeToGroupEvent=false;"
-                :dialog="true"
+        <v-dialog fullscreen v-model="showInscribeToGroupEvent" transition="dialog-bottom-transition"
+                  :overlay="false"
+                  scrollable>
+           <group
+                    :event="currentEvent"
+                    @close="showInscribeToGroupEvent=false;"
+                    :dialog="true"
             ></group>
         </v-dialog>
         <v-card>
@@ -45,10 +47,13 @@
                             <td class="text-xs-left">{{ props.item.tickets }}</td>
                             <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
                             <td class="text-xs-left">{{ props.item.available_tickets }}</td>
-                            <td class="text-xs-left"><a :href="props.item.regulation">Clica'm</a></td>
+                            <td class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Clica'm</a></td>
                             <td class="text-xs-right">
                                 <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
-                                <v-switch v-else :input-value="props.item.inscribed" @change="toogleInscription(props.item)"></v-switch>
+                                <v-switch v-else
+                                          :input-value="props.item.inscribed"
+                                          @change="toogleInscription(props.item)"
+                                          :disabled="props.item.available_tickets < 1"></v-switch>
                             </td>
                         </tr>
                     </template>

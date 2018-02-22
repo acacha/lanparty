@@ -31,10 +31,8 @@ class ParticipantHomePageTest extends TestCase
 
         $events = Event::published();
 
-        $numbers = factory(Number::class, 3)->create();
-
-        foreach ($numbers as $number) {
-            $number->assignUser($user);
+        foreach ( range (1,3) as $i) {
+            Number::firstAvailableNumber()->assignUser($user);
         }
 
         $this->actingAs($user);
@@ -60,7 +58,7 @@ class ParticipantHomePageTest extends TestCase
             $response->assertSee($event->name);
         }
 
-        foreach ($numbers as $number) {
+        foreach ($user->numbers as $number) {
             $response->assertSee((String) $number->value);
         }
 

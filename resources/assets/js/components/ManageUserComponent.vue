@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid grid-list-md class="grey lighten-4" v-show="show">
+    <v-container fluid grid-list-md class="grey lighten-4" v-show="showSelectedUser">
         <v-layout row wrap>
             <v-flex xs12 md4>
                 <v-card flat>
@@ -58,7 +58,7 @@
             <v-flex xs12 md8>
                 <v-card class="mb-2">
                     <v-card-title class="blue darken-3 white--text"><h4>Numbers</h4></v-card-title>
-                        <v-list>
+                        <v-list v-if="selectedUser.numbers.length >0">
                             <v-list-tile v-for="numbers in selectedUser.numbers" v-bind:key="numbers.title" @click="">
                                 <v-list-tile-content>
                                     <v-chip color="orange" text-color="white" >
@@ -77,12 +77,34 @@
                                 </v-list-tile-action>
                             </v-list-tile>
                         </v-list>
-
+                        <p v-else class="pt-2">
+                            Sense números assignats
+                        </p>
                     <v-card-actions class="white">
                         <v-spacer></v-spacer>
-                        <v-btn icon>
+                        <v-btn icon slot="activator" @click="assignNumberDialog = true">
                             <v-icon>add_circle</v-icon>
                         </v-btn>
+                        <v-dialog v-model="assignNumberDialog" max-width="500px">
+                            <v-card>
+                                <v-card-title class="blue darken-3 white--text">
+                                    <span>Assignar número</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-select
+                                            :items="descriptions"
+                                            v-model="description"
+                                            label="Escolliu un motiu"
+                                            class="input-group--focused"
+                                            item-value="text"
+                                    ></v-select>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-btn color="primary" flat @click.stop="assignNumberDialog=false">Tancar</v-btn>
+                                    <v-btn :loading="assigningNumber" color="primary" flat @click.stop="assignNumber">Assignar</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                         <v-btn icon>
                             <v-icon>remove_circle</v-icon>
                         </v-btn>
@@ -132,6 +154,7 @@
   import _ from 'lodash'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import Gravatar from './GravatarComponent.vue'
+  import * as actions from '../store/action-types'
 
   export default {
     name: 'ManageUser',
@@ -139,13 +162,37 @@
     components: { Gravatar },
     data () {
       return {
-        payed: 'false'
+        description: '',
+        descriptions: [
+          { 'text': 'Assistència matí divendres' },
+          { 'text': 'Assistència tarda divendres' },
+          { 'text': 'Assistència matí dissabte' },
+          { 'text': 'Assistència tarda dissabte' },
+          { 'text': 'Altres' }
+        ],
+        assigningNumber: false,
+        payed: 'false',
+        assignNumberDialog: false
       }
     },
     computed: {
       ...mapGetters(['selectedUser']),
-      show () {
+      showSelectedUser () {
         return !_.isEmpty(this.selectedUser)
+      }
+    },
+    methods: {
+      assignNumber () {
+        console.log('Assign number')
+        this.assigningNumber = true
+        this.$store.dispatch(actions.ASSIGN_NUMBER_TO_USER).then(result => {
+          console.log(result)
+        }).catch(error => {
+          console.dir(error)
+          console.log(error.message)
+        }).then(() => {
+          this.assigningNumber = false
+        })
       }
     }
   }

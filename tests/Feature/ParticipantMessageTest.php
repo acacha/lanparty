@@ -31,6 +31,7 @@ class ParticipantMessageTest extends TestCase
             'name' => 'League Of Legends',
             'inscription_type_id' => 1,
             'image' => 'img/LoL.jpeg',
+            'regulation' => 'http://example.com/regulation'
         ]);
 
         $this->actingAs($user);

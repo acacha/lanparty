@@ -28,7 +28,7 @@ if (!function_exists('create_events')) {
               'inscription_type' => 'group',
               'image' => 'img/LoL.jpeg',
               'tickets' => 10, // Número de grups,
-              'reglament' => 'https://docs.google.com/document/d/1lO-twh_U-wGS7jNQJu_B6yhqq-E5RbQacOX-3AiRZmA/edit',
+              'regulation' => 'https://docs.google.com/document/d/1lO-twh_U-wGS7jNQJu_B6yhqq-E5RbQacOX-3AiRZmA/edit',
               'published_at' => '2018-01-15 12:00:00'
             ],
             [
@@ -43,7 +43,7 @@ if (!function_exists('create_events')) {
                 'name' => 'Counter Strike',
                 'inscription_type' => 'individual',
                 'image' => 'img/CounterStrike.jpeg',
-                'tickets' => 20, // Número d'usuaris es poden inscriure
+                'tickets' => 5, // Número d'usuaris es poden inscriure
                 'regulation' => 'https://docs.google.com/document/d/1ZMUBSAYHz79JSWkbv9Ra0HLfO2WGJHkLW6xDYHa4Pks/edit',
                 'published_at' => '2018-01-15 12:00:00',
 
@@ -71,6 +71,7 @@ if (!function_exists('create_events')) {
                 'name' => $event['name'],
                 'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
                 'image' => $event['image'],
+                'regulation' => $event['regulation'],
                 'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null
             ]);
 //            dump('Adding ' . $event['tickets'] . ' tickets to event ' . $event['name'] );
@@ -79,10 +80,18 @@ if (!function_exists('create_events')) {
     }
 }
 
+if (!function_exists('create_numbers')) {
+    function create_numbers()
+    {
+        Number::addNumbers(1000);
+    }
+}
+
 if (!function_exists('seed_database')) {
     function seed_database() {
         create_inscription_types();
         create_events();
+        create_numbers();
     }
 }
 
@@ -133,19 +142,19 @@ if (!function_exists('first_user_as_manager')) {
 if (!function_exists('seed_example_database')) {
     function seed_example_database()
     {
+        seed_database();
+
         $user = User::find(1);
-        $numbers = factory(Number::class,3)->create();
-        foreach ($numbers as $number) {
-            $number->assignUser($user);
+        foreach ( range(1,3) as $i) {
+            Number::firstAvailableNumber()->assignUser($user);
         }
+        //One extra number with description:
+        Number::firstAvailableNumber()->assignUser($user,'Por que tú lo vales!');
 
         $users = factory(User::class,100)->create();
 
-        seed_database();
-
-        $numbers = factory(Number::class, 10)->create();
-        foreach ($numbers as $number) {
-            $number->assignUser($users->random());
+        foreach (  range(1,20) as $i) {
+            Number::firstAvailableNumber()->assignUser($users->random());
         }
 
         $events = Event::published()->get();

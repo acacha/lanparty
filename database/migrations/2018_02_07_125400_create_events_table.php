@@ -21,6 +21,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('inscription_type_id');
             $table->string('image');
+            $table->string('regulation');
             $table->datetime('published_at')->nullable();
             $table->timestamps();
         });

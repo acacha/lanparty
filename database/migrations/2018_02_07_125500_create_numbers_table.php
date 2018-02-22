@@ -18,8 +18,9 @@ class CreateNumbersTable extends Migration
     {
         Schema::create('numbers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('value');
+            $table->integer('value')->unique();
             $table->unsignedInteger('user_id')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

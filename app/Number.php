@@ -14,11 +14,60 @@ class Number extends Model
     protected $guarded = [];
 
     /**
-     * @param User $user
+     * Add numbers.
+     *
+     * @param $quantity
      */
-    public function assignUser($user)
+    public static function addNumbers($quantity) {
+        $initial = Number::last() ? Number::last() + 1 : 1;
+        foreach (range($initial, $initial + $quantity -1 ) as $value) {
+            Number::create([
+                'value' => $value
+            ]);
+        }
+    }
+
+    /**
+     * Get first available number.
+     *
+     * @return mixed
+     */
+    public static function firstAvailableNumber() {
+        return Number::available()->orderBy('value', 'asc')->first();
+    }
+
+    /**
+     * Available scope.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('user_id', null);
+    }
+
+
+    /**
+     * Obtain last number
+     *
+     * @return mixed
+     */
+    public static function last() {
+        $lastNumber = Number::orderBy('value', 'desc')->first();
+        return $lastNumber ? (int) $lastNumber->value : null;
+    }
+
+    /**
+     * Assign user.
+     *
+     * @param $user
+     * @param string $description
+     */
+    public function assignUser($user, $description = '')
     {
         $this->user()->associate($user);
+        $this->description = $description;
         $this->save();
     }
 

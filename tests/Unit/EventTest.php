@@ -30,7 +30,8 @@ class EventTest extends TestCase
         $event = Event::firstOrCreate([
             'name' => 'League Of Legends',
             'inscription_type_id' => 1,
-            'image' => 'img/LoL.jpeg'
+            'image' => 'img/LoL.jpeg',
+            'regulation' => 'http://example.com/regulation'
         ]);
         $event->addTickets(50);
         $this->assertEquals(count($event->registrations), 50);
@@ -42,7 +43,8 @@ class EventTest extends TestCase
         $event = Event::firstOrCreate([
             'name' => 'League Of Legends',
             'inscription_type_id' => 1,
-            'image' => 'img/LoL.jpeg'
+            'image' => 'img/LoL.jpeg',
+            'regulation' => 'http://example.com/regulation'
         ]);
         $event->addTickets(50);
         $this->assertEquals($event->tickets, 50);
@@ -54,7 +56,8 @@ class EventTest extends TestCase
         $event = Event::firstOrCreate([
             'name' => 'League Of Legends',
             'inscription_type_id' => 1,
-            'image' => 'img/LoL.jpeg'
+            'image' => 'img/LoL.jpeg',
+            'regulation' => 'http://example.com/regulation'
         ]);
         $event->addTickets(50);
         $this->assertEquals($event->available_tickets, 50);
@@ -66,7 +69,8 @@ class EventTest extends TestCase
         $event = Event::firstOrCreate([
             'name' => 'League Of Legends',
             'inscription_type_id' => 1,
-            'image' => 'img/LoL.jpeg'
+            'image' => 'img/LoL.jpeg',
+            'regulation' => 'http://example.com/regulation'
         ]);
         $event->addTickets(50);
         $this->assertSame($event->assigned_tickets, 0);

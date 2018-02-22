@@ -22,7 +22,8 @@ class ParticipantsHomePageController extends Controller
     {
         $events = Event::published()->with('groups')->get();
         return view('home', [
-            'events' => $events
+            'events' => $events,
+            'numbers' => collect([]),
         ]);
     }
 }
