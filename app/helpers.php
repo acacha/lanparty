@@ -92,6 +92,7 @@ if (!function_exists('seed_database')) {
         create_inscription_types();
         create_events();
         create_numbers();
+        initialize_roles();
     }
 }
 
@@ -145,6 +146,12 @@ if (!function_exists('seed_example_database')) {
         seed_database();
 
         $user = User::find(1);
+        try {
+        $user->assignRole('Manager');
+        } catch (\Exception $e) {
+
+        }
+
         foreach ( range(1,3) as $i) {
             Number::firstAvailableNumber()->assignUser($user);
         }

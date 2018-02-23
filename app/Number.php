@@ -63,12 +63,14 @@ class Number extends Model
      *
      * @param $user
      * @param string $description
+     * @return $this
      */
     public function assignUser($user, $description = '')
     {
         $this->user()->associate($user);
         $this->description = $description;
         $this->save();
+        return $this;
     }
 
     /**

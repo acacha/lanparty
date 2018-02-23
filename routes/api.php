@@ -23,9 +23,10 @@ Route::group(['prefix'=>'v1'], function() {
 });
 
 Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
-
     Route::get('/users', 'UsersController@index');
     Route::post('/events/{event}/register', 'RegisterToEventController@store');
     Route::delete('/events/{event}/register', 'RegisterToEventController@destroy');
+
+    Route::post('/user/{user}/assign_number', 'AssignNumberToUserController@store');
 });
 

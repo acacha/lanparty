@@ -1,0 +1,72 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Number;
+use App\User;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+/**
+ * Class AssignNumberToUserTest.
+ *
+ * @package Tests\Feature
+ */
+class AssignNumberToUserTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function can_assign_number_to_user()
+    {
+//        $this->withoutExceptionHandling();
+        initialize_roles();
+        Number::addNumbers(5);
+        $user = factory(User::class)->create();
+        $manager = factory(User::class)->create();
+
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        $response = $this->post('/api/v1/user/' . $user->id . '/assign_number', [
+            'description' => 'Assistència matí divendres'
+        ]);
+        $response->assertSuccessful();
+        $number = json_decode($response->getContent());
+        $this->assertSame('Assistència matí divendres', $number->description);
+        $this->assertEquals(1, $number->value);
+        $this->assertEquals(1, $number->user_id);
+        $this->assertCount($user->id,$user->numbers);
+        $this->assertSame('Assistència matí divendres', $user->numbers()->first()->description);
+        $response->assertJsonStructure([
+            'id',
+            'value',
+            'user_id',
+            'created_at',
+            'updated_at',
+            'user' => [
+                'id',
+                'name',
+                'email',
+                'givenName',
+                'sn1',
+                'sn2',
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function cannot_assign_number_to_user_if_not_manager()
+    {
+        initialize_roles();
+        Number::addNumbers(5);
+        $user = factory(User::class)->create();
+        $manager = factory(User::class)->create();
+        $this->actingAs($manager,'api');
+
+        $response = $this->post('/api/v1/user/' . $user->id . '/assign_number', [
+            'description' => 'Assistència matí divendres'
+        ]);
+        $response->assertStatus(403);
+    }
+}

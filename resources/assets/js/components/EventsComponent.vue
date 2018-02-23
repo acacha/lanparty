@@ -117,6 +117,7 @@
 
 <script>
   import InteractsWithGravatar from './mixins/interactsWithGravatar'
+  import withSnackbar from './mixins/withSnackbar'
   import Group from './GroupComponent.vue'
   import * as mutations from '../store/mutation-types'
   import * as actions from '../store/action-types'
@@ -127,12 +128,9 @@
   export default {
     name: 'Events',
     components: { Group },
-    mixins: [InteractsWithGravatar],
+    mixins: [InteractsWithGravatar, withSnackbar],
     data () {
       return {
-        snackbarColor: 'error',
-        snackbarText: 'An error occurred',
-        snackbar: false,
         showInscribeToGroupEvent: false,
         currentEvent: null,
         inscriptions: [],
@@ -160,14 +158,6 @@
       })
     },
     methods: {
-      showError (message) {
-        this.showSnackBar(message, 'error')
-      },
-      showSnackBar (message, color) {
-        this.snackbar = true
-        this.snackbarText = message
-        this.snackbarColor = color || this.snackbarColor
-      },
       expand (event, props) {
         if (this.avoidExpand) {
           this.avoidExpand = false
