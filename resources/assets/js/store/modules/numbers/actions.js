@@ -3,12 +3,19 @@ import * as actions from '../../action-types'
 import numbers from '../../../api/numbers'
 
 export default {
-  [ actions.ASSIGN_NUMBER_TO_USER ] (context, user) {
-    console.log('USER')
-    console.log(user)
+  [ actions.ASSIGN_NUMBER_TO_USER ] (context, { user, description }) {
     return new Promise((resolve, reject) => {
-      numbers.assignNumberToUser(user).then(response => {
+      numbers.assignNumberToUser(user, description).then(response => {
         context.commit(mutations.LAST_ASSIGNED_NUMBER, response.data)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.UNASSIGN_NUMBER_TO_USER ] (context, number) {
+    return new Promise((resolve, reject) => {
+      numbers.unassignNumberToUser(number).then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)

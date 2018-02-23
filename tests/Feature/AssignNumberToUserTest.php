@@ -56,6 +56,41 @@ class AssignNumberToUserTest extends TestCase
     }
 
     /** @test */
+    public function can_unassign_number_to_user()
+    {
+        initialize_roles();
+        Number::addNumbers(5);
+        $number = Number::first();
+        $user = factory(User::class)->create();
+        $number->assignUser($user);
+        $manager = factory(User::class)->create();
+
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        $response = $this->delete('/api/v1/number/' . $number->id .'/assign');
+        $response->assertSuccessful();
+        $this->assertCount(0, $user->numbers);
+
+    }
+
+    /** @test */
+    public function cannnot_unassign_number_to_user_if_not_manager()
+    {
+        initialize_roles();
+        Number::addNumbers(5);
+        $number = Number::first();
+        $user = factory(User::class)->create();
+        $number->assignUser($user);
+        $manager = factory(User::class)->create();
+        $this->actingAs($manager,'api');
+
+        $response = $this->delete('/api/v1/number/' . $number->id .'/assign');
+        $response->assertStatus(403);
+
+    }
+
+    /** @test */
     public function cannot_assign_number_to_user_if_not_manager()
     {
         initialize_roles();

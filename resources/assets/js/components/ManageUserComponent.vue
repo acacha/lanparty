@@ -83,7 +83,7 @@
                                     <v-list-tile-title> {{ number.created_at }}</v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
-                                    <v-icon right>delete</v-icon>
+                                    <v-icon right @click="unassignNumber(number)">delete</v-icon>
                                 </v-list-tile-action>
                             </v-list-tile>
                         </v-list>
@@ -116,9 +116,20 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn icon>
+                            <v-btn icon slot="activator" @click="unassignNumbersDialog = true">
                                 <v-icon>remove_circle</v-icon>
                             </v-btn>
+                            <v-dialog v-model="unassignNumbersDialog" persistent max-width="290">
+                                <v-card>
+                                    <v-card-text>Esteu segurs que voleu desassignar tots els números al usuari?</v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="green darken-1" flat @click.native="unassignNumbersDialog = false">Cancel·lar</v-btn>
+                                        <v-btn v-if="!unassignNumbersDone" :loading="unassigningNumbers" color="primary" flat @click.stop="unassignAllNumbers">Endavant!</v-btn>
+                                        <v-btn v-else color="success" flat><v-icon>done</v-icon> Fet</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
                         </v-card-actions>
                     </v-card>
                     <v-card>
@@ -167,6 +178,7 @@
   import withSnackbar from './mixins/withSnackbar'
   import Gravatar from './GravatarComponent.vue'
   import * as actions from '../store/action-types'
+  import * as mutations from '../store/mutation-types'
   import sleep from '../utils/sleep'
 
   export default {
@@ -186,7 +198,13 @@
         assigningNumber: false,
         numberAssigned: false,
         payed: 'false',
-        assignNumberDialog: false
+        assignNumberDialog: false,
+        unassignNumbersDialog: false,
+        unassigningNumbers: false,
+        unassignNumbersDone: false,
+        unassigningNumber: false,
+        numberUnassigned: false,
+        unassignNumberDialog: false
       }
     },
     computed: {
@@ -196,15 +214,45 @@
       }
     },
     methods: {
-      assignNumber () {
-        this.assigningNumber = true
-        this.$store.dispatch(actions.ASSIGN_NUMBER_TO_USER, this.selectedUser).then(result => {
-          this.numberAssigned = true
-          this.assigningNumber = false
-          sleep(1500).then(() => { this.assignNumberDialog = false })
+      unassignAllNumbers () {
+        this.unassigningNumbers = true
+        this.$store.dispatch(actions.UNASSIGN_NUMBERS_TO_USER, this.selectedUser).then(result => {
+          this.unassignNumbersDone = true
+          this.$store.commit(mutations.SET_SELECTED_USER_NUMBERS, [])
+          sleep(1000).then(() => { this.unassignNumbersDialog = false; this.unassignNumbersDone = true })
         }).catch(error => {
           console.dir(error)
           this.showError(error.message)
+        }).then(() => {
+          this.unassigningNumbers = false
+        })
+      },
+      assignNumber () {
+        this.assigningNumber = true
+        this.$store.dispatch(actions.ASSIGN_NUMBER_TO_USER, { user: this.selectedUser, description: this.description }).then(result => {
+          this.numberAssigned = true
+          this.$store.commit(mutations.ADD_NUMBER_TO_SELECTED_USER_NUMBERS, result.data)
+          sleep(1000).then(() => { this.assignNumberDialog = false; this.numberAssigned = false })
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error.message)
+        }).then(() => {
+          this.assigningNumber = false
+        })
+      },
+      unassignNumber (number) {
+        console.log('unassignNumber!!!!')
+        console.log(number)
+        this.unassigningNumber = true
+        this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
+          this.numberUnassigned = true
+          this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, number)
+          sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error.message)
+        }).then(() => {
+          this.unassigningNumber = false
         })
       }
     }

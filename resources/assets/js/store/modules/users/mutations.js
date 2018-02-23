@@ -4,6 +4,15 @@ export default {
   [ types.SELECTED_USER ] (state, user) {
     state.selected_user = user
   },
+  [ types.SET_SELECTED_USER_NUMBERS ] (state, numbers) {
+    state.selected_user.numbers = numbers
+  },
+  [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
+    state.selected_user.numbers.push(number)
+  },
+  [ types.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
+    state.selected_user.numbers.splice(state.selected_user.numbers.indexOf(number), 1)
+  },
   [ types.SET_USERS ] (state, users) {
     state.users = users
   }

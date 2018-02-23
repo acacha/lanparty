@@ -28,5 +28,10 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/events/{event}/register', 'RegisterToEventController@destroy');
 
     Route::post('/user/{user}/assign_number', 'AssignNumberToUserController@store');
+
+    Route::post('/user/{user}/unassign_numbers', 'UnassignNumbersToUserController@store');
+
+    Route::delete('/number/{number}/assign', 'AssignNumberToUserController@destroy');
+
 });
 

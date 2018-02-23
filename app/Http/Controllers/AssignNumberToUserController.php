@@ -26,4 +26,19 @@ class AssignNumberToUserController extends Controller
         $number->save();
         return $number;
     }
+
+
+    /**
+     * Unassign number to user
+     *
+     * @param AssignNumberToUser $request
+     * @param Number $number
+     * @return Number
+     */
+    public function destroy(AssignNumberToUser $request, Number $number)
+    {
+        $number->user_id = null;
+        $number->save();
+        return $number;
+    }
 }
