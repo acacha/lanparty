@@ -23,6 +23,7 @@ class UserPaymentsController extends Controller
      */
     public function store(UserPaymentsRequest $request, User $user)
     {
+        if ($user->inscription_paid) abort(422,"L'usuari ja ha pagat la inscripció");
         return $user->pay();
     }
 
@@ -35,6 +36,7 @@ class UserPaymentsController extends Controller
      */
     public function destroy(UserPaymentsRequest $request, User $user)
     {
+        if (!$user->inscription_paid) abort(422,"L'usuari no ha pagat el ticket");
         return $user->unpay();
     }
 }
