@@ -149,30 +149,75 @@
                     </v-card>
                     <v-card>
                         <v-card-title class="blue darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
-                        <v-list>
-                            <v-list-tile avatar v-for="number in selectedUser.numbers" v-bind:key="number.value" @click="">
-                                <v-list-tile-avatar>
-                                    <img src="/img/CounterStrike.png">
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title> Counter Strike </v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-content>
-                                    <v-list-tile-title> Data inscripció</v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-icon right>delete</v-icon>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </v-list>
+
+
+
+                        <v-data-table
+                                :items="selectedUser.events"
+                                hide-actions
+                                hide-headers
+                                class="elevation-1 mx-1 my-1"
+                        >
+                            <template slot="items" slot-scope="props">
+                                <td>
+                                    <img width="40px;" :src="'/' + props.item.image">
+                                </td>
+                                <td>{{ props.item.name }}</td>
+                                <td>{{ props.item.pivot.updated_at }}</td>
+                                <td>
+                                    <template v-if="confirmingUnregisterEvent == props.item.name">
+                                        <v-icon right v-if="!unassigningNumber" @click="cancelUnassignNumber()" class="red--text darken-4--text">clear</v-icon>
+                                        <v-progress-circular v-if="unassigningNumber" indeterminate color="primary"></v-progress-circular>
+                                        <v-icon right v-else @click="unassignNumber(props.item)" class="green--text">done</v-icon>
+                                    </template>
+                                    <v-icon v-else right @click="confirmUnregisterEvent(props.item)" color="pink">delete</v-icon>
+                                </td>
+                            </template>
+                            <template slot="no-data">
+                                L'usuari no s'ha inscrit encara a cap event/competició
+                            </template>
+                        </v-data-table>
+
                         <v-card-actions class="white">
                             <v-spacer></v-spacer>
-                            <v-btn icon>
-                                <v-icon>add_circle</v-icon>
+                            <v-btn icon slot="activator" @click="assignNumberDialog = true">
+                                <v-icon color="teal">add_circle</v-icon>
                             </v-btn>
-                            <v-btn icon>
-                                <v-icon>remove_circle</v-icon>
+                            <v-dialog v-model="assignNumberDialog" max-width="500px">
+                                <v-card>
+                                    <v-card-title class="blue darken-3 white--text">
+                                        <span>Assignar número</span>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <v-select
+                                                :items="descriptions"
+                                                v-model="description"
+                                                label="Escolliu un motiu"
+                                                class="input-group--focused"
+                                                item-value="text"
+                                        ></v-select>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-btn color="primary" flat @click.stop="assignNumberDialog=false">Tancar</v-btn>
+                                        <v-btn v-if="!numberAssigned" :loading="assigningNumber" color="primary" @click.stop="assignNumber">Assignar</v-btn>
+                                        <v-btn v-else color="success" flat><v-icon>done</v-icon> Assignat</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                            <v-btn icon slot="activator" @click="unassignNumbersDialog = true">
+                                <v-icon color="red darken-2">remove_circle</v-icon>
                             </v-btn>
+                            <v-dialog v-model="unassignNumbersDialog" persistent max-width="290">
+                                <v-card>
+                                    <v-card-text>Esteu segurs que voleu desassignar tots els números al usuari?</v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="primary" flat @click.native="unassignNumbersDialog = false">Cancel·lar</v-btn>
+                                        <v-btn v-if="!unassignNumbersDone" :loading="unassigningNumbers" color="error" @click.stop="unassignAllNumbers">Dessasignar</v-btn>
+                                        <v-btn v-else color="success" flat><v-icon>done</v-icon> Fet</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
                         </v-card-actions>
                     </v-card>
                 </v-flex>
@@ -222,7 +267,8 @@
         unassigningNumber: false,
         numberUnassigned: false,
         unassignNumberDialog: false,
-        loadingPayments: false
+        loadingPayments: false,
+        confirmingUnregisterEvent: null
       }
     },
     computed: {

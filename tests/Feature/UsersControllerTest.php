@@ -18,6 +18,7 @@ class UsersControllerTest extends TestCase
     /** @test */
     public function can_retrieve_all_users()
     {
+        $this->withoutExceptionHandling();
         $users = factory(User::class,5)->create();
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
@@ -33,7 +34,8 @@ class UsersControllerTest extends TestCase
             'formatted_created_at_date',
             'full_search',
             'numbers',
-            'inscription_paid'
+            'inscription_paid',
+            'events'
         ]]);
     }
 }

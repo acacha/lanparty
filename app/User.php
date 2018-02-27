@@ -19,7 +19,7 @@ class User extends Authenticatable
 
     protected $appends = ['formatted_created_at_date','full_search','inscription_paid'];
 
-    public $with = ['numbers'];
+    public $with = ['numbers','events:name,image'];
 
     /**
      * The attributes that are mass assignable.
@@ -83,7 +83,7 @@ class User extends Authenticatable
      */
     public function events()
     {
-        return $this->morphToMany(Event::class, 'registration');
+        return $this->morphToMany(Event::class, 'registration')->withTimestamps();
     }
 
     /**
