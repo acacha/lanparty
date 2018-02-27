@@ -6,6 +6,7 @@ use App\Jobs\SendParticipantMessage;
 use App\Mail\ParticipantMessageEmail;
 use App\ParticipantMessage;
 use App\Event;
+use App\User;
 use Mail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,44 +22,59 @@ class SendParticipantMessageTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function esborrar()
-    {
-        $this->assertTrue(true);
-    }
-
     public function it_sends_the_message_to_all_event_particpants()
     {
         Mail::fake();
 
-        // Preparació
-        $event = Event::create([
-            'name' => 'League Of Legends',
-            'inscription_type_id' => 1,
-            'image' => 'img/LoL.jpeg',
+        $user1 = User::create([
+            'name' => 'asdasdasdasd',
+            'email' => 'pepito@gmail.com'
+        ]);
+        $user2 = User::create([
+            'name' => 'asdasdasdasd',
+            'email' => 'maria@gmail.com'
+        ]);
+        $user3 = User::create([
+            'name' => 'asdasdasdasd',
+            'email' => 'javi@gmail.com'
         ]);
 
+        // Preparació
+        $event = Event::create([
+            'name' => 'FIFA 18',
+            'inscription_type_id' => 2,
+            'image' => 'img/Fifa18.jpeg',
+            'regulation' => 'asdasdasdasd'
+        ]);
+        $event->addTickets(10);
+        $event->registerUser($user1);
+        $event->registerUser($user2);
+        $event->registerUser($user3);
+
         $message = ParticipantMessage::create([
-            'subject' => 'Prova emai',
+            'subject' => 'Prova subject',
             'message' => 'Prova missatge',
             'event_id' => $event->id
         ]);
 
         //Execució
-
 //        $job = new SendParticipantMessage();
 //        $job->handle();
-
         SendParticipantMessage::dispatch($message);
 
-        // Asserts
-//        Mail::assertSent(ParticipantMessageEmail::class);
-//        Mail::assertSent(ParticipantMessageEmail::class, function ($mail) use ($message) {
-//            return $mail->message->is($message);
-//        });
+        // Si preparem per a 3 persones apuntades he de comprovar que s'envien 3 emails
 
-//        Mail::assertSent(ParticipantMessageEmail::class, function ($mail) use ($message) {
-//            return $mail->hasTo('alex@example.com')
-//                && $mail->attendeeMessage->is($message);
-//        });
+        Mail::assertSent(ParticipantMessageEmail::class, function ($mail) use ($message) {
+            return $mail->hasTo('pepito@gmail.com') && $mail->message->is($message);
+        });
+
+        Mail::assertSent(ParticipantMessageEmail::class, function ($mail) use ($message) {
+            return $mail->hasTo('maria@gmail.com') && $mail->message->is($message);
+        });
+
+        Mail::assertSent(ParticipantMessageEmail::class, function ($mail) use ($message) {
+            return $mail->hasTo('javi@gmail.com') && $mail->message->is($message);
+        });
+
     }
 }
