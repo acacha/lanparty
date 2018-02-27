@@ -130,7 +130,10 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <v-btn v-else href="/home">Home</v-btn>
+            <v-btn v-else href="/home">
+                <v-icon>home</v-icon>
+                Home
+            </v-btn>
             <v-dialog v-model="showRememberPassword" persistent max-width="500px">
                 <v-card>
                     <v-card-title>
@@ -242,52 +245,54 @@
                     >
                         <img src="/img/logo.png" alt="Vuetify.js" height="200">
 
-                        <template v-if="registrationsEnabled">
-                            <v-btn
-                                    class="orange darken-3 mt-2"
-                                    dark
-                                    large
-                                    @click.native="showRegister = true"
-                            >
-                                Registra't
-                            </v-btn>
-                        </template>
-                        <template v-else>
-                            <v-card class="elevation-0 text-xs-center" style="width: 400px;">
-                                <v-card-title style="align-items: center;justify-content: center;">
-                                    <span class="title">Llista de correu electrònic</span>
-                                    <em class="subheading">Apunta't i sigues el primer en rebre tota la informació de la LAN party!</em>
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-form v-model="valid">
-                                        <v-text-field
-                                                name="email"
-                                                label="E-mail"
-                                                v-model="emailMailingList"
-                                                :rules="emailRules"
-                                                required
-                                                box
-                                                autofocus
-                                                auto-grow
-                                        ></v-text-field>
-                                    </v-form>
-                                    <template v-if="newsletterSubscriptionDone">Comproveu el vostre email i seguiu les passes indicades!</template>
-                                    <v-btn
-                                        :loading="newsLetterLoading"
-                                        class="darken-3 mt-2"
-                                        :class="{ green: newsletterSubscriptionDone, orange: !newsletterSubscriptionDone }"
+                        <template v-if="!logged">
+                            <template v-if="registrationsEnabled">
+                                <v-btn
+                                        class="orange darken-3 mt-2"
                                         dark
                                         large
-                                        @click.native="addEmailToMailingList"
-                                    >
-                                        <v-icon v-if="!newsletterSubscriptionDone">mail_outline</v-icon>
-                                        <v-icon v-else>done</v-icon>
-                                        &nbsp;
-                                        <template v-if="!newsletterSubscriptionDone">Apunta'm</template>
-                                        <template v-else>Fet</template>
-                                    </v-btn>
-                                </v-card-text>
-                            </v-card>
+                                        @click.native="showRegister = true"
+                                >
+                                    Registra't
+                                </v-btn>
+                            </template>
+                            <template v-else>
+                                <v-card class="elevation-0 text-xs-center" style="width: 400px;">
+                                    <v-card-title style="align-items: center;justify-content: center;">
+                                        <span class="title">Llista de correu electrònic</span>
+                                        <em class="subheading">Apunta't i sigues el primer en rebre tota la informació de la LAN party!</em>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <v-form v-model="valid">
+                                            <v-text-field
+                                                    name="email"
+                                                    label="E-mail"
+                                                    v-model="emailMailingList"
+                                                    :rules="emailRules"
+                                                    required
+                                                    box
+                                                    autofocus
+                                                    auto-grow
+                                            ></v-text-field>
+                                        </v-form>
+                                        <template v-if="newsletterSubscriptionDone">Comproveu el vostre email i seguiu les passes indicades!</template>
+                                        <v-btn
+                                                :loading="newsLetterLoading"
+                                                class="darken-3 mt-2"
+                                                :class="{ green: newsletterSubscriptionDone, orange: !newsletterSubscriptionDone }"
+                                                dark
+                                                large
+                                                @click.native="addEmailToMailingList"
+                                        >
+                                            <v-icon v-if="!newsletterSubscriptionDone">mail_outline</v-icon>
+                                            <v-icon v-else>done</v-icon>
+                                            &nbsp;
+                                            <template v-if="!newsletterSubscriptionDone">Apunta'm</template>
+                                            <template v-else>Fet</template>
+                                        </v-btn>
+                                    </v-card-text>
+                                </v-card>
+                            </template>
                         </template>
                     </v-layout>
                 </v-parallax>
@@ -559,9 +564,6 @@
       }
     },
     props: {
-      user: {
-        required: true
-      },
       action: {
         type: String,
         default: null

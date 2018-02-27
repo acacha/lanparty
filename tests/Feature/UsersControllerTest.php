@@ -18,24 +18,24 @@ class UsersControllerTest extends TestCase
     /** @test */
     public function can_retrieve_all_users()
     {
-        $this->withoutExceptionHandling();
         $users = factory(User::class,5)->create();
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
         $response->assertSuccessful();
+//        $response->dump();
         $this->assertCount(5,json_decode($response->getContent()));
         $response->assertJsonStructure([[
-            'id',
-            'name',
-            'email',
-            'givenName',
-            'sn1',
-            'sn2',
-            'formatted_created_at_date',
-            'full_search',
-            'numbers',
-            'inscription_paid',
-            'events'
+                'id',
+                'name',
+                'email',
+                'givenName',
+                'sn1',
+                'sn2',
+                'formatted_created_at_date',
+                'full_search',
+                'numbers',
+                'inscription_paid',
+                'events'
         ]]);
     }
 }

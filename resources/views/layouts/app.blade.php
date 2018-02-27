@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="user" content="{{ logged_user() }}">
+    <meta name="user" content="{{ formatted_logged_user() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <link href="https://unpkg.com/vuetify@1.0.0-beta.6/dist/vuetify.min.css" rel="stylesheet">
@@ -138,6 +138,11 @@
                                <v-text-field readonly
                                              label="2n Cognom"
                                              value="{{ $user->sn2 }}"
+                                             readonly
+                               ></v-text-field>
+                               <v-text-field readonly
+                                             label="Created at"
+                                             value="{{ $user->formatted_created_at_date }}"
                                              readonly
                                ></v-text-field>
                            </v-form>

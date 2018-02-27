@@ -8,6 +8,7 @@ use App\InvitationCodeGeneratorComplex;
 use App\InvitationCodeGeneratorSimple;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\ServiceProvider;
 use View;
 
@@ -25,28 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function($view) {
-            if (Auth::user()) {
-                $view->with('user',Auth::user());
-            } else {
-                $view->with('user',new GuestUser);
-            }
-            $view->with('registrations_enabled', $this->registrationsAreEnabled() ? 'true' : 'false');
-        });
-
-
-
-
-    }
-
-    /**
-     * Check if registrations are enabled.
-     *
-     * @return bool
-     */
-    protected function registrationsAreEnabled()
-    {
-        return Carbon::parse(config('lanparty.registration_start_date'))->isPast();
+        Resource::withoutWrapping();
     }
 
     /**

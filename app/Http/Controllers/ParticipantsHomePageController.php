@@ -24,6 +24,7 @@ class ParticipantsHomePageController extends Controller
         return view('home', [
             'events' => $events,
             'numbers' => collect([]),
+            'user' => Auth::user()
         ]);
     }
 }

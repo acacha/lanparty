@@ -13,7 +13,6 @@
 </head>
 <div id="app">
     <landing-page
-            user="{{ $user }}"
             action="{{ $action or null }}"
             :registrations-enabled="{{ $registrations_enabled or true }}"
             reset-password-token="{{ $token or null }}"

@@ -2,6 +2,7 @@
 
 use App\Event;
 use App\Group;
+use App\Http\Resources\UserResource;
 use App\InscriptionType;
 use App\Number;
 use App\Ticket;
@@ -252,3 +253,12 @@ if (!function_exists('logged_user')) {
         return Auth::user();
     }
 }
+
+if (!function_exists('formatted_logged_user')) {
+    function formatted_logged_user()
+    {
+        return json_encode((new UserResource(Auth::user()))->resolve());
+    }
+}
+
+

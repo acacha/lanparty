@@ -17,10 +17,6 @@ class User extends Authenticatable
 {
     use HasApiTokens,Notifiable, HasRoles;
 
-    protected $appends = ['formatted_created_at_date','full_search','inscription_paid'];
-
-    public $with = ['numbers','events:name,image'];
-
     /**
      * The attributes that are mass assignable.
      *
