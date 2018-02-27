@@ -15,5 +15,25 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.USER_PAY ] (context, user) {
+    return new Promise((resolve, reject) => {
+      users.pay(user).then(response => {
+        context.commit(mutations.SET_SELECTED_USER_PAYMENT, true)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.USER_UNPAY ] (context, user) {
+    return new Promise((resolve, reject) => {
+      users.unpay(user).then(response => {
+        context.commit(mutations.SET_SELECTED_USER_PAYMENT, false)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }

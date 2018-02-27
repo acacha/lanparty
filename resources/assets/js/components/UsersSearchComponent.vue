@@ -14,6 +14,7 @@
 
 <script>
   import * as actions from '../store/action-types'
+  import * as mutations from '../store/mutation-types'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import VUsersSearch from './VUsersSearchComponent.vue'
 
@@ -49,7 +50,7 @@
       }
     },
     mounted () {
-      if (this.users) this.internalUsers = this.users
+      if (this.users) this.$store.commit(mutations.SET_USERS, this.users)
       else this.$store.dispatch(actions.FETCH_USERS)
     }
   }

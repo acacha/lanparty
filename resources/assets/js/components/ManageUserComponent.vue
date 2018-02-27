@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar
-                timeout="6000"
+                :timeout="6000"
                 :color="snackbarColor"
                 v-model="snackbar"
                 :vertical="true"
@@ -22,7 +22,12 @@
                                 <v-flex xs12 md8 >
                                     <h3>{{ selectedUser.name }}</h3>
                                     <p class="text-xs-center">
-                                        <v-switch label="Pagat" v-model="selectedUser.inscription_paid"></v-switch>
+                                        <v-switch
+                                                label="Pagat"
+                                                :input-value="selectedUser.inscription_paid"
+                                                @change="tooglePayment(selectedUser)"
+                                                :loading="loadingPayments"
+                                        ></v-switch>
                                     </p>
                                 </v-flex>
                             </v-layout>
@@ -216,7 +221,8 @@
         unassignNumbersDone: false,
         unassigningNumber: false,
         numberUnassigned: false,
-        unassignNumberDialog: false
+        unassignNumberDialog: false,
+        loadingPayments: false
       }
     },
     computed: {
@@ -226,6 +232,28 @@
       }
     },
     methods: {
+      tooglePayment (user) {
+        if (user.inscription_paid) this.unpay(user)
+        else this.pay(user)
+      },
+      pay (user) {
+        this.loadingPayments = true
+        this.$store.dispatch(actions.USER_PAY, user).catch(error => {
+          console.dir(error)
+          this.showError(error.message)
+        }).then(() => {
+          this.loadingPayments = false
+        })
+      },
+      unpay (user) {
+        this.loadingPayments = true
+        this.$store.dispatch(actions.USER_UNPAY, user).catch(error => {
+          console.dir(error)
+          this.showError(error.message)
+        }).then(() => {
+          this.loadingPayments = false
+        })
+      },
       unassignAllNumbers () {
         this.unassigningNumbers = true
         this.$store.dispatch(actions.UNASSIGN_NUMBERS_TO_USER, this.selectedUser).then(result => {

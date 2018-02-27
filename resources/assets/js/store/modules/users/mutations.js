@@ -7,6 +7,9 @@ export default {
   [ types.SET_SELECTED_USER_NUMBERS ] (state, numbers) {
     state.selected_user.numbers = numbers
   },
+  [ types.SET_SELECTED_USER_PAYMENT ] (state, payment) {
+    state.selected_user.inscription_paid = payment
+  },
   [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
     state.selected_user.numbers.push(number)
   },

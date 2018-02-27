@@ -12,10 +12,10 @@
         "test": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require tests/Javascript/setup.js tests/Javascript/**/*.spec.js"
     },
     "devDependencies": {
-        "@vue/test-utils": "^1.0.0-beta.11",
+        "@vue/test-utils": "^1.0.0-beta.12",
         "axios": "^0.17",
         "cross-env": "^5.1",
-        "expect": "^22.3.0",
+        "expect": "^22.4.0",
         "jsdom": "^11.6.2",
         "jsdom-global": "^3.0.2",
         "laravel-mix": "^2.0",
@@ -23,7 +23,7 @@
         "mocha-webpack": "^1.0.1",
         "vue": "^2.5.13",
         "vue-test-utils": "^1.0.0-beta.11",
-        "vuetify": "^1.0.0"
+        "vuetify": "^1.0.3"
     },
     "dependencies": {
         "gravatar": "^1.6.0",
