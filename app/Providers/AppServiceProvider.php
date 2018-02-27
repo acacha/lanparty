@@ -44,7 +44,6 @@ class AppServiceProvider extends ServiceProvider
             } else {
                 dd('Error');
             }
-//
         });
 //
 //            $this->app->bind('HelpSpot\API', function ($app) {

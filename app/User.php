@@ -71,7 +71,9 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-        return $this->ticket()->count() == 1 ? true : false;
+        dump($this->ticket);
+        if (! $this->ticket) return false;
+        return $this->ticket->count == 1 ? true : false;
     }
 
     /**

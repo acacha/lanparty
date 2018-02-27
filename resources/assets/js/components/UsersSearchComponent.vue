@@ -4,6 +4,15 @@
             <v-container fluid>
                 <v-layout row wrap>
                     <v-flex xs12>
+                        Usuaris:
+                        <v-chip label color="orange darken-3" text-color="white">
+                            <v-icon left>group</v-icon>Total: {{ this.internalUsers.length }}
+                        </v-chip>
+                        <v-chip label color="green darken-3" text-color="white">
+                            <v-icon left>group</v-icon>Pagats: {{ this.paidInternalusers.length }}
+                        </v-chip>
+                    </v-flex>
+                    <v-flex xs12>
                         <v-users-search :users="internalUsers" @input="input"></v-users-search>
                     </v-flex>
                 </v-layout>
@@ -41,6 +50,11 @@
       internalUsers () {
         if (this.users) return this.users
         return this.$store.getters.users
+      },
+      paidInternalusers () {
+        return this.internalUsers.filter(function (user) {
+          return user.inscription_paid
+        })
       }
     },
     methods: {

@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'updated_at' => $this->updated_at,
             'numbers' => NumberResource::collection($this->numbers),
             'events' => EventResource::collection($this->events),
+            'ticket' => $this->ticket,
         ];
     }
 }

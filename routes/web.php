@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'ParticipantsHomePageController@index');
     Route::get('/manage/participants', 'ManageParticipantsController@index');
 
+//    Route::get('/manage/events/{event}/messages', 'ParticipantMessagesController@index');
     Route::post('/manage/events/{event}/messages', 'ParticipantMessagesController@store')
         ->name('manage.event-messages.store');
 

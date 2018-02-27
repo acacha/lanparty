@@ -23,8 +23,6 @@ class ManageParticipantsTest extends TestCase
      */
     public function see_users_and_numbers_in_manage_participants_page()
     {
-//        $this->withoutExceptionHandling();
-
         seed_database();
         initialize_roles();
 

@@ -20,6 +20,7 @@ class InvitationCodeGeneratorSimple implements InvitationCodeGenerator
      */
     public function generate()
     {
-        return 'INVITATIONCODE_123';
+//        return 'INVITATIONCODE_123';
+        return str_random(50);
     }
 }

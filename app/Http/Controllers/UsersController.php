@@ -19,6 +19,6 @@ class UsersController extends Controller
     public function index()
     {
 //        return User::with('events:name,image')->get();
-        return UserResource::collection(User::all());
+        return UserResource::collection(User::with(['numbers','events'])->get());
     }
 }

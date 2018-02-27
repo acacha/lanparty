@@ -284,8 +284,9 @@
       },
       pay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_PAY, user).catch(error => {
+        this.$store.dispatch(actions.USER_PAY, user).then().catch(error => {
           console.dir(error)
+          console.log('SHIT SHOWING SNACKBAR!!!!!!!!!!!!!!!!!!!!!!')
           this.showError(error.message)
         }).then(() => {
           this.loadingPayments = false
@@ -293,7 +294,7 @@
       },
       unpay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_UNPAY, user).catch(error => {
+        this.$store.dispatch(actions.USER_UNPAY, user).then().catch(error => {
           console.dir(error)
           this.showError(error.message)
         }).then(() => {

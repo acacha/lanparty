@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Number;
 use App\User;
 use Auth;
-use Illuminate\Http\Request;
 
 /**
  * Class ManageParticipantsController
@@ -20,7 +20,7 @@ class ManageParticipantsController extends Controller
      */
     public function index()
     {
-        $users = User::with('numbers')->get();
+        $users = collect(UserResource::collection(User::with(['ticket','events','numbers'])->get())->resolve());
         $numbers = Number::with('user')->get();
         return view('manage.participants', [
             'user' => Auth::user(),
