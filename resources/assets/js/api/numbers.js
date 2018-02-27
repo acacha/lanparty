@@ -9,5 +9,8 @@ export default {
   },
   unassignNumberToUser (number) {
     return axios.delete('/api/v1/number/' + number.id + '/assign')
+  },
+  unassignNumbersToUser (user) {
+    return axios.post('/api/v1/user/' + user.id + '/unassign_numbers')
   }
 }

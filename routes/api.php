@@ -27,11 +27,13 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::post('/events/{event}/register', 'RegisterToEventController@store');
     Route::delete('/events/{event}/register', 'RegisterToEventController@destroy');
 
+    // Assign first available number to user
     Route::post('/user/{user}/assign_number', 'AssignNumberToUserController@store');
-
-    Route::post('/user/{user}/unassign_numbers', 'UnassignNumbersToUserController@store');
-
+    // Unassign/free number
     Route::delete('/number/{number}/assign', 'AssignNumberToUserController@destroy');
+
+    // Unassign all numbers assigned to an user
+    Route::post('/user/{user}/unassign_numbers', 'UnassignNumbersToUserController@store');
 
 });
 

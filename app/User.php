@@ -17,7 +17,7 @@ class User extends Authenticatable
 {
     use HasApiTokens,Notifiable, HasRoles;
 
-    protected $appends = ['formatted_created_at_date','full_search'];
+    protected $appends = ['formatted_created_at_date','full_search','inscription_paid'];
 
     public $with = ['numbers'];
 
@@ -66,6 +66,16 @@ class User extends Authenticatable
     public function getFullSearchAttribute()
     {
         return "$this->name $this->email $this->givenName $this->sn1 $this->sn2 $this->formatted_created_at_date $this->id";
+    }
+
+    /**
+     * inscription_paid attribute.
+     *
+     * @return mixed
+     */
+    public function getInscriptionPaidAttribute()
+    {
+        return false;
     }
 
     /**

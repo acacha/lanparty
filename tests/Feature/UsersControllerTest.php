@@ -33,6 +33,7 @@ class UsersControllerTest extends TestCase
             'formatted_created_at_date',
             'full_search',
             'numbers',
+            'inscription_paid'
         ]]);
     }
 }

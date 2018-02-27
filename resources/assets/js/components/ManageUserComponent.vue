@@ -9,23 +9,25 @@
             {{ snackbarText }}
             <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
-        <v-container fluid grid-list-md class="grey lighten-4" v-show="showSelectedUser">
+        <v-container fluid grid-list-md v-show="showSelectedUser">
             <v-layout row wrap>
                 <v-flex xs12 md4>
-                    <v-card flat>
+                    <v-card flat class="elevation-5">
                         <v-card-title class="blue darken-3 white--text"><h4>User</h4></v-card-title>
-                        <v-container fluid grid-list-md class="grey lighten-4" v-show="show">
+                        <v-container fluid grid-list-md>
                             <v-layout row wrap>
                                 <v-flex xs12 md4>
                                     <gravatar :user="selectedUser" size="100px"></gravatar>
                                 </v-flex>
-                                <v-flex xs12 md8>
+                                <v-flex xs12 md8 >
                                     <h3>{{ selectedUser.name }}</h3>
-                                    <v-switch label="Pagat" v-model="payed"></v-switch>
+                                    <p class="text-xs-center">
+                                        <v-switch label="Pagat" v-model="selectedUser.inscription_paid"></v-switch>
+                                    </p>
                                 </v-flex>
                             </v-layout>
                         </v-container>
-                        <v-card-text class="px-0 grey lighten-3">
+                        <v-card-text class="px-0">
                             <v-form class="pl-3 pr-1 ma-0">
                                 <v-text-field readonly
                                               label="Email"
@@ -67,33 +69,41 @@
                 </v-flex>
                 <v-flex xs12 md8>
                     <v-card class="mb-2">
-                        <v-card-title class="blue darken-3 white--text"><h4>Numbers</h4></v-card-title>
-                        <v-list v-if="selectedUser.numbers.length >0">
-                            <v-list-tile v-for="number in selectedUser.numbers" v-bind:key="number.value" @click="">
-                                <v-list-tile-content>
-                                    <v-chip color="orange" text-color="white" >
-                                        {{ number.value }}
+                        <v-card-title class="blue darken-3 white--text"><h4>Números</h4></v-card-title>
+
+                        <v-data-table
+                                :items="selectedUser.numbers"
+                                hide-actions
+                                hide-headers
+                                class="elevation-1 mx-1 my-1"
+                        >
+                            <template slot="items" slot-scope="props">
+                                <td>
+                                    <v-chip :color="randomColor()" text-color="white" >
+                                        {{ props.item.value }}
                                         <v-icon right>star</v-icon>
                                     </v-chip>
-                                </v-list-tile-content>
-                                <v-list-tile-content>
-                                    <v-list-tile-title> {{ number.description }} </v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-content>
-                                    <v-list-tile-title> {{ number.created_at }}</v-list-tile-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-icon right @click="unassignNumber(number)">delete</v-icon>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </v-list>
-                        <p v-else class="pt-2">
-                            Sense números assignats
-                        </p>
+                                </td>
+                                <td>{{ props.item.description }}</td>
+                                <td>{{ props.item.created_at }}</td>
+                                <td>
+                                    <template v-if="confirmingUnassigningNumber == props.item.id">
+                                        <v-icon right v-if="!unassigningNumber" @click="cancelUnassignNumber()" class="red--text darken-4--text">clear</v-icon>
+                                        <v-progress-circular v-if="unassigningNumber" indeterminate color="primary"></v-progress-circular>
+                                        <v-icon right v-else @click="unassignNumber(props.item)" class="green--text">done</v-icon>
+                                    </template>
+                                    <v-icon v-else right @click="confirmUnassignNumber(props.item)" color="pink">delete</v-icon>
+                                </td>
+                            </template>
+                            <template slot="no-data">
+                                Sense números assignats
+                            </template>
+                        </v-data-table>
+
                         <v-card-actions class="white">
                             <v-spacer></v-spacer>
                             <v-btn icon slot="activator" @click="assignNumberDialog = true">
-                                <v-icon>add_circle</v-icon>
+                                <v-icon color="teal">add_circle</v-icon>
                             </v-btn>
                             <v-dialog v-model="assignNumberDialog" max-width="500px">
                                 <v-card>
@@ -111,21 +121,21 @@
                                     </v-card-text>
                                     <v-card-actions>
                                         <v-btn color="primary" flat @click.stop="assignNumberDialog=false">Tancar</v-btn>
-                                        <v-btn v-if="!numberAssigned" :loading="assigningNumber" color="primary" flat @click.stop="assignNumber">Assignar</v-btn>
+                                        <v-btn v-if="!numberAssigned" :loading="assigningNumber" color="primary" @click.stop="assignNumber">Assignar</v-btn>
                                         <v-btn v-else color="success" flat><v-icon>done</v-icon> Assignat</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
                             <v-btn icon slot="activator" @click="unassignNumbersDialog = true">
-                                <v-icon>remove_circle</v-icon>
+                                <v-icon color="red darken-2">remove_circle</v-icon>
                             </v-btn>
                             <v-dialog v-model="unassignNumbersDialog" persistent max-width="290">
                                 <v-card>
                                     <v-card-text>Esteu segurs que voleu desassignar tots els números al usuari?</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn color="green darken-1" flat @click.native="unassignNumbersDialog = false">Cancel·lar</v-btn>
-                                        <v-btn v-if="!unassignNumbersDone" :loading="unassigningNumbers" color="primary" flat @click.stop="unassignAllNumbers">Endavant!</v-btn>
+                                        <v-btn color="primary" flat @click.native="unassignNumbersDialog = false">Cancel·lar</v-btn>
+                                        <v-btn v-if="!unassignNumbersDone" :loading="unassigningNumbers" color="error" @click.stop="unassignAllNumbers">Dessasignar</v-btn>
                                         <v-btn v-else color="success" flat><v-icon>done</v-icon> Fet</v-btn>
                                     </v-card-actions>
                                 </v-card>
@@ -180,10 +190,11 @@
   import * as actions from '../store/action-types'
   import * as mutations from '../store/mutation-types'
   import sleep from '../utils/sleep'
+  import randomColor from './mixins/randomColor'
 
   export default {
     name: 'ManageUser',
-    mixins: [ interactsWithGravatar, withSnackbar ],
+    mixins: [ interactsWithGravatar, withSnackbar, randomColor ],
     components: { Gravatar },
     data () {
       return {
@@ -200,6 +211,7 @@
         payed: 'false',
         assignNumberDialog: false,
         unassignNumbersDialog: false,
+        confirmingUnassigningNumber: null,
         unassigningNumbers: false,
         unassignNumbersDone: false,
         unassigningNumber: false,
@@ -219,7 +231,7 @@
         this.$store.dispatch(actions.UNASSIGN_NUMBERS_TO_USER, this.selectedUser).then(result => {
           this.unassignNumbersDone = true
           this.$store.commit(mutations.SET_SELECTED_USER_NUMBERS, [])
-          sleep(1000).then(() => { this.unassignNumbersDialog = false; this.unassignNumbersDone = true })
+          sleep(1000).then(() => { this.unassignNumbersDialog = false; this.unassignNumbersDone = false })
         }).catch(error => {
           console.dir(error)
           this.showError(error.message)
@@ -240,9 +252,13 @@
           this.assigningNumber = false
         })
       },
+      cancelUnassignNumber () {
+        this.confirmingUnassigningNumber = null
+      },
+      confirmUnassignNumber (number) {
+        this.confirmingUnassigningNumber = number.id
+      },
       unassignNumber (number) {
-        console.log('unassignNumber!!!!')
-        console.log(number)
         this.unassigningNumber = true
         this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
           this.numberUnassigned = true
@@ -253,6 +269,7 @@
           this.showError(error.message)
         }).then(() => {
           this.unassigningNumber = false
+          this.confirmingUnassigningNumber = null
         })
       }
     }

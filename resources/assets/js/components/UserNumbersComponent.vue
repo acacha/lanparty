@@ -24,38 +24,15 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import randomColor from './mixins/randomColor'
 
   export default {
     name: 'UserNumbers',
+    mixins: [randomColor],
     computed: {
       ...mapGetters([
         'user'
       ])
-    },
-    methods: {
-      randomColor () {
-        var colors = [
-          'red',
-          'pink',
-          'purple',
-          'deep-purple',
-          'indigo',
-          'blue',
-          'light-blue',
-          'cyan',
-          'green',
-          'light-green',
-          'lime',
-          'yellow',
-          'amber',
-          'orange',
-          'deep-orange',
-          'brown',
-          'blue-gray'
-        ]
-
-        return colors[Math.floor(Math.random() * colors.length)]
-      }
     }
   }
 </script>

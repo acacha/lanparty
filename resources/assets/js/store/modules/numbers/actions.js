@@ -21,5 +21,14 @@ export default {
         reject(error)
       })
     })
+  },
+  [ actions.UNASSIGN_NUMBERS_TO_USER ] (context, user) {
+    return new Promise((resolve, reject) => {
+      numbers.unassignNumbersToUser(user).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
