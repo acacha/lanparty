@@ -35,5 +35,10 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     // Unassign all numbers assigned to an user
     Route::post('/user/{user}/unassign_numbers', 'UnassignNumbersToUserController@store');
 
+    //Payments
+    Route::post('/user/{user}/pay', 'UserPaymentsController@store');
+    Route::delete('/user/{user}/pay', 'UserPaymentsController@destroy');
+
+
 });
 

@@ -41,4 +41,25 @@ class UserTest extends TestCase
 
         $this->assertEquals('Sergi Tur Badenas sergiturbadenas@gmail.com Pepe Pardo Jeans 08:00:00PM 01-12-2016 1', $user->full_search);
     }
+
+    /** @test */
+    function user_can_pay()
+    {
+        seed_database();
+        $user = factory(User::class)->create();
+        $this->assertEquals(false, $user->inscription_paid);
+        $user->pay();
+        $this->assertEquals(true, $user->inscription_paid);
+    }
+
+    /** @test */
+    function user_can_unpay()
+    {
+        seed_database();
+        $user = factory(User::class)->create();
+        $user->pay();
+        $this->assertEquals(true, $user->inscription_paid);
+        $user->unpay();
+        $this->assertEquals(false, $user->inscription_paid);
+    }
 }

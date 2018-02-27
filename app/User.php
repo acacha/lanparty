@@ -75,7 +75,7 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-        return false;
+        return $this->ticket()->count() == 1 ? true : false;
     }
 
     /**
@@ -97,4 +97,34 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
+    /**
+     * Pay ticket.
+     *
+     * @return $this
+     */
+    public function pay()
+    {
+        $this->ticket()->save(Ticket::firstAvailableTicket());
+        return $this;
+    }
+
+    /**
+     * Unpay ticket.
+     *
+     * @return $this
+     */
+    public function unpay()
+    {
+        $this->ticket->user_id = null;
+        $this->ticket->save();
+        return $this;
+    }
+
+    /**
+     * Get the ticket associated with the user.
+     */
+    public function ticket()
+    {
+        return $this->hasOne(Ticket::class);
+    }
 }

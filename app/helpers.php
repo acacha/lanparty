@@ -4,6 +4,7 @@ use App\Event;
 use App\Group;
 use App\InscriptionType;
 use App\Number;
+use App\Ticket;
 use App\User;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
@@ -87,11 +88,19 @@ if (!function_exists('create_numbers')) {
     }
 }
 
+if (!function_exists('create_tickets')) {
+    function create_tickets()
+    {
+        Ticket::addTickets(250);
+    }
+}
+
 if (!function_exists('seed_database')) {
     function seed_database() {
         create_inscription_types();
         create_events();
         create_numbers();
+        create_tickets();
         initialize_roles();
     }
 }
