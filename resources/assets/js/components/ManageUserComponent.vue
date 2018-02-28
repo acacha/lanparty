@@ -149,9 +149,6 @@
                     </v-card>
                     <v-card>
                         <v-card-title class="blue darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
-
-
-
                         <v-data-table
                                 :items="selectedUser.events"
                                 hide-actions
@@ -163,7 +160,7 @@
                                     <img width="40px;" :src="'/' + props.item.image">
                                 </td>
                                 <td>{{ props.item.name }}</td>
-                                <td>{{ props.item.pivot.updated_at }}</td>
+                                <td>{{ props.item.inscription_date }}</td>
                                 <td>
                                     <template v-if="confirmingUnregisterEvent == props.item.name">
                                         <v-icon right v-if="!unassigningNumber" @click="cancelUnassignNumber()" class="red--text darken-4--text">clear</v-icon>

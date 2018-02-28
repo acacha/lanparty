@@ -47,8 +47,15 @@ class UserTest extends TestCase
     {
         seed_database();
         $user = factory(User::class)->create();
+        $this->assertDatabaseMissing('tickets', [
+            'user_id' => $user->id
+        ]);
         $this->assertEquals(false, $user->inscription_paid);
         $user->pay();
+        $user->fresh();
+        $this->assertDatabaseHas('tickets', [
+            'user_id' => $user->id
+        ]);
         $this->assertEquals(true, $user->inscription_paid);
     }
 

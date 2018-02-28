@@ -1,5 +1,6 @@
 <?php
 
+use Acacha\User\GuestUser;
 use App\Event;
 use App\Group;
 use App\Http\Resources\UserResource;
@@ -76,7 +77,6 @@ if (!function_exists('create_events')) {
                 'regulation' => $event['regulation'],
                 'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null
             ]);
-//            dump('Adding ' . $event['tickets'] . ' tickets to event ' . $event['name'] );
             $createdEvent->addTickets($event['tickets']);
         }
     }
@@ -157,9 +157,9 @@ if (!function_exists('seed_example_database')) {
 
         $user = User::find(1);
         try {
-        $user->assignRole('Manager');
+            $user->assignRole('Manager');
         } catch (\Exception $e) {
-
+            // Do nothing if user has role Manager already assigned
         }
 
         foreach ( range(1,3) as $i) {
@@ -257,6 +257,7 @@ if (!function_exists('logged_user')) {
 if (!function_exists('formatted_logged_user')) {
     function formatted_logged_user()
     {
+        if(!Auth::user()) return new GuestUser();
         return json_encode((new UserResource(Auth::user()))->resolve());
     }
 }

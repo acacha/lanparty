@@ -8,6 +8,7 @@ use App\InvitationCodeGeneratorComplex;
 use App\InvitationCodeGeneratorSimple;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\ServiceProvider;
 use View;
@@ -42,12 +43,8 @@ class AppServiceProvider extends ServiceProvider
             } elseif (config('codes.type') == 'complex')  {
                 return new InvitationCodeGeneratorComplex();
             } else {
-                dd('Error');
+                throw new BindingResolutionException();
             }
         });
-//
-//            $this->app->bind('HelpSpot\API', function ($app) {
-//                return new HelpSpot\API($app->make('HttpClient'));
-//            });
     }
 }

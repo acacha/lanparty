@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
-    protected $appends = ['inscribed','tickets','available_tickets','assigned_tickets'];
+//    protected $appends = ['inscribed','tickets','available_tickets','assigned_tickets'];
 
     protected $guarded = [];
 
@@ -188,7 +188,7 @@ class Event extends Model
      */
     public function getAvailableTicketsAttribute()
     {
-        return $this->registrations()->available()->count();
+        return $this->registrations()->available()->get()->count();
     }
 
     /**
