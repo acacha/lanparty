@@ -3,10 +3,10 @@
 @section('content')
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
-            @if(Session::has('flash')))
+            @if(Session::has('status')))
                 <v-flex xs12>
-                    <v-alert type="success" dismissible>
-                        {{ Session::get('flash')}}
+                    <v-alert type="success" :value="true">
+                        {{ Session::get('status')}}
                     </v-alert>
                 </v-flex>
             @endif

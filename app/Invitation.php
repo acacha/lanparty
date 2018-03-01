@@ -35,7 +35,12 @@ class Invitation extends Model
         $user = Auth::user();
         $this->user_id = Auth::user()->id;
         $this->save();
-        $user->assignRole('Manager');
+        try {
+            $user->assignRole('Manager');
+        } catch (\Exception $e) {
+            //
+        }
+
     }
 
     /**

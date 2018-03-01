@@ -16,15 +16,25 @@
     <template>
         <v-app id="inspire">
             <v-content>
-                <v-container fluid fill-height>
-                    <v-layout align-center justify-center>
-                        <v-flex xs12 sm8 md4 >
-                            <h1>Oppps!!! No hem pogut trobar la pàgina!</h1>
+                <v-container fill-height>
+                    <v-layout row wrap>
+                        <v-flex xs12>
+                            <v-alert type="error" :value="true">
+                                Oppps!!! No hem pogut trobar la pàgina!
+                            </v-alert>
+                        </v-flex>
+                        <v-flex xs4 offset-xs2 align-center>
                             <img src="/img/404.jpg" alt="404 not found">
-                            <v-btn outline color="primary" href="/">Tornar a la pàgina principal</v-btn>
+                        </v-flex>
+                        <v-flex xs6 offset-xs5 align-center>
+                            <v-btn outline color="primary" href="/home">Tornar a la pàgina principal</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-container>
+                <v-container fluid fill-height>
+
+                </v-container>
+
             </v-content>
         </v-app>
     </template>

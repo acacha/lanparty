@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+# Invitació
 
-The body of your message.
+Aquest email és una invitació per convertir el teu usuari en gestor a l'aplicació de la LAn Party de l'Institut de l'Ebre.
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => url("/manage/invitations/{$invitation->code}") ])
+Gestionar la LAN PARTY
 @endcomponent
 
-Thanks,<br>
+Salutacions,<br>
 {{ config('app.name') }}
 @endcomponent

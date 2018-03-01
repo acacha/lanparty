@@ -28,6 +28,6 @@ class InvitationsController extends Controller
         $invitation->use();
 
         return redirect()->route('manage.participants')
-            ->with('flash','Ok! Has utilitzat la teva invitació. Ara ets un usuari amb rol Manager');
+            ->with('status','Ok! Has utilitzat la teva invitació. Ara ets un usuari amb rol Manager.');
     }
 }

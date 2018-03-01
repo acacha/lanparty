@@ -34,6 +34,6 @@ class ManagerInvitationEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.manager-invitation');
+        return $this->markdown('emails.manager-invitation')->subject("Invitació per ser gestor de l'aplicació de la LAN Party Institut de l'Ebre");
     }
 }

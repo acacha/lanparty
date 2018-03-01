@@ -20,15 +20,9 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 Artisan::command('invite-manager {email}', function ($email) {
-//    $code = new InvitationCode();
-//    $code = generate_invitation_code();
     Invitation::create([
         'email' => $email,
         // Facades
         'code' => InvitationCode::generate() // resolve('mail')->generate()
     ])->send();
-
-//    send($invitation);
-//    $invitation->send();
-
-})->describe('Display an inspiring quote');
+})->describe('Invite a manager');
