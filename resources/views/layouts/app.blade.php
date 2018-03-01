@@ -22,7 +22,7 @@
                         v-model="drawer"
                 >
                     <v-list dense>
-                        <template v-for="(item, i) in items">
+                            <template v-for="(item, i) in items">
                             <template v-if="checkRoles(item)">
                                 <v-layout
                                         row

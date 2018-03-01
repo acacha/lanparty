@@ -21,7 +21,7 @@ class ManageParticipantsController extends Controller
      */
     public function index(ManagePartipantsRequest $request)
     {
-        $users = collect(UserResource::collection(User::with(['ticket','events','numbers'])->withCount('ticket')->get())->resolve());
+        $users = collect(UserResource::collection(User::with(['ticket','events','roles','numbers'])->withCount('ticket')->get())->resolve());
         $numbers = Number::with('user')->get();
         return view('manage.participants', [
             'user' => Auth::user(),
