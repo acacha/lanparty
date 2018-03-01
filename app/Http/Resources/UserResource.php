@@ -29,6 +29,7 @@ class UserResource extends JsonResource
             'numbers' => NumberResource::collection($this->numbers),
             'events' => UserEventResource::collection($this->events),
             'ticket' => $this->ticket,
+            'roles' => $this->roles->pluck('name')
         ];
     }
 }

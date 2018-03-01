@@ -3,7 +3,7 @@
 @section('content')
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
-            @if(Session::has('status')))
+            @if(Session::has('status'))
                 <v-flex xs12>
                     <v-alert type="success" :value="true">
                         {{ Session::get('status')}}

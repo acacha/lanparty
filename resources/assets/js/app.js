@@ -48,8 +48,8 @@ const app = new Vue({
       { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
       { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , new: true },
       { icon: 'link', text: 'Streaming (Twitch)', href: 'https://www.twitch.tv/iesebrelanparty' , new: true },
-      { heading: 'Administració'},
-      { icon: 'face', text: 'Participants', href: '/manage/participants' },
+      { heading: 'Administració', role: 'Manager'},
+      { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' }
     ]
   }),
   components: { UsersSearch, VUsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar, Events, UserNumbers },
@@ -66,6 +66,16 @@ const app = new Vue({
     },
     toogleRightDrawer() {
       this.drawerRight = ! this.drawerRight
+    },
+    checkRoles (item) {
+      if (item.role) {
+        const found = this.$store.getters.roles.find(function(role) {
+          return role == item.role;
+        })
+        if (found) return true
+        return false
+      }
+      return true
     },
     menuItemSelected(item) {
       if (item.href) {
