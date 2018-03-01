@@ -3,6 +3,13 @@
 @section('content')
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
+            @if(Session::has('flash')))
+                <v-flex xs12>
+                    <v-alert type="success" dismissible>
+                        {{ Session::get('flash')}}
+                    </v-alert>
+                </v-flex>
+            @endif
             <v-flex xs12>
                 <v-card>
                     <v-card-title class="blue darken-3 white--text">

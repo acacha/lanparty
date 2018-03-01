@@ -52,4 +52,21 @@ class ManageParticipantsTest extends TestCase
         });
 
     }
+
+    /**
+     * @test
+     */
+    public function cannot_manage_participants_if_not_manager()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/manage/participants');
+
+        $response->assertStatus(403);
+
+
+    }
+
+
 }

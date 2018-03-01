@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ManagePartipantsRequest;
 use App\Http\Resources\UserResource;
 use App\Number;
 use App\User;
@@ -18,7 +19,7 @@ class ManageParticipantsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(ManagePartipantsRequest $request)
     {
         $users = collect(UserResource::collection(User::with(['ticket','events','numbers'])->withCount('ticket')->get())->resolve());
         $numbers = Number::with('user')->get();
