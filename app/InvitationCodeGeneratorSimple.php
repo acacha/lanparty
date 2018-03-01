@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergi
- * Date: 23/02/18
- * Time: 17:06
- */
 
 namespace App;
 
@@ -20,7 +14,6 @@ class InvitationCodeGeneratorSimple implements InvitationCodeGenerator
      */
     public function generate()
     {
-//        return 'INVITATIONCODE_123';
         return str_random(50);
     }
 }

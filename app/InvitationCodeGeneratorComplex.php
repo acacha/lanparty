@@ -2,14 +2,22 @@
 
 namespace App;
 
-
+/**
+ * Class InvitationCodeGeneratorComplex.
+ *
+ * @package App
+ */
 class InvitationCodeGeneratorComplex implements InvitationCodeGenerator
 {
     /**
-     * @return string
+     * Generate random number.
+     *
+     * @return bool|string
      */
     public function generate()
     {
-        return '42323b986642376b96b698423423b696986986423b7698698423';
+        $pool = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+        return substr(str_shuffle(str_repeat($pool, 24)), 0, 24);
     }
 }
