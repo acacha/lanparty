@@ -36,7 +36,7 @@ class AcceptInvitationTest extends TestCase
         $this->assertTrue($user->fresh()->hasRole('Manager'));
 
         $response->assertRedirect('/manage/participants');
-        $response->assertSessionHas('status','Ok! Has utilitzat la teva invitació. Ara ets un usuari amb rol Manager');
+        $response->assertSessionHas('status','Ok! Has utilitzat la teva invitació. Ara ets un usuari amb rol Manager.');
     }
 
     /** @test */
