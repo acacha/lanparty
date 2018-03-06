@@ -21,7 +21,7 @@ class RegisterGroupToEventController extends Controller
 
         $group = Group::create([
             'name' => $request->name,
-            'avatar' => $request->avatar->store('avatars')
+            'avatar' => $request->file('avatar')->store('avatars')
             // Same as 'avatar' => $request->avatar->store('avatars', 'local') because local is default filesystem
             // You could use Amazon S3 or others with: 'avatar' => $request->avatar->store('avatars', 's3')
             // specify filename:

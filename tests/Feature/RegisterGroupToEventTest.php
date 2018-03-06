@@ -26,7 +26,7 @@ class RegisterGroupToEventTest extends TestCase
     {
         $this->withoutExceptionHandling();
         seed_database();
-        Storage::fake('avatars');
+        Storage::fake('local');
 
         $leader = factory(User::class)->create();
         $this->actingAs($leader,'api');
@@ -47,7 +47,7 @@ class RegisterGroupToEventTest extends TestCase
             $this->assertEquals(null, $group);
         }
 
-        $file = File::image('concert-poster.png');
+        $file = File::image('avatar.png');
 
         $response = $this->post('/api/v1/events/' . $event->id . '/register_group', [
             'name' => 'Smells Like Team Spirit',
@@ -60,10 +60,14 @@ class RegisterGroupToEventTest extends TestCase
         $response->assertSuccessful();
         $group = Group::findByName('Smells Like Team Spirit');
         $this->assertInstanceOf(Group::class, $group);
+        $this->assertNotNull($group->avatar);
         $this->assertFileEquals(
             $file->getPathname(),
             Storage::disk('local')->path($group->avatar)
         );
+
+        Storage::disk('local')->assertExists($group->avatar);
+
 
         $this->assertCount(5, $group->members);
         $this->assertCount(0, $group->members->pluck('id')->diff(collect(array_merge([$leader->id], $ids))));

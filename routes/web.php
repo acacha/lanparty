@@ -28,5 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/invitations/{code}', 'InvitationsController@show')
         ->name('manage.invitations.show');
+
+    Route::get('/group/{group}/avatar', 'GroupAvatarController@show');
 });
 
