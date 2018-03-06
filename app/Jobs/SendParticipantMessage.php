@@ -37,8 +37,15 @@ class SendParticipantMessage implements ShouldQueue
      */
     public function handle()
     {
-        $participants = $this->message->recipients()->each(function($participant) {
-            Mail::to($participant)->send(new ParticipantMessageEmail($this->message));
+
+        $this->message->recipients()->chunk(20)->each(function($recipient) {
+            Mail::to($recipient)->send(new ParticipantMessageEmail($this->message));
         });
+
+//        $this->message->withChunckedRecipients( function ($recipients) {
+//            $recipients->each( function($recipient) {
+//                Mail::to($recipient)->send(new ParticipantMessageEmail($this->message));
+//            });
+//        });
     }
 }

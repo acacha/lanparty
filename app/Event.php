@@ -78,7 +78,7 @@ class Event extends Model
     public function registerUser(User $user)
     {
         if ($this->inscription_type_id == 1) throw new InscriptionException('Cannot register an user in an event for groups');
-        if ($this->userAlreadyInscribed($user)) throw new UserAlreadyInscribedException;
+        if ($this->hasParticipant($user)) throw new UserAlreadyInscribedException;
 
         $tickets = $this->registrations()->available()->take(1)->get();
 
@@ -108,9 +108,16 @@ class Event extends Model
      * @param User $user
      * @return bool
      */
-    protected function userAlreadyInscribed(User $user)
+    public function hasParticipant(User $user)
     {
-        return in_array($user->id, $this->users->pluck('id')->all());
+        if ($this->published_at === null) return false;
+        if ($this->inscription_type_id == 2) {
+            return in_array($user->id, $this->users->pluck('id')->all());
+        }
+        foreach ($this->groups as $group) {
+            if ($group->hasMember($user)) return true;
+        }
+        return false;
     }
 
     /**
@@ -210,4 +217,5 @@ class Event extends Model
     {
         return $query->whereNotNull('published_at');
     }
+
 }

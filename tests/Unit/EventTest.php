@@ -8,6 +8,7 @@ use App\Exceptions\InscriptionException;
 use App\Exceptions\UserAlreadyInscribedException;
 use App\Exceptions\UserAlreadyUnregisteredException;
 use App\Group;
+use App\Member;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -223,6 +224,35 @@ class EventTest extends TestCase
         }
 
         $this->fail('An user cannot be unregistered to an event of type groupal');
+    }
+
+    /** @test */
+    public function can_check_if_an_event_has_an_specific_user_as_participant()
+    {
+        seed_database();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->first();
+        $user = factory(User::class)->create();
+        $this->assertFalse($event->hasParticipant($user));
+
+        $event->inscribeUser($user);
+        $event = $event->fresh();
+
+        $this->assertTrue($event->hasParticipant($user));
+
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+
+        $user = factory(User::class)->create();
+        $group = factory(Group::class)->create([
+            'name' => 'Smells like team spirit'
+        ]);
+
+        $this->assertFalse($event->hasParticipant($user));
+        $group->add($user);
+
+        $event->inscribeGroup($group);
+        $event = $event->fresh();
+
+        $this->assertTrue($event->hasParticipant($user));
     }
 
 }

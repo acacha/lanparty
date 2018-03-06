@@ -25,6 +25,12 @@ Route::group(['prefix'=>'v1'], function() {
 Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::get('/users', 'UsersController@index');
     Route::post('/events/{event}/register', 'RegisterToEventController@store');
+
+    Route::post('/events/{event}/register_group', 'RegisterGroupToEventController@store');
+
+//    $response = $this->post('/api/v1/events/' . $event->id . '/register_group', [
+
+
     Route::delete('/events/{event}/register', 'RegisterToEventController@destroy');
 
     // Assign first available number to user

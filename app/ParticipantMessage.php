@@ -21,4 +21,11 @@ class ParticipantMessage extends Model
     {
         return $this->event->users()->pluck('email');
     }
+
+    public function withChunckedRecipients( $callback)
+    {
+        $this->recipients()->chunk(20, function($recipients) use ($callback) {
+            $callback($recipients);
+        });
+    }
 }
