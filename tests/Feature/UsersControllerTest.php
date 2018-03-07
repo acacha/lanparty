@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Event;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,12 +19,20 @@ class UsersControllerTest extends TestCase
     /** @test */
     public function can_retrieve_all_users()
     {
+        seed_database();
+
         $users = factory(User::class,5)->create();
+
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+        $event->addTickets(10);
+        $paidUser = factory(User::class)->create();
+        $paidUser->pay();
+
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
         $response->assertSuccessful();
 //        $response->dump();
-        $this->assertCount(5,json_decode($response->getContent()));
+        $this->assertCount(6,json_decode($response->getContent()));
         $response->assertJsonStructure([[
                 'id',
                 'name',
@@ -37,5 +46,10 @@ class UsersControllerTest extends TestCase
                 'inscription_paid',
                 'events'
         ]]);
+
+        // Check paid user
+
+        $users = json_decode($response->getContent());
+        $this->assertTrue($users[5]->inscription_paid);
     }
 }
