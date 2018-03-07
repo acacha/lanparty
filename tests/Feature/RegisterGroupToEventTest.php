@@ -24,7 +24,7 @@ class RegisterGroupToEventTest extends TestCase
     /** @test */
     public function logged_user_can_register_group_to_event_as_leader()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         seed_database();
         Storage::fake('local');
 
@@ -45,11 +45,12 @@ class RegisterGroupToEventTest extends TestCase
             $group = Group::findByName('Smells Like Team Spirit');
         } catch (ModelNotFoundException $e) {
             $this->assertEquals(null, $group);
+            return;
         }
 
         $file = File::image('avatar.png');
 
-        $response = $this->post('/api/v1/events/' . $event->id . '/register_group', [
+        $response = $this->json('POST','/api/v1/events/' . $event->id . '/register_group', [
             'name' => 'Smells Like Team Spirit',
             'avatar' => $file,
 //            'leader' Not needed -> Logged user is Group leader
@@ -76,6 +77,7 @@ class RegisterGroupToEventTest extends TestCase
         // depending on event type
 
         $this->assertTrue($group->leader->is($leader));
+        $this->assertTrue($event->hasParticipant($leader));
         $this->assertTrue($group->getMemberByOrder(1)->is($leader));
 
         $event = $event->fresh();

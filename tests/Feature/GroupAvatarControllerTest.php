@@ -36,7 +36,11 @@ class GroupAvatarControllerTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user);
 
+        // <img src="/group/1/avatar">
+
         $response = $this->get('/group/' . $group->id . '/avatar');
+
+//        $response = $this->get('/avatar/' . "asdasdasdaweqwe2354r3-png");
         $response->assertSuccessful();
 
         $showedImage = file_get_contents($response->baseResponse->getFile()->getPathName());

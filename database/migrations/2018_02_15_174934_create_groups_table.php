@@ -20,7 +20,6 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('avatar')->nullable();
-            $table->unsignedInteger('leader')->nullable();
             $table->timestamps();
         });
     }

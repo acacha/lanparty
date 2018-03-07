@@ -30,11 +30,14 @@ class RegisterGroupToEventController extends Controller
 
         $group->add(Auth::user());
 
+//        $i = 2;
         collect($request->ids)->each(function($user_id) use ($group) {
+//            $group->members()->save($user,['order' => $i])
             Member::create([
                 'user_id' => $user_id,
                 'group_id' => $group->id
             ]);
+//            $i++;
         });
 
         $event->inscribeGroup($group);
