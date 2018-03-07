@@ -31,7 +31,6 @@ class UsersControllerTest extends TestCase
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
         $response->assertSuccessful();
-//        $response->dump();
         $this->assertCount(6,json_decode($response->getContent()));
         $response->assertJsonStructure([[
                 'id',

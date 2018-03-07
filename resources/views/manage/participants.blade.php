@@ -16,7 +16,7 @@
                         <h3>Usuaris</h3>
                     </v-card-title>
                     <v-card-text class="px-0 mb-2">
-                        <users-search></users-search>
+                        <users-search :users="{{$users}}"></users-search>
                         <manage-user></manage-user>
                     </v-card-text>
                 </v-card>

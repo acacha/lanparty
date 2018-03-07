@@ -20,6 +20,7 @@ export default {
     return new Promise((resolve, reject) => {
       users.pay(user).then(response => {
         context.commit(mutations.SET_SELECTED_USER_PAYMENT, true)
+        context.commit(mutations.SET_USER_PAYMENT_STATE, {user, payment: true})
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -30,6 +31,7 @@ export default {
     return new Promise((resolve, reject) => {
       users.unpay(user).then(response => {
         context.commit(mutations.SET_SELECTED_USER_PAYMENT, false)
+        context.commit(mutations.SET_USER_PAYMENT_STATE, {user, payment: false})
         resolve(response)
       }).catch(error => {
         reject(error)

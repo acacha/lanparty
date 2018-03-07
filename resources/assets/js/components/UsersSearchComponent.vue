@@ -52,7 +52,7 @@
         return this.$store.getters.users
       },
       paidInternalusers () {
-        return this.internalUsers.filter(function (user) {
+        return this.$store.getters.users.filter(function (user) {
           return user.inscription_paid
         })
       }
