@@ -25,7 +25,7 @@ class NewsletterTest extends TestCase
             ->with('prova@gmail.com')
             ->andReturn('value'); // Return some value to avoid 422 errors
 
-        $response = $this->post('/api/v1/newsletter', [ 'email' => 'prova@gmail.com' ]);
+        $response = $this->json('POST','/api/v1/newsletter', [ 'email' => 'prova@gmail.com' ]);
 
         $response->assertSuccessful();
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Exceptions\InscriptionException;
+use App\Exceptions\UserAlreadyInscribedException;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -18,7 +20,13 @@ class RegisterToEventController extends Controller
      */
     public function store(Event $event)
     {
-        $event->registerUser(Auth::user());
+        try {
+            $event->registerUser(Auth::user());
+        } catch(UserAlreadyInscribedException $e) {
+            abort(422,"L'usuari ja està apuntat al esdeveniment!");
+        } catch(InscriptionException $e) {
+            abort(422,$e->getMessage());
+        }
     }
 
     /**

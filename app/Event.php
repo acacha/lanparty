@@ -72,12 +72,13 @@ class Event extends Model
 
     /**
      * Register user to event.
-     *
      * @param User $user
      */
     public function registerUser(User $user)
     {
-        if ($this->inscription_type_id == 1) throw new InscriptionException('Cannot register an user in an event for groups');
+        if ($this->inscription_type_id == 1) throw new InscriptionException('No es pot registrar un usuari a un esdeveniment per a grups');
+        if ($this->published_at === null) throw new InscriptionException('No es pot es pot registrar un usuari a un esdeveniment sense publicar');
+
         if ($this->hasParticipant($user)) throw new UserAlreadyInscribedException;
 
         $tickets = $this->registrations()->available()->take(1)->get();
@@ -174,7 +175,15 @@ class Event extends Model
      */
     public function getInscribedAttribute()
     {
-        if (Auth::user()) return $this->users->pluck('id')->search(Auth::user()->id) === false ? false : true;
+        if (Auth::user()) {
+            if ($this->inscription_type_id == 1) {
+                foreach ($this->groups as $group) {
+                    if ($group->members->pluck('id')->search(Auth::user()->id) !== false) return true;
+                }
+                return false;
+            }
+            return $this->users->pluck('id')->search(Auth::user()->id) === false ? false : true;
+        }
         return false;
     }
 
@@ -216,6 +225,16 @@ class Event extends Model
     public function scopePublished($query)
     {
         return $query->whereNotNull('published_at');
+    }
+
+    /**
+     * Unpublished scope.
+     *
+     * @return string
+     */
+    public function scopeUnpublished($query)
+    {
+        return $query->whereNull('published_at');
     }
 
 }

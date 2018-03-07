@@ -32,7 +32,7 @@ class MassiveUnassignNumberToUserTest extends TestCase
         $manager->assignRole('Manager');
         $this->actingAs($manager,'api');
 
-        $response = $this->post('/api/v1/user/' . $user->id . '/unassign_numbers');
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/unassign_numbers');
         $response->assertSuccessful();
 
         $this->assertCount(0,$user->numbers);
@@ -55,7 +55,7 @@ class MassiveUnassignNumberToUserTest extends TestCase
         $manager = factory(User::class)->create();
         $this->actingAs($manager,'api');
 
-        $response = $this->post('/api/v1/user/' . $user->id . '/unassign_numbers');
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/unassign_numbers');
         $response->assertStatus(403);
 
     }

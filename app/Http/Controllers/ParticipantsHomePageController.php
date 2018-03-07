@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Http\Resources\EventResourceForHomePage;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -20,9 +21,10 @@ class ParticipantsHomePageController extends Controller
      */
     public function index()
     {
-        $events = Event::published()->with('groups')->get();
+        $events = EventResourceForHomePage::collection(Event::published()->with(['users','groups.members'])->get());
         return view('home', [
-            'events' => $events,
+//            'events' => $events,
+            'events' => $events->collection,
             'numbers' => collect([]),
             'user' => Auth::user()
         ]);

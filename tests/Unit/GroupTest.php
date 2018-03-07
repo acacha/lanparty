@@ -150,4 +150,26 @@ class GroupTest extends TestCase
         $group = $group->fresh();
         $this->assertTrue($group->getMemberByOrder(3)->is($participant2));
     }
+
+    /** @test */
+    public function user_can_leave_a_group()
+    {
+        $group = factory(Group::class)->create([
+            'name' => 'Smells Like Team Spirit'
+        ]);
+
+        $this->assertCount(0, $group->members);
+
+        $leader = factory(User::class)->create();
+        $group->add($leader);
+
+        $group = $group->fresh();
+        $this->assertCount(1, $group->members);
+        $this->assertTrue($group->leader->is($leader));
+
+        $group->leave($leader);
+        $group = $group->fresh();
+        $this->assertCount(0, $group->members);
+        $this->assertNull($group->leader);
+    }
 }

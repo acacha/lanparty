@@ -30,7 +30,7 @@
 
                 <v-text-field
                         label="Líder"
-                        v-model="lider"
+                        :value="user.name"
                         readonly
                 ></v-text-field>
 
@@ -50,18 +50,25 @@
 <script>
   import UsersSearch from './UsersSearchComponent'
   import Upload from './UploadComponent'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'Group',
     components: { UsersSearch, Upload },
     data () {
       return {
+        valid: false,
         name: '',
         nameRules: [
           v => !!v || 'El nom és obligatori',
           v => v.length <= 30 || 'Name must be less than 30 characters'
         ]
       }
+    },
+    computed: {
+      ...mapGetters({
+        user: 'user'
+      })
     },
     props: {
       dialog: {

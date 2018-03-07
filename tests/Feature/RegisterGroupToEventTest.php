@@ -100,7 +100,7 @@ class RegisterGroupToEventTest extends TestCase
         $this->actingAs($participant,'api');
         $event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
 
-        $response = $this->post('/api/v1/events/' . $event->id . '/register_group');
+        $response = $this->json('POST','/api/v1/events/' . $event->id . '/register_group');
 
         $response->assertStatus(422);
     }

@@ -7,6 +7,7 @@ use App\Mail\ParticipantMessageEmail;
 use App\ParticipantMessage;
 use App\Event;
 use App\User;
+use Carbon\Carbon;
 use Mail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -44,7 +45,8 @@ class SendParticipantMessageTest extends TestCase
             'name' => 'FIFA 18',
             'inscription_type_id' => 2,
             'image' => 'img/Fifa18.jpeg',
-            'regulation' => 'asdasdasdasd'
+            'regulation' => 'asdasdasdasd',
+            'published_at' => Carbon::now()->subDays(30)
         ]);
         $event->addTickets(10);
         $event->registerUser($user1);

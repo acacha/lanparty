@@ -69,6 +69,19 @@ class Group extends Model
     }
 
     /**
+     * User leave group.
+     *
+     * @param User $user
+     */
+    public function leave(User $user)
+    {
+        $member = Member::where('group_id',$this->id)->where('user_id',$user->id);
+        if ($member) $member->delete();
+    }
+
+
+
+    /**
      * Check if a user pertains to group.
      *
      * @param User $user

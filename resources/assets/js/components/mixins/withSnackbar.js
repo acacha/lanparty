@@ -3,17 +3,32 @@ export default {
     return {
       snackbarColor: 'error',
       snackbarText: 'An error occurred',
+      snackbarSubtext: '',
       snackbar: false
     }
   },
   methods: {
-    showError (message) {
-      this.showSnackBar(message, 'error')
+    showError (error) {
+      this.showSnackBar(error, 'error')
     },
-    showSnackBar (message, color) {
+    showSnackBar (error, color) {
+      console.log('ERROR:')
+      console.dir(error)
+      console.log(error)
+      console.log('TYPEOF ERROR:')
+      console.log(typeof error)
       this.snackbar = true
-      this.snackbarText = message
       this.snackbarColor = color || this.snackbarColor
+      if (typeof error === 'string') {
+        this.snackbarText = error
+        return
+      }
+      console.log('MESSAGE:')
+      console.dir(error.message)
+      console.log('RESPONSE:')
+      console.dir(error.response)
+      this.snackbarText = error.message
+      if (error.response) this.snackbarSubtext = error.response.data.message
     }
   }
 }

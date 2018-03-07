@@ -175,7 +175,7 @@ class EventTest extends TestCase
     }
 
     /** @test */
-    function can_determine_if_logged_user_is_subscribed_to_event()
+    function can_determine_if_logged_user_is_subscribed_to_event_of_type_individual()
     {
         seed_database();
         $user = factory(User::class)->create();
@@ -187,10 +187,43 @@ class EventTest extends TestCase
     }
 
     /** @test */
-    function can_determine_if_logged_user_is_no_subscribed_to_event()
+    function can_determine_if_logged_user_is_no_subscribed_to_event_of_type_individual()
     {
         seed_database();
-        $event = Event::published()->inRandomOrder()->get()->first();
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',2)->first();
+        $this->assertFalse($event->inscribed);
+    }
+
+    /** @test */
+    function can_determine_if_logged_user_is_subscribed_to_event_of_type_groupal()
+    {
+        seed_database();
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+        $group = factory(Group::class)->create([
+            'name' => 'Smells Like Team Spirit'
+        ]);
+        $group->add($user);
+        $event->inscribeGroup($group);
+        $event = Event::find($event->id);
+        $this->assertTrue($event->inscribed);
+    }
+
+    /** @test */
+    function can_determine_if_logged_user_is_no_subscribed_to_event_of_type_groupal()
+    {
+        seed_database();
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+        $group = factory(Group::class)->create([
+            'name' => 'Smells Like Team Spirit'
+        ]);
+        $group->add($user);
+        $event = Event::find($event->id);
         $this->assertFalse($event->inscribed);
     }
 

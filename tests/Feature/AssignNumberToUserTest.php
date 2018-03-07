@@ -28,7 +28,7 @@ class AssignNumberToUserTest extends TestCase
         $manager->assignRole('Manager');
         $this->actingAs($manager,'api');
 
-        $response = $this->post('/api/v1/user/' . $user->id . '/assign_number', [
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/assign_number', [
             'description' => 'Assistència matí divendres'
         ]);
         $response->assertSuccessful();
@@ -68,7 +68,7 @@ class AssignNumberToUserTest extends TestCase
         $manager->assignRole('Manager');
         $this->actingAs($manager,'api');
 
-        $response = $this->delete('/api/v1/number/' . $number->id .'/assign');
+        $response = $this->json('DELETE','/api/v1/number/' . $number->id .'/assign');
         $response->assertSuccessful();
         $this->assertCount(0, $user->numbers);
 
@@ -85,7 +85,7 @@ class AssignNumberToUserTest extends TestCase
         $manager = factory(User::class)->create();
         $this->actingAs($manager,'api');
 
-        $response = $this->delete('/api/v1/number/' . $number->id .'/assign');
+        $response = $this->json('DELETE','/api/v1/number/' . $number->id .'/assign');
         $response->assertStatus(403);
 
     }
@@ -99,7 +99,7 @@ class AssignNumberToUserTest extends TestCase
         $manager = factory(User::class)->create();
         $this->actingAs($manager,'api');
 
-        $response = $this->post('/api/v1/user/' . $user->id . '/assign_number', [
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/assign_number', [
             'description' => 'Assistència matí divendres'
         ]);
         $response->assertStatus(403);

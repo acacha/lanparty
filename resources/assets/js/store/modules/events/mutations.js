@@ -4,19 +4,42 @@ export default {
   [ types.SET_EVENTS ] (state, events) {
     state.events = events
   },
-  [ types.SET_EVENT_AS_INSCRIBED ] (state, event) {
+  [ types.SET_EVENT_AS_INSCRIBED ] (state, {event, user}) {
     let newEvents = []
     state.events.forEach((item, index) => {
       newEvents[index] = item
-      if (item.id === event.id) newEvents[index].inscribed = true
+      if (item.id === event.id) {
+        newEvents[index].inscribed = true
+        newEvents[index].assigned_tickets++
+        newEvents[index].available_tickets--
+        newEvents[index].users.push(user)
+      }
     })
     state.events = newEvents
   },
-  [ types.SET_EVENT_AS_UNSCRIBED ] (state, event) {
+  [ types.SET_EVENT_AS_UNSUBSCRIBED ] (state, {event, user}) {
     let newEvents = []
     state.events.forEach((item, index) => {
       newEvents[index] = item
-      if (item.id === event.id) newEvents[index].inscribed = false
+      if (item.id === event.id) {
+        newEvents[index].inscribed = false
+        newEvents[index].users.splice(newEvents[index].users.indexOf(user), 1)
+        newEvents[index].assigned_tickets--
+        newEvents[index].available_tickets++
+      }
+    })
+    state.events = newEvents
+  },
+  [ types.SET_GROUP_EVENT_AS_UNSUBSCRIBED ] (state, {event, group, user}) {
+    let newEvents = []
+    state.events.forEach((item, index) => {
+      newEvents[index] = item
+      if (item.id === event.id) {
+        newEvents[index].inscribed = false
+        const groupIndex = newEvents[index].groups.indexOf(group)
+        const userIndex = newEvents[index].groups[groupIndex].members.indexOf(user)
+        newEvents[index].groups[groupIndex].members.splice(userIndex, 1)
+      }
     })
     state.events = newEvents
   },

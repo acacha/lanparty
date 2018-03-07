@@ -4,9 +4,10 @@
                 :timeout="6000"
                 :color="snackbarColor"
                 v-model="snackbar"
-                :vertical="true"
+                :multi-line="true"
         >
-            {{ snackbarText }}
+            {{ snackbarText }}<br/>
+            {{ snackbarSubtext }}
             <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
         <v-dialog fullscreen v-model="showInscribeToGroupEvent" transition="dialog-bottom-transition"
@@ -47,13 +48,13 @@
                             <td class="text-xs-left">{{ props.item.tickets }}</td>
                             <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
                             <td class="text-xs-left">{{ props.item.available_tickets }}</td>
-                            <td class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Clica'm</a></td>
+                            <td class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Reglament</a></td>
                             <td class="text-xs-right">
                                 <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
                                 <v-switch v-else
                                           :input-value="props.item.inscribed"
                                           @change="toogleInscription(props.item)"
-                                          :disabled="props.item.available_tickets < 1"></v-switch>
+                                          :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
                             </td>
                         </tr>
                     </template>
@@ -61,44 +62,86 @@
                         <v-card>
                             <v-card-text>
                                 <template v-if="props.item.inscription_type_id == 1">
+
                                     <v-list two-line>
-                                        <template v-for="(group, index) in props.item.groups">
-                                            <v-list-tile avatar :key="group.title" @click="">
+                                        <v-list-group
+                                                v-for="(group, index) in props.item.groups"
+                                                :key="group.id"
+                                                no-action
+                                        >
+                                            <v-list-tile slot="activator">
                                                 <v-list-tile-avatar>
                                                     <template v-if="group.avatar">
-                                                        <img :src="group.avatar">
+                                                    <img :src="group.avatar">
                                                     </template>
                                                     <template v-else>
-                                                        <img src="/img/groupPlaceholder.jpg">
+                                                    <img src="/img/groupPlaceholder.jpg">
                                                     </template>
                                                 </v-list-tile-avatar>
                                                 <v-list-tile-content>
-                                                    <v-list-tile-title>{{group.name}}</v-list-tile-title>
-                                                    <v-list-tile-sub-title>
-                                                        Leader:
-                                                        <template v-if="group.leader">{{group.leader.sn1}} {{group.leader.sn2}},{{group.leader.givenName}} ({{group.leader.name}})</template>
-                                                        <template v-else>No leader assigned</template>
-                                                        | Team members:
-                                                        <template v-if="group.users">{{group.leader.sn1}} {{group.leader.sn2}},{{group.leader.givenName}} ({{group.leader.name}})</template>
-                                                        <template v-else>No members assigned</template>
-                                                    </v-list-tile-sub-title>
+                                                    <v-list-tile-title>
+                                                        <b>{{ group.name }}</b> |
+                                                        Líder:
+                                                        <template v-if="group.leader">
+                                                            {{this.user.id}} {{group.leader.sn1}} {{group.leader.sn2}}, {{group.leader.givenName}} ({{group.leader.name}})
+                                                        </template>
+                                                        <template v-else>Sense lider assignat</template>
+                                                    </v-list-tile-title>
+                                                </v-list-tile-content>
+                                                <v-list-tile-action v-if="group.leader && group.leader.id === this.user.id">
+                                                    <v-btn icon ripple @click.stop="editGroup(group)">
+                                                        <v-icon color="green darken-1">mode_edit</v-icon>
+                                                    </v-btn>
+                                                </v-list-tile-action>
+                                                <v-list-tile-action v-if="group.leader && group.leader.id === this.user.id">
+                                                    <v-btn icon ripple @click.stop="unsubscribeGroup(group)">
+                                                        <v-icon color="red darken-1">delete</v-icon>
+                                                    </v-btn>
+                                                </v-list-tile-action>
+                                                <v-list-tile-action v-if="memberOf(group,this.user)">
+                                                    <v-btn icon ripple @click.stop="unregisterToEvent(props.item)">
+                                                        <v-icon color="red darken-1">exit_to_app</v-icon>
+                                                    </v-btn>
+                                                </v-list-tile-action>
+                                            </v-list-tile>
+
+                                            <template v-if="group.members &&  group.members.length">
+                                                <v-list-tile v-for="(member, index) in group.members" :key="member.id">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>
+                                                            {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} ({{member.name}})
+                                                        </v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </template>
+                                            <v-list-tile v-else>
+                                                <v-list-tile-content>
+                                                    <v-list-tile-title>
+                                                        Sense membres assignats al grup
+                                                    </v-list-tile-title>
                                                 </v-list-tile-content>
                                             </v-list-tile>
-                                        </template>
+
+                                        </v-list-group>
                                     </v-list>
                                 </template>
                                 <template v-else>
                                     <v-list two-line>
-                                        <template v-for="(user, index) in props.item.users">
-                                            <v-list-tile avatar :key="user.title" @click="">
-                                                <v-list-tile-avatar>
-                                                    <img :src="gravatarURL(user.email)">
-                                                </v-list-tile-avatar>
-                                                <v-list-tile-content>
-                                                    <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} ({{user.name}})</v-list-tile-title>
-                                                    <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
-                                                </v-list-tile-content>
-                                            </v-list-tile>
+                                        <template v-if="props.item.users && props.item.users.length">
+                                            <template v-for="(user, index) in props.item.users">
+                                                <v-list-tile avatar :key="user.title" @click="">
+                                                    <v-list-tile-avatar>
+                                                        <img :src="gravatarURL(user.email)">
+                                                    </v-list-tile-avatar>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} ({{user.name}})</v-list-tile-title>
+                                                        <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+                                            </template>
+                                        </template>
+                                        <template v-else>
+                                            Cap usuari inscrit a l'esdeveniment
                                         </template>
                                     </v-list>
                                 </template>
@@ -132,7 +175,7 @@
     data () {
       return {
         showInscribeToGroupEvent: false,
-        currentEvent: null,
+        currentEvent: {},
         inscriptions: [],
         avoidExpand: false,
         headers: [
@@ -154,10 +197,22 @@
     },
     computed: {
       ...mapGetters({
-        internalEvents: 'events'
+        internalEvents: 'events',
+        user: 'user'
       })
     },
     methods: {
+      memberOf (group, user) {
+        return group.members.find((member) => {
+          return member.id === user.id
+        })
+      },
+      editGroup (group) {
+        console.log('TODO EDIT GROUP')
+      },
+      unsubscribeGroup (group) {
+        console.log('TODO UNSUBSCRIBE GROUP')
+      },
       expand (event, props) {
         if (this.avoidExpand) {
           this.avoidExpand = false
@@ -175,17 +230,30 @@
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
-          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, event).catch(error => {
+          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user}).catch(error => {
             console.dir(error)
-            this.showError(error.message)
+            this.showError(error)
           })
         }
       },
+      obtainGroup (event, user) {
+        return event.groups.find((group) => {
+          return group.members.find((member) => {
+            return member.id === user.id
+          })
+        })
+      },
       unregisterToEvent (event) {
         if (event.inscription_type_id === GROUP) {
-          console.log('unregister to group event')
+          const group = this.obtainGroup(event, this.user)
+          console.log('GROUP:')
+          console.log(group.name)
+          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_GROUP_EVENT, {event, group, user: this.user}).catch(error => {
+            console.dir(error)
+            this.showError(error.message)
+          })
         } else {
-          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, event).catch(error => {
+          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user}).catch(error => {
             console.dir(error)
             this.showError(error.message)
           })
