@@ -208,9 +208,11 @@
         })
       },
       editGroup (group) {
+        // TODO
         console.log('TODO EDIT GROUP')
       },
       unsubscribeGroup (group) {
+        // TODO
         console.log('TODO UNSUBSCRIBE GROUP')
       },
       expand (event, props) {
@@ -246,8 +248,6 @@
       unregisterToEvent (event) {
         if (event.inscription_type_id === GROUP) {
           const group = this.obtainGroup(event, this.user)
-          console.log('GROUP:')
-          console.log(group.name)
           this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_GROUP_EVENT, {event, group, user: this.user}).catch(error => {
             console.dir(error)
             this.showError(error.message)

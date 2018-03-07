@@ -4,9 +4,10 @@
                 :timeout="6000"
                 :color="snackbarColor"
                 v-model="snackbar"
-                :vertical="true"
+                :multi-line="true"
         >
-            {{ snackbarText }}
+            {{ snackbarText }}<br/>
+            {{ snackbarSubtext }}
             <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
         <v-container fluid grid-list-md v-show="showSelectedUser">
@@ -282,9 +283,7 @@
       pay (user) {
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_PAY, user).then().catch(error => {
-          console.dir(error)
-          console.log('SHIT SHOWING SNACKBAR!!!!!!!!!!!!!!!!!!!!!!')
-          this.showError(error.message)
+          this.showError(error)
         }).then(() => {
           this.loadingPayments = false
         })
@@ -293,7 +292,7 @@
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_UNPAY, user).then().catch(error => {
           console.dir(error)
-          this.showError(error.message)
+          this.showError(error)
         }).then(() => {
           this.loadingPayments = false
         })
@@ -306,7 +305,7 @@
           sleep(1000).then(() => { this.unassignNumbersDialog = false; this.unassignNumbersDone = false })
         }).catch(error => {
           console.dir(error)
-          this.showError(error.message)
+          this.showError(error)
         }).then(() => {
           this.unassigningNumbers = false
         })
@@ -319,7 +318,7 @@
           sleep(1000).then(() => { this.assignNumberDialog = false; this.numberAssigned = false })
         }).catch(error => {
           console.dir(error)
-          this.showError(error.message)
+          this.showError(error)
         }).then(() => {
           this.assigningNumber = false
         })
@@ -338,7 +337,7 @@
           sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
         }).catch(error => {
           console.dir(error)
-          this.showError(error.message)
+          this.showError(error)
         }).then(() => {
           this.unassigningNumber = false
           this.confirmingUnassigningNumber = null

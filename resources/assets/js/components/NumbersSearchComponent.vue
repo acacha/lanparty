@@ -73,8 +73,6 @@
     },
     methods: {
       input (number) {
-        console.log('INPUT EVENT FIRED')
-        console.log(number)
         this.$emit('input', number)
       },
       gravatarURL (number) {

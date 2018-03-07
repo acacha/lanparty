@@ -35,7 +35,7 @@
                 ></v-text-field>
 
                 <template v-for="n in 4">
-                    <users-search :label="'Membre del grup ' + n"></users-search>
+                    <v-users-search @input="userSelected(n)" :label="'Participant ' + n"></v-users-search>
                 </template>
 
             </v-form>
@@ -48,13 +48,13 @@
 </style>
 
 <script>
-  import UsersSearch from './UsersSearchComponent'
+  import VUsersSearch from './VUsersSearchComponent.vue'
   import Upload from './UploadComponent'
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'Group',
-    components: { UsersSearch, Upload },
+    components: { VUsersSearch, Upload },
     data () {
       return {
         valid: false,
@@ -81,6 +81,10 @@
       }
     },
     methods: {
+      userSelected (position) {
+        //TODO
+        console.log('User has been selected for position: ' + position)
+      },
       close () {
         this.$emit('close')
       }
