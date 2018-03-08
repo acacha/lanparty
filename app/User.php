@@ -55,7 +55,7 @@ class User extends Authenticatable
     }
 
     /**
-     * formatted_created_at_date attribute.
+     * Full search attribute.
      *
      * @return mixed
      */

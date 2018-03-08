@@ -48,5 +48,8 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Members
     Route::delete('/group/{group}/member', 'MembersController@destroy');
 
+    //Numbers
+    Route::get('/numbers', 'NumbersController@index');
+
 });
 

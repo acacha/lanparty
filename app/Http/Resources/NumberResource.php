@@ -4,6 +4,11 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class NumberResource.
+ *
+ * @package App\Http\Resources
+ */
 class NumberResource extends JsonResource
 {
     /**
@@ -14,6 +19,13 @@ class NumberResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'value' => $this->value,
+            'description' => $this->description,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'user_id' => $this->user_id
+        ];
     }
 }

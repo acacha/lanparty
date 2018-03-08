@@ -4,13 +4,29 @@
             <v-container fluid>
                 <v-layout row wrap>
                     <v-flex xs12>
+                        Números:
+                        <v-chip label color="orange darken-3" text-color="white">
+                            <v-icon left>group</v-icon>Total: {{ this.internalNumbers.length }}
+                        </v-chip>
+                        <v-chip label color="green darken-3" text-color="white">
+                            <v-icon left>group</v-icon>Assignats: {{ this.assignedNumbers.length }}
+                        </v-chip>
+                    </v-flex>
+                    <v-flex xs12>
+                        <v-checkbox
+                                label="Només números assignats"
+                                v-model="assigned"
+                        ></v-checkbox>
+                    </v-flex>
+                    <v-flex xs12>
                         <v-select
                                 label="Seleccioneu un número de sorteig"
-                                v-bind:items="numbers"
+                                v-bind:items="filteredNumbers"
                                 v-model="selected_number_id"
                                 item-text="full_search"
-                                max-height="auto"
+                                max-height="300"
                                 autocomplete
+                                clearable
                                 @input="input"
                         >
                             <template slot="selection" slot-scope="data">
@@ -56,19 +72,44 @@
 <script>
   import gravatar from 'gravatar'
   import randomColor from './mixins/randomColor'
+  import * as mutations from '../store/mutation-types'
+  import * as actions from '../store/action-types'
+
+  // Numbers filters
+  const filters = {
+    assigned: function (numbers) {
+      return numbers.filter(function (number) {
+        return number.user_id
+      })
+    }
+  }
 
   export default {
     name: 'NumbersSearch',
     mixins: [ randomColor ],
     data () {
       return {
-        selected_number_id: null
+        selected_number_id: null,
+        assigned: true
       }
     },
     props: {
       numbers: {
-        type: Array,
-        required: true
+        type: Array
+      }
+    },
+    computed: {
+      internalNumbers () {
+        return this.$store.getters.numbers
+      },
+      filteredNumbers: function () {
+        if (this.assigned) {
+          return filters['assigned'](this.internalNumbers)
+        }
+        return this.numbers
+      },
+      assignedNumbers: function () {
+        return filters['assigned'](this.internalNumbers)
       }
     },
     methods: {
@@ -87,6 +128,10 @@
         }
         return 'Cap usuari té assignat aquest número'
       }
+    },
+    mounted () {
+      if (this.numbers) this.$store.commit(mutations.SET_NUMBERS, this.numbers)
+      else this.$store.dispatch(actions.FETCH_NUMBERS)
     }
   }
 </script>

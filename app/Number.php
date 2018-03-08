@@ -47,6 +47,17 @@ class Number extends Model
         return $query->where('user_id', null);
     }
 
+    /**
+     * Assigned scope.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeAssigned($query)
+    {
+        return $query->whereNotNull('user_id');
+    }
+
 
     /**
      * Obtain last number
@@ -81,5 +92,19 @@ class Number extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * full_search attribute.
+     *
+     * @return mixed
+     */
+    public function getFullSearchAttribute()
+    {
+        if ($this->user_id) {
+            return $this->value . ' ' . $this->description . ' ' . $this->user->givenName . ' ' . $this->user->sn1 . ' ' .
+                $this->user->sn2 . ' ' . $this->user->name;
+        }
+        return "$this->value $this->description";
     }
 }

@@ -38,8 +38,7 @@
     },
     props: {
       users: {
-        type: Array,
-        required: false
+        type: Array
       },
       label: {
         type: String,
@@ -48,7 +47,6 @@
     },
     computed: {
       internalUsers () {
-        if (this.users) return this.users
         return this.$store.getters.users
       },
       paidInternalusers () {

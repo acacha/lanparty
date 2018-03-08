@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ManagePartipantsRequest;
+use App\Http\Resources\NumberWithUserResource;
 use App\Http\Resources\UserResource;
 use App\Number;
 use App\User;
@@ -22,7 +23,7 @@ class ManageParticipantsController extends Controller
     public function index(ManagePartipantsRequest $request)
     {
         $users = collect(UserResource::collection(User::with(['ticket','events','roles','numbers'])->withCount('ticket')->get())->resolve());
-        $numbers = Number::with('user')->get();
+        $numbers = collect(NumberWithUserResource::collection(Number::with(['user'])->get())->resolve());
         return view('manage.participants', [
             'user' => Auth::user(),
             'users' => $users,

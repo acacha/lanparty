@@ -69,4 +69,27 @@ class NumberTest extends TestCase
         $number->save();
         $this->assertEquals(2, Number::firstAvailableNumber()->value);
     }
+
+    /** @test */
+    function can_get_full_search_attribute()
+    {
+
+        $number = factory(Number::class)->create([
+            'value' => 1,
+            'description' => 'Assistència matí divendres'
+        ]);
+
+        $this->assertEquals('1 Assistència matí divendres', $number->full_search);
+
+        $user = factory(User::class)->create([
+            'name' => 'Acacha',
+            'sn1' => 'Tur',
+            'sn2' => 'Badenas',
+            'givenName' => 'Sergi'
+        ]);
+
+        $number->assignUser($user,'Assistència matí divendres');
+
+        $this->assertEquals('1 Assistència matí divendres Sergi Tur Badenas Acacha', $number->full_search);
+    }
 }
