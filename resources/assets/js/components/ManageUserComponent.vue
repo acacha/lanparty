@@ -338,11 +338,7 @@
       },
       unregisterEvent (event) {
         this.unregisteringEvent = true
-        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).then(result => {
-          this.numberUnassigned = true
-//          this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, event)
-          sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
-        }).catch(error => {
+        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).catch(error => {
           console.dir(error)
           this.showError(error)
         }).then(() => {
