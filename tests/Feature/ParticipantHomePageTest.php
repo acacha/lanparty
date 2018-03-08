@@ -25,7 +25,8 @@ class ParticipantHomePageTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create();
+        $users = factory(User::class,5)->create();
+        $user = $users->first();
 
         seed_database();
 
@@ -44,6 +45,11 @@ class ParticipantHomePageTest extends TestCase
 
         $response->assertViewHas('events', function ($viewEvents) use ($events) {
             if ($events->pluck('id')->diff($viewEvents->pluck('id'))->count() != 0) return false;
+            return true;
+        });
+
+        $response->assertViewHas('users', function ($viewUsers) use ($users) {
+            if ($users->pluck('id')->diff($viewUsers->pluck('id'))->count() != 0) return false;
             return true;
         });
 

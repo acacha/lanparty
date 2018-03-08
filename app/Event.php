@@ -204,7 +204,7 @@ class Event extends Model
      */
     public function getAvailableTicketsAttribute()
     {
-        return $this->registrations()->available()->get()->count();
+        return $this->registrations()->available()->count();
     }
 
     /**

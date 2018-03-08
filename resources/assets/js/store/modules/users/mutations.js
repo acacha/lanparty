@@ -24,5 +24,8 @@ export default {
   },
   [ types.SET_USERS ] (state, users) {
     state.users = users
+  },
+  [ types.UNREGISTER_SELECTED_USER_TO_EVENT ] (state, event) {
+    state.selected_user.events.splice(state.selected_user.events.indexOf(event), 1)
   }
 }

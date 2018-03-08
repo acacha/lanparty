@@ -35,7 +35,7 @@
                 ></v-text-field>
 
                 <template v-for="n in 4">
-                    <v-users-search @input="userSelected(n)" :label="'Participant ' + n"></v-users-search>
+                    <v-users-search :users="users" @input="userSelected(n)" :label="'Participant ' + n"></v-users-search>
                 </template>
 
             </v-form>
@@ -78,6 +78,9 @@
       event: {
         type: Object,
         required: true
+      },
+      users: {
+        type: Array
       }
     },
     methods: {

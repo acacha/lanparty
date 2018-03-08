@@ -14,6 +14,7 @@
                   :overlay="false"
                   scrollable>
            <group
+                    :users="this.users"
                     :event="currentEvent"
                     @close="showInscribeToGroupEvent=false;"
                     :dialog="true"
@@ -193,6 +194,9 @@
       events: {
         type: Array,
         required: false
+      },
+      users: {
+        type: Array
       }
     },
     computed: {
