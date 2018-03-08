@@ -62,6 +62,16 @@ export default {
         reject(error)
       })
     })
-  }
+  },
   // TODO export const REGISTER_USER_TO_EVENT = 'REGISTER_USER_TO_EVENT'
+  [ actions.UNREGISTER_ALL_EVENTS ] (context, user) {
+    return new Promise((resolve, reject) => {
+      events.unregisterAllEvents(user).then(response => {
+        context.commit(mutations.SET_SELECTED_USER_EVENTS, [])
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }

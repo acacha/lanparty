@@ -17,7 +17,7 @@
                     </v-card-title>
                     <v-card-text class="px-0 mb-2">
                         <users-search :users="{{$users}}"></users-search>
-                        <manage-user></manage-user>
+                        <manage-user :events="{{$events}}"></manage-user>
                     </v-card-text>
                 </v-card>
             </v-flex>

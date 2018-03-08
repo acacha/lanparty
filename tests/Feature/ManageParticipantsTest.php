@@ -23,6 +23,7 @@ class ManageParticipantsTest extends TestCase
      */
     public function see_users_and_numbers_in_manage_participants_page()
     {
+        $this->withoutExceptionHandling();
         seed_database();
         initialize_roles();
 
@@ -42,6 +43,12 @@ class ManageParticipantsTest extends TestCase
         $response->assertViewIs('manage.participants');
         $response->assertViewHas('users', function ($viewUsers) use ($users) {
             if ($users->pluck('id')->diff($viewUsers->pluck('id'))->count() != 0) return false;
+            return true;
+        });
+
+        $events = Event::published();
+        $response->assertViewHas('events', function ($viewEvents) use ($events) {
+            if ($events->pluck('id')->diff($viewEvents->pluck('id'))->count() != 0) return false;
             return true;
         });
 

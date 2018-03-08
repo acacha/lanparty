@@ -40,6 +40,8 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::post('/events/{event}/register/user/{user}', 'RegisterUserToEventController@store');
     Route::delete('/events/{event}/register/user/{user}', 'RegisterUserToEventController@destroy');
 
+    Route::delete('/events/register/user/{user}', 'RegisterUserToAllEventsController@destroy');
+
     //Register group to event
     Route::post('/events/{event}/register_group', 'RegisterGroupToEventController@store');
 

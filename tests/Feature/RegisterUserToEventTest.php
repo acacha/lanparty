@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  *
  * @package Tests\Feature
  */
-class RegisterUserToEventControllerTest extends TestCase
+class RegisterUserToEventTest extends TestCase
 {
     use RefreshDatabase;
 

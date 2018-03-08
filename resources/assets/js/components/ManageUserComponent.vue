@@ -178,40 +178,53 @@
 
                         <v-card-actions class="white">
                             <v-spacer></v-spacer>
-                            <v-btn icon slot="activator" @click="assignNumberDialog = true">
+                            <v-btn icon slot="activator" @click="registerUserToEvent = true">
                                 <v-icon color="teal">add_circle</v-icon>
                             </v-btn>
-                            <v-dialog v-model="assignNumberDialog" max-width="500px">
+                            <v-dialog v-model="registerUserToEvent" max-width="750px">
                                 <v-card>
                                     <v-card-title class="blue darken-3 white--text">
-                                        <span>Assignar número</span>
+                                        <span>Inscriure a un esdeveniment</span>
                                     </v-card-title>
                                     <v-card-text>
                                         <v-select
-                                                :items="descriptions"
-                                                v-model="description"
-                                                label="Escolliu un motiu"
-                                                class="input-group--focused"
-                                                item-value="text"
-                                        ></v-select>
+                                                :items="events"
+                                                v-model="event"
+                                                label="Escolliu un esdeveniment"
+                                                clearable
+                                        >
+                                            <template slot="selection" slot-scope="data">
+                                                <v-chip class="chip--select">
+                                                    {{ data.item.name }}
+                                                </v-chip>
+                                            </template>
+                                            <template slot="item" slot-scope="data">
+                                                <v-list-tile avatar>
+                                                    <v-list-tile-avatar>
+                                                        <img :src="'/' + data.item.image">
+                                                    </v-list-tile-avatar>
+                                                    <v-list-tile-content v-text="data.item.name"></v-list-tile-content>
+                                                </v-list-tile>
+                                            </template>
+                                        </v-select>
                                     </v-card-text>
                                     <v-card-actions>
-                                        <v-btn color="primary" flat @click.stop="assignNumberDialog=false">Tancar</v-btn>
-                                        <v-btn v-if="!numberAssigned" :loading="assigningNumber" color="primary" @click.stop="assignNumber">Assignar</v-btn>
-                                        <v-btn v-else color="success" flat><v-icon>done</v-icon> Assignat</v-btn>
+                                        <v-btn color="primary" flat @click.stop="registerUserToEvent=false">Tancar</v-btn>
+                                        <v-btn v-if="!numberAssigned" :loading="assigningNumber" color="primary" @click.stop="assignNumber">Inscriure</v-btn>
+                                        <v-btn v-else color="success" flat><v-icon>done</v-icon> Inscrit</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn icon slot="activator" @click="unassignNumbersDialog = true">
+                            <v-btn icon slot="activator" @click="unregisterEventsDialog = true">
                                 <v-icon color="red darken-2">remove_circle</v-icon>
                             </v-btn>
-                            <v-dialog v-model="unassignNumbersDialog" persistent max-width="290">
+                            <v-dialog v-model="unregisterEventsDialog" persistent max-width="290">
                                 <v-card>
-                                    <v-card-text>Esteu segurs que voleu desassignar tots els números al usuari?</v-card-text>
+                                    <v-card-text>Esteu segurs que voleu desapuntar de tots els esdeveniments al usuari?</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn color="primary" flat @click.native="unassignNumbersDialog = false">Cancel·lar</v-btn>
-                                        <v-btn v-if="!unassignNumbersDone" :loading="unassigningNumbers" color="error" @click.stop="unassignAllNumbers">Dessasignar</v-btn>
+                                        <v-btn color="primary" flat @click.native="unregisterEventsDialog = false">Cancel·lar</v-btn>
+                                        <v-btn v-if="!unregisterEventsDone" :loading="unregisteringEvents" color="error" @click.stop="unregisterAllEvents">Desapuntar</v-btn>
                                         <v-btn v-else color="success" flat><v-icon>done</v-icon> Fet</v-btn>
                                     </v-card-actions>
                                 </v-card>
@@ -247,6 +260,7 @@
     data () {
       return {
         description: '',
+        event: {},
         descriptions: [
           { 'text': 'Assistència matí divendres' },
           { 'text': 'Assistència tarda divendres' },
@@ -267,7 +281,17 @@
         unassignNumberDialog: false,
         loadingPayments: false,
         confirmingUnregisterEvent: null,
-        unregisteringEvent: false
+        unregisteringEvent: false,
+        registerUserToEvent: false,
+        unregisterEventsDialog: false,
+        unregisterEventsDone: false,
+        unregisteringEvents: false
+      }
+    },
+    props: {
+      events: {
+        type: Array,
+        required: true
       }
     },
     computed: {
@@ -309,6 +333,18 @@
           this.showError(error)
         }).then(() => {
           this.unassigningNumbers = false
+        })
+      },
+      unregisterAllEvents () {
+        this.unregisteringEvents = true
+        this.$store.dispatch(actions.UNREGISTER_ALL_EVENTS, this.selectedUser).then(result => {
+          this.unregisterEventsDone = true
+          sleep(1000).then(() => { this.unregisterEventsDialog = false; this.unregisterEventsDone = false })
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error)
+        }).then(() => {
+          this.unregisteringEvents = false
         })
       },
       assignNumber () {

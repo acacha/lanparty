@@ -15,5 +15,8 @@ export default {
   },
   registerUser (user, event) {
     return axios.post('/api/v1/events/' + event.id + '/register/user/' + user.id)
+  },
+  unregisterAllEvents (user) {
+    return axios.delete('/api/v1/events/register/user/' + user.id)
   }
 }
