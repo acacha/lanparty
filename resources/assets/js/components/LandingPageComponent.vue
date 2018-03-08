@@ -47,8 +47,8 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showLogin = false">Tancar</v-btn>
-                        <v-btn color="blue darken-1" flat @click.native="login" :loading="loginLoading">Entrar</v-btn>
+                        <v-btn color="blue darken-2" flat @click.native="showLogin = false">Tancar</v-btn>
+                        <v-btn color="blue darken-2" class="white--text" @click.native="login" :loading="loginLoading">Entrar</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -260,7 +260,7 @@
                                 <v-card class="elevation-0 text-xs-center" style="width: 400px;">
                                     <v-card-title style="align-items: center;justify-content: center;">
                                         <span class="title">Llista de correu electrònic</span>
-                                        <em class="subheading">Apunta't i sigues el primer en rebre tota la informació de la LAN party!</em>
+                                        <em class="subheading">Apunta't i sigues el primer en rebre tota la informació de la LAN Party!</em>
                                     </v-card-title>
                                     <v-card-text>
                                         <v-form v-model="valid">
