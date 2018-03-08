@@ -30,7 +30,7 @@ class RegisterToEventController extends Controller
     }
 
     /**
-     * Register current logged user to an event
+     * Unregister current logged user to an event
      */
     public function destroy(Event $event)
     {

@@ -52,5 +52,16 @@ export default {
         context.commit(mutations.UNSET_EVENT_AS_LOADING, event)
       })
     })
+  },
+  [ actions.UNREGISTER_USER_TO_EVENT ] (context, {user, event}) {
+    return new Promise((resolve, reject) => {
+      events.unregisterUser(user, event).then(response => {
+        // context.commit(mutations.SET_GROUP_EVENT_AS_UNSUBSCRIBED, {event, group, user})
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
+  // TODO export const REGISTER_USER_TO_EVENT = 'REGISTER_USER_TO_EVENT'
 }

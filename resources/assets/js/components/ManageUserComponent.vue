@@ -163,10 +163,10 @@
                                 <td>{{ props.item.name }}</td>
                                 <td>{{ props.item.inscription_date }}</td>
                                 <td>
-                                    <template v-if="confirmingUnregisterEvent == props.item.name">
-                                        <v-icon right v-if="!unassigningNumber" @click="cancelUnassignNumber()" class="red--text darken-4--text">clear</v-icon>
-                                        <v-progress-circular v-if="unassigningNumber" indeterminate color="primary"></v-progress-circular>
-                                        <v-icon right v-else @click="unassignNumber(props.item)" class="green--text">done</v-icon>
+                                    <template v-if="confirmingUnregisterEvent == props.item.id">
+                                        <v-icon right v-if="!unregisteringEvent" @click="cancelUnregisterEvent()" class="red--text darken-4--text">clear</v-icon>
+                                        <v-progress-circular v-if="unregisteringEvent" indeterminate color="primary"></v-progress-circular>
+                                        <v-icon right v-else @click="unregisterEvent(props.item)" class="green--text">done</v-icon>
                                     </template>
                                     <v-icon v-else right @click="confirmUnregisterEvent(props.item)" color="pink">delete</v-icon>
                                 </td>
@@ -266,7 +266,8 @@
         numberUnassigned: false,
         unassignNumberDialog: false,
         loadingPayments: false,
-        confirmingUnregisterEvent: null
+        confirmingUnregisterEvent: null,
+        unregisteringEvent: false
       }
     },
     computed: {
@@ -329,6 +330,26 @@
       confirmUnassignNumber (number) {
         this.confirmingUnassigningNumber = number.id
       },
+      cancelUnregisterEvent () {
+        this.confirmingUnregisterEvent = null
+      },
+      confirmUnregisterEvent (event) {
+        this.confirmingUnregisterEvent = event.id
+      },
+      unregisterEvent (event) {
+        this.unregisteringEvent = true
+        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).then(result => {
+          this.numberUnassigned = true
+//          this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, event)
+          sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error)
+        }).then(() => {
+          this.unregisteringEvent = false
+          this.confirmingUnregisterEvent = null
+        })
+      },
       unassignNumber (number) {
         this.unassigningNumber = true
         this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
@@ -344,5 +365,5 @@
         })
       }
     }
-  }
+}
 </script>
