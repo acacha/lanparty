@@ -27,7 +27,7 @@ class RegisterUserToEventController extends Controller
         try {
             $event->registerUser($user);
         } catch(UserAlreadyInscribedException $e) {
-            abort(422,"L'usuari ja està apuntat al esdeveniment!");
+            abort(422,"L'usuari ja està apuntat a l'esdeveniment!");
         } catch(InscriptionException $e) {
             abort(422,$e->getMessage());
         }

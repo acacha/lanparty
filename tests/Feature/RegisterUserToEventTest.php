@@ -87,7 +87,7 @@ class RegisterUserToEventTest extends TestCase
         $response= $this->json('POST','/api/v1/events/' . $event->id . '/register/user/' . $participant->id);
 
         $response->assertStatus(422);
-        $this->assertEquals("L'usuari ja està apuntat al esdeveniment!", json_decode($response->getContent())->message);
+        $this->assertEquals("L'usuari ja està apuntat a l'esdeveniment!", json_decode($response->getContent())->message);
         $this->assertEquals($event->users()->first()->id, $participant->id);
         $this->assertEquals($participant->events()->first()->id, $event->id);
     }
