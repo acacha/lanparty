@@ -66,7 +66,7 @@ class RegisterUserToEventTest extends TestCase
         $response= $this->json('POST','/api/v1/events/' . $event->id . '/register/user/' . $participant->id);
 
         $response->assertStatus(422);
-        $this->assertEquals('No es pot es pot registrar un usuari a un esdeveniment sense publicar', json_decode($response->getContent())->message);
+        $this->assertEquals('No es pot registrar un usuari a un esdeveniment sense publicar', json_decode($response->getContent())->message);
         $this->assertCount(0,$event->users);
         $this->assertCount(0,$participant->events);
     }

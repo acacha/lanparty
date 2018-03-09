@@ -77,7 +77,7 @@ class Event extends Model
     public function registerUser(User $user)
     {
         if ($this->inscription_type_id == 1) throw new InscriptionException('No es pot registrar un usuari a un esdeveniment per a grups');
-        if ($this->published_at === null) throw new InscriptionException('No es pot es pot registrar un usuari a un esdeveniment sense publicar');
+        if ($this->published_at === null) throw new InscriptionException('No es pot registrar un usuari a un esdeveniment sense publicar');
 
         if ($this->hasParticipant($user)) throw new UserAlreadyInscribedException;
 
