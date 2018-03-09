@@ -53,6 +53,17 @@ export default {
       })
     })
   },
+  [ actions.REGISTER_GROUP_TO_EVENT ] (context, {event, group}) {
+    return new Promise((resolve, reject) => {
+      context.commit(mutations.SET_EVENT_AS_LOADING, event)
+      events.registerGroupToEvent(event, group).then(response => {
+        // TODO ALGUN COMMIT?
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   [ actions.UNREGISTER_USER_TO_EVENT ] (context, {user, event}) {
     return new Promise((resolve, reject) => {
       events.unregisterUser(user, event).then(response => {
@@ -73,7 +84,6 @@ export default {
       })
     })
   },
-  // TODO export const REGISTER_USER_TO_EVENT = 'REGISTER_USER_TO_EVENT'
   [ actions.UNREGISTER_ALL_EVENTS ] (context, user) {
     return new Promise((resolve, reject) => {
       events.unregisterAllEvents(user).then(response => {
