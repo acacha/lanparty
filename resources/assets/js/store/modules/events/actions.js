@@ -56,7 +56,17 @@ export default {
   [ actions.UNREGISTER_USER_TO_EVENT ] (context, {user, event}) {
     return new Promise((resolve, reject) => {
       events.unregisterUser(user, event).then(response => {
-        context.commit(mutations.UNREGISTER_SELECTED_USER_TO_EVENT, {event})
+        context.commit(mutations.UNREGISTER_SELECTED_USER_TO_EVENT, event)
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [ actions.REGISTER_USER_TO_EVENT ] (context, {user, event}) {
+    return new Promise((resolve, reject) => {
+      events.registerUser(user, event).then(response => {
+        context.commit(mutations.REGISTER_SELECTED_USER_TO_EVENT, event)
         resolve(response)
       }).catch(error => {
         reject(error)

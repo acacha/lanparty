@@ -22,7 +22,9 @@ class EventResourceForHomePage extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->image
+            'image' => $this->image,
+            'inscription_type_id' => $this->inscription_type_id,
+            'available_tickets' => $this->available_tickets
         ];
     }
 }

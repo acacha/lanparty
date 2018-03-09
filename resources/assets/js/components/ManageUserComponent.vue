@@ -132,7 +132,7 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn icon slot="activator" @click="unassignNumbersDialog = true">
+                            <v-btn icon slot="activator" @click="unassignNumbersDialog = true" :disabled="selectedUser.numbers && selectedUser.numbers.length === 0">
                                 <v-icon color="red darken-2">remove_circle</v-icon>
                             </v-btn>
                             <v-dialog v-model="unassignNumbersDialog" persistent max-width="290">
@@ -188,8 +188,8 @@
                                     </v-card-title>
                                     <v-card-text>
                                         <v-select
-                                                :items="events"
-                                                v-model="event"
+                                                :items="individualInscriptionEvents"
+                                                v-model="eventToRegister"
                                                 label="Escolliu un esdeveniment"
                                                 clearable
                                         >
@@ -203,19 +203,21 @@
                                                     <v-list-tile-avatar>
                                                         <img :src="'/' + data.item.image">
                                                     </v-list-tile-avatar>
-                                                    <v-list-tile-content v-text="data.item.name"></v-list-tile-content>
+                                                    <v-list-tile-content>
+                                                        {{ data.item.name }} ( Places: {{ data.item.available_tickets }})
+                                                    </v-list-tile-content>
                                                 </v-list-tile>
                                             </template>
                                         </v-select>
                                     </v-card-text>
                                     <v-card-actions>
                                         <v-btn color="primary" flat @click.stop="registerUserToEvent=false">Tancar</v-btn>
-                                        <v-btn v-if="!numberAssigned" :loading="assigningNumber" color="primary" @click.stop="assignNumber">Inscriure</v-btn>
+                                        <v-btn v-if="!eventRegistered" :loading="registeringEvent" color="primary" @click.stop="registerEvent" :disabled="eventToRegister === null">Inscriure</v-btn>
                                         <v-btn v-else color="success" flat><v-icon>done</v-icon> Inscrit</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                            <v-btn icon slot="activator" @click="unregisterEventsDialog = true">
+                            <v-btn icon slot="activator" @click="unregisterEventsDialog = true" :disabled="selectedUser.events && selectedUser.events.length === 0">
                                 <v-icon color="red darken-2">remove_circle</v-icon>
                             </v-btn>
                             <v-dialog v-model="unregisterEventsDialog" persistent max-width="290">
@@ -260,7 +262,7 @@
     data () {
       return {
         description: '',
-        event: {},
+        eventToRegister: null,
         descriptions: [
           { 'text': 'Assistència matí divendres' },
           { 'text': 'Assistència tarda divendres' },
@@ -282,6 +284,8 @@
         loadingPayments: false,
         confirmingUnregisterEvent: null,
         unregisteringEvent: false,
+        registeringEvent: false,
+        eventRegistered: false,
         registerUserToEvent: false,
         unregisterEventsDialog: false,
         unregisterEventsDone: false,
@@ -298,6 +302,11 @@
       ...mapGetters(['selectedUser']),
       showSelectedUser () {
         return !_.isEmpty(this.selectedUser)
+      },
+      individualInscriptionEvents () {
+        return this.events.filter((event) => {
+          return event.inscription_type_id === '2'
+        })
       }
     },
     methods: {
@@ -360,6 +369,20 @@
           this.assigningNumber = false
         })
       },
+      unassignNumber (number) {
+        this.unassigningNumber = true
+        this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
+          this.numberUnassigned = true
+          this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, number)
+          sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
+        }).catch(error => {
+          console.dir(error)
+          this.showError(error)
+        }).then(() => {
+          this.unassigningNumber = false
+          this.confirmingUnassigningNumber = null
+        })
+      },
       cancelUnassignNumber () {
         this.confirmingUnassigningNumber = null
       },
@@ -382,18 +405,16 @@
           this.confirmingUnregisterEvent = null
         })
       },
-      unassignNumber (number) {
-        this.unassigningNumber = true
-        this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
-          this.numberUnassigned = true
-          this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, number)
-          sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
+      registerEvent () {
+        this.registeringEvent = true
+        this.$store.dispatch(actions.REGISTER_USER_TO_EVENT, { user: this.selectedUser, event: this.eventToRegister }).then((response) => {
+          this.eventRegistered = true
+          sleep(1000).then(() => { this.registerUserToEvent = false; this.eventRegistered = false })
         }).catch(error => {
           console.dir(error)
           this.showError(error)
         }).then(() => {
-          this.unassigningNumber = false
-          this.confirmingUnassigningNumber = null
+          this.registeringEvent = false
         })
       }
     }
