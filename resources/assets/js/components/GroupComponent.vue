@@ -136,7 +136,6 @@
         }).then(() => {
           this.registering = false
         })
-        console.log('REGISTER!!!!!!!!!!!')
       },
       close () {
         this.$emit('close')

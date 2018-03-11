@@ -1,11 +1,14 @@
 <template>
     <div>
+        <img ref="avatar" :src="filePath" alt="Avatar" width="50"
+             @click="selectUploadFile">
         <v-text-field
             prepend-icon="attach_file" single-line
             v-model="filename" :label="label" :required="required"
-            @click.native="onFocus"
+            @click.native="selectUploadFile"
             :disabled="disabled" ref="fileTextField">
         </v-text-field>
+        <v-btn @click="uploadAvatar" color="info">Upload Avatar</v-btn>
         <input type="file" :accept="accept" :multiple="false" :disabled="disabled"
                ref="fileInput" @change="onFileChange">
     </div>
@@ -19,6 +22,7 @@
 </style>
 
 <script>
+  import axios from 'axios'
   export default{
     name: 'Upload',
     props: {
@@ -48,7 +52,9 @@
     },
     data () {
       return {
-        filename: ''
+        filename: '',
+        file: null,
+        filePath: 'img/groupPlaceholder.jpg'
       }
     },
     watch: {
@@ -61,6 +67,18 @@
     },
 
     methods: {
+      uploadAvatar () {
+        console.log('uploadAvatar')
+
+        const formData = new FormData()
+        formData.append('file', this.$refs.fileInput.files[0])
+
+        axios.post('/group/1/avatar', formData).then(response => {
+          console.log(response)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
       getFormData (files) {
         const data = new FormData();
         [...files].forEach(file => {
@@ -68,26 +86,37 @@
         })
         return data
       },
-      onFocus () {
+      selectUploadFile () {
         if (!this.disabled) {
-          debugger
           this.$refs.fileInput.click()
         }
       },
-      onFileChange ($event) {
-        const files = $event.target.files || $event.dataTransfer.files
-        const form = this.getFormData(files)
-        if (files) {
-          if (files.length > 0) {
-            this.filename = [...files].map(file => file.name).join(', ')
-          } else {
-            this.filename = null
-          }
-        } else {
-          this.filename = $event.target.value.split('\\').pop()
+      preview (file) {
+        let reader = new FileReader()
+        reader.onload = f => {
+//          this.$refs.avatar.setAttribute('src', f.target.result)
+          this.filePath = f.target.result
         }
-        this.$emit('input', this.filename)
-        this.$emit('formData', form)
+        reader.readAsDataURL(file)
+      },
+      onFileChange (event) {
+        var target = event.target || event.srcElement
+        this.file = target.files[0]
+        this.preview(this.file)
+
+        // const files = event.target.files || event.dataTransfer.files
+        // const form = this.getFormData(files)
+        // if (files) {
+        //  if (files.length > 0) {
+        //    this.filename = [...files].map(file => file.name).join(', ')
+        //  } else {
+        //    this.filename = null
+        //  }
+        // } else {
+        //  this.filename = event.target.value.split('\\').pop()
+        // }
+        // this.$emit('input', this.filename)
+        // this.$emit('formData', form)
       }
     }
   }

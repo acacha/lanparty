@@ -30,5 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('manage.invitations.show');
 
     Route::get('/group/{group}/avatar', 'GroupAvatarController@show');
+
+    Route::post('/group/1/avatar','GroupAvatarController@store');
+
 });
 
