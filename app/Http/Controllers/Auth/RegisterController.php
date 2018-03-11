@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Traits\RegistrationsAreEnabled;
 use App\User;
 use App\Http\Controllers\Controller;
-use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+/**
+ * Class RegisterController.
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
+    use RegistrationsAreEnabled;
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -64,7 +71,10 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('welcome', [ 'action' => 'register']);
+        return view('welcome', [
+            'action' => 'register',
+            'registrations_enabled' => $this->registrationsAreEnabled()
+        ]);
     }
 
     /**

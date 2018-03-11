@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\RegistrationsAreEnabled;
 
 /**
  * Class WelcomeController.
@@ -12,6 +11,8 @@ use Illuminate\Http\Request;
  */
 class WelcomeController extends Controller
 {
+    use RegistrationsAreEnabled;
+
     /**
      * Welcome page.
      *
@@ -19,16 +20,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return view('welcome')->with('registrations_enabled', $this->registrationsAreEnabled() ? true : false);
+        return view('welcome')->with('registrations_enabled', $this->registrationsAreEnabled());
     }
 
-    /**
-     * Check if registrations are enabled.
-     *
-     * @return bool
-     */
-    protected function registrationsAreEnabled()
-    {
-        return Carbon::parse(config('lanparty.registration_start_date'))->isPast();
-    }
 }

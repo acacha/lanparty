@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\RegistrationsAreEnabled;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 
+/**
+ * Class ResetPasswordController.
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class ResetPasswordController extends Controller
 {
+    use RegistrationsAreEnabled;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -52,7 +60,8 @@ class ResetPasswordController extends Controller
         return view('welcome')->with([
             'token' => $token,
             'email' => $request->email,
-            'action' => 'reset_password'
+            'action' => 'reset_password',
+            'registrations_enabled' => $this->registrationsAreEnabled()
         ]);
     }
 }

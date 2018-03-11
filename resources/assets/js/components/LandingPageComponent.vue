@@ -45,12 +45,21 @@
                                     required
                             ></v-text-field>
                         </v-form>
-                        <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
-                            Entra amb Facebook
+                        <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
+                            <svg class="facebook" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="266.893px" height="266.895px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+                                 xml:space="preserve">
+                            <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+                                c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+                                H248.082z"/>
+                            <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+                                l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+                                v99.803H182.409z"/>
+                            </svg>
+                            <span class="ml-1">Entra amb Facebook</span>
                         </v-btn>
                         <a href="/password/reset" color="blue darken-2">
-                            Recorda'm la paraula de pas
-                        </a>
+                            Recorda'm la paraula de pas</a> |
                         <a href="/register" color="blue darken-2">
                             Registra't
                         </a>
@@ -122,8 +131,18 @@
                                     v-model="sn2"
                             ></v-text-field>
                         </v-form>
-                        <v-btn href="/auth/facebook" color="blue darken-2" class="white--text">
-                            Entra amb Facebook
+                        <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
+                            <svg class="facebook" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="266.893px" height="266.895px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+                                 xml:space="preserve">
+                            <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+                                c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+                                H248.082z"/>
+                            <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+                                l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+                                v99.803H182.409z"/>
+                            </svg>
+                            <span class="ml-1">Entra amb Facebook</span>
                         </v-btn>
                         <a href="/login" color="blue darken-2">
                             Ja tinc un usuari
@@ -500,8 +519,10 @@
     </v-app>
 </template>
 
-<style>
-
+<style scoped>
+.facebook {
+    width: 20px;
+}
 </style>
 
 <script>
@@ -665,7 +686,11 @@
             window.location = '/home'
           }).catch(error => {
             if (error.response && error.response.status === 422) {
-              this.showError({ message: 'Les dades no són vàlides' })
+              this.showValidationErrorOnSnackBar({
+                message: 'Les dades no són vàlides',
+                errors: error.response.data.errors
+              })
+              this.registerErrors = error.response.data.errors
             } else {
               this.showError(error)
               this.registerErrors = error.response.data.errors
@@ -674,6 +699,16 @@
             this.registerLoading = false
           })
         }
+      },
+      showValidationErrorOnSnackBar (error, color) {
+        this.snackbar = true
+        this.snackbarColor = color || this.snackbarColor
+        if (typeof error === 'string') {
+          this.snackbarText = error.message
+          return
+        }
+        this.snackbarText = error.message
+        this.snackbarSubtext = error.errors
       },
       login () {
         if (this.$refs.loginForm.validate()) {
