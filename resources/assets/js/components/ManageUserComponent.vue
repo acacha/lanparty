@@ -8,7 +8,7 @@
         >
             {{ snackbarText }}<br/>
             {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
         </v-snackbar>
         <v-container fluid grid-list-md v-show="showSelectedUser">
             <v-layout row wrap>

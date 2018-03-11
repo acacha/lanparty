@@ -45,7 +45,7 @@ class SendParticipantMessageTest extends TestCase
             'name' => 'FIFA 18',
             'inscription_type_id' => 2,
             'image' => 'img/Fifa18.jpeg',
-            'regulation' => 'regulation_here',
+            'regulation' => 'regulationlink',
             'published_at' => Carbon::now()->subDays(30)
         ]);
         $event->addTickets(10);
@@ -75,7 +75,7 @@ class SendParticipantMessageTest extends TestCase
         });
 
         Mail::assertSent(ParticipantMessageEmail::class, function ($mail) use ($message) {
-            return $mail->hasTo('javi@gmail.com') && $mail->message->is($message);
+            return $mail->hasTo('xavi@gmail.com') && $mail->message->is($message);
         });
 
     }

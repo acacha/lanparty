@@ -8,7 +8,7 @@
         >
             {{ snackbarText }}<br/>
             {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
         </v-snackbar>
         <v-toolbar card dark color="primary">
             <v-btn icon @click.native="close" dark>

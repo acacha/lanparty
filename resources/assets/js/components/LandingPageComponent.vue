@@ -1,5 +1,15 @@
 <template>
     <v-app light>
+        <v-snackbar
+                :timeout="6000"
+                :color="snackbarColor"
+                v-model="snackbar"
+                :multi-line="true"
+        >
+            {{ snackbarText }}<br/>
+            {{ snackbarSubtext }}
+            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
+        </v-snackbar>
         <v-toolbar class="white">
             <v-toolbar-title>Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -16,7 +26,7 @@
                             <h3>{{loginErrorMessage}}</h3>
                             <p v-for="(error, errorKey) in loginErrors">{{errorKey}} : {{ error[0] }}</p>
                         </v-alert>
-                        <v-form v-model="valid">
+                        <v-form ref="loginForm" v-model="valid">
                             <v-text-field
                                     name="email"
                                     label="E-mail"
@@ -40,7 +50,7 @@
                         </v-btn>
                         <a href="/password/reset" color="blue darken-2">
                             Recorda'm la paraula de pas
-                        </a> &nbsp; |
+                        </a>
                         <a href="/register" color="blue darken-2">
                             Registra't
                         </a>
@@ -52,7 +62,7 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <v-dialog v-if="!logged" v-model="showRegister" persistent max-width="500px">
+            <v-dialog fullscreen v-if="!logged" v-model="showRegister" persistent max-width="500px">
                 <template v-if="registrationsEnabled">
                     <v-btn slot="activator">Registra't</v-btn>
                 </template>
@@ -61,11 +71,7 @@
                         <span class="headline">Alta d'usuari</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="registerErrorMessage" color="error" icon="warning" value="true" dismissible>
-                            <h3>{{registerErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in registerErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
-                        <v-form v-model="valid">
+                        <v-form ref="registrationForm" v-model="valid">
                             <v-text-field
                                     label="Nom d'usuari"
                                     v-model="name"
@@ -126,7 +132,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
-                        <v-btn :loading="registerLoading" color="blue darken-1" flat @click.native="register">Registra'm</v-btn>
+                        <v-btn :loading="registerLoading" color="blue darken-1" class="white--text" @click.native="register">Registra'm</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -502,9 +508,11 @@
   import { mapGetters } from 'vuex'
   import * as actions from '../store/action-types'
   import sleep from '../utils/sleep'
+  import withSnackbar from './mixins/withSnackbar'
 
   export default {
     name: 'LandingPage',
+    mixins: [withSnackbar],
     data () {
       return {
         internalAction: this.action,
@@ -512,7 +520,6 @@
         loginErrorMessage: '',
         loginErrors: [],
         registerLoading: false,
-        registerErrorMessage: '',
         registerErrors: [],
         valid: false,
         name: '',
@@ -641,45 +648,52 @@
         })
       },
       register () {
-        this.registerLoading = true
-        const user = {
-          'name': this.name,
-          'email': this.registerEmail,
-          'password': this.registerPassword,
-          'password_confirmation': this.passwordConfirmation,
-          'givenName': this.givenName,
-          'sn1': this.sn1,
-          'sn2': this.sn2
+        if (this.$refs.registrationForm.validate()) {
+          this.registerLoading = true
+          const user = {
+            'name': this.name,
+            'email': this.registerEmail,
+            'password': this.registerPassword,
+            'password_confirmation': this.passwordConfirmation,
+            'givenName': this.givenName,
+            'sn1': this.sn1,
+            'sn2': this.sn2
+          }
+          this.$store.dispatch(actions.REGISTER, user).then(response => {
+            this.registerLoading = false
+            this.showRegister = false
+            window.location = '/home'
+          }).catch(error => {
+            if (error.response && error.response.status === 422) {
+              this.showError({ message: 'Les dades no són vàlides' })
+            } else {
+              this.showError(error)
+              this.registerErrors = error.response.data.errors
+            }
+          }).then(() => {
+            this.registerLoading = false
+          })
         }
-        this.$store.dispatch(actions.REGISTER, user).then(response => {
-          this.registerLoading = false
-          this.showRegister = false
-          window.location = '/home'
-        }).catch(error => {
-          console.log(error)
-          this.registerErrorMessage = error.response.data.message
-          this.registerErrors = error.response.data.errors
-        }).then(() => {
-          this.registerLoading = false
-        })
       },
       login () {
-        this.loginLoading = true
-        const credentials = {
-          'email': this.email,
-          'password': this.password
+        if (this.$refs.loginForm.validate()) {
+          this.loginLoading = true
+          const credentials = {
+            'email': this.email,
+            'password': this.password
+          }
+          this.$store.dispatch(actions.LOGIN, credentials).then(response => {
+            this.loginLoading = false
+            this.showLogin = false
+            window.location = '/home'
+          }).catch(error => {
+            console.log(error)
+            this.loginErrorMessage = error.response.data.message
+            this.loginErrors = error.response.data.errors
+          }).then(() => {
+            this.loginLoading = false
+          })
         }
-        this.$store.dispatch(actions.LOGIN, credentials).then(response => {
-          this.loginLoading = false
-          this.showLogin = false
-          window.location = '/home'
-        }).catch(error => {
-          console.log(error)
-          this.loginErrorMessage = error.response.data.message
-          this.loginErrors = error.response.data.errors
-        }).then(() => {
-          this.loginLoading = false
-        })
       },
       rememberPassword () {
         this.rememberPasswordLoading = true

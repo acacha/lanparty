@@ -147,7 +147,7 @@ class EventTest extends TestCase
         try {
             $event->inscribeGroup($group);
         } catch (InscriptionException $exception) {
-            $this->assertEquals(count($event->group), 0);
+            $this->assertEquals($event->group, null);
             $this->assertEquals(count($group->events), 0);
             return;
         }

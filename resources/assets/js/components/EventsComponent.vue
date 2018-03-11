@@ -8,7 +8,7 @@
         >
             {{ snackbarText }}<br/>
             {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
         </v-snackbar>
         <v-dialog fullscreen v-model="showInscribeToGroupEvent" transition="dialog-bottom-transition"
                   :overlay="false"

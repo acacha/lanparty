@@ -19,7 +19,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return view('welcome')->with('registrations_enabled', $this->registrationsAreEnabled() ? 'true' : 'false');
+        return view('welcome')->with('registrations_enabled', $this->registrationsAreEnabled() ? true : false);
     }
 
     /**
