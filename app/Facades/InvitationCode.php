@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Facade;
 class InvitationCode extends Facade
 {
     protected static function getFacadeAccessor() {
-//        return 'App\asdasd\InvitationCodeGenerator';
         return InvitationCodeGenerator::class;
-//        return 'invitation_code_generator';
     }
 }

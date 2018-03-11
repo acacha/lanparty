@@ -28,16 +28,16 @@ class SendParticipantMessageTest extends TestCase
         Mail::fake();
 
         $user1 = User::create([
-            'name' => 'asdasdasdasd',
+            'name' => 'Pepito',
             'email' => 'pepito@gmail.com'
         ]);
         $user2 = User::create([
-            'name' => 'asdasdasdasd',
+            'name' => 'Maria',
             'email' => 'maria@gmail.com'
         ]);
         $user3 = User::create([
-            'name' => 'asdasdasdasd',
-            'email' => 'javi@gmail.com'
+            'name' => 'Xavi',
+            'email' => 'xavi@gmail.com'
         ]);
 
         // Preparació
@@ -45,7 +45,7 @@ class SendParticipantMessageTest extends TestCase
             'name' => 'FIFA 18',
             'inscription_type_id' => 2,
             'image' => 'img/Fifa18.jpeg',
-            'regulation' => 'asdasdasdasd',
+            'regulation' => 'regulation_here',
             'published_at' => Carbon::now()->subDays(30)
         ]);
         $event->addTickets(10);
