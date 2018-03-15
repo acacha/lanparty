@@ -124,7 +124,7 @@
       },
       userInfoFormNumber (number) {
         if (number.user_id) {
-          return 'Usuari: ' + number.user.name + ' | Nom: ' + number.user.givenName + ' ' + number.user.sn1 + ' ' + number.user.sn2 + ' (' + number.user.id + ')'
+          return 'Usuari: ' + number.user.name + ' | Nom: ' + (number.user.givenName || '') + ' ' + ( number.user.sn1 || '') + ' ' + ( number.user.sn2 || '' ) + ' (' + number.user.id + ')'
         }
         return 'Cap usuari té assignat aquest número'
       }

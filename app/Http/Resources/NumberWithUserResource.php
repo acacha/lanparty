@@ -35,7 +35,8 @@ class NumberWithUserResource extends JsonResource
                     'name' => $this->user->name,
                     'sn1' => $this->user->sn1,
                     'sn2' => $this->user->sn2,
-                    'givenName' => $this->user->givenName
+                    'givenName' => $this->user->givenName,
+                    'email' => $this->user->email,
                 ]
             ]);
         }
