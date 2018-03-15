@@ -11,7 +11,7 @@
             <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
         </v-snackbar>
         <v-toolbar class="white">
-            <v-toolbar-title>Institut de l'Ebre LAN PARTY</v-toolbar-title>
+            <v-toolbar-title class="hidden-xs-only">Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly">
                 <template v-if="registrationsEnabled">
