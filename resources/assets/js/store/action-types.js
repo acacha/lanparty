@@ -14,6 +14,7 @@ export const SUBSCRIBE_TO_NEWSLETTER = 'SUBSCRIBE_TO_NEWSLETTER'
 export const FETCH_USERS = 'FETCH_USERS'
 export const USER_UNPAY = 'USER_UNPAY'
 export const USER_PAY = 'USER_PAY'
+export const UPDATE_USER = 'UPDATE_USER'
 
 // EVENTS
 export const FETCH_EVENTS = 'FETCH_EVENTS'

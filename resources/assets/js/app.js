@@ -26,6 +26,8 @@ import store from './store'
 import * as actions from './store/action-types'
 import * as mutations from './store/mutation-types'
 
+import { mapGetters } from 'vuex'
+
 store.commit(mutations.USER,  user)
 if (window.user ) store.commit(mutations.LOGGED, true)
 
@@ -53,6 +55,11 @@ const app = new Vue({
     ]
   }),
   components: { UsersSearch, VUsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar, Events, UserNumbers },
+  computed: {
+    ...mapGetters({
+      user: 'user'
+    })
+  },
   methods: {
     logout() {
       this.logoutLoading = true
@@ -60,6 +67,15 @@ const app = new Vue({
         window.location = '/'
       }).catch(error => {
         console.log(error)
+      }).then(() => {
+        this.logoutLoading = false
+      })
+    },
+    updateUser() {
+      this.$store.dispatch(actions.UPDATE_USER, this.user).then(response => {
+
+      }).catch(error => {
+        console.dir(error)
       }).then(() => {
         this.logoutLoading = false
       })

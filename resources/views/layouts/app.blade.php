@@ -121,28 +121,23 @@
                            <v-form class="pl-3 pr-1 ma-0">
                                <v-text-field
                                              label="Email"
-                                             value="{{ $user->email }}"
-                                             readonly
+                                             :value="user.email"
                                ></v-text-field>
                                <v-text-field
                                              label="Nom usuari"
-                                             value="{{ $user->name }}"
-                                             readonly
+                                             :value="user.name"
                                ></v-text-field>
                                <v-text-field
                                              label="Nom"
-                                             value="{{ $user->givenName }}"
-                                             readonly
+                                             :value="user.givenName"
                                ></v-text-field>
                                <v-text-field
                                              label="1r Cognom"
-                                             value="{{ $user->sn1 }}"
-                                             readonly
+                                             :value="user.sn1"
                                ></v-text-field>
                                <v-text-field
                                              label="2n Cognom"
-                                             value="{{ $user->sn2 }}"
-                                             readonly
+                                             :value="user.sn2"
                                ></v-text-field>
                                <v-text-field readonly
                                              label="Created at"
@@ -152,12 +147,20 @@
                            </v-form>
                        </v-card-text>
                        <v-card-actions>
-                           <v-btn flat color="orange">Editar AAA</v-btn>
-                           <v-btn :loading="logoutLoading" @click="logout" flat color="orange">Sortir</v-btn>
+                           <v-spacer></v-spacer>
+                           <v-btn flat color="orange" @click="updateUser">
+                               <v-icon right dark>edit</v-icon>
+                               Editar
+                           </v-btn>
+                           <v-btn :loading="logoutLoading" @click="logout" flat color="orange">
+                               <v-icon right dark>exit_to_app</v-icon>
+                               Sortir</v-btn>
+                           <v-spacer></v-spacer>
                        </v-card-actions>
                        <v-card-actions>
-                           <v-btn flat color="orange">Editar</v-btn>
-                           <v-btn :loading="logoutLoading" @click="logout" flat color="orange">Sortir</v-btn>
+                           <v-spacer></v-spacer>
+                           <v-btn flat color="red">Canviar Paraula de pas</v-btn>
+                           <v-spacer></v-spacer>
                        </v-card-actions>
                    </v-card>
 

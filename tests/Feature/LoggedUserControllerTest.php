@@ -31,6 +31,15 @@ class LoggedUserControllerTest extends TestCase
         ]);
 
         $response->assertSuccessful();
+
+        $response->assertJson([
+            'email' => 'pepepardo@jeans.com',
+            'name' => 'Pepe Pardo Jeans',
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+        ]);
+
         $user = User::find($user->id);
 
         $this->assertEquals('Pepe Pardo Jeans',$user->name);
