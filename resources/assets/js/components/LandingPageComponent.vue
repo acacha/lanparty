@@ -13,7 +13,7 @@
         <v-toolbar class="white">
             <v-toolbar-title>Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px">
+            <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly">
                 <template v-if="registrationsEnabled">
                     <v-btn color="primary" dark slot="activator">Entrar</v-btn>
                 </template>
@@ -22,10 +22,6 @@
                         <span class="headline">Login</span>
                     </v-card-title>
                     <v-card-text>
-                        <v-alert v-if="loginErrorMessage" color="error" icon="warning" value="true" dismissible>
-                            <h3>{{loginErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in loginErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
                         <v-form ref="loginForm" v-model="valid">
                             <v-text-field
                                     name="email"
@@ -45,33 +41,44 @@
                                     required
                             ></v-text-field>
                         </v-form>
-                        <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
-                            <svg class="facebook" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 width="266.893px" height="266.895px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
-                                 xml:space="preserve">
-                            <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
-                                c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
-                                H248.082z"/>
-                            <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
-                                l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
-                                v99.803H182.409z"/>
-                            </svg>
-                            <span class="ml-1">Entra amb Facebook</span>
-                        </v-btn>
-                        <a href="/password/reset" color="blue darken-2">
-                            Recorda'm la paraula de pas</a> |
-                        <a href="/register" color="blue darken-2">
-                            Registra't
-                        </a>
+                        <v-container grid-list-md text-xs-center>
+                            <v-layout row wrap>
+                            <v-flex xs12>
+                                <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
+                                    <svg class="facebook" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                     width="266.893px" height="266.895px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
+                                     xml:space="preserve">
+                                        <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
+                                            c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
+                                            H248.082z"/>
+                                        <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
+                                            l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
+                                            v99.803H182.409z"/>
+                                    </svg>
+                                    <span class="ml-1">Entra amb Facebook</span>
+                                </v-btn>
+                            </v-flex>
+                            <v-flex xs12>
+                                <a href="/password/reset" color="blue darken-2">
+                                    Recorda'm la paraula de pas</a>
+                            </v-flex>
+                            <v-flex xs12>
+                                <a href="/register" color="blue darken-2">
+                                    Registra't
+                                </a>
+                            </v-flex>
+                        </v-layout>
+                        </v-container>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-2" flat @click.native="showLogin = false">Tancar</v-btn>
                         <v-btn color="blue darken-2" class="white--text" @click.native="login" :loading="loginLoading">Entrar</v-btn>
+                        <v-spacer></v-spacer>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <v-dialog fullscreen v-if="!logged" v-model="showRegister" persistent max-width="500px">
+            <v-dialog fullscreen v-if="!logged" v-model="showRegister" persistent>
                 <template v-if="registrationsEnabled">
                     <v-btn slot="activator">Registra't</v-btn>
                 </template>
@@ -92,6 +99,8 @@
                                     label="Correu electrònic"
                                     v-model="registerEmail"
                                     :rules="emailRules"
+                                    :error="registerErrors['email']"
+                                    :error-messages="registerErrors['email']"
                                     required
                             ></v-text-field>
                             <v-text-field
@@ -113,6 +122,8 @@
                                     min="6"
                                     type="password"
                                     required
+                                    :error="registerErrors['password']"
+                                    :error-messages="registerErrors['password']"
                             ></v-text-field>
                             <v-text-field
                                     label="Nom"
@@ -174,6 +185,8 @@
                                     label="Correu electrònic"
                                     v-model="emailRememberPassword"
                                     :rules="emailRules"
+                                    :error="loginErrors['email']"
+                                    :error-messages="loginErrors['email']"
                                     required
                             ></v-text-field>
                         </v-form>
@@ -538,7 +551,6 @@
       return {
         internalAction: this.action,
         loginLoading: false,
-        loginErrorMessage: '',
         loginErrors: [],
         registerLoading: false,
         registerErrors: [],
@@ -686,29 +698,17 @@
             window.location = '/home'
           }).catch(error => {
             if (error.response && error.response.status === 422) {
-              this.showValidationErrorOnSnackBar({
-                message: 'Les dades no són vàlides',
-                errors: error.response.data.errors
+              this.showError({
+                message: 'Les dades no són vàlides'
               })
-              this.registerErrors = error.response.data.errors
             } else {
               this.showError(error)
-              this.registerErrors = error.response.data.errors
             }
+            this.registerErrors = error.response.data.errors
           }).then(() => {
             this.registerLoading = false
           })
         }
-      },
-      showValidationErrorOnSnackBar (error, color) {
-        this.snackbar = true
-        this.snackbarColor = color || this.snackbarColor
-        if (typeof error === 'string') {
-          this.snackbarText = error.message
-          return
-        }
-        this.snackbarText = error.message
-        this.snackbarSubtext = error.errors
       },
       login () {
         if (this.$refs.loginForm.validate()) {
@@ -722,8 +722,13 @@
             this.showLogin = false
             window.location = '/home'
           }).catch(error => {
-            console.log(error)
-            this.loginErrorMessage = error.response.data.message
+            if (error.response && error.response.status === 422) {
+              this.showError({
+                message: 'Les dades no són vàlides'
+              })
+            } else {
+              this.showError(error)
+            }
             this.loginErrors = error.response.data.errors
           }).then(() => {
             this.loginLoading = false
