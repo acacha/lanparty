@@ -22,8 +22,8 @@
         </v-dialog>
         <v-card>
             <v-card-title class="blue darken-3 white--text"><h2>Events</h2></v-card-title>
-            <v-card-text class="px-0 mb-2">
-                <v-data-table class="hidden-sm-and-down"
+            <v-card-text class="px-0 mb-2 hidden-sm-and-down">
+                <v-data-table
                         :headers="headers"
                         :items="internalEvents"
                         hide-actions
@@ -151,6 +151,73 @@
                     </template>
                 </v-data-table>
             </v-card-text>
+
+
+
+
+
+            <v-data-iterator
+                    content-tag="v-layout"
+                    row
+                    wrap
+                    :items="internalEvents"
+                    class="hidden-md-and-up"
+                    hide-actions
+            >
+                <v-flex
+                        slot="item"
+                        slot-scope="props"
+                        xs12
+                >
+                    <v-card class="mb-2 mt-1">
+                        <v-container fluid grid-list-lg>
+                            <v-layout row>
+                                <v-flex xs7>
+                                    <div>
+                                        <div class="headline">{{ props.item.name }}</div>
+                                        <v-layout row>
+                                            <v-flex xs8>
+                                                <div class="text-xs-left">
+                                                    Tipus:
+                                                    <template v-if="props.item.inscription_type_id == 1">
+                                                        Grup
+                                                    </template>
+                                                    <template v-else>
+                                                        Individual
+                                                    </template>
+                                                </div>
+                                            </v-flex>
+                                            <v-flex xs4 class="">
+                                                <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
+                                                <v-switch v-else
+                                                          :input-value="props.item.inscribed"
+                                                          @change="toogleInscription(props.item)"
+                                                          :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
+                                            </v-flex>
+                                        </v-layout>
+
+                                        <div class="text-xs-left">Places: {{ props.item.tickets }}</div>
+                                        <div class="text-xs-left">Inscrits: {{ props.item.assigned_tickets }}</div>
+                                        <div class="text-xs-left">Disponibles: {{ props.item.available_tickets }}</div>
+                                        <div class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Reglament</a></div>
+                                    </div>
+                                </v-flex>
+                                <v-flex xs5>
+                                    <v-card-media
+                                            :src="props.item.image"
+                                            height="125px"
+                                            contain
+                                    ></v-card-media>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                    </v-card>
+
+                </v-flex>
+            </v-data-iterator>
+
+
+
         </v-card>
     </div>
 </template>
