@@ -295,17 +295,10 @@
         else this.unregisterToEvent(event)
       },
       registerToEvent (event) {
-        console.log('1')
-        console.log(event.inscription_type_id)
-        console.log(GROUP)
-        console.log('Resultat:')
-        console.log(event.inscription_type_id === GROUP)
-        if (event.inscription_type_id === GROUP) {
-          console.log('2')
+        if (event.inscription_type_id == GROUP) {  // eslint-disable-line
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
-          console.log('3')
           this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user}).catch(error => {
             console.dir(error)
             this.showError(error)
