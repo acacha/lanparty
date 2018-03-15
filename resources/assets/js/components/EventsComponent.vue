@@ -152,10 +152,6 @@
                 </v-data-table>
             </v-card-text>
 
-
-
-
-
             <v-data-iterator
                     content-tag="v-layout"
                     row
@@ -299,10 +295,13 @@
         else this.unregisterToEvent(event)
       },
       registerToEvent (event) {
+        console.log('1')
         if (event.inscription_type_id === GROUP) {
+          console.log('2')
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
+          console.log('3')
           this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user}).catch(error => {
             console.dir(error)
             this.showError(error)
