@@ -51,4 +51,49 @@ class UsersControllerTest extends TestCase
         $users = json_decode($response->getContent());
         $this->assertTrue($users[5]->inscription_paid);
     }
+
+    /** @test */
+    public function manager_can_update_user()
+    {
+        seed_database();
+        $manager = factory(User::class)->create();
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+        $user = factory(User::class)->create();
+        $response = $this->json('PUT','api/v1/users/' . $user->id, [
+            'email' => 'pepepardo@jeans.com',
+            'name' => 'Pepe Pardo Jeans',
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
+
+        $response->assertSuccessful();
+        $user = User::find($user->id);
+
+        $this->assertEquals('Pepe Pardo Jeans',$user->name);
+        $this->assertEquals('Pepe',$user->givenName);
+        $this->assertEquals('Pardo',$user->sn1);
+        $this->assertEquals('Jeans',$user->sn2);
+        $this->assertEquals('pepepardo@jeans.com',$user->email);
+    }
+
+    /** @test */
+    public function users_cannnot_update_other_users()
+    {
+        seed_database();
+        $otherUser = factory(User::class)->create();
+        $this->actingAs($otherUser,'api');
+        $user = factory(User::class)->create();
+        $response = $this->json('PUT','api/v1/users/' . $user->id, [
+            'email' => 'pepepardo@jeans.com',
+            'name' => 'Pepe Pardo Jeans',
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
+
+        $response->assertStatus(403);
+
+    }
 }

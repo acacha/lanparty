@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,5 +20,13 @@ class UsersController extends Controller
     public function index()
     {
         return UserResource::collection(User::with(['numbers','events'])->withCount('ticket')->get());
+    }
+
+    /**
+     * Update user.
+     */
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $user->update($request->only(['name','email','givenName','sn1','sn2']));
     }
 }

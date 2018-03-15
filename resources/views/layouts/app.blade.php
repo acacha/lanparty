@@ -119,27 +119,27 @@
                        </v-container>
                        <v-card-text class="px-0 grey lighten-3">
                            <v-form class="pl-3 pr-1 ma-0">
-                               <v-text-field readonly
+                               <v-text-field
                                              label="Email"
                                              value="{{ $user->email }}"
                                              readonly
                                ></v-text-field>
-                               <v-text-field readonly
+                               <v-text-field
                                              label="Nom usuari"
                                              value="{{ $user->name }}"
                                              readonly
                                ></v-text-field>
-                               <v-text-field readonly
+                               <v-text-field
                                              label="Nom"
                                              value="{{ $user->givenName }}"
                                              readonly
                                ></v-text-field>
-                               <v-text-field readonly
+                               <v-text-field
                                              label="1r Cognom"
                                              value="{{ $user->sn1 }}"
                                              readonly
                                ></v-text-field>
-                               <v-text-field readonly
+                               <v-text-field
                                              label="2n Cognom"
                                              value="{{ $user->sn2 }}"
                                              readonly
@@ -151,6 +151,10 @@
                                ></v-text-field>
                            </v-form>
                        </v-card-text>
+                       <v-card-actions>
+                           <v-btn flat color="orange">Editar AAA</v-btn>
+                           <v-btn :loading="logoutLoading" @click="logout" flat color="orange">Sortir</v-btn>
+                       </v-card-actions>
                        <v-card-actions>
                            <v-btn flat color="orange">Editar</v-btn>
                            <v-btn :loading="logoutLoading" @click="logout" flat color="orange">Sortir</v-btn>

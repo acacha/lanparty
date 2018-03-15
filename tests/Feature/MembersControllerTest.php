@@ -9,11 +9,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class MembersControllertest.
+ * Class MembersControllerTest.
  *
  * @package Tests\Feature
  */
-class MembersControllertest extends TestCase
+class MembersControllerTest extends TestCase
 {
     use RefreshDatabase;
 
