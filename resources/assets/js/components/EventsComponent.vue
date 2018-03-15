@@ -296,6 +296,10 @@
       },
       registerToEvent (event) {
         console.log('1')
+        console.log(event.inscription_type_id)
+        console.log(GROUP)
+        console.log('Resultat:')
+        console.log(event.inscription_type_id === GROUP)
         if (event.inscription_type_id === GROUP) {
           console.log('2')
           this.showInscribeToGroupEvent = true
