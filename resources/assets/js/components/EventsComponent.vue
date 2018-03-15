@@ -23,7 +23,7 @@
         <v-card>
             <v-card-title class="blue darken-3 white--text"><h2>Events</h2></v-card-title>
             <v-card-text class="px-0 mb-2">
-                <v-data-table
+                <v-data-table class="hidden-sm-and-down"
                         :headers="headers"
                         :items="internalEvents"
                         hide-actions
