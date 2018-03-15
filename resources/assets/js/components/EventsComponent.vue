@@ -230,7 +230,7 @@
   import * as actions from '../store/action-types'
   import { mapGetters } from 'vuex'
 
-  const GROUP = '1'
+  const GROUP = 1
 
   export default {
     name: 'Events',
