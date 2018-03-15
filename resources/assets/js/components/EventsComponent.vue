@@ -169,7 +169,7 @@
                         slot-scope="props"
                         xs12
                 >
-                    <v-card class="mb-2 mt-1">
+                    <v-card class="mb-1 mt-1">
                         <v-container fluid grid-list-lg>
                             <v-layout row>
                                 <v-flex xs7>
