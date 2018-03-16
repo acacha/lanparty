@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/group/{group}/avatar', 'GroupAvatarController@show');
 
-    Route::post('/group/1/avatar','GroupAvatarController@store');
+    Route::post('/group/{group}/avatar','GroupAvatarController@store');
 
 });
 

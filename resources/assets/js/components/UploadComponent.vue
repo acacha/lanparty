@@ -8,7 +8,7 @@
             @click.native="selectUploadFile"
             :disabled="disabled" ref="fileTextField">
         </v-text-field>
-        <v-btn @click="uploadAvatar" color="info">Upload Avatar</v-btn>
+        <!--<v-btn @click="uploadAvatar" color="info">Upload Avatar</v-btn>-->
         <input type="file" :accept="accept" :multiple="false" :disabled="disabled"
                ref="fileInput" @change="onFileChange">
     </div>
@@ -52,7 +52,7 @@
     },
     data () {
       return {
-        filename: '',
+        filename: this.value,
         file: null,
         filePath: 'img/groupPlaceholder.jpg'
       }
@@ -62,23 +62,19 @@
         this.filename = v
       }
     },
-    mounted () {
-      this.filename = this.value
-    },
-
     methods: {
-      uploadAvatar () {
-        console.log('uploadAvatar')
-
-        const formData = new FormData()
-        formData.append('file', this.$refs.fileInput.files[0])
-
-        axios.post('/group/1/avatar', formData).then(response => {
-          console.log(response)
-        }).catch(error => {
-          console.log(error)
-        })
-      },
+//      uploadAvatar () {
+//        console.log('uploadAvatar')
+//
+//        const formData = new FormData()
+//        formData.append('avatar', this.$refs.fileInput.files[0])
+//
+//        axios.post('/group/1/avatar', formData).then(response => {
+//          console.log(response)
+//        }).catch(error => {
+//          console.log(error)
+//        })
+//      },
       getFormData (files) {
         const data = new FormData();
         [...files].forEach(file => {
@@ -102,6 +98,7 @@
       onFileChange (event) {
         var target = event.target || event.srcElement
         this.file = target.files[0]
+        this.filename = target.files[0].name
         this.preview(this.file)
 
         // const files = event.target.files || event.dataTransfer.files

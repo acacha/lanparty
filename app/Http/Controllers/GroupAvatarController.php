@@ -24,12 +24,23 @@ class GroupAvatarController extends Controller
      * @param Request $request
      * @return false|string
      */
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
-//        dd($request->file);
-//        dd($request->all());
-        $path = $request->file->storeAs('avatars','prova.jpg');
+        Storage::delete($group->avatar);
+        $group->avatar = $request->avatar->storeAs('avatars', $this->avatarFileName($group, $request->avatar));
+        $group->update();
+        return $group;
+    }
 
-        return $path;
+    /**
+     * Get avatar file name.
+     *
+     * @param $group
+     * @param $file
+     * @return string
+     */
+    protected function avatarFileName($group, $file)
+    {
+        return $group->id . '_' . snake_case($group->name) . '.' . pathinfo($file->name, PATHINFO_EXTENSION);
     }
 }

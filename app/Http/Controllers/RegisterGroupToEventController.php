@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Group;
+use App\Http\Requests\RegisterGroupToEventRequest;
 use App\Member;
 use Auth;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class RegisterGroupToEventController extends Controller
      * @param Request $request
      * @param Event $event
      */
-    public function store(Request $request, Event $event)
+    public function store(RegisterGroupToEventRequest $request, Event $event)
     {
         if ($event->inscription_type_id == 2) abort(422, 'No es pot registrar un grup a un event per a usuaris');
 

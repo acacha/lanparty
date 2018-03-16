@@ -24,7 +24,6 @@ class RegisterGroupToEventTest extends TestCase
     /** @test */
     public function logged_user_can_register_group_to_event_as_leader()
     {
-//        $this->withoutExceptionHandling();
         seed_database();
         Storage::fake('local');
 
@@ -92,17 +91,54 @@ class RegisterGroupToEventTest extends TestCase
     }
 
     /** @test */
+    public function register_group_to_event_as_leader_test_validation()
+    {
+
+        seed_database();
+        $participant = factory(User::class)->create();
+        $this->actingAs($participant,'api');
+        $event = Event::inRandomOrder()->where('inscription_type_id',1)->first();
+        $response = $this->json('POST','/api/v1/events/' . $event->id . '/register_group');
+        $response->assertStatus(422);
+        $content = json_decode($response->getContent());
+
+        $this->assertEquals('The given data was invalid.', $content->message);
+        $this->assertEquals('El camp nom és obligatori.', $content->errors->name[0]);
+        $this->assertEquals('El camp ids és obligatori.', $content->errors->ids[0]);
+        $this->assertEquals('El camp avatar és obligatori.', $content->errors->avatar[0]);
+
+//        $this->withoutExceptionHandling();
+
+        $event = Event::inRandomOrder()->where('inscription_type_id',1)->first();
+        $response = $this->json('POST','/api/v1/events/' . $event->id . '/register_group',[
+            'name' => 'Smells Like Team Spirit',
+            'avatar' => 'asdsd',
+            'ids' => [1,2,3]
+        ]);
+        $response->assertStatus(422);
+        $content = json_decode($response->getContent());
+
+        $this->assertEquals('The given data was invalid.', $content->message);
+        $this->assertEquals('avatar ha de ser una imatge.', $content->errors->avatar[0]);
+    }
+
+    /** @test */
     public function logged_user_cannot_register_group_to_event_as_leader_if_event_is_individual()
     {
+//        $this->withoutExceptionHandling();
         seed_database();
 
         $participant = factory(User::class)->create();
         $this->actingAs($participant,'api');
-        $event = Event::inRandomOrder()->where('inscription_type_id',2)->first();
+        $event = Event::inRandomOrder()->where('inscription_type_id',1)->first();
+
+        $leader = factory(User::class)->create();
+        $this->actingAs($leader,'api');
 
         $response = $this->json('POST','/api/v1/events/' . $event->id . '/register_group');
 
         $response->assertStatus(422);
+//        $response->dump();
     }
 
     /** @todo */
@@ -111,3 +147,4 @@ class RegisterGroupToEventTest extends TestCase
         // TESTING SORT
     }
 }
+
