@@ -21,28 +21,29 @@
             </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
-            <v-alert type="error" :value="true" class="mb-3">
-                Les inscripcions a una competició les ha de realitzar només el líder del grup!
+            <v-alert type="error" :value="true" class="mb-3" dismissible v-model="alert">
+                Les inscripcions a una competició les ha de realitzar només el líder del grup inscrivint a tots els components del grup.
             </v-alert>
 
-            <span class="subheading">Sóc el lider del grup i li poso el nom:</span>
+            <v-chip>
+                <v-avatar>
+                    <img :src="gravatarURL(user.email)">
+                </v-avatar>
+                {{ user.name }}
+            </v-chip>
 
-            <v-form v-model="valid">
+            <span class="subheading">sóc el líder del grup amb nom:</span>
+
+            <v-form v-model="valid" ref="registrationGroupForm">
                 <v-text-field
                         label="Nom del grup"
                         v-model="name"
                         :rules="nameRules"
-                        :counter="30"
+                        :counter="50"
                         required
                 ></v-text-field>
 
-                <upload label="Escolliu un avatar pel grup"></upload>
-
-                <v-text-field
-                        label="Líder"
-                        :value="user.name"
-                        readonly
-                ></v-text-field>
+                <upload label="Escolliu un avatar pel grup o arrosegueu una imatge" accept="image/*"></upload>
 
                 <template v-for="n in 4">
                     <v-users-search :users="users" @input="userSelected(n+1,$event)" :label="'Participant ' + n"></v-users-search>
@@ -65,13 +66,15 @@
   import { mapGetters } from 'vuex'
   import * as actions from '../store/action-types'
   import withSnackbar from './mixins/withSnackbar'
+  import interactsWithGravatar from './mixins/interactsWithGravatar'
 
   export default {
     name: 'Group',
     components: { VUsersSearch, Upload },
-    mixins: [withSnackbar],
+    mixins: [withSnackbar, interactsWithGravatar],
     data () {
       return {
+        alert: true,
         valid: false,
         registering: false,
         name: '',
@@ -121,21 +124,23 @@
         return new Set(this.selectedUsers).has(user)
       },
       register () {
-        this.registering = true
-        // TODO avatar
-        const group = {
-          name: this.name,
-          avatar: '',
-          user_ids: this.ids
+        if (this.$refs.registrationGroupForm.validate()) {
+          this.registering = true
+          // TODO avatar
+          const group = {
+            name: this.name,
+            avatar: '',
+            user_ids: this.ids
+          }
+          this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
+            console.dir(response)
+          }).catch(error => {
+            console.dir(error)
+            this.showError(error)
+          }).then(() => {
+            this.registering = false
+          })
         }
-        this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
-          console.dir(response)
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
-          this.registering = false
-        })
       },
       close () {
         this.$emit('close')

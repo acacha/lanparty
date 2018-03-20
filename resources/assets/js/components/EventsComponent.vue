@@ -50,12 +50,16 @@
                             <td class="text-xs-left">{{ props.item.assigned_tickets }}</td>
                             <td class="text-xs-left">{{ props.item.available_tickets }}</td>
                             <td class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Reglament</a></td>
-                            <td class="text-xs-right">
+                            <td class="text-xs-right d-flex" >
                                 <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
                                 <v-switch v-else
                                           :input-value="props.item.inscribed"
                                           @change="toogleInscription(props.item)"
                                           :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
+                                TODO
+                                <v-btn flat icon color="green" v-if="props.item.available_tickets === 4">
+                                    <v-icon>mode_edit</v-icon>
+                                </v-btn>
                             </td>
                         </tr>
                     </template>

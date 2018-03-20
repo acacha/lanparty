@@ -1,5 +1,6 @@
 <template>
     <v-select
+            prepend-icon="face"
             :label="label"
             :items="users"
             v-model="selected_user_id"
