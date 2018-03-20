@@ -47,6 +47,25 @@ class GroupAvatarControllerTest extends TestCase
     }
 
     /** @test */
+    public function show_group_avatar_placeholder_for_group_without_avatar()
+    {
+        $this->withoutExceptionHandling();
+        $group = factory(Group::class)->create([
+            'name' => 'Smells Like Team Spirit'
+        ]);
+
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/group/' . $group->id . '/avatar');
+        $response->assertSuccessful();
+
+        $showedImage = file_get_contents($response->baseResponse->getFile()->getPathName());
+        $originalImage = file_get_contents(base_path('tests/__fixtures__/groupPlaceholder.jpg'));
+        $this->assertEquals($showedImage, $originalImage);
+    }
+
+    /** @test */
     public function cannot_change_group_avatar_of_unexisting_group()
     {
 //        Route::post('/group/1/avatar','GroupAvatarController@store');

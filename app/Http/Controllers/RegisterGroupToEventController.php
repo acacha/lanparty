@@ -32,7 +32,7 @@ class RegisterGroupToEventController extends Controller
 
         $group->avatar = $request->file('avatar')->storeAs(
             'avatars',
-            'group_' . $group->id . '_avatar.' . pathinfo($request->file('avatar')->name,PATHINFO_EXTENSION));
+            'group_' . $group->id . '_avatar.' . $request->file('avatar')->clientExtension());
         $group->update();
 
         $group->add(Auth::user());

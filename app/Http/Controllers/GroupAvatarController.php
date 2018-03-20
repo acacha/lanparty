@@ -13,9 +13,19 @@ use Storage;
  */
 class GroupAvatarController extends Controller
 {
+    /**
+     * Show group avatar.
+     *
+     * @param Group $group
+     * @return mixed
+     */
     public function show(Group $group)
     {
-        return response()->file(Storage::disk('local')->path($group->avatar));
+        if ($group->avatar) {
+            return response()->file(Storage::disk('local')->path($group->avatar));
+        }
+        dd('adsdsa');
+        redirect('img/groupPlaceholder.jpg');
     }
 
     /**
