@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class ParticipantMainPageTest.
+ * Class ParticipantHomePageTest.
  *
  * @package Tests\Feature
  */
@@ -52,13 +52,6 @@ class ParticipantHomePageTest extends TestCase
             if ($users->pluck('id')->diff($viewUsers->pluck('id'))->count() != 0) return false;
             return true;
         });
-
-//        $response->assertSee($user->email);
-//        $response->assertSee($user->name);
-//        $response->assertSee($user->givenName);
-//        $response->assertSee($user->sn1);
-//        $response->assertSee($user->sn2);
-//        $response->assertSee($user->formatted_created_at_date);
 
         foreach ($events as $event) {
             $response->assertSee($event->name);

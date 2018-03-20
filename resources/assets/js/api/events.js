@@ -20,10 +20,11 @@ export default {
     return axios.delete('/api/v1/events/register/user/' + user.id)
   },
   registerGroupToEvent (event, group) {
-    return axios.post('/api/v1/events/' + event.id + '/register_group', {
-      name: group.name,
-      avatar: group.avatar,
-      ids: group.user_ids
-    })
+    console.log(group)
+    const formData = new FormData()
+    formData.append('avatar', group.avatar)
+    formData.append('name', group.name)
+    formData.append('ids', group.ids)
+    return axios.post('/api/v1/events/' + event.id + '/register_group', formData)
   }
 }

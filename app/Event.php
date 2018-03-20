@@ -188,6 +188,23 @@ class Event extends Model
     }
 
     /**
+     * Is current logged user leading a group inscribed to this event?.
+     *
+     * @return string
+     */
+    public function getLeadingAttribute()
+    {
+        if ($loggedUser = Auth::user()) {
+            if ($this->inscription_type_id == 1) {
+                foreach ($this->groups as $group) {
+                    if (optional($group->members->first())->id === $loggedUser->id) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get total number of tickets/registrations.
      *
      * @return string

@@ -28,6 +28,7 @@ class EventResourceForHomePage extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'inscribed' => $this->inscribed,
+            'leading' => $this->leading,
             'tickets' => $this->tickets,
             'available_tickets' => $this->available_tickets,
             'assigned_tickets' => $this->assigned_tickets,

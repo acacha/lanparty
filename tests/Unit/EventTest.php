@@ -6,12 +6,9 @@ use App\Event;
 use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
 use App\Exceptions\UserAlreadyInscribedException;
-use App\Exceptions\UserAlreadyUnregisteredException;
 use App\Group;
-use App\Member;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
@@ -286,6 +283,23 @@ class EventTest extends TestCase
         $event = $event->fresh();
 
         $this->assertTrue($event->hasParticipant($user));
+    }
+
+    /** @test */
+    function can_determine_if_logged_user_is_leader_of_group_inscribed_to_event_of_type_groupal()
+    {
+        seed_database();
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+        $group = factory(Group::class)->create([
+            'name' => 'Smells Like Team Spirit'
+        ]);
+        $group->add($user);
+        $this->assertFalse($event->leading);
+        $event->inscribeGroup($group);
+        $event = Event::find($event->id);
+        $this->assertTrue($event->leading);
     }
 
 }

@@ -25,6 +25,9 @@
                 Les inscripcions a una competició les ha de realitzar només el líder del grup inscrivint a tots els components del grup.
             </v-alert>
 
+            <v-alert type="success" class="mb-3" v-model="result">
+                Inscripció del grup realitzada correctament
+            </v-alert>
             <v-chip>
                 <v-avatar>
                     <img :src="gravatarURL(user.email)">
@@ -53,7 +56,7 @@
                         <v-text-field
                             prepend-icon="attach_file"
                             single-line
-                            v-model="filename"
+                            v-model="avatarFilename"
                             label="Escolliu un avatar pel grup o arrosegueu una imatge"
                             @click.native="selectUploadFile"
                             ref="fileTextField"
@@ -93,6 +96,7 @@
   import * as actions from '../store/action-types'
   import withSnackbar from './mixins/withSnackbar'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
+  import sleep from '../utils/sleep'
 
   export default {
     name: 'Group',
@@ -101,6 +105,7 @@
     data () {
       return {
         alert: true,
+        result: false,
         valid: false,
         registering: false,
         name: '',
@@ -113,8 +118,8 @@
           v => !!v || 'El avatar és obligatori'
         ],
         selectedUsers: [],
-        filename: null,
-        file: null,
+        avatarFilename: null,
+        avatar: null,
         filePath: 'img/groupPlaceholder.jpg',
         dragging: false
       }
@@ -164,8 +169,8 @@
           files = e.target.files
         }
         if (files[0].type.startsWith('image')) {
-          this.file = files[0]
-          this.filename = files[0].name
+          this.avatar = files[0]
+          this.avatarFilename = files[0].name
           this.preview(files[0])
         }
       },
@@ -183,9 +188,9 @@
       },
       onFileChange (event) {
         var target = event.target || event.srcElement
-        this.file = target.files[0]
-        this.filename = target.files[0].name
-        this.preview(this.file)
+        this.avatar = target.files[0]
+        this.avatarFilename = target.files[0].name
+        this.preview(this.avatar)
       },
       userSelected (n, user) {
         if (user) {
@@ -201,16 +206,18 @@
         return new Set(this.selectedUsers).has(user)
       },
       register () {
+        this.alert = false
         if (this.$refs.registrationGroupForm.validate()) {
           this.registering = true
-          // TODO avatar
           const group = {
             name: this.name,
-            avatar: '',
+            avatar: this.avatar,
             user_ids: this.ids
           }
+
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
-            console.dir(response)
+            this.result = true
+            sleep(3000).then(() => { this.close() })
           }).catch(error => {
             console.dir(error)
             this.showError(error)

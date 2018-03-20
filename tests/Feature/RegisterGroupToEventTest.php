@@ -44,7 +44,6 @@ class RegisterGroupToEventTest extends TestCase
             $group = Group::findByName('Smells Like Team Spirit');
         } catch (ModelNotFoundException $e) {
             $this->assertEquals(null, $group);
-            return;
         }
 
         $file = File::image('avatar.png');
@@ -52,7 +51,6 @@ class RegisterGroupToEventTest extends TestCase
         $response = $this->json('POST','/api/v1/events/' . $event->id . '/register_group', [
             'name' => 'Smells Like Team Spirit',
             'avatar' => $file,
-//            'leader' Not needed -> Logged user is Group leader
             'ids' => $ids
         ]);
 
@@ -60,7 +58,9 @@ class RegisterGroupToEventTest extends TestCase
         $response->assertSuccessful();
         $group = Group::findByName('Smells Like Team Spirit');
         $this->assertInstanceOf(Group::class, $group);
-        $this->assertNotNull($group->avatar);
+
+        $this->assertEquals('avatars/group_' . $group->id . '_avatar.png',$group->avatar);
+
         $this->assertFileEquals(
             $file->getPathname(),
             Storage::disk('local')->path($group->avatar)

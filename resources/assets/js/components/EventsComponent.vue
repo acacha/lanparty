@@ -16,7 +16,7 @@
            <group
                     :users="this.users"
                     :event="currentEvent"
-                    @close="showInscribeToGroupEvent=false;"
+                    @close="closeRegisterGroupDialog"
                     :dialog="true"
             ></group>
         </v-dialog>
@@ -56,8 +56,7 @@
                                           :input-value="props.item.inscribed"
                                           @change="toogleInscription(props.item)"
                                           :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
-                                <!--TODO-->
-                                <v-btn flat icon color="green" v-if="props.item.available_tickets === 4">
+                                <v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">
                                     <v-icon>mode_edit</v-icon>
                                 </v-btn>
                             </td>
@@ -76,12 +75,7 @@
                                         >
                                             <v-list-tile slot="activator">
                                                 <v-list-tile-avatar>
-                                                    <template v-if="group.avatar">
-                                                    <img :src="group.avatar">
-                                                    </template>
-                                                    <template v-else>
-                                                    <img src="/img/groupPlaceholder.jpg">
-                                                    </template>
+                                                    <img :src="'/group/' + group.id + '/avatar'">
                                                 </v-list-tile-avatar>
                                                 <v-list-tile-content>
                                                     <v-list-tile-title>
@@ -273,6 +267,14 @@
       })
     },
     methods: {
+      editGroupRegistration () {
+        this.avoidExpand = true
+        this.showInscribeToGroupEvent = true
+        // TODO Vuex store: logged user with groups is member. Use this data to fill fields on Group REgistration Form
+      },
+      closeRegisterGroupDialog () {
+        this.showInscribeToGroupEvent = false
+      },
       memberOf (group, user) {
         return group.members.find((member) => {
           return member.id === user.id

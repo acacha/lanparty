@@ -27,9 +27,13 @@ class RegisterGroupToEventController extends Controller
         if ($event->inscription_type_id == 2) abort(422, 'No es pot registrar un grup a un event per a usuaris');
 
         $group = Group::create([
-            'name' => $request->name,
-            'avatar' => $request->file('avatar')->store('avatars')
+            'name' => $request->name
         ]);
+
+        $group->avatar = $request->file('avatar')->storeAs(
+            'avatars',
+            'group_' . $group->id . '_avatar.' . pathinfo($request->file('avatar')->name,PATHINFO_EXTENSION));
+        $group->update();
 
         $group->add(Auth::user());
 
