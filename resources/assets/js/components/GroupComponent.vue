@@ -43,7 +43,27 @@
                         required
                 ></v-text-field>
 
-                <upload label="Escolliu un avatar pel grup o arrosegueu una imatge" accept="image/*"></upload>
+                <v-layout row wrap align-center>
+                    <v-flex xs1 class="text-xs-center">
+                        <img ref="avatar" :src="filePath" alt="Avatar" style="max-width: 100%;max-height: 100%;"
+                             @click="selectUploadFile" @dragover="dragover" @dragleave="dragleave" @drop="drop"
+                             v-bind:class="{ isDragging: dragging }">
+                    </v-flex>
+                    <v-flex xs11>
+                        <v-text-field
+                            prepend-icon="attach_file"
+                            single-line
+                            v-model="filename"
+                            label="Escolliu un avatar pel grup o arrosegueu una imatge"
+                            @click.native="selectUploadFile"
+                            ref="fileTextField"
+                            :rules="avatarRules"
+                            required
+                        >
+                        </v-text-field>
+                        <input type="file" accept="image/*" ref="fileInput" @change="onFileChange">
+                    </v-flex>
+                </v-layout>
 
                 <template v-for="n in 4">
                     <v-users-search :users="users" @input="userSelected(n+1,$event)" :label="'Participant ' + n"></v-users-search>
@@ -56,13 +76,19 @@
     </v-card>
 </template>
 
-<style>
-
+<style scoped>
+    input[type=file] {
+        position: absolute;
+        left: -99999px;
+    }
+    .isDragging {
+        opacity: 0.5;
+        filter: alpha(opacity=50); /* For IE8 and earlier */
+    }
 </style>
 
 <script>
   import VUsersSearch from './VUsersSearchComponent.vue'
-  import Upload from './UploadComponent'
   import { mapGetters } from 'vuex'
   import * as actions from '../store/action-types'
   import withSnackbar from './mixins/withSnackbar'
@@ -70,7 +96,7 @@
 
   export default {
     name: 'Group',
-    components: { VUsersSearch, Upload },
+    components: { VUsersSearch },
     mixins: [withSnackbar, interactsWithGravatar],
     data () {
       return {
@@ -81,9 +107,16 @@
         ids: {},
         nameRules: [
           v => !!v || 'El nom és obligatori',
-          v => v.length <= 30 || 'Name must be less than 30 characters'
+          v => v.length <= 50 || 'Name must be less than 50 characters'
         ],
-        selectedUsers: []
+        avatarRules: [
+          v => !!v || 'El avatar és obligatori'
+        ],
+        selectedUsers: [],
+        filename: null,
+        file: null,
+        filePath: 'img/groupPlaceholder.jpg',
+        dragging: false
       }
     },
     computed: {
@@ -110,6 +143,50 @@
       }
     },
     methods: {
+      dragover (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.dragging = true
+      },
+      dragleave (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.dragging = false
+      },
+      drop (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.dragging = false
+        let files
+        if (e.dataTransfer) {
+          files = e.dataTransfer.files
+        } else if (e.target) {
+          files = e.target.files
+        }
+        if (files[0].type.startsWith('image')) {
+          this.file = files[0]
+          this.filename = files[0].name
+          this.preview(files[0])
+        }
+      },
+      selectUploadFile () {
+        if (!this.disabled) {
+          this.$refs.fileInput.click()
+        }
+      },
+      preview (file) {
+        let reader = new FileReader()
+        reader.onload = f => {
+          this.filePath = f.target.result
+        }
+        reader.readAsDataURL(file)
+      },
+      onFileChange (event) {
+        var target = event.target || event.srcElement
+        this.file = target.files[0]
+        this.filename = target.files[0].name
+        this.preview(this.file)
+      },
       userSelected (n, user) {
         if (user) {
           if (this.isUserAlreadySelected(user)) {

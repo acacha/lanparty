@@ -56,7 +56,7 @@
                                           :input-value="props.item.inscribed"
                                           @change="toogleInscription(props.item)"
                                           :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
-                                TODO
+                                <!--TODO-->
                                 <v-btn flat icon color="green" v-if="props.item.available_tickets === 4">
                                     <v-icon>mode_edit</v-icon>
                                 </v-btn>
