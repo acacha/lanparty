@@ -1,14 +1,5 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/push_message.js": "/js/push_message.js",
-    "/0.316e3c660ceead213bb0.hot-update.js": "/0.316e3c660ceead213bb0.hot-update.js",
-    "/0.d7dc82ba0d677aabaee3.hot-update.js": "/0.d7dc82ba0d677aabaee3.hot-update.js",
-    "/0.5ad8c2b92eeb605da9f5.hot-update.js": "/0.5ad8c2b92eeb605da9f5.hot-update.js",
-    "/0.c3a2db61aef36dd3cac8.hot-update.js": "/0.c3a2db61aef36dd3cac8.hot-update.js",
-    "/0.1a0a8464cb99896c8dfa.hot-update.js": "/0.1a0a8464cb99896c8dfa.hot-update.js",
-    "/0.8e26c9efb0d30c805323.hot-update.js": "/0.8e26c9efb0d30c805323.hot-update.js",
-    "/0.a228831ded2b0b0ea5cf.hot-update.js": "/0.a228831ded2b0b0ea5cf.hot-update.js",
-    "/0.57eb5d23714f7e62c4ae.hot-update.js": "/0.57eb5d23714f7e62c4ae.hot-update.js",
-    "/0.57f7f9977b9c27cf236c.hot-update.js": "/0.57f7f9977b9c27cf236c.hot-update.js"
+    "/js/push_message.js": "/js/push_message.js"
 }

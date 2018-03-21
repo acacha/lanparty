@@ -21,6 +21,7 @@ import LandingPage from './components/LandingPageComponent.vue'
 import Gravatar from './components/GravatarComponent.vue'
 import Events from './components/EventsComponent.vue'
 import UserNumbers from './components/UserNumbersComponent.vue'
+import Share from './components/ShareComponent.vue'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -54,7 +55,16 @@ const app = new Vue({
       { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' }
     ]
   }),
-  components: { UsersSearch, VUsersSearch, NumbersSearch, ManageUser, LandingPage, Gravatar, Events, UserNumbers },
+  components: {
+    UsersSearch,
+    VUsersSearch,
+    NumbersSearch,
+    ManageUser,
+    LandingPage,
+    Gravatar,
+    Events,
+    UserNumbers,
+    Share },
   computed: {
     ...mapGetters({
       user: 'user'

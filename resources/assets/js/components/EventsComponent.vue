@@ -181,12 +181,19 @@
                                                     </template>
                                                 </div>
                                             </v-flex>
-                                            <v-flex xs4 class="">
+                                            <v-flex xs4>
+                                                Inscrit:
                                                 <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
                                                 <v-switch v-else
                                                           :input-value="props.item.inscribed"
                                                           @change="toogleInscription(props.item)"
                                                           :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
+
+
+                                                <v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">
+                                                    <v-icon>mode_edit</v-icon>
+                                                </v-btn>
+
                                             </v-flex>
                                         </v-layout>
 

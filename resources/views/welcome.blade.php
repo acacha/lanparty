@@ -7,6 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="user" content="{{ logged_user() }}">
 
+    <meta property="og:title" content="LAN PARTY Institut de l'Ebre" />
+    <meta property="subtitle" content="Bla bla bla" />
     <meta property="og:url" content="https://registre.lanparty.iesebre.com" />
     <meta property="og:image" content="https://registre.lanparty.iesebre.com/img/AcachaAdminLTE.png" />
     <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x600.png" />
@@ -31,6 +33,7 @@
             reset-password-token="{{ $token or null }}"
             reset-password-email="{{ $email or null }}">
     </landing-page>
+    <share></share>
 </div>
 @stack('beforeScripts')
 <script src="{{ mix('js/app.js') }}"></script>
