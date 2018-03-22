@@ -66,9 +66,8 @@
                     <template slot="expand" slot-scope="props">
                         <v-card>
                             <v-card-text>
-                                <template v-if="props.item.inscription_type_id == 1">
-
-                                    <v-list two-line>
+                                <v-list two-line v-if="props.item.inscription_type_id == 1">
+                                    <template v-if="props.item.groups && props.item.groups.length">
                                         <v-list-group
                                                 v-for="(group, index) in props.item.groups"
                                                 :key="group.id"
@@ -125,7 +124,165 @@
                                             </v-list-tile>
 
                                         </v-list-group>
-                                    </v-list>
+                                    </template>
+                                    <template v-else>
+                                        Cap grup inscrit a l'esdeveniment
+                                    </template>
+                                </v-list>
+
+                                <v-list two-line v-else>
+                                    <template v-if="props.item.users && props.item.users.length">
+                                        <template v-for="(user, index) in props.item.users">
+                                            <v-list-tile avatar :key="user.title" @click="">
+                                                <v-list-tile-avatar>
+                                                    <img :src="gravatarURL(user.email)">
+                                                </v-list-tile-avatar>
+                                                <v-list-tile-content>
+                                                    <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} ({{user.name}})</v-list-tile-title>
+                                                    <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
+                                                </v-list-tile-content>
+                                            </v-list-tile>
+                                        </template>
+                                    </template>
+                                    <template v-else>
+                                        Cap usuari inscrit a l'esdeveniment
+                                    </template>
+                                </v-list>
+                            </v-card-text>
+                        </v-card>
+                    </template>
+                </v-data-table>
+            </v-card-text>
+
+
+            <v-expansion-panel>
+                <v-data-iterator
+                        content-tag="v-layout"
+                        row
+                        wrap
+                        :items="internalEvents"
+                        class="hidden-md-and-up"
+                        hide-actions
+                >
+                    <v-expansion-panel-content
+                            slot="item"
+                            slot-scope="props">
+
+                        <v-card slot="header" class="mb-1 mt-1">
+                            <v-container fluid grid-list-lg>
+                                <v-layout row>
+                                    <v-flex xs7>
+                                        <div>
+                                            <div class="headline">{{ props.item.name }}</div>
+                                            <v-layout row>
+                                                <v-flex xs8>
+                                                    <div class="text-xs-left">
+                                                        Tipus:
+                                                        <template v-if="props.item.inscription_type_id == 1">
+                                                            Grup
+                                                        </template>
+                                                        <template v-else>
+                                                            Individual
+                                                        </template>
+                                                    </div>
+                                                </v-flex>
+                                                <v-flex xs4>
+                                                    Inscrit:
+                                                    <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
+                                                    <v-switch v-else
+                                                              :input-value="props.item.inscribed"
+                                                              @change="toogleInscription(props.item)"
+                                                              :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
+
+
+                                                    <v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">
+                                                        <v-icon>mode_edit</v-icon>
+                                                    </v-btn>
+
+                                                </v-flex>
+                                            </v-layout>
+
+                                            <div class="text-xs-left">Places: {{ props.item.tickets }}</div>
+                                            <div class="text-xs-left">Inscrits: {{ props.item.assigned_tickets }}</div>
+                                            <div class="text-xs-left">Disponibles: {{ props.item.available_tickets }}</div>
+                                            <div class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Reglament</a></div>
+                                        </div>
+                                    </v-flex>
+                                    <v-flex xs5>
+                                        <v-card-media
+                                                :src="props.item.image"
+                                                height="125px"
+                                                contain
+                                        ></v-card-media>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-card>
+
+                        <v-card>
+                            <v-card-text>
+                                <template v-if="props.item.inscription_type_id == 1">
+                                    <v-list two-line v-if="props.item.groups && props.item.groups.length">
+                                            <v-list-group
+                                                    v-for="(group, index) in props.item.groups"
+                                                    :key="group.id"
+                                                    no-action
+                                            >
+                                                <v-list-tile slot="activator">
+                                                    <v-list-tile-avatar>
+                                                        <img :src="'/group/' + group.id + '/avatar'">
+                                                    </v-list-tile-avatar>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>
+                                                            <b>{{ group.name }}</b> |
+                                                            Líder:
+                                                            <template v-if="group.leader">
+                                                                {{this.user.id}} {{group.leader.sn1}} {{group.leader.sn2}}, {{group.leader.givenName}} ({{group.leader.name}})
+                                                            </template>
+                                                            <template v-else>Sense lider assignat</template>
+                                                        </v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                    <v-list-tile-action v-if="canEditGroup(group)">
+
+                                                        <v-btn icon ripple @click.stop="editGroup(group)">
+                                                            <v-icon color="green darken-1">mode_edit</v-icon>
+                                                        </v-btn>
+
+                                                    </v-list-tile-action>
+                                                    <v-list-tile-action v-if="canEditGroup(group)">
+                                                        <v-btn icon ripple @click.stop="unsubscribeGroup(props.item,group)">
+                                                            <v-icon color="red darken-1">delete</v-icon>
+                                                        </v-btn>
+                                                    </v-list-tile-action>
+                                                    <v-list-tile-action v-if="memberOf(group,this.user)">
+                                                        <v-btn icon ripple @click.stop="unregisterToEvent(props.item)">
+                                                            <v-icon color="red darken-1">exit_to_app</v-icon>
+                                                        </v-btn>
+                                                    </v-list-tile-action>
+                                                </v-list-tile>
+
+                                                <template v-if="group.members &&  group.members.length">
+                                                    <v-list-tile v-for="(member, index) in group.members" :key="member.id">
+                                                        <v-list-tile-content>
+                                                            <v-list-tile-title>
+                                                                {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} ({{member.name}})
+                                                            </v-list-tile-title>
+                                                        </v-list-tile-content>
+                                                    </v-list-tile>
+                                                </template>
+                                                <v-list-tile v-else>
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>
+                                                            Sense membres assignats al grup
+                                                        </v-list-tile-title>
+                                                    </v-list-tile-content>
+                                                </v-list-tile>
+
+                                            </v-list-group>
+                                        </v-list>
+                                    <template v-else>
+                                        Cap grup inscrit a l'esdeveniment
+                                    </template>
                                 </template>
                                 <template v-else>
                                     <v-list two-line>
@@ -149,78 +306,11 @@
                                 </template>
                             </v-card-text>
                         </v-card>
-                    </template>
-                </v-data-table>
-            </v-card-text>
-
-            <v-data-iterator
-                    content-tag="v-layout"
-                    row
-                    wrap
-                    :items="internalEvents"
-                    class="hidden-md-and-up"
-                    hide-actions
-            >
-                <v-flex
-                        slot="item"
-                        slot-scope="props"
-                        xs12
-                >
-                    <v-card class="mb-1 mt-1">
-                        <v-container fluid grid-list-lg>
-                            <v-layout row>
-                                <v-flex xs7>
-                                    <div>
-                                        <div class="headline">{{ props.item.name }}</div>
-                                        <v-layout row>
-                                            <v-flex xs8>
-                                                <div class="text-xs-left">
-                                                    Tipus:
-                                                    <template v-if="props.item.inscription_type_id == 1">
-                                                        Grup
-                                                    </template>
-                                                    <template v-else>
-                                                        Individual
-                                                    </template>
-                                                </div>
-                                            </v-flex>
-                                            <v-flex xs4>
-                                                Inscrit:
-                                                <v-progress-circular v-if="props.item.loading" indeterminate color="primary"></v-progress-circular>
-                                                <v-switch v-else
-                                                          :input-value="props.item.inscribed"
-                                                          @change="toogleInscription(props.item)"
-                                                          :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
+                    </v-expansion-panel-content>
+                </v-data-iterator>
 
 
-                                                <v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">
-                                                    <v-icon>mode_edit</v-icon>
-                                                </v-btn>
-
-                                            </v-flex>
-                                        </v-layout>
-
-                                        <div class="text-xs-left">Places: {{ props.item.tickets }}</div>
-                                        <div class="text-xs-left">Inscrits: {{ props.item.assigned_tickets }}</div>
-                                        <div class="text-xs-left">Disponibles: {{ props.item.available_tickets }}</div>
-                                        <div class="text-xs-left"><a @click.stop="return;" :href="props.item.regulation" target="_blank">Reglament</a></div>
-                                    </div>
-                                </v-flex>
-                                <v-flex xs5>
-                                    <v-card-media
-                                            :src="props.item.image"
-                                            height="125px"
-                                            contain
-                                    ></v-card-media>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-card>
-
-                </v-flex>
-            </v-data-iterator>
-
-
+            </v-expansion-panel>
 
         </v-card>
     </div>

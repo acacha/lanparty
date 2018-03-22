@@ -196,54 +196,106 @@ if (!function_exists('seed_example_database')) {
     }
 }
 
+if (!function_exists('add_avatar_to_group')) {
+    function add_avatar_to_group($group, $avatar)
+    {
+        $file = 'avatars/group_' . $group->id . '_avatar.' . pathinfo($avatar, PATHINFO_EXTENSION);;
+        Storage::put($file, file_get_contents(public_path($avatar)));
+        $group->avatar =  $file;
+        $group->update();
+    }
+}
+
+if (!function_exists('create_and_assign_members_to_group')) {
+    function create_and_assign_members_to_group($group) {
+        $leader = factory(User::class)->create();
+        $member1 = factory(User::class)->create();
+        $member2 = factory(User::class)->create();
+        $member3 = factory(User::class)->create();
+        $member4 = factory(User::class)->create();
+
+        $group->add($leader);
+        $group->add($member1);
+        $group->add($member2);
+        $group->add($member3);
+        $group->add($member4);
+
+    }
+}
+
+
 if (!function_exists('seed_groups')) {
     function seed_groups()
     {
-        Group::create( [
-            'name' => 'Fire Breathing Rubber Duckies'
+        $group = Group::create( [
+            'name' => 'Group without avatar field'
         ]);
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'e-LEMON-ators'
+        $group = Group::create( [
+            'name' => 'Group with incorrect avatar field'
         ]);
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Straight off the Couch'
-        ]);
+        $group->avatar =  'avatars/nonexistingpath.png';
+        $group->update();
 
-        Group::create( [
-            'name' => 'Cereal Killers'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'e-LEMON-ators'
+            ]),
+            'img/group2.jpg');
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Podunk Hopscotch Mafia',
-            'avatar' => 'img/group5.jpg'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Straight off the Couch'
+            ]),
+            'img/group3.jpg');
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Not Fast, Just Furious'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Cereal Killers'
+            ]),
+            'img/group4.jpg');
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Super Heroes In Training',
-            'avatar' => 'img/group4.jpg'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Not Fast, Just Furious',
+            ]),
+            'img/group5.jpg');
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Smells Like Team Spirit',
-            'avatar' => 'img/group3.jpg'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Super Heroes In Training',
+            ]),
+            'img/group1.jpg');
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Victorious Secret',
-            'avatar' => 'img/group2.jpg'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Smells Like Team Spirit',
+            ]),
+            'img/group2.jpg');
+        create_and_assign_members_to_group($group);
 
-        Group::create( [
-            'name' => 'Our Uniforms Match',
-            'avatar' => 'img/group1.jpg'
-        ]);
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Victorious Secret',
+            ]),
+            'img/group3.jpg');
+        create_and_assign_members_to_group($group);
 
+        add_avatar_to_group(
+            $group = Group::create( [
+                'name' => 'Our Uniforms Match',
+            ]),
+            'img/group4.jpg');
+        create_and_assign_members_to_group($group);
+        
     }
 }
 
