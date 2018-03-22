@@ -302,4 +302,25 @@ class EventTest extends TestCase
         $this->assertTrue($event->leading);
     }
 
+    /** @test */
+    public function can_unregister_groups()
+    {
+        seed_database();
+        $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
+
+        $group = factory(Group::class)->create();
+        $event->inscribeGroup($group);
+        $event = $event->fresh();
+
+        $this->assertEquals($event->groups->first()->id, $group->id);
+        $this->assertEquals($group->events->first()->id, $event->id);
+
+        $event->unregisterGroup($group);
+        $event = $event->fresh();
+        $group = $group->fresh();
+        $this->assertFalse(in_array($group->id, $event->groups->pluck('id')->all()));
+        $this->assertFalse(in_array($event->id, $group->events->pluck('id')->all()));
+
+    }
+
 }

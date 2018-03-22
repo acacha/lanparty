@@ -56,6 +56,7 @@
                                           :input-value="props.item.inscribed"
                                           @change="toogleInscription(props.item)"
                                           :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
+
                                 <v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">
                                     <v-icon>mode_edit</v-icon>
                                 </v-btn>
@@ -87,13 +88,15 @@
                                                         <template v-else>Sense lider assignat</template>
                                                     </v-list-tile-title>
                                                 </v-list-tile-content>
-                                                <v-list-tile-action v-if="group.leader && group.leader.id === this.user.id">
+                                                <v-list-tile-action v-if="canEditGroup(group)">
+
                                                     <v-btn icon ripple @click.stop="editGroup(group)">
                                                         <v-icon color="green darken-1">mode_edit</v-icon>
                                                     </v-btn>
+
                                                 </v-list-tile-action>
-                                                <v-list-tile-action v-if="group.leader && group.leader.id === this.user.id">
-                                                    <v-btn icon ripple @click.stop="unsubscribeGroup(group)">
+                                                <v-list-tile-action v-if="canEditGroup(group)">
+                                                    <v-btn icon ripple @click.stop="unsubscribeGroup(props.item,group)">
                                                         <v-icon color="red darken-1">delete</v-icon>
                                                     </v-btn>
                                                 </v-list-tile-action>
@@ -270,10 +273,21 @@
     computed: {
       ...mapGetters({
         internalEvents: 'events',
-        user: 'user'
+        user: 'user',
+        roles: 'roles'
       })
     },
     methods: {
+      canEditGroup (group) {
+        return (group.leader && group.leader.id === this.user.id) || this.loggedUserIsManager()
+      },
+      loggedUserIsManager () {
+        const found = this.roles.find((role) => {
+          return role === 'Manager'
+        })
+        if (found) return true
+        return false
+      },
       editGroupRegistration () {
         this.avoidExpand = true
         this.showInscribeToGroupEvent = true
@@ -291,9 +305,15 @@
         // TODO
         console.log('TODO EDIT GROUP')
       },
-      unsubscribeGroup (group) {
-        // TODO
+      unsubscribeGroup (event, group) {
         console.log('TODO UNSUBSCRIBE GROUP')
+        console.log(group)
+        console.dir(event)
+        this.$store.dispatch(actions.UNREGISTER_GROUP_TO_EVENT, {event, group}).then(response => {
+          console.log('todo ok!!!!!!!!!')
+        }).catch(error => {
+          this.showError(error)
+        })
       },
       expand (event, props) {
         if (this.avoidExpand) {
@@ -326,6 +346,8 @@
         })
       },
       unregisterToEvent (event) {
+        // TODO
+        console.log('JORL!!!!!!!!!!!!!!!!!')
         if (event.inscription_type_id === GROUP) {
           const group = this.obtainGroup(event, this.user)
           this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_GROUP_EVENT, {event, group, user: this.user}).catch(error => {

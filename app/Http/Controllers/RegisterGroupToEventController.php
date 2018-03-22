@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Group;
 use App\Http\Requests\RegisterGroupToEventRequest;
+use App\Http\Requests\UnregisterGroup;
 use App\Member;
+use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -37,13 +39,26 @@ class RegisterGroupToEventController extends Controller
 
         $group->add(Auth::user());
 
-        collect($request->ids)->each(function($user_id) use ($group) {
-            Member::create([
-                'user_id' => $user_id,
-                'group_id' => $group->id
-            ]);
+        $ids = is_array($request->ids) ? $request->ids : json_decode($request->ids);
+        collect($ids)->each(function($user_id) use ($group) {
+            $group->add(User::findOrFail($user_id));
         });
 
         $event->inscribeGroup($group);
+    }
+
+    /**
+     * Unregister group to event.
+     *
+     * @param Request $request
+     * @param Event $event
+     * @param Group $group
+     * @return Group
+     */
+    public function destroy(UnregisterGroup $request, Event $event, Group $group)
+    {
+        $event->unregisterGroup($group);
+        $group->delete();
+        return $group;
     }
 }

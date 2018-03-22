@@ -127,12 +127,7 @@
     computed: {
       ...mapGetters({
         user: 'user'
-      }),
-      availableUsers () {
-        let users = new Set(this.users)
-        let sUsers = new Set(this.selectedUsers)
-        return [...users].filter(user => !sUsers.has(user))
-      }
+      })
     },
     props: {
       dialog: {
@@ -199,8 +194,17 @@
             return
           }
           this.ids[n] = user.id
-        } else delete this.ids[n]
-        this.selectedUsers.push(user)
+          this.selectedUsers.push(user)
+        } else {
+          if (this.ids[n]) {
+            const oldId = this.ids[n]
+            let oldUser = this.selectedUsers.find(user => {
+              return user.id === oldId
+            })
+            this.selectedUsers.splice(this.selectedUsers.indexOf(oldUser), 1)
+          }
+          delete this.ids[n]
+        }
       },
       isUserAlreadySelected (user) {
         return new Set(this.selectedUsers).has(user)
@@ -208,11 +212,27 @@
       register () {
         this.alert = false
         if (this.$refs.registrationGroupForm.validate()) {
+          console.dir(this.ids)
+          let ids = Object.values(this.ids)
+          console.log('IDS:')
+          console.dir(ids)
+          console.log('USER ID:')
+          console.log(this.user.id)
+          console.log('INDEX OF:')
+          let index = ids.indexOf(this.user.id)
+          console.log(index)
+          let ids2 = ids.splice(index, 1)
+          console.log('IDS 2:')
+          console.dir(ids2)
+
+          let userIds = this.selectedUsers.map(user => user['id'])
+          console.dir(userIds)
+
           this.registering = true
           const group = {
             name: this.name,
             avatar: this.avatar,
-            user_ids: this.ids
+            user_ids: JSON.stringify(userIds)
           }
 
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
@@ -232,10 +252,6 @@
     },
     mounted () {
       this.ids[1] = this.user.id
-      var foundUser = this.users.find((user) => {
-        return user.id === this.user.id
-      })
-      this.selectedUsers.push(foundUser)
     }
   }
 </script>

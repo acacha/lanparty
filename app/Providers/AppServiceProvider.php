@@ -6,6 +6,8 @@ use Acacha\User\GuestUser;
 use App\InvitationCodeGenerator;
 use App\InvitationCodeGeneratorComplex;
 use App\InvitationCodeGeneratorSimple;
+use App\Member;
+use App\Observers\MemberObserver;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Resource::withoutWrapping();
+        Member::observe(MemberObserver::class);
     }
 
     /**

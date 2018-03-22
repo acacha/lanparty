@@ -57,10 +57,25 @@ export default {
     return new Promise((resolve, reject) => {
       context.commit(mutations.SET_EVENT_AS_LOADING, event)
       events.registerGroupToEvent(event, group).then(response => {
-        // TODO ALGUN COMMIT?
+        context.commit(mutations.SET_GROUP_EVENT_AS_INSCRIBED, {event, group})
         resolve(response)
       }).catch(error => {
         reject(error)
+      }).then(() => {
+        context.commit(mutations.UNSET_EVENT_AS_LOADING, event)
+      })
+    })
+  },
+  [ actions.UNREGISTER_GROUP_TO_EVENT ] (context, {event, group}) {
+    return new Promise((resolve, reject) => {
+      context.commit(mutations.SET_EVENT_AS_LOADING, event)
+      events.unregisterGroupToEvent(event, group).then(response => {
+        context.commit(mutations.SET_GROUP_EVENT_AS_UNSUBSCRIBED, {event, group})
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      }).then(() => {
+        context.commit(mutations.UNSET_EVENT_AS_LOADING, event)
       })
     })
   },

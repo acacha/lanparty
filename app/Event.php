@@ -122,7 +122,9 @@ class Event extends Model
     }
 
     /**
-     * Register group to event
+     * Register group to event.
+     * 
+     * @param Group $group
      */
     public function registerGroup(Group $group)
     {
@@ -133,7 +135,7 @@ class Event extends Model
 
     /**
      * Alias for registerGroup.
-     * s
+     *
      * @param Group $group
      */
     public function inscribeGroup(Group $group)
@@ -142,14 +144,37 @@ class Event extends Model
     }
 
     /**
+     * Unregister group.
+     *
+     * @param Group $group
+     */
+    public function unregisterGroup(Group $group)
+    {
+        if ($this->inscription_type_id == 2) throw new InscriptionException('Cannot unregister a group in an event for individuals');
+
+        $this->groups()->detach($group->id);
+    }
+
+    /**
      * Check if group is already registered to the event.
      *
      * @param Group $group
      * @return bool
      */
-    protected function groupAlreadyInscribed(Group $group)
+    public function groupAlreadyInscribed(Group $group)
     {
         return in_array($group->id, $this->groups->pluck('id')->all());
+    }
+
+    /**
+     * Alias for groupAlreadyInscribed.
+     *
+     * @param Group $group
+     * @return bool
+     */
+    public function hasGroup(Group $group)
+    {
+        return $this->groupAlreadyInscribed($group);
     }
 
     /**

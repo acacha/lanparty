@@ -21,22 +21,11 @@ class GroupAvatarController extends Controller
      */
     public function show(Group $group)
     {
-//        dd($group->avatar);
+
         if ($group->avatar && Storage::exists($group->avatar)) {
             return response()->file(Storage::path($group->avatar));
         }
-
-//        return Storage::disk('public')->response('groupPlaceholder.jpg');
-//        dd(Storage::disk('public')->path('groupPlaceholder.jpg'));
-        return response()->download(public_path('/img/group1.jpg'));
-        return response()->download(Storage::disk('public')->path('groupPlaceholder.jpg'));
-//        dd(Storage::disk('public')->path('groupPlaceholder.jpg'));
-
-        return response()->file(public_path('/img/group1.jpg'),['Content-Type' => 'image/jpeg']);
-
-//        dd(public_path('/img/groupPlaceholder.jpg'));
-//        dd('dasdsaas');
-
+        return response()->file(public_path('/img/groupPlaceholder.jpg'));
     }
 
     /**

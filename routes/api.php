@@ -49,6 +49,8 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Register group to event
     Route::post('/events/{event}/register_group', 'RegisterGroupToEventController@store');
 
+    Route::delete('/events/{event}/register_group/{group}', 'RegisterGroupToEventController@destroy');
+
     // ASSIGN NUMBERS
     // Assign first available number to user
     Route::post('/user/{user}/assign_number', 'AssignNumberToUserController@store');
@@ -60,7 +62,6 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Payments
     Route::post('/user/{user}/pay', 'UserPaymentsController@store');
     Route::delete('/user/{user}/pay', 'UserPaymentsController@destroy');
-
 
 });
 

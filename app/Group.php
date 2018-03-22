@@ -92,6 +92,12 @@ class Group extends Model
         return in_array($user->id, $this->members->pluck('id')->all());
     }
 
+    /**
+     * Get member by order.
+     *
+     * @param $order
+     * @return mixed
+     */
     public function getMemberByOrder($order)
     {
         return $this->members()->wherePivot('order',$order)->first();

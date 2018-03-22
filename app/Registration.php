@@ -34,4 +34,40 @@ class Registration extends Model
     {
         return $query->whereNotNull('registration_id');
     }
+
+    /**
+     * By type.
+     *
+     * @param $query
+     * @param $type
+     * @return mixed
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('registration_type',$type);
+    }
+
+    /**
+     * Group.
+     *
+     * @param $query
+     * @param Group $group
+     * @return mixed
+     */
+    public function scopeGroup($query, Group $group)
+    {
+        return $query->where('registration_type',Group::class)->where('registration_id', $group->id);
+    }
+
+    /**
+     * User.
+     *
+     * @param $query
+     * @param User $user
+     * @return mixed
+     */
+    public function scopeUser($query, User $user)
+    {
+        return $query->where('registration_type',User::class)->where('registration_id', $user->id);
+    }
 }
