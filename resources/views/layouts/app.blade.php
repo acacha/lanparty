@@ -177,7 +177,7 @@
                        </v-card-actions>
                        <v-card-actions>
                            <v-spacer></v-spacer>
-                           <v-btn flat color="red">Canviar Paraula de pas</v-btn>
+                           <v-btn :loading="changingPassword" flat color="red" @click="changePassword">Canviar Paraula de pas</v-btn>
                            <v-spacer></v-spacer>
                        </v-card-actions>
                    </v-card>

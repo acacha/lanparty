@@ -43,6 +43,7 @@ const app = new Vue({
     logoutLoading: false,
     editingUser: false,
     updatingUser: false,
+    changingPassword: false,
     items: [
       { icon: 'home', text: 'Home', href: '/home' },
       { icon: 'contacts', text: 'Col·laboradors' },
@@ -114,6 +115,18 @@ const app = new Vue({
       }).then(() => {
         this.editingUser = false
         this.updatingUser = false
+      })
+    },
+    changePassword() {
+      console.log('change password')
+      this.changingPassword = true
+      this.$store.dispatch(actions.REMEMBER_PASSWORD, this.user.email).then(response => {
+        this.showMessage(`Se us ha enviat un email per tal de modificar la paraula de pas`)
+      }).catch(error => {
+        console.dir(error)
+        this.showError(error)
+      }).then(() => {
+        this.changingPassword = false
       })
     },
     toogleRightDrawer() {
