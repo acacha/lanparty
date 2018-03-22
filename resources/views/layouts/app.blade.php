@@ -14,10 +14,18 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app" v-cloak>
-
-   <v-app id="inspire">
-                <v-navigation-drawer
+   <v-app id="app" v-cloak>
+       <v-snackbar
+               :timeout="6000"
+               :color="snackbarColor"
+               v-model="snackbar"
+               :multi-line="true"
+       >
+           @{{ snackbarText }}<br/>
+           @{{ snackbarSubtext }}
+           <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
+       </v-snackbar>
+               <v-navigation-drawer
                         fixed
                         clipped
                         app
@@ -78,7 +86,7 @@
                         </template>
                     </v-list>
                 </v-navigation-drawer>
-                <v-toolbar
+               <v-toolbar
                         color="blue darken-3"
                         dark
                         app
@@ -113,31 +121,37 @@
                                    <gravatar :user="{{ $user }}" size="100px"></gravatar>
                                </v-flex>
                                <v-flex xs12 md8>
-                                   <h3>{{ $user->name }}</h3>
+                                   <h3>@{{ user.name }}</h3>
                                </v-flex>
                            </v-layout>
                        </v-container>
                        <v-card-text class="px-0 grey lighten-3">
                            <v-form class="pl-3 pr-1 ma-0">
-                               <v-text-field
+                               <v-text-field :readonly="!editingUser"
                                              label="Email"
                                              :value="user.email"
+                                             ref="email"
+                                             @input="updateEmail"
                                ></v-text-field>
-                               <v-text-field
+                               <v-text-field :readonly="!editingUser"
                                              label="Nom usuari"
                                              :value="user.name"
+                                             @input="updateName"
                                ></v-text-field>
-                               <v-text-field
+                               <v-text-field :readonly="!editingUser"
                                              label="Nom"
                                              :value="user.givenName"
+                                             @input="updateGivenName"
                                ></v-text-field>
-                               <v-text-field
+                               <v-text-field :readonly="!editingUser"
                                              label="1r Cognom"
                                              :value="user.sn1"
+                                             @input="updateSn1"
                                ></v-text-field>
-                               <v-text-field
+                               <v-text-field :readonly="!editingUser"
                                              label="2n Cognom"
                                              :value="user.sn2"
+                                             @input="updateSn2"
                                ></v-text-field>
                                <v-text-field readonly
                                              label="Created at"
@@ -148,7 +162,11 @@
                        </v-card-text>
                        <v-card-actions>
                            <v-spacer></v-spacer>
-                           <v-btn flat color="orange" @click="updateUser">
+                           <v-btn :loading="updatingUser" flat color="green" @click="updateUser" v-if="editingUser">
+                               <v-icon right dark>save</v-icon>
+                               Guardar
+                           </v-btn>
+                           <v-btn flat color="orange" @click="editUser()" v-else>
                                <v-icon right dark>edit</v-icon>
                                Editar
                            </v-btn>
@@ -169,7 +187,6 @@
                     @yield('content')
                 </v-content>
             </v-app>
-    </div>
     @stack('beforeScripts')
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>

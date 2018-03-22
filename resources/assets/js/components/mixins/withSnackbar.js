@@ -8,18 +8,21 @@ export default {
     }
   },
   methods: {
+    showMessage (message) {
+      this.showSnackBar(message, 'success')
+    },
     showError (error) {
       this.showSnackBar(error, 'error')
     },
-    showSnackBar (error, color) {
+    showSnackBar (message, color) {
       this.snackbar = true
       this.snackbarColor = color || this.snackbarColor
-      if (typeof error === 'string') {
-        this.snackbarText = error.message
+      if (typeof message === 'string') {
+        this.snackbarText = message
         return
       }
-      this.snackbarText = error.message
-      if (error.response) this.snackbarSubtext = error.response.data.message
+      this.snackbarText = message.message
+      if (message.response) this.snackbarSubtext = message.response.data.message
     }
   }
 }

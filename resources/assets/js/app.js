@@ -22,6 +22,7 @@ import Gravatar from './components/GravatarComponent.vue'
 import Events from './components/EventsComponent.vue'
 import UserNumbers from './components/UserNumbersComponent.vue'
 import Share from './components/ShareComponent.vue'
+import withSnackbar from './components/mixins/withSnackbar'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -40,6 +41,8 @@ const app = new Vue({
     drawer: null,
     drawerRight: false,
     logoutLoading: false,
+    editingUser: false,
+    updatingUser: false,
     items: [
       { icon: 'home', text: 'Home', href: '/home' },
       { icon: 'contacts', text: 'Col·laboradors' },
@@ -65,6 +68,7 @@ const app = new Vue({
     Events,
     UserNumbers,
     Share },
+  mixins: [ withSnackbar],
   computed: {
     ...mapGetters({
       user: 'user'
@@ -81,13 +85,35 @@ const app = new Vue({
         this.logoutLoading = false
       })
     },
+    editUser() {
+      this.editingUser = true
+      this.$nextTick(this.$refs.email.focus)
+    },
+    updateEmail(email){
+      this.$store.commit(mutations.USER,{...this.user, email})
+    },
+    updateName(name){
+      this.$store.commit(mutations.USER,{...this.user, name})
+    },
+    updateGivenName(givenName){
+      this.$store.commit(mutations.USER,{...this.user, givenName})
+    },
+    updateSn1(sn1){
+      this.$store.commit(mutations.USER,{...this.user, sn1})
+    },
+    updateSn2(sn2){
+      this.$store.commit(mutations.USER,{...this.user, sn2})
+    },
     updateUser() {
+      this.updatingUser = true
       this.$store.dispatch(actions.UPDATE_USER, this.user).then(response => {
-
+        this.showMessage('Usuari modificat correctament')
       }).catch(error => {
         console.dir(error)
+        this.showError(error)
       }).then(() => {
-        this.logoutLoading = false
+        this.editingUser = false
+        this.updatingUser = false
       })
     },
     toogleRightDrawer() {

@@ -295,7 +295,7 @@ if (!function_exists('seed_groups')) {
             ]),
             'img/group4.jpg');
         create_and_assign_members_to_group($group);
-        
+
     }
 }
 
