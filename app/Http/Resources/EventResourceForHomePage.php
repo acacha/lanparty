@@ -33,7 +33,8 @@ class EventResourceForHomePage extends JsonResource
             'available_tickets' => $this->available_tickets,
             'assigned_tickets' => $this->assigned_tickets,
             'users' => $this->users,
-            'groups' => GroupResource::collection($this->groups)
+            'groups' => GroupResource::collection($this->groups),
+            'regulation' => $this->regulation
         ];
     }
 }

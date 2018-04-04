@@ -36,7 +36,8 @@ class EventsControllerTest extends TestCase
             'tickets',
             'available_tickets',
             'assigned_tickets',
-            'registrations'
+            'registrations',
+            'regulation'
         ]]);
     }
 }

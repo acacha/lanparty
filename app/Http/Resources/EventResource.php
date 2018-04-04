@@ -31,7 +31,8 @@ class EventResource extends JsonResource
             'tickets' => $this->tickets,
             'available_tickets' => $this->available_tickets,
             'assigned_tickets' => $this->assigned_tickets,
-            'registrations' => $this->registrations
+            'registrations' => $this->registrations,
+            'regulation' => $this->regulation
         ];
     }
 }
