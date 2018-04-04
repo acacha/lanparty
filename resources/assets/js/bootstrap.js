@@ -52,3 +52,12 @@ if (token) {
 //     cluster: 'mt1',
 //     encrypted: true
 // });
+
+// https://github.com/laravel/echo/issues/151
+
+// import Echo from "laravel-echo";
+
+// window.Echo = new Echo({
+//   broadcaster: 'socket.io',
+//   host: 'http://192.168.10.10:6001'
+// });

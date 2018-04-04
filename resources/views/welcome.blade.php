@@ -8,17 +8,15 @@
     <meta name="user" content="{{ logged_user() }}">
 
     <meta property="og:title" content="LAN PARTY Institut de l'Ebre" />
-    <meta property="subtitle" content="Bla bla bla" />
+    <meta property="subtitle" content="La LAN Party de les Terres de l'Ebre" />
     <meta property="og:url" content="https://registre.lanparty.iesebre.com" />
-    <meta property="og:image" content="https://registre.lanparty.iesebre.com/img/AcachaAdminLTE.png" />
-    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x600.png" />
-    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x314.png" />
-    <meta property="og:sitename" content="demo.adminlte.acacha.org" />
-    <meta property="og:url" content="https://demo.adminlte.acacha.org" />
+    <meta property="og:image" content="https://registre.lanparty.iesebre.com/img/logo512x512.png" />
+    <meta property="og:sitename" content="registre.lanparty.iesebre.com" />
+    <meta property="og:url" content="https://registre.lanparty.iesebre.com" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@acachawiki" />
-    <meta name="twitter:creator" content="@acacha1" />
+    <meta name="twitter:site" content="@Institut_Ebre" />
+    <meta name="twitter:creator" content="@Institut_Ebre" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="manifest" href="/manifest.json">
