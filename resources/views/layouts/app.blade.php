@@ -117,11 +117,12 @@
                    <v-card>
                        <v-container fluid grid-list-md class="grey lighten-4">
                            <v-layout row wrap>
-                               <v-flex xs12 md4>
+                               <v-flex xs12>
                                    <gravatar :user="{{ $user }}" size="100px"></gravatar>
                                </v-flex>
-                               <v-flex xs12 md8>
+                               <v-flex xs12>
                                    <h3>@{{ user.name }}</h3>
+                                   <a href="https://en.gravatar.com/connect/">Canvia el teu avatar</a>
                                </v-flex>
                            </v-layout>
                        </v-container>
@@ -177,11 +178,15 @@
                        </v-card-actions>
                        <v-card-actions>
                            <v-spacer></v-spacer>
-                           <v-btn :loading="changingPassword" flat color="red" @click="changePassword">Canviar Paraula de pas</v-btn>
+                            <v-btn :loading="changingPassword" flat color="red" @click="changePassword">Canviar Paraula de pas</v-btn>
+                           <v-spacer></v-spacer>
+                       </v-card-actions>
+                       <v-card-actions>
+                           <v-spacer></v-spacer>
+                            <a href="https://en.gravatar.com/connect/">Canvia el teu avatar</a>
                            <v-spacer></v-spacer>
                        </v-card-actions>
                    </v-card>
-
                </v-navigation-drawer>
                 <v-content>
                     @yield('content')
