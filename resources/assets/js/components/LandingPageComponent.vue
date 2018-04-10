@@ -462,6 +462,12 @@
             </section>
 
             <section>
+                <v-container>
+                    <div id="googleMap" style="width:100%;height:400px;"></div>
+                </v-container>
+            </section>
+
+            <section>
                 <v-container grid-list-xl>
                     <v-layout row wrap justify-center class="my-5">
                         <v-flex xs12 sm4>
