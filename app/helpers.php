@@ -194,6 +194,8 @@ if (!function_exists('seed_example_database')) {
         seed_groups();
         $groups = Group::all();
         foreach ($events as $event) {
+            dump('Event name: ' . $event->name);
+            dump('inscription_type_id: ' . $event->inscription_type_id);
             if ($event->inscription_type_id == 2) {
                 foreach (range(1,5) as $i) {
                     $user = $users->pop();
