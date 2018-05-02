@@ -48,7 +48,7 @@ if (!function_exists('create_events')) {
                 'name' => 'Counter Strike',
                 'inscription_type' => 'group',
                 'image' => 'img/CounterStrike.jpeg',
-                'tickets' => 5, // Número d'usuaris es poden inscriure
+                'tickets' => 10, // Número d'usuaris es poden inscriure
                 'participants_number' => 3,
                 'regulation' => 'https://docs.google.com/document/d/1ZMUBSAYHz79JSWkbv9Ra0HLfO2WGJHkLW6xDYHa4Pks/edit',
                 'published_at' => '2018-01-15 12:00:00',
@@ -58,7 +58,7 @@ if (!function_exists('create_events')) {
                 'name' => 'Age Of empires',
                 'inscription_type' => 'individual',
                 'image' => 'img/AgeOfEmpires2.png',
-                'tickets' => 12, // Número d'usuaris es poden inscriure
+                'tickets' => 15, // Número d'usuaris es poden inscriure
                 'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
                 'participants_number' => null,
                 'published_at' => '2018-01-15 12:00:00',
