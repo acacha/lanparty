@@ -71,5 +71,14 @@ export default {
       if (item.id === event.id) newEvents[index].loading = false
     })
     state.events = newEvents
+  },
+  [ types.REMOVE_GROUP_FROM_EVENT ] (state, event, group) {
+    state.events.indexOf()
+    let foundEvent = state.events.find((e) => {
+      return e.id === event.id
+    })
+    foundEvent.groups.splice(foundEvent.groups.indexOf(group), 1)
+    foundEvent.assigned_tickets--
+    foundEvent.available_tickets++
   }
 }

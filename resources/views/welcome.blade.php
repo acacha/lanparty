@@ -31,7 +31,6 @@
             reset-password-token="{{ $token or null }}"
             reset-password-email="{{ $email or null }}">
     </landing-page>
-    <share></share>
 </div>
 @stack('beforeScripts')
 <script src="{{ mix('js/app.js') }}"></script>

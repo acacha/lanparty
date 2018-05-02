@@ -385,10 +385,10 @@
                                 <v-flex xs12 md3>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <img src="/img/FIFA18.png" alt="FIFA 18" width="200px;">
+                                            <img src="/img/AgeOfEmpires2.png" alt="Age of Empires2" width="200px;">
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline text-xs-center">FIFA 18</div>
+                                            <div class="headline text-xs-center">Age of Empires 2</div>
                                         </v-card-title>
                                         <v-card-text>
                                             Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
@@ -467,69 +467,15 @@
                 </v-container>
             </section>
 
-            <section>
-                <v-container grid-list-xl>
-                    <v-layout row wrap justify-center class="my-5">
-                        <v-flex xs12 sm4>
-                            <v-card class="elevation-0 transparent">
-                                <v-card-title primary-title class="layout justify-center">
-                                    <div class="headline">Company info</div>
-                                </v-card-title>
-                                <v-card-text>
-                                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                    Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
-                                </v-card-text>
-                            </v-card>
-                        </v-flex>
-                        <v-flex xs12 sm4 offset-sm1>
-                            <v-card class="elevation-0 transparent">
-                                <v-card-title primary-title class="layout justify-center">
-                                    <div class="headline">Contact us</div>
-                                </v-card-title>
-                                <v-card-text>
-                                    Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                </v-card-text>
-                                <v-list class="transparent">
-                                    <v-list-tile>
-                                        <v-list-tile-action>
-                                            <v-icon class="blue--text text--lighten-2">phone</v-icon>
-                                        </v-list-tile-action>
-                                        <v-list-tile-content>
-                                            <v-list-tile-title>777-867-5309</v-list-tile-title>
-                                        </v-list-tile-content>
-                                    </v-list-tile>
-                                    <v-list-tile>
-                                        <v-list-tile-action>
-                                            <v-icon class="blue--text text--lighten-2">place</v-icon>
-                                        </v-list-tile-action>
-                                        <v-list-tile-content>
-                                            <v-list-tile-title>Chicago, US</v-list-tile-title>
-                                        </v-list-tile-content>
-                                    </v-list-tile>
-                                    <v-list-tile>
-                                        <v-list-tile-action>
-                                            <v-icon class="blue--text text--lighten-2">email</v-icon>
-                                        </v-list-tile-action>
-                                        <v-list-tile-content>
-                                            <v-list-tile-title>john@vuetifyjs.com</v-list-tile-title>
-                                        </v-list-tile-content>
-                                    </v-list-tile>
-                                </v-list>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                </v-container>
-            </section>
-
             <v-footer class="blue darken-3">
                 <v-layout row wrap align-center>
                     <v-flex xs12>
                         <div class="white--text ml-3">
-                            Made with
+                            Fet amb
                             <v-icon class="red--text">favorite</v-icon>
-                            by <a class="white--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>
-                            and <a class="white--text" href="https://github.com/acacha">Sergi Tur</a>
+                            per <a class="white--text" href="https://github.com/acacha">Sergi Tur</a> utilitzant
+                            <a class="white--text" href="https://github.com/laravel-frontend-presets/laravel-vuetify">Laravel Frontend Preset</a> per a <a class="white--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>.
+                            Vegeu la <a class="white--text" href="https://laravel-vuetify.acacha.org/">demo</a>.
                         </div>
                     </v-flex>
                 </v-layout>
@@ -767,7 +713,7 @@
           this.resetPasswordLoading = false
           this.resetPasswordLoadingDone = true
           sleep(4000).then(() => {
-            this.showRememberPassword = false
+            this.showResetPassword = false
             window.location = '/home'
           })
         }).catch(error => {

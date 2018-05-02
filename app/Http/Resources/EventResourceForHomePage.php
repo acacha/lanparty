@@ -24,6 +24,7 @@ class EventResourceForHomePage extends JsonResource
             'name' => $this->name,
             'image' => $this->image,
             'inscription_type_id' => $this->inscription_type_id,
+            'participants_number' => $this->participants_number,
             'published_at' => $this->published_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

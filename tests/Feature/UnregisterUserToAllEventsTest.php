@@ -31,20 +31,16 @@ class UnregisterUserToAllEventsTest extends TestCase
         $event = $events[0];
         $event->registerUser($participant);
         $event = $event->fresh();
-        $event2 = $events[1];
-        $event2->registerUser($participant);
-        $event2 = $event2->fresh();
 
         $this->assertTrue($event->hasParticipant($participant));
-        $this->assertTrue($event2->hasParticipant($participant));
 
         $response= $this->json('DELETE','/api/v1/events/register/user/' . $participant->id);
 
         $response->assertSuccessful();
         $event = $event->fresh();
-        $event2 = $event2->fresh();
+
         $this->assertFalse($event->hasParticipant($participant));
-        $this->assertFalse($event2->hasParticipant($participant));
+
     }
 
 }

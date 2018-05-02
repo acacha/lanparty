@@ -99,9 +99,9 @@
                         <span class="hidden-xs-only">{{ config('app.shortname', 'Laravel') }}</span>
                     </v-toolbar-title>
                     <div class="d-flex align-center" style="margin-left: auto">
-                        <v-btn icon>
-                            <v-icon>notifications</v-icon>
-                        </v-btn>
+                        {{--<v-btn icon>--}}
+                            {{--<v-icon>notifications</v-icon>--}}
+                        {{--</v-btn>--}}
                         <v-btn icon large @click="toogleRightDrawer">
                             <gravatar :user="{{ $user }}" size="52px"></gravatar>
                         </v-btn>
@@ -122,7 +122,7 @@
                                </v-flex>
                                <v-flex xs12>
                                    <h3>@{{ user.name }}</h3>
-                                   <a href="https://en.gravatar.com/connect/">Canvia el teu avatar</a>
+                                   <a href="https://en.gravatar.com/connect/">Canvia el teu avatar a Gravatar</a>
                                </v-flex>
                            </v-layout>
                        </v-container>
@@ -183,7 +183,7 @@
                        </v-card-actions>
                        <v-card-actions>
                            <v-spacer></v-spacer>
-                            <a href="https://en.gravatar.com/connect/">Canvia el teu avatar</a>
+                            <a href="https://en.gravatar.com/connect/">Canvia el teu avatar a Gravatar</a>
                            <v-spacer></v-spacer>
                        </v-card-actions>
                    </v-card>
@@ -193,7 +193,7 @@
                 </v-content>
             </v-app>
     @stack('beforeScripts')
-    <script src="{{ mix('js/app.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
     @stack('afterScripts')
 </body>

@@ -57,6 +57,7 @@ export default {
     return new Promise((resolve, reject) => {
       context.commit(mutations.SET_EVENT_AS_LOADING, event)
       events.registerGroupToEvent(event, group).then(response => {
+        const group = response.data
         context.commit(mutations.SET_GROUP_EVENT_AS_INSCRIBED, {event, group})
         resolve(response)
       }).catch(error => {
@@ -71,6 +72,7 @@ export default {
       context.commit(mutations.SET_EVENT_AS_LOADING, event)
       events.unregisterGroupToEvent(event, group).then(response => {
         context.commit(mutations.SET_GROUP_EVENT_AS_UNSUBSCRIBED, {event, group})
+
         resolve(response)
       }).catch(error => {
         reject(error)

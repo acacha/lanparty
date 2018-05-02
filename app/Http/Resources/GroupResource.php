@@ -24,7 +24,7 @@ class GroupResource extends JsonResource
             'name' => $this->name,
             'avatar' => $this->avatar,
             'leader' => $this->leader,
-            'members' => $this->members,
+            'members' => $this->members
         ];
     }
 }

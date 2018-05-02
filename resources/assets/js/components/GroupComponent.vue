@@ -68,7 +68,7 @@
                     </v-flex>
                 </v-layout>
 
-                <template v-for="n in 4">
+                <template v-for="n in numberOfParticipants()">
                     <v-users-search :users="users" @input="userSelected(n+1,$event)" :label="'Participant ' + n"></v-users-search>
                 </template>
 
@@ -143,6 +143,9 @@
       }
     },
     methods: {
+      numberOfParticipants () {
+        if (this.event.participants_number) return parseInt(this.event.participants_number) - 1
+      },
       dragover (e) {
         e.preventDefault()
         e.stopPropagation()
@@ -212,21 +215,11 @@
       register () {
         this.alert = false
         if (this.$refs.registrationGroupForm.validate()) {
-          console.dir(this.ids)
           let ids = Object.values(this.ids)
-          console.log('IDS:')
-          console.dir(ids)
-          console.log('USER ID:')
-          console.log(this.user.id)
-          console.log('INDEX OF:')
           let index = ids.indexOf(this.user.id)
-          console.log(index)
           let ids2 = ids.splice(index, 1)
-          console.log('IDS 2:')
-          console.dir(ids2)
 
           let userIds = this.selectedUsers.map(user => user['id'])
-          console.dir(userIds)
 
           this.registering = true
           const group = {

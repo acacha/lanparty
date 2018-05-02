@@ -48,8 +48,8 @@ const app = new Vue({
       { icon: 'home', text: 'Home', href: '/home' },
       { icon: 'contacts', text: 'Col·laboradors' },
       { icon: 'favorite_border', text: 'Premis' },
-      { icon: 'settings', text: 'Settings' },
-      { icon: 'chat_bubble', text: 'Contact' },
+      // { icon: 'settings', text: 'Settings' },
+      // { icon: 'chat_bubble', text: 'Contact' },
       { heading: 'Links'},
       { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', new: true },
       { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
@@ -69,7 +69,7 @@ const app = new Vue({
     Events,
     UserNumbers,
     Share },
-  mixins: [ withSnackbar],
+  mixins: [ withSnackbar ],
   computed: {
     ...mapGetters({
       user: 'user'
@@ -90,13 +90,13 @@ const app = new Vue({
       this.editingUser = true
       this.$nextTick(this.$refs.email.focus)
     },
-    updateEmail(email){
-      this.$store.commit(mutations.USER,{...this.user, email})
+    updateEmail (email) {
+      this.$store.commit(mutations.USER, {...this.user, email})
     },
-    updateName(name){
-      this.$store.commit(mutations.USER,{...this.user, name})
+    updateName(name) {
+      this.$store.commit(mutations.USER, {...this.user, name})
     },
-    updateGivenName(givenName){
+    updateGivenName (givenName){
       this.$store.commit(mutations.USER,{...this.user, givenName})
     },
     updateSn1(sn1){
@@ -105,7 +105,7 @@ const app = new Vue({
     updateSn2(sn2){
       this.$store.commit(mutations.USER,{...this.user, sn2})
     },
-    updateUser() {
+    updateUser () {
       this.updatingUser = true
       this.$store.dispatch(actions.UPDATE_USER, this.user).then(response => {
         this.showMessage('Usuari modificat correctament')
@@ -133,15 +133,13 @@ const app = new Vue({
     },
     checkRoles (item) {
       if (item.role) {
-        const found = this.$store.getters.roles.find(function(role) {
-          return role == item.role;
+        return this.$store.getters.roles.find(function(role) {
+          return role == item.role // eslint-disable-line
         })
-        if (found) return true
-        return false
       }
       return true
     },
-    menuItemSelected(item) {
+    menuItemSelected (item) {
       if (item.href) {
         if (item.new) {
           window.open(item.href)

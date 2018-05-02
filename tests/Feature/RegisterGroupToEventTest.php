@@ -27,11 +27,24 @@ class RegisterGroupToEventTest extends TestCase
         seed_database();
         Storage::fake('local');
 
-        $leader = factory(User::class)->create();
+        $leader = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com',
+            'givenName' => 'Pepe',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans'
+        ]);
         $this->actingAs($leader,'api');
         $event = Event::inRandomOrder()->where('inscription_type_id',1)->first();
 
-        $member1 = factory(User::class)->create();
+        $member1 = factory(User::class)->create(
+            [
+                'name' => 'Pepa Parda Jeans',
+                'email' => 'pepaparda@jeans.com',
+                'givenName' => 'Pepa',
+                'sn1' => 'Parda',
+                'sn2' => 'Jeans'
+        ]);
         $member2 = factory(User::class)->create();
         $member3 = factory(User::class)->create();
         $member4 = factory(User::class)->create();
@@ -56,6 +69,38 @@ class RegisterGroupToEventTest extends TestCase
 
         // ASSERTS
         $response->assertSuccessful();
+
+//        $response->dump();
+
+        $response->assertJsonStructure([
+            'id',
+            'name',
+            'avatar',
+            'members',
+            'leader'
+        ]);
+        $response->assertJson([
+            'id' => 1,
+            'name' => 'Smells Like Team Spirit',
+            'avatar' => 'avatars/group_1_avatar.png',
+            'leader' => [
+              'id' => 1,
+              'name' => 'Pepe Pardo Jeans',
+              'email' => 'pepepardo@jeans.com',
+              'givenName' => 'Pepe',
+              'sn1' => 'Pardo',
+              'sn2' => 'Jeans'
+            ]
+        ]);
+        $response->assertJsonFragment([
+                'id' => 2,
+                'name' => 'Pepa Parda Jeans',
+                'email' => 'pepaparda@jeans.com',
+                'givenName' => 'Pepa',
+                'sn1' => 'Parda',
+                'sn2' => 'Jeans'
+        ]);
+
         $group = Group::findByName('Smells Like Team Spirit');
         $this->assertInstanceOf(Group::class, $group);
 

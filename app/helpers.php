@@ -31,7 +31,8 @@ if (!function_exists('create_events')) {
               'inscription_type' => 'group',
               'image' => 'img/LoL.jpeg',
               'tickets' => 10, // Número de grups,
-              'regulation' => 'https://docs.google.com/document/d/1lO-twh_U-wGS7jNQJu_B6yhqq-E5RbQacOX-3AiRZmA/edit',
+              'participants_number' => 5,
+              'regulation' => 'http s://docs.google.com/document/d/1lO-twh_U-wGS7jNQJu_B6yhqq-E5RbQacOX-3AiRZmA/edit',
               'published_at' => '2018-01-15 12:00:00'
             ],
             [
@@ -39,24 +40,27 @@ if (!function_exists('create_events')) {
                 'inscription_type' => 'group',
                 'image' => 'img/Overwatch.jpeg',
                 'tickets' => 10, // Número de grups
+                'participants_number' => 6,
                 'regulation' => 'https://docs.google.com/document/d/1OlM3ZcxyxiIz51R_tYeYiA1-lfiK-lyG-tMhRm8DHSk/edit',
                 'published_at' => '2018-01-15 12:00:00'
             ],
             [
                 'name' => 'Counter Strike',
-                'inscription_type' => 'individual',
+                'inscription_type' => 'group',
                 'image' => 'img/CounterStrike.jpeg',
                 'tickets' => 5, // Número d'usuaris es poden inscriure
+                'participants_number' => 3,
                 'regulation' => 'https://docs.google.com/document/d/1ZMUBSAYHz79JSWkbv9Ra0HLfO2WGJHkLW6xDYHa4Pks/edit',
                 'published_at' => '2018-01-15 12:00:00',
 
             ],
             [
-                'name' => 'FIFA 18',
+                'name' => 'Age Of empires',
                 'inscription_type' => 'individual',
-                'image' => 'img/Fifa18.jpeg',
-                'tickets' => 15, // Número d'usuaris es poden inscriure
+                'image' => 'img/AgeOfEmpires2.png',
+                'tickets' => 12, // Número d'usuaris es poden inscriure
                 'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
+                'participants_number' => null,
                 'published_at' => '2018-01-15 12:00:00',
             ],
             [
@@ -65,8 +69,19 @@ if (!function_exists('create_events')) {
                 'image' => 'img/Fifa18.jpeg',
                 'tickets' => 15, // Número d'usuaris es poden inscriure
                 'regulation' => 'https://docs.google.com/document/d/15M_Acf3hBp0E7k2bCB8LwJV1ZZuiXx0B_w4SEZtY5DA/edit',
+                'participants_number' => null,
                 'published_at' => null
+            ],
+            [
+                'name' => 'FIFA 18',
+                'inscription_type' => 'individual',
+                'image' => 'img/Fifa18.jpeg',
+                'tickets' => 15, // Número d'usuaris es poden inscriure
+                'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
+                'participants_number' => null,
+                'published_at' => null,
             ]
+
         ];
 
         foreach ($events as $event) {
@@ -75,7 +90,8 @@ if (!function_exists('create_events')) {
                 'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
                 'image' => $event['image'],
                 'regulation' => $event['regulation'],
-                'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null
+                'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null,
+                'participants_number' => $event['participants_number']
             ]);
             $createdEvent->addTickets($event['tickets']);
         }

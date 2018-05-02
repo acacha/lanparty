@@ -6,6 +6,7 @@ use App\Event;
 use App\Group;
 use App\Http\Requests\RegisterGroupToEventRequest;
 use App\Http\Requests\UnregisterGroup;
+use App\Http\Resources\GroupResource;
 use App\Member;
 use App\User;
 use Auth;
@@ -45,6 +46,8 @@ class RegisterGroupToEventController extends Controller
         });
 
         $event->inscribeGroup($group);
+
+        return new GroupResource($group->fresh());
     }
 
     /**
