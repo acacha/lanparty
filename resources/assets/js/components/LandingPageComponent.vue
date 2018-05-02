@@ -363,7 +363,8 @@
                                             <div class="headline text-xs-center">League of Legends</div>
                                         </v-card-title>
                                         <v-card-text>
-                                            Apunta't a la lliga i converteix-te en una llegenda. Crush YOUR enemies!. Més informació sobre el LoL a la <a href="http://leagueoflegends.com">pàgina oficial</a>
+                                            Els jugadors s’enfronten entre ells dividint-se en 2 equips de 3 o 5 jugadores cadascun, depenent de si el mode de joc és 3 vs. 3 a l’escenari «El Bosque Retorcido» o 5 vs. 5 als escenaris «El Abismo de los Lamentos» i «La Grieta del Invocador», sent aquest últim mapa el més famós i considerat l’estàndard en el joc competitiu.
+                                            Més informació a la <a href="https://euw.leagueoflegends.com/es/">pàgina oficial</a>
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
@@ -376,9 +377,8 @@
                                             <div class="headline">Overwatch</div>
                                         </v-card-title>
                                         <v-card-text>
-                                            Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                            Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                                            En una partida d'Overwatch hi ha dos equips de 6 persones cadascun. Cada jugador ha d'escollir un dels personatges (anomenats herois dins del videojoc) amb habilitats i moviments únics. Els herois estan dividits en quatre classes segons el seu estil de joc: atac, defensa, tanc i suport.
+                                            Més informació a la <a href="https://playoverwatch.com/es-es/">pàgina oficial</a>
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
@@ -391,9 +391,8 @@
                                             <div class="headline text-xs-center">Age of Empires 2</div>
                                         </v-card-title>
                                         <v-card-text>
-                                            Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                            Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                                            Joc ambientat en la Edat Mitja, just després de la caiguda de l'Imperi romà i la presa de Roma pels Visigots. El jugador pot escollir entre 13 civilitzacions que van existir en aquell període històric, i ha d'encaminar-les per a formar un gran imperi i guanyar als seus enemics.
+                                            Més informació a la <a href="http://www.ensemblestudios.com/">pàgina oficial</a>
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
@@ -406,9 +405,8 @@
                                             <div class="headline text-xs-center">Counter Strike</div>
                                         </v-card-title>
                                         <v-card-text>
-                                            Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                                            Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                                            L'acció de Counter-Strike es desenvolupa en rondes d'una durada màxima de 9 minuts, en les quals un equip de terroristes s'enfronta a un equip d'antiterroristes. L'equip guanyador és el que compleixi tots els seus objectius, destrucció de material o l'eliminació de tots els jugadors de l'altre equip.
+                                            Més informació a la <a href="http://www.counter-strike.net/">pàgina oficial</a>.
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
