@@ -52,11 +52,18 @@ class RegisterToEventTest extends TestCase
         $this->actingAs($participant,'api');
         $event = Event::inRandomOrder()->published()->where('inscription_type_id',2)->first();
 
+        $event->registerUser($participant);
+        $event = $event->fresh();
+        $tickets = $event->tickets;
+
         $response = $this->json('DELETE','/api/v1/events/' . $event->id . '/register');
 
         $response->assertSuccessful();
         $this->assertCount(0,$event->users);
         $this->assertCount(0,$participant->events);
+
+        $event = $event->fresh();
+        $this->assertEquals($tickets,$event->tickets);
 
     }
 

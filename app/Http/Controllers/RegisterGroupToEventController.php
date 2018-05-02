@@ -53,7 +53,7 @@ class RegisterGroupToEventController extends Controller
     /**
      * Unregister group to event.
      *
-     * @param Request $request
+     * @param UnregisterGroup $request
      * @param Event $event
      * @param Group $group
      * @return Group

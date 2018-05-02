@@ -249,6 +249,8 @@ class RegisterGroupToEventTest extends TestCase
         $group->add($leader);
         $event->registerGroup($group);
         $event = $event->fresh();
+        $tickets = $event->tickets;
+
         $this->assertTrue($event->hasGroup($group));
 
         $this->actingAs($leader,'api');
@@ -260,6 +262,8 @@ class RegisterGroupToEventTest extends TestCase
         $this->assertFalse($event->hasGroup($group));
         $group = $group->fresh();
         $this->assertNull($group);
+
+        $this->assertEquals($event->tickets, $tickets);
 
     }
 
