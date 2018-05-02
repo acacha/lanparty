@@ -36,7 +36,10 @@ export default {
       newEvents[index] = item
       if (item.id === event.id) {
         newEvents[index].inscribed = false
-        newEvents[index].users.splice(newEvents[index].users.indexOf(user), 1)
+        let foundUser = newEvents[index].users.find(u => {
+          return u.id === user.id
+        })
+        newEvents[index].users.splice(newEvents[index].users.indexOf(foundUser), 1)
         newEvents[index].assigned_tickets--
         newEvents[index].available_tickets++
       }
@@ -80,6 +83,17 @@ export default {
       return g.id === group.id
     })
     foundEvent.groups.splice(foundEvent.groups.indexOf(foundGroup), 1)
+    foundEvent.assigned_tickets--
+    foundEvent.available_tickets++
+  },
+  [ types.REMOVE_USER_FROM_EVENT ] (state, {event, user}) {
+    let foundEvent = state.events.find((e) => {
+      return e.id === event.id
+    })
+    let foundUser = foundEvent.users.find((u) => {
+      return u.id === user.id
+    })
+    foundEvent.users.splice(foundEvent.users.indexOf(foundUser), 1)
     foundEvent.assigned_tickets--
     foundEvent.available_tickets++
   }

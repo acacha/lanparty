@@ -91,6 +91,15 @@ export default {
       })
     })
   },
+  [ actions.REMOVE_USER_FROM_EVENT ] (context, {user, event}) {
+    return new Promise((resolve, reject) => {
+      events.unregisterUser(user, event).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   [ actions.REGISTER_USER_TO_EVENT ] (context, {user, event}) {
     return new Promise((resolve, reject) => {
       events.registerUser(user, event).then(response => {

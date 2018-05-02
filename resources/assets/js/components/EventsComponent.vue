@@ -78,12 +78,7 @@
                                                 </v-list-tile-avatar>
                                                 <v-list-tile-content>
                                                     <v-list-tile-title>
-                                                        <b>{{ group.name }}</b> |
-                                                        Líder:
-                                                        <template v-if="group.leader">
-                                                            {{this.user.id}} {{group.leader.sn1}} {{group.leader.sn2}}, {{group.leader.givenName}} ({{group.leader.name}})
-                                                        </template>
-                                                        <template v-else>Sense lider assignat</template>
+                                                        <b>{{ group.name }}</b>
                                                     </v-list-tile-title>
                                                 </v-list-tile-content>
                                                 <!--<v-list-tile-action v-if="canEditGroup(group)">-->
@@ -108,7 +103,7 @@
                                                 <v-list-tile v-for="(member, index) in group.members" :key="member.id">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>
-                                                            {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} ({{member.name}})
+                                                            {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} <span class="hidden-sm-and-down">({{member.name}})</span>
                                                         </v-list-tile-title>
                                                     </v-list-tile-content>
                                                 </v-list-tile>
@@ -136,9 +131,14 @@
                                                     <img :src="gravatarURL(user.email)">
                                                 </v-list-tile-avatar>
                                                 <v-list-tile-content>
-                                                    <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} ({{user.name}})</v-list-tile-title>
+                                                    <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} <span class="hidden-sm-and-down">({{user.name}})</span></v-list-tile-title>
                                                     <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
                                                 </v-list-tile-content>
+                                                <v-list-tile-action v-if="canDeleteUser(user)">
+                                                    <v-btn icon ripple @click.stop="unsubscribeUser(props.item,user)">
+                                                        <v-icon color="red darken-1">delete</v-icon>
+                                                    </v-btn>
+                                                </v-list-tile-action>
                                             </v-list-tile>
                                         </template>
                                     </template>
@@ -232,12 +232,7 @@
                                                     </v-list-tile-avatar>
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>
-                                                            <b>{{ group.name }}</b> |
-                                                            Líder:
-                                                            <template v-if="group.leader">
-                                                                {{this.user.id}} {{group.leader.sn1}} {{group.leader.sn2}}, {{group.leader.givenName}} ({{group.leader.name}})
-                                                            </template>
-                                                            <template v-else>Sense lider assignat</template>
+                                                            <b>{{ group.name }}</b>
                                                         </v-list-tile-title>
                                                     </v-list-tile-content>
                                                     <!--<v-list-tile-action v-if="canEditGroup(group)">-->
@@ -263,7 +258,7 @@
                                                     <v-list-tile v-for="(member, index) in group.members" :key="member.id">
                                                         <v-list-tile-content>
                                                             <v-list-tile-title>
-                                                                {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} ({{member.name}})
+                                                                {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} <span class="hidden-sm-and-down">({{member.name}})</span>
                                                             </v-list-tile-title>
                                                         </v-list-tile-content>
                                                     </v-list-tile>
@@ -291,9 +286,14 @@
                                                         <img :src="gravatarURL(user.email)">
                                                     </v-list-tile-avatar>
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} ({{user.name}})</v-list-tile-title>
+                                                        <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} <span class="hidden-sm-and-down">({{user.name}})</span></v-list-tile-title>
                                                         <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
                                                     </v-list-tile-content>
+                                                    <v-list-tile-action v-if="canDeleteUser(user)">
+                                                        <v-btn icon ripple @click.stop="unsubscribeUser(props.item,user)">
+                                                            <v-icon color="red darken-1">delete</v-icon>
+                                                        </v-btn>
+                                                    </v-list-tile-action>
                                                 </v-list-tile>
                                             </template>
                                         </template>
@@ -372,6 +372,9 @@
       canDeleteGroup (group) {
         return (group.leader && group.leader.id === this.user.id) || this.loggedUserIsManager()
       },
+      canDeleteUser (user) {
+        return this.loggedUserIsManager()
+      },
       loggedUserIsManager () {
         const found = this.roles.find((role) => {
           return role === 'Manager'
@@ -399,6 +402,13 @@
       unsubscribeGroup (event, group) {
         this.$store.dispatch(actions.UNREGISTER_GROUP_TO_EVENT, {event, group}).then(response => {
           this.$store.commit(mutations.REMOVE_GROUP_FROM_EVENT, {event, group})
+        }).catch(error => {
+          this.showError(error)
+        })
+      },
+      unsubscribeUser (event, user) {
+        this.$store.dispatch(actions.REMOVE_USER_FROM_EVENT, {user, event}).then(response => {
+          this.$store.commit(mutations.REMOVE_USER_FROM_EVENT, {event, user})
         }).catch(error => {
           this.showError(error)
         })
