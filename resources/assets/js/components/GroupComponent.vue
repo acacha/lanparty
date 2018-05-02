@@ -217,7 +217,6 @@
         if (this.$refs.registrationGroupForm.validate()) {
           let ids = Object.values(this.ids)
           let index = ids.indexOf(this.user.id)
-          let ids2 = ids.splice(index, 1)
 
           let userIds = this.selectedUsers.map(user => user['id'])
 

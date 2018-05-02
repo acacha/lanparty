@@ -240,23 +240,23 @@
                                                             <template v-else>Sense lider assignat</template>
                                                         </v-list-tile-title>
                                                     </v-list-tile-content>
-                                                    <v-list-tile-action v-if="canEditGroup(group)">
+                                                    <!--<v-list-tile-action v-if="canEditGroup(group)">-->
 
-                                                        <v-btn icon ripple @click.stop="editGroup(group)">
-                                                            <v-icon color="green darken-1">mode_edit</v-icon>
-                                                        </v-btn>
+                                                        <!--<v-btn icon ripple @click.stop="editGroup(group)">-->
+                                                            <!--<v-icon color="green darken-1">mode_edit</v-icon>-->
+                                                        <!--</v-btn>-->
 
-                                                    </v-list-tile-action>
-                                                    <v-list-tile-action v-if="canEditGroup(group)">
+                                                    <!--</v-list-tile-action>-->
+                                                    <v-list-tile-action v-if="canDeleteGroup(group)">
                                                         <v-btn icon ripple @click.stop="unsubscribeGroup(props.item,group)">
                                                             <v-icon color="red darken-1">delete</v-icon>
                                                         </v-btn>
                                                     </v-list-tile-action>
-                                                    <v-list-tile-action v-if="memberOf(group,this.user)">
-                                                        <v-btn icon ripple @click.stop="unregisterToEvent(props.item)">
-                                                            <v-icon color="red darken-1">exit_to_app</v-icon>
-                                                        </v-btn>
-                                                    </v-list-tile-action>
+                                                    <!--<v-list-tile-action v-if="memberOf(group,this.user)">-->
+                                                        <!--<v-btn icon ripple @click.stop="unregisterToEvent(props.item)">-->
+                                                            <!--<v-icon color="red darken-1">exit_to_app</v-icon>-->
+                                                        <!--</v-btn>-->
+                                                    <!--</v-list-tile-action>-->
                                                 </v-list-tile>
 
                                                 <template v-if="group.members &&  group.members.length">
@@ -398,8 +398,7 @@
       },
       unsubscribeGroup (event, group) {
         this.$store.dispatch(actions.UNREGISTER_GROUP_TO_EVENT, {event, group}).then(response => {
-          this.$store.commit(mutations.REMOVE_GROUP_FROM_EVENT, event, group)
-          this.$store.commit(mutations, event, group)
+          this.$store.commit(mutations.REMOVE_GROUP_FROM_EVENT, {event, group})
         }).catch(error => {
           this.showError(error)
         })

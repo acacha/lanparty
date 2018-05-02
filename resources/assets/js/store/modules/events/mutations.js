@@ -72,12 +72,14 @@ export default {
     })
     state.events = newEvents
   },
-  [ types.REMOVE_GROUP_FROM_EVENT ] (state, event, group) {
-    state.events.indexOf()
+  [ types.REMOVE_GROUP_FROM_EVENT ] (state, {event, group}) {
     let foundEvent = state.events.find((e) => {
       return e.id === event.id
     })
-    foundEvent.groups.splice(foundEvent.groups.indexOf(group), 1)
+    let foundGroup = foundEvent.groups.find((g) => {
+      return g.id === group.id
+    })
+    foundEvent.groups.splice(foundEvent.groups.indexOf(foundGroup), 1)
     foundEvent.assigned_tickets--
     foundEvent.available_tickets++
   }
