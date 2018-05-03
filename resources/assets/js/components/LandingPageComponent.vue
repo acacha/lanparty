@@ -92,7 +92,7 @@
                                     label="Nom d'usuari"
                                     v-model="name"
                                     :rules="nameRules"
-                                    :counter="10"
+                                    :counter="255"
                                     required
                             ></v-text-field>
                             <v-text-field
@@ -508,7 +508,7 @@
         name: '',
         nameRules: [
           (v) => !!v || 'El nom d\'usuari és un camp obligatori',
-          (v) => v.length <= 10 || 'El nom d\'usuari ha de tenir com a màxim 10 caracters'
+          (v) => v.length <= 255 || 'El nom d\'usuari ha de tenir com a màxim 255 caracters'
         ],
         newsLetterLoading: false,
         newsletterSubscriptionDone: false,
