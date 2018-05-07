@@ -56,7 +56,8 @@ const app = new Vue({
       { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , new: true },
       { icon: 'link', text: 'Streaming (Twitch)', href: 'https://www.twitch.tv/iesebrelanparty' , new: true },
       { heading: 'Administració', role: 'Manager'},
-      { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' }
+      { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' },
+      { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager' }
     ]
   }),
   components: {
