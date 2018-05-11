@@ -23,6 +23,8 @@ import Events from './components/EventsComponent.vue'
 import UserNumbers from './components/UserNumbersComponent.vue'
 import Share from './components/ShareComponent.vue'
 import withSnackbar from './components/mixins/withSnackbar'
+import Sorteig from './components/SorteigComponent.vue'
+import Prizes from './components/PrizesComponent.vue'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -69,7 +71,10 @@ const app = new Vue({
     Gravatar,
     Events,
     UserNumbers,
-    Share },
+    Share,
+    Sorteig,
+    Prizes
+  },
   mixins: [ withSnackbar ],
   computed: {
     ...mapGetters({

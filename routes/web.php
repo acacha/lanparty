@@ -15,6 +15,8 @@
 
 Route::get('/', 'WelcomeController@index');
 
+Route::get('/premis', 'PrizesController@show');
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
@@ -32,6 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/group/{group}/avatar', 'GroupAvatarController@show');
 
     Route::post('/group/{group}/avatar','GroupAvatarController@store');
+
+    // Sorteig
+    Route::get('/manage/sorteig', 'SorteigController@index')
+        ->name('manage.sorteig');
 
 });
 

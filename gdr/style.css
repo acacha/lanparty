@@ -1,0 +1,174 @@
+html, body{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body
+{
+  color:#333;
+  font-family: Ubuntu, Verdana, Arial, "Liberation sans", sans-serif;
+  font-size:12px;
+  line-height:1.4;
+  text-align:left;
+}
+
+#content{
+	margin:0 auto;
+	height:100%;
+	max-width: 1024px;
+}
+
+#instructions{
+	padding: 10px;
+}
+
+#dice, #instructions
+{ 
+  background:#700;
+  color:white;
+  text-align:center;
+  border: #300 10px solid;
+  
+  text-shadow: -1px 0px 0px rgb(0, 0, 0);
+  border-radius: 20px;
+  box-shadow: inset 3px 3px 3px rgb(51, 0, 0);
+  -moz-box-shadow: inset 3px 3px 3px rgb(51, 0, 0);
+  -webkit-box-shadow: inset 3px 3px 3px rgb(51, 0, 0);
+}
+
+#dice {
+
+  height: 95%;
+}
+
+#dice.finished{
+  background: #070;
+  border-color: #090;
+}
+
+#hint{
+	font-size: 40px;
+	background: black;
+	color: white;
+	border-radius: 30px;
+	padding: 0 50px;
+	margin-top: 100px;
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+#result{
+	display: block;
+	font-size:400px;
+	line-height:400px;
+	margin:auto auto;
+	position: relative;
+}
+
+#results{
+	display: none;
+}
+
+
+
+
+
+.loading-wrap{
+  width: 60px; height: 60px;
+  position: absolute;
+  top: 50%; left: 50%;
+  margin: -30px 0 0 -30px;
+  background: #777;      
+  -moz-animation: rotation ease-in-out 2s infinite;
+  -webkit-animation: rotation ease-in-out 2s infinite;
+  -ms-animation: rotation ease-in-out 2s infinite;
+  animation: rotation ease-in-out 2s infinite;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;      
+}
+
+.triangle1, .triangle2, .triangle3{
+  border-width: 0 20px 30px 20px;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: #67cbf0;
+  height: 0; width: 0;
+  position: absolute;
+  left: 10px; top: -10px;
+  -moz-animation: fadecolor 2s 1s infinite;
+  -webkit-animation: fadecolor 2s 1s infinite;
+  -ms-animation: fadecolor 2s 1s infinite;
+  animation: fadecolor 2s 1s infinite;
+}
+
+.triangle2, .triangle3{
+  content: '';
+  top: 20px; left: 30px;
+  -moz-animation-delay: 1.1s;
+  -webkit-animation-delay: 1.1s;
+  -ms-animation-delay: 1.1s;
+  animation-delay: 1.1s;
+}
+
+.triangle3{
+  left: -10px;
+  -moz-animation-delay: 1.2s;
+  -webkit-animation-delay: 1.2s;
+  -ms-animation-delay: 1.2s;
+  animation-delay: 1.2s;
+}
+
+@-moz-keyframes rotation
+{
+  0% {-moz-transform: rotate(0deg);}
+  20% {-moz-transform: rotate(360deg);}
+  100% {-moz-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes rotation
+{
+  0% {-webkit-transform: rotate(0deg);}
+  20% {-webkit-transform: rotate(360deg);}
+  100% {-webkit-transform: rotate(360deg);}
+}
+
+@-ms-keyframes rotation
+{
+  0% {-webkit-transform: rotate(0deg);}
+  20% {-webkit-transform: rotate(360deg);}
+  100% {-webkit-transform: rotate(360deg);}
+}		
+
+@keyframes rotation
+{
+  0% {transform: rotate(0deg);}
+  20% {transform: rotate(360deg);}
+  100% {transform: rotate(360deg);}
+}          
+
+@-moz-keyframes fadecolor
+{
+  0% {border-bottom-color: #eee;}
+  100%{border-bottom-color: #67cbf0;}
+}
+
+@-webkit-keyframes fadecolor
+{
+  0% {border-bottom-color: #eee;}
+  100%{border-bottom-color: #67cbf0;}
+}
+
+@-ms-keyframes fadecolor
+{
+  0% {border-bottom-color: #eee;}
+  100%{border-bottom-color: #67cbf0;}
+}		
+
+@keyframes fadecolor
+{
+  0% {border-bottom-color: #eee;}
+  100%{border-bottom-color: #67cbf0;}
+}
+
+
