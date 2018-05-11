@@ -16,6 +16,7 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('/premis', 'PrizesController@show');
+Route::get('/colaboradors', 'PartnersController@show');
 
 Auth::routes();
 

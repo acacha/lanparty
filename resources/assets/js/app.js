@@ -25,6 +25,7 @@ import Share from './components/ShareComponent.vue'
 import withSnackbar from './components/mixins/withSnackbar'
 import Sorteig from './components/SorteigComponent.vue'
 import Prizes from './components/PrizesComponent.vue'
+import Partners from './components/PartnersComponent.vue'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -48,8 +49,8 @@ const app = new Vue({
     changingPassword: false,
     items: [
       { icon: 'home', text: 'Home', href: '/home' },
-      { icon: 'contacts', text: 'Col·laboradors' },
-      { icon: 'favorite_border', text: 'Premis' },
+      { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', new: true  },
+      { icon: 'favorite_border', text: 'Premis', href: '/premis', new: true },
       // { icon: 'settings', text: 'Settings' },
       // { icon: 'chat_bubble', text: 'Contact' },
       { heading: 'Links'},
@@ -73,7 +74,8 @@ const app = new Vue({
     UserNumbers,
     Share,
     Sorteig,
-    Prizes
+    Prizes,
+    Partners
   },
   mixins: [ withSnackbar ],
   computed: {
