@@ -28,7 +28,11 @@
 </head>
 <div id="app">
     <v-app light>
-        <sorteig :numbers="{{ $numbers }}" :prizes="{{ $prizes }}"></sorteig>
+        <sorteig
+                :numbers="{{ $numbers }}"
+                :prizes="{{ $prizes }}"
+                :winners="{{ $winners }}">
+        </sorteig>
     </v-app>
 </div>
 @stack('beforeScripts')

@@ -48,4 +48,15 @@ class Prize extends Model
         return $query->where('user_id', null)->where('number_id', null);
     }
 
+    /**
+     * Winners scope.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeWinners($query)
+    {
+        return $query->where('number_id','!=', null);
+    }
+
 }

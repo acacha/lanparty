@@ -25,6 +25,7 @@ class CreatePrizesTable extends Migration
             $table->unsignedInteger('partner_id');
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('number_id')->nullable();
+            $table->boolean('multiple')->default(false);
             $table->timestamps();
         });
     }

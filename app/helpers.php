@@ -102,7 +102,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '',
             'value' => 0,
-            'partner_id' => Partner::findByName('Ajuntament de Tortosa')->id
+            'partner_id' => Partner::findByName('Ajuntament de Tortosa')->id,
+            'multiple' => true
         ]);
 
         Prize::firstOrCreate([
@@ -142,7 +143,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1r classificat Counter Strike',
             'value' => 5999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -150,7 +152,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1r classificat concurs Hardware',
             'value' => 14620,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -166,7 +169,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1r classificat concurs de programació',
             'value' => 23000,
-            'partner_id' => Partner::findByName('DISI')->id
+            'partner_id' => Partner::findByName('DISI')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -174,7 +178,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificat de programació',
             'value' => 12550,
-            'partner_id' => Partner::findByName('DISI')->id
+            'partner_id' => Partner::findByName('DISI')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -182,7 +187,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '3r classificat de programació',
             'value' => 12550,
-            'partner_id' => Partner::findByName('DISI')->id
+            'partner_id' => Partner::findByName('DISI')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -198,11 +204,12 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1r classificat Ae of Empires 2 HD',
             'value' => 12900,
-            'partner_id' => Partner::findByName('PC Serveis')->id
+            'partner_id' => Partner::findByName('PC Serveis')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
-            'name' => '1 router domèstic TP-Link Archer C2',
+            'name' => '1 router domèstic TP-Link Archer C2 1',
             'description' => '',
             'notes' => '2n classificat concurs programació',
             'value' => 3999,
@@ -210,7 +217,7 @@ if (!function_exists('initialize_prizes')) {
         ]);
 
         Prize::firstOrCreate([
-            'name' => '1 router domèstic TP-Link Archer C2',
+            'name' => '1 router domèstic TP-Link Archer C2 2',
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
@@ -222,7 +229,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1rs classificats League of Legends',
             'value' => 7500,
-            'partner_id' => Partner::findByName('SecurityPla')->id
+            'partner_id' => Partner::findByName('SecurityPla')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -230,7 +238,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1rs classificats Counter Strike',
             'value' => 7500,
-            'partner_id' => Partner::findByName('SecurityPla')->id
+            'partner_id' => Partner::findByName('SecurityPla')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -238,7 +247,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Guanyador concurs cartell LAN Party',
             'value' => 7500,
-            'partner_id' => Partner::findByName('Altercom 21')->id
+            'partner_id' => Partner::findByName('Altercom 21')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -270,7 +280,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificat Age Of Empires 2',
             'value' => 1575,
-            'partner_id' => Partner::findByName('Ferreteria Garcia')->id
+            'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -278,7 +289,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1r classificat Counter Strike',
             'value' => 8999,
-            'partner_id' => Partner::findByName('Jabil')->id
+            'partner_id' => Partner::findByName('Jabil')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -310,11 +322,12 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificat Concurs de hardware',
             'value' => 6000,
-            'partner_id' => Partner::findByName('Electrotic')->id
+            'partner_id' => Partner::findByName('Electrotic')->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
-            'name' => '1 funda consola, 1 ratolí i alfombreta',
+            'name' => '1 funda consola, 1 ratolí i alfombreta 1',
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 1000,
@@ -322,7 +335,7 @@ if (!function_exists('initialize_prizes')) {
         ]);
 
         Prize::firstOrCreate([
-            'name' => '1 funda consola, 1 ratolí i alfombreta',
+            'name' => '1 funda consola, 1 ratolí i alfombreta 2',
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 1000,
@@ -334,31 +347,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1rs classificats League of Legends',
             'value' => 6500,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'Disc dur SSD Toshiba OCZ TR2000 de 240 GB',
-            'description' => '',
-            'notes' => '1rs classificats League of Legends',
-            'value' => 6500,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'Disc dur SSD Toshiba OCZ TR2000 de 240 GB',
-            'description' => '',
-            'notes' => '1rs classificats League of Legends',
-            'value' => 6500,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'Disc dur SSD Toshiba OCZ TR2000 de 240 GB',
-            'description' => '',
-            'notes' => '1rs classificats League of Legends',
-            'value' => 6500,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
+            'partner_id' => Partner::findByName("Departament d'informàtica")->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -366,63 +356,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
             'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'SMARTWATCH NETWAY TEMPUS PLUS',
-            'description' => '',
-            'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
-            'value' => 3000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
+            'partner_id' => Partner::findByName("Departament d'informàtica")->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -430,7 +365,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
+            'partner_id' => Partner::findByName("Departament d'informàtica")->id,
+            'user_id' => 999999 // Ja assignat
         ]);
 
         Prize::firstOrCreate([
@@ -438,103 +374,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
-        ]);
-
-        Prize::firstOrCreate([
-            'name' => 'MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4',
-            'description' => '',
-            'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
-            'value' => 1000,
-            'partner_id' => Partner::findByName("Departament d'informàtica")->id
+            'partner_id' => Partner::findByName("Departament d'informàtica")->id,
+            'user_id' => 999999 // Ja assignat
         ]);
     }
 }

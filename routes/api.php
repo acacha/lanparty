@@ -63,5 +63,8 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::post('/user/{user}/pay', 'UserPaymentsController@store');
     Route::delete('/user/{user}/pay', 'UserPaymentsController@destroy');
 
+    //Winners
+    Route::delete('/winners', 'WinnersController@destroy');
+    Route::delete('/winner/{prize}', 'WinnerController@destroy');
 });
 

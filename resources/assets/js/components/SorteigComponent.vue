@@ -1,14 +1,46 @@
 <template>
     <v-container grid-list-md text-xs-center>
+        <v-snackbar
+                :timeout="6000"
+                :color="snackbarColor"
+                v-model="snackbar"
+                :multi-line="true"
+        >
+            {{ snackbarText }}<br/>
+            {{ snackbarSubtext }}
+            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
+        </v-snackbar>
+
         <v-alert v-model="error" type="error" dismissible>
             Especifiqueu el regal a sortejar!
         </v-alert>
         <v-layout row wrap>
             <v-flex xs9>
-                <v-text-field
-                        v-model="gift"
-                        label="Regal a sortejar"
-                ></v-text-field>
+                <v-select
+                        v-model="prize"
+                        :items="internalPrizes"
+                        label="Seleccioneu un regal o indiqueu un de nou"
+                        item-value="name"
+                        combobox
+                        autocomplete
+                        chips
+                        clearable
+                >
+                    <template slot="selection" slot-scope="data">
+                        <v-chip
+                                :key="JSON.stringify(data.item)"
+                                class="chip--select-multi"
+                        >
+                            {{ data.item }}
+                        </v-chip>
+                    </template>
+                    <template slot="item" slot-scope="data">
+                        <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.partner && data.item.partner.name"></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </template>
+                </v-select>
             </v-flex>
             <v-flex xs3>
                 Números sorteig: {{ total }}
@@ -16,18 +48,38 @@
             </v-flex>
             <v-flex xs2>
                 <v-card>
-                    <v-toolbar color="cyan" dark>
+                    <v-toolbar color="blue" dark>
                         <v-toolbar-title>Guanyadors</v-toolbar-title>
+                        <v-dialog v-model="removeAllWinnersDialog" persistent max-width="290">
+                            <v-btn icon slot="activator">
+                                <v-icon>delete</v-icon>
+                            </v-btn>
+                            <v-card>
+                                <v-card-title class="headline">Si us plau confirmeu</v-card-title>
+                                <v-card-text>
+                                    Segur que voleu esborrar tots els premis assignats?
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="green darken-1" flat @click.native="removeAllWinnersDialog = false">Cancel·lar</v-btn>
+                                    <v-btn color="red darken-1" flat
+                                           :disabled="removingAllWinners"
+                                           :loading="removingAllWinners"
+                                           @click.native="removeAllWinners">Eliminar tots</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </v-toolbar>
-                    <v-list two-line>
-                        <template v-for="winner in winners">
+                    <v-list three-line>
+                        <template v-for="winner in internalWinners">
                             <v-list-tile :key="winner.id" avatar>
                                 <v-list-tile-avatar>
-                                    <img :src="gravatarURL (winner.email)">
+                                    <img :src="gravatarURL (winner.number && winner.number.user && winner.number.user.email)">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-html="winner.name"></v-list-tile-title>
-                                    <v-list-tile-sub-title v-html="winner.gift"></v-list-tile-sub-title>
+                                    <v-list-tile-title>{{ winner.number.value }} {{ winner.number && winner.number.user && winner.number.user.name}}</v-list-tile-title>
+                                    <v-list-tile-sub-title v-html="name(winner.number && winner.number.user && winner.number.user)"></v-list-tile-sub-title>
+                                    <v-list-tile-sub-title v-html="winner.name"></v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </template>
@@ -39,7 +91,7 @@
             </v-flex>
             <v-flex xs12 v-if="tachan">
                 <v-alert :value="true" type="info" dismissible>
-                    <h1 class="display-2 mb-0">I el guanyador de {{ gift}} és ...</h1>
+                    <h1 class="display-2 mb-0">I el guanyador de {{ prize.name}} és ...</h1>
                 </v-alert>
             </v-flex>
             <v-flex xs4 offset-xs4>
@@ -83,16 +135,21 @@
 
 <script>
   import interactsWithGravatar from './mixins/interactsWithGravatar'
+  import axios from 'axios'
+  import withSnackbar from './mixins/withSnackbar'
 
   export default {
-    mixins: [interactsWithGravatar],
+    mixins: [interactsWithGravatar, withSnackbar],
     data () {
       return {
+        removingAllWinners: false,
+        removeAllWinnersDialog: false,
         error: false,
         tachan: false,
-        gift: '',
+        internalPrizes: this.prizes,
+        prize: null,
         winner: null,
-        winners: [],
+        internalWinners: this.winners,
         result: null,
         value: 999,
         timing: 1,
@@ -114,14 +171,50 @@
       prizes: {
         type: Array,
         required: true
+      },
+      winners: {
+        type: Array,
+        required: true
       }
     },
     methods: {
+      name (winner) {
+        let name = ''
+        if (!winner) return name
+        if (winner.sn1) name = name + winner.sn1
+        if (winner.sn2) name = name + ' ' + winner.sn2
+        if (winner.name) {
+          if (name) {
+            name = name + ', ' + winner.givenName
+          } else {
+            name = name + winner.givenName
+          }
+        }
+        return name
+      },
       addWinner () {
-        this.winner.gift = this.gift
-        this.winners.push(this.winner)
+        this.internalWinners.push({
+          name: this.prize,
+          number: {
+            value: this.result,
+            user: {
+              name: this.winner.name,
+              givenName: this.winner.givenName,
+              sn1: this.winner.sn1,
+              sn2: this.winner.sn2,
+              email: this.winner.email
+            }
+          }
+        })
         this.winner = null
         this.tachan = false
+        let selectedPrize = this.internalPrizes.find((prize) => {
+          return prize.name === this.prize
+        })
+        if (parseInt(selectedPrize.multiple) !== 1) {
+          this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
+        }
+        this.prize = null
       },
       userName (user) {
         let name = ''
@@ -150,11 +243,7 @@
       },
       setWinner () {
         this.rolling = false
-        console.log('Set winner!')
-        console.log('result: ' + this.result)
         let number = this.findNumberByValue(this.result)
-        console.log('number: ' + number)
-        console.log('user id: ' + number.user.id)
         this.winner = number.user
         window.Vue.nextTick(function () {
           window.scrollTo(0, document.body.scrollHeight)
@@ -175,14 +264,15 @@
       },
       roll () {
         this.tachan = false
-        if (!this.gift) {
+        if (!this.prize) {
           this.error = true
           return
         } else {
           this.error = false
         }
         if (this.rolling) return
-        this.play(this.sound1Buffer)
+        // TODO add sound
+        // this.play(this.sound1Buffer)
         this.rolling = true
         this.winner = null
         this.duration = Math.floor(3000 + Math.random() * 9000)
@@ -204,12 +294,24 @@
         source.buffer = audioBuffer
         source.connect(this.context.destination)
         source.start()
+      },
+      removeAllWinners () {
+        this.removingAllWinners = true
+        axios.delete('/api/v1/winners').then(response => {
+          this.internalWinners = null
+          this.removingAllWinners = false
+          this.removeAllWinnersDialog = false
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+          this.removingAllWinners = false
+        })
       }
     },
     created () {
-      this.context = new AudioContext()
-      this.sound1 = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3'
-      window.fetch(this.sound1)
+      // this.context = new AudioContext()
+      // this.sound1 = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3'
+      /* window.fetch(this.sound1)
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => this.context.decodeAudioData(arrayBuffer))
         .then(audioBuffer => {
@@ -217,6 +319,7 @@
           // playButton.disabled = false
           this.sound1Buffer = audioBuffer
         })
+      */
     }
   }
 </script>
