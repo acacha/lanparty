@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Number;
 use App\Prize;
 use App\User;
 use Tests\TestCase;
@@ -16,6 +17,50 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class WinnerControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function can_add_winner() {
+        seed_database();
+        $manager = factory(User::class)->create();
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        initialize_prizes();
+        $prize = Prize::available()->first();
+        $this->assertNull($prize->number);
+        $number = Number::available()->first();
+        $number->assignUser(factory(User::class)->create());
+        $number = Number::assigned()->first();
+        $response = $this->json('POST','api/v1/winner/' . $prize->id, [
+            'number' => $number->id
+        ]);
+
+        $response->assertSuccessful();
+        $result = json_decode($response->getContent());
+
+        $this->assertEquals($prize->id, $result->id);
+        $this->assertEquals($prize->name, $result->name);
+
+        $this->assertNull(Prize::available()->find($prize->id));
+        $prize = $prize->fresh();
+        $this->assertTrue($prize->number->is($number));
+    }
+
+    /** @test */
+    public function user_cannot_add_winner() {
+        seed_database();
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+
+        initialize_prizes();
+        $prize = Prize::available()->first();
+        $number = Number::available()->first();
+        $response = $this->json('POST','api/v1/winner/' . $prize->id, [
+            'number_id' => $number->id
+        ]);
+
+        $response->assertStatus(403);
+    }
 
     /** @test */
     public function can_remove_a_winner()

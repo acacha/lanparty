@@ -12,6 +12,15 @@ use Illuminate\Http\Request;
  */
 class PrizesController extends Controller
 {
+
+    /**
+     * List.
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function index()
+    {
+        return Prize::all();
+    }
     /**
      * Show.
      *

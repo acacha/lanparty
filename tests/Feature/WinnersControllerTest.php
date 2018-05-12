@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Number;
 use App\Prize;
 use App\User;
 use Tests\TestCase;
@@ -24,10 +25,40 @@ class WinnersControllerTest extends TestCase
     }
 
     /** @test */
-    public function can_list_winners()
+    public function users_can_list_winners()
     {
-        $response = $this->json('GET','api/v1/winners');
+        seed_database();
+        $user = factory(User::class)->create();
+        $this->actingAs($user,'api');
+
+        //Create some winners
+        initialize_prizes();
+        $this->assertTrue($count = Prize::all()->count() > 0);
+
+        foreach (Prize::available()->get()->take(5) as $availablePrize) {
+            $availablePrize->number()->associate(factory(User::class)->create());
+            $availablePrize->save();
+        }
+
+        $response = $this->json('GET','api/v1/winner');
         $response->assertSuccessful();
+
+        $response->assertJsonStructure([[
+            'id',
+            'name',
+            'description',
+            'notes',
+            'value',
+            'partner_id',
+            'user_id',
+            'number_id',
+            'multiple',
+            'created_at',
+            'updated_at',
+            'partner',
+            'number'
+        ]]);
+
     }
 
     /** @test */

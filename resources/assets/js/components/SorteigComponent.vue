@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-md text-xs-center>
+    <v-container fluid grid-list-md text-xs-center>
         <v-snackbar
                 :timeout="6000"
                 :color="snackbarColor"
@@ -15,12 +15,13 @@
             Especifiqueu el regal a sortejar!
         </v-alert>
         <v-layout row wrap>
-            <v-flex xs9>
+            <v-flex xs8>
                 <v-select
                         v-model="prize"
                         :items="internalPrizes"
                         label="Seleccioneu un regal o indiqueu un de nou"
                         item-value="name"
+                        item-text="name"
                         combobox
                         autocomplete
                         chips
@@ -42,17 +43,42 @@
                     </template>
                 </v-select>
             </v-flex>
-            <v-flex xs3>
+            <v-flex xs4>
+                Regals: {{ internalPrizes.length }}
+                <v-icon @click="refreshPrizes">refresh</v-icon>
                 Números sorteig: {{ total }}
                 <v-btn @click="roll" :loading="rolling" :disabled="rolling">Sortejar</v-btn>
             </v-flex>
             <v-flex xs2>
+                <v-card v-if="tachan">
+                    <v-toolbar style="background-color: #40764e;" class="white--text">
+                        <v-toolbar-title>I el guanyador és ...</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card-title primary-title>
+                        <v-card v-if="winner">
+                            <v-card-media :src="gravatarURL (winner.email)" height="250px">
+                            </v-card-media>
+                            <v-card-title primary-title>
+                                <h3 class="headline mb-0">{{ userName(winner) }}</h3>
+                                <h1 class="subheading mb-0">{{ winner.name }}</h1>
+                            </v-card-title>
+                            <v-card-actions>
+                                <v-btn flat
+                                       color="green"
+                                       :disabled="assigningWinning"
+                                       :loading="assigningWinning"
+                                       @click="addWinner">Assignar regal</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
+                    </v-card-title>
+                </v-card>
                 <v-card>
-                    <v-toolbar color="blue" dark>
+                    <v-toolbar style="background-color: #40764e;" class="white--text">
                         <v-toolbar-title>Guanyadors</v-toolbar-title>
                         <v-dialog v-model="removeAllWinnersDialog" persistent max-width="290">
                             <v-btn icon slot="activator">
-                                <v-icon>delete</v-icon>
+                                <v-icon class="white--text">delete</v-icon>
                             </v-btn>
                             <v-card>
                                 <v-card-title class="headline">Si us plau confirmeu</v-card-title>
@@ -71,47 +97,45 @@
                         </v-dialog>
                     </v-toolbar>
                     <v-list three-line>
-                        <template v-for="winner in internalWinners">
-                            <v-list-tile :key="winner.id" avatar>
-                                <v-list-tile-avatar>
-                                    <img :src="gravatarURL (winner.number && winner.number.user && winner.number.user.email)">
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ winner.number.value }} {{ winner.number && winner.number.user && winner.number.user.name}}</v-list-tile-title>
-                                    <v-list-tile-sub-title v-html="name(winner.number && winner.number.user && winner.number.user)"></v-list-tile-sub-title>
-                                    <v-list-tile-sub-title v-html="winner.name"></v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                        </template>
+                        <v-list-tile v-for="winner in internalWinners" :key="winner.id" avatar>
+                            <v-list-tile-action>
+                                <v-chip :color="randomColor()" text-color="white" slot="activator">
+                                    {{ winner.number.value }}
+                                </v-chip>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    <v-dialog v-model="removeWinnerDialog" persistent max-width="290">
+                                        <v-icon slot="activator" color="red" >delete</v-icon>
+                                        <v-card>
+                                            <v-card-title class="headline">Si us plau confirmeu</v-card-title>
+                                            <v-card-text>
+                                                Segur que voleu esborrar l'assignació del premi?
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="green darken-1" flat @click.native="removeWinnerDialog = false">Cancel·lar</v-btn>
+                                                <v-btn color="red darken-1" flat
+                                                       :disabled="removingWinner"
+                                                       :loading="removingWinner"
+                                                       @click.native="removeWinner(winner)">Eliminar</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                    {{ winner.number && winner.number.user && winner.number.user.name}}
+                                </v-list-tile-title>
+                                <v-list-tile-sub-title v-html="name(winner.number && winner.number.user && winner.number.user)"></v-list-tile-sub-title>
+                                <v-list-tile-sub-title v-html="winner.name"></v-list-tile-sub-title>
+                            </v-list-tile-content>
+                            <v-list-tile-avatar>
+                                <img :src="gravatarURL (winner.number && winner.number.user && winner.number.user.email)">
+                            </v-list-tile-avatar>
+                        </v-list-tile>
                     </v-list>
                 </v-card>
             </v-flex>
             <v-flex xs10>
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">999</div>
-            </v-flex>
-            <v-flex xs12 v-if="tachan">
-                <v-alert :value="true" type="info" dismissible>
-                    <h1 class="display-2 mb-0">I el guanyador de {{ prize.name}} és ...</h1>
-                </v-alert>
-            </v-flex>
-            <v-flex xs4 offset-xs4>
-                <v-card v-if="winner">
-                    <v-card-media :src="gravatarURL (winner.email)" height="250px">
-                    </v-card-media>
-                    <v-card-title primary-title>
-                        <v-container grid-list-md text-xs-center>
-                            <v-layout row wrap>
-                                <v-flex xs9>
-                                    <h3 class="headline mb-0">{{ userName(winner) }}</h3>
-                                    <h1 class="subheading mb-0">{{ winner.name }}</h1>
-                                </v-flex>
-                                <v-flex xs3>
-                                    <v-btn flat color="green" @click="addWinner">Assignar regal</v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-card-title>
-                </v-card>
             </v-flex>
         </v-layout>
     </v-container>
@@ -123,11 +147,11 @@
     }
 
     .odometer.odometer-animating-up .odometer-ribbon-inner, .odometer.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
-        -webkit-transition-duration: 1s !important;
-        -moz-transition-duration: 1s !important;
-        -ms-transition-duration: 1s !important;
-        -o-transition-duration: 1s !important;
-        transition-duration: 1s !important
+        -webkit-transition-duration: 8s !important;
+        -moz-transition-duration: 8s !important;
+        -ms-transition-duration: 8s !important;
+        -o-transition-duration: 8s !important;
+        transition-duration: 8s !important
     }
     [v-cloak] {display: none}
 
@@ -137,11 +161,15 @@
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import axios from 'axios'
   import withSnackbar from './mixins/withSnackbar'
+  import randomColor from './mixins/randomColor'
 
   export default {
-    mixins: [interactsWithGravatar, withSnackbar],
+    mixins: [interactsWithGravatar, withSnackbar,randomColor],
     data () {
       return {
+        assigningWinning: false,
+        removingWinner: false,
+        removeWinnerDialog: false,
         removingAllWinners: false,
         removeAllWinnersDialog: false,
         error: false,
@@ -192,8 +220,9 @@
         }
         return name
       },
-      addWinner () {
-        this.internalWinners.push({
+      finishAddWinner (multiple, selectedPrize) {
+        this.internalWinners.unshift({
+          id: selectedPrize.id,
           name: this.prize,
           number: {
             value: this.result,
@@ -208,13 +237,32 @@
         })
         this.winner = null
         this.tachan = false
-        let selectedPrize = this.internalPrizes.find((prize) => {
-          return prize.name === this.prize
-        })
-        if (parseInt(selectedPrize.multiple) !== 1) {
+        if (multiple !== 1) {
           this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
         }
         this.prize = null
+      },
+      addWinner () {
+        this.assigningWinning = true
+        let selectedPrize = this.internalPrizes.find((prize) => {
+          return prize.name === this.prize
+        })
+        let multiple = parseInt(selectedPrize.multiple)
+        if (!selectedPrize || (multiple === 1)) {
+          this.finishAddWinner(multiple, selectedPrize)
+          this.assigningWinning = false
+          return
+        }
+        axios.post('/api/v1/winner/' + selectedPrize.id, {
+          number: this.result
+        }).then(response => {
+          this.assigningWinning = false
+          this.finishAddWinner(multiple, selectedPrize)
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+          this.assigningWinning = false
+        })
       },
       userName (user) {
         let name = ''
@@ -234,8 +282,8 @@
           window.odometer.innerHTML = this.result
           window.setTimeout(() => {
             this.tachan = true
-          }, 1500)
-          window.setTimeout(this.setWinner, 2500)
+          }, 4500)
+          window.setTimeout(this.setWinner, 8500)
           return
         }
         window.odometer.innerHTML = Math.floor(100 + Math.random() * 899) // returns a number between 100 and 999
@@ -245,9 +293,6 @@
         this.rolling = false
         let number = this.findNumberByValue(this.result)
         this.winner = number.user
-        window.Vue.nextTick(function () {
-          window.scrollTo(0, document.body.scrollHeight)
-        })
       },
       findNumberByValue (value) {
         return this.numbers.find((number) => {
@@ -276,7 +321,6 @@
         this.rolling = true
         this.winner = null
         this.duration = Math.floor(3000 + Math.random() * 9000)
-        this.duration = 1
         console.log('Rolling during ' + this.duration + ' ms...')
         this.loop()
         this.updateTiming()
@@ -295,12 +339,41 @@
         source.connect(this.context.destination)
         source.start()
       },
+      removeWinner (winner) {
+        console.log('winner:')
+        console.log(winner)
+        console.log('winner id:')
+        console.log(winner.id)
+        console.log('winner name:')
+        console.log(winner.name)
+        this.removingWinner = true
+        axios.delete('/api/v1/winner/' + winner.id).then(response => {
+          this.internalWinners.splice(this.internalWinners.indexOf(winner), 1)
+          this.refreshPrizes()
+          this.removingWinner = false
+          this.removeWinnerDialog = false
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+          this.removingWinner = false
+        })
+      },
+      refreshPrizes () {
+        axios.get('/api/v1/prizes').then(response => {
+          this.internalPrizes = response.data
+        }).catch(error => {
+          console.log(error)
+          this.showError(error)
+        })
+      },
       removeAllWinners () {
         this.removingAllWinners = true
         axios.delete('/api/v1/winners').then(response => {
           this.internalWinners = null
           this.removingAllWinners = false
           this.removeAllWinnersDialog = false
+          this.refreshPrizes()
+          this.prize = null
         }).catch(error => {
           console.log(error)
           this.showError(error)
@@ -309,6 +382,9 @@
       }
     },
     created () {
+      this.originalPrizes = Object.assign(this.prizes)
+      console.log('L:')
+      console.log(this.prizes.length)
       // this.context = new AudioContext()
       // this.sound1 = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3'
       /* window.fetch(this.sound1)

@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix'=>'v1'], function() {
     Route::post('/newsletter', 'NewsletterController@store');
     Route::get('/events', 'EventsController@index');
+    //Prizes
+    Route::get('/prizes','PrizesController@index');
+    Route::get('/available_prizes','AvailablePrizesController@index');
+
 });
 
 Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
@@ -65,6 +69,12 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     //Winners
     Route::delete('/winners', 'WinnersController@destroy');
+
+    //Winner
+    Route::get('/winner', 'WinnerController@index');
     Route::delete('/winner/{prize}', 'WinnerController@destroy');
+    Route::post('/winner/{prize}', 'WinnerController@store');
+
+
 });
 

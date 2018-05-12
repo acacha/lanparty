@@ -23,4 +23,12 @@ class PrizesControllerTest extends TestCase
         $response->assertViewIs('prizes');
         $response->assertViewHas('prizes');
     }
+
+    /** @test */
+    public function can_list_prizes()
+    {
+        $response = $this->json('GET','/api/v1/prizes');
+
+        $response->assertSuccessful();
+    }
 }
