@@ -59,8 +59,8 @@
                             <v-card-media :src="gravatarURL (winner.email)" height="250px">
                             </v-card-media>
                             <v-card-title primary-title>
+                                <h1 class="display-1 mb-0">{{ winner.name }}</h1>
                                 <h3 class="headline mb-0">{{ userName(winner) }}</h3>
-                                <h1 class="subheading mb-0">{{ winner.name }}</h1>
                             </v-card-title>
                             <v-card-actions>
                                 <v-btn flat
@@ -135,7 +135,11 @@
                 </v-card>
             </v-flex>
             <v-flex xs10>
-                <div id="odometer" style="border: 15px solid #40764e;" class="odometer">999</div>
+                <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
+            </v-flex>
+            <v-flex xs12 v-if="prize">
+                <h1 class="display-2" v-html="prize"></h1>
+                <h3 class="display-2" v-if="winner">{{ winner.name}}</h3>
             </v-flex>
         </v-layout>
     </v-container>
@@ -340,12 +344,6 @@
         source.start()
       },
       removeWinner (winner) {
-        console.log('winner:')
-        console.log(winner)
-        console.log('winner id:')
-        console.log(winner.id)
-        console.log('winner name:')
-        console.log(winner.name)
         this.removingWinner = true
         axios.delete('/api/v1/winner/' + winner.id).then(response => {
           this.internalWinners.splice(this.internalWinners.indexOf(winner), 1)
@@ -382,9 +380,6 @@
       }
     },
     created () {
-      this.originalPrizes = Object.assign(this.prizes)
-      console.log('L:')
-      console.log(this.prizes.length)
       // this.context = new AudioContext()
       // this.sound1 = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3'
       /* window.fetch(this.sound1)
