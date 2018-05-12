@@ -138,8 +138,8 @@
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
             </v-flex>
             <v-flex xs12 v-if="prize">
-                <h1 class="display-2" v-html="prize"></h1>
-                <h3 class="display-2" v-if="winner">{{ winner.name}}</h3>
+                <h1 class="display-1" v-html="prize"></h1>
+                <h3 class="display-1" v-if="winner">{{ winner.name}}</h3>
             </v-flex>
         </v-layout>
     </v-container>
