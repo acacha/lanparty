@@ -26,10 +26,10 @@
 </head>
 <div id="app">
     <landing-page
-            action="{{ $action or null }}"
+            action="{{ $action ?? null }}"
             :registrations-enabled="{{ json_encode($registrations_enabled) }}"
-            reset-password-token="{{ $token or null }}"
-            reset-password-email="{{ $email or null }}">
+            reset-password-token="{{ $token ?? null }}"
+            reset-password-email="{{ $email ?? null }}">
     </landing-page>
 </div>
 @stack('beforeScripts')
