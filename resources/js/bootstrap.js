@@ -3,9 +3,12 @@
  * using reactive data binding and reusable components. Vue's API is clean
  * and simple, leaving you to focus on building your next great project.
  */
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+import Axios from 'axios'
 
-window.Vue = require('vue');
-window.Vuetify = require('vuetify');
+window.Vue = Vue;
+window.Vuetify = Vuetify;
 
 Vue.use(Vuetify)
 
@@ -15,7 +18,7 @@ Vue.use(Vuetify)
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+window.axios = Axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
