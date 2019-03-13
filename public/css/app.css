@@ -18,8 +18,7 @@
 }
 
 .pace .pace-progress-inner {
-  -webkit-box-shadow: 0 0 10px #0D47A1, 0 0 5px #0D47A1;
-          box-shadow: 0 0 10px #0D47A1, 0 0 5px #0D47A1;
+  box-shadow: 0 0 10px #0D47A1, 0 0 5px #0D47A1;
 }
 
 .pace .pace-activity {
