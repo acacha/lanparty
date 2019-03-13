@@ -3,6 +3,11 @@
 - [ ] Crear la branca
 - [ ] Utilitzar en producció
 
+# Favicons i touchsicons 
+
+- [ ] Copiar de scool
+- [ ] Vendor extraction i defer a pàgina principal
+
 # Actualitzar Laravel:
 
 - [X] Versió de partida: Laravel Framework 5.6.19

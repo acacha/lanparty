@@ -33,6 +33,14 @@ import * as mutations from './store/mutation-types'
 
 import { mapGetters } from 'vuex'
 
+import 'typeface-montserrat/index.css'
+import 'typeface-roboto/index.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'font-awesome/css/font-awesome.min.css'
+
+import 'vuetify/dist/vuetify.min.css'
+
 store.commit(mutations.USER,  user)
 if (window.user ) store.commit(mutations.LOGGED, true)
 
