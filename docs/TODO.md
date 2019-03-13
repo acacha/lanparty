@@ -5,9 +5,9 @@
 
 # Actualitzar Laravel:
 
-- [ ] Versió de partida: Laravel Framework 5.6.19
- - [ ] Upgrade de 5.6 a 5.7: https://laravel.com/docs/5.7/upgrade#upgrade-5.7.0
- 
+- [X] Versió de partida: Laravel Framework 5.6.19
+ - [X] Upgrade de 5.6 a 5.7: https://laravel.com/docs/5.7/upgrade#upgrade-5.7.0
+ - [ ] https://laravel.com/docs/5.8/upgrade#upgrade-5.8.0
 # Activar Email verification
 
 - [ ] TODO
