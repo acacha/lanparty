@@ -19,7 +19,6 @@ class NewsletterTest extends TestCase
     /** @test */
     public function guest_users_can_subscribe_to_newsletter()
     {
-        $this->withoutExceptionHandling();
         Newsletter::shouldReceive('subscribePending')
             ->once()
             ->with('prova@gmail.com')
