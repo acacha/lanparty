@@ -13,10 +13,10 @@ let SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js').sourceMaps()
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/js/app.js', 'public/js').sourceMaps()
+   .sass('resources/sass/app.scss', 'public/css');
 
-mix.copy('resources/assets/js/push_message.js', 'public/js/push_message.js');
+mix.copy('resources/js/push_message.js', 'public/js/push_message.js');
 
 
 // PWA service Workers
