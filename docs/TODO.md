@@ -8,6 +8,16 @@
 - [ ] Copiar de scool
 - [ ] Vendor extraction i defer a pàgina principal
 
+# optimització errors amb snackbar i Axios interceptor
+
+- [ ] Login porti a l'última pàgina logada
+
+# Service worker offline
+
+- [ ] Passar a workbox
+- [ ] importar imatges amb webpack
+- [ ] Que funcioni igualment offline el newsletter subscribe
+
 # Actualitzar Laravel:
 
 - [X] Versió de partida: Laravel Framework 5.6.19
