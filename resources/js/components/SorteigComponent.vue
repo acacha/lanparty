@@ -1,16 +1,5 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
-        <v-snackbar
-                :timeout="6000"
-                :color="snackbarColor"
-                v-model="snackbar"
-                :multi-line="true"
-        >
-            {{ snackbarText }}<br/>
-            {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
-        </v-snackbar>
-
         <v-alert v-model="error" type="error" dismissible>
             Especifiqueu el regal a sortejar!
         </v-alert>
@@ -164,13 +153,13 @@
 <script>
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import axios from 'axios'
-  import withSnackbar from './mixins/withSnackbar'
   import randomColor from './mixins/randomColor'
 
   export default {
-    mixins: [interactsWithGravatar, withSnackbar,randomColor],
+    mixins: [interactsWithGravatar, randomColor],
     data () {
       return {
+        refreshing: false,
         assigningWinning: false,
         removingWinner: false,
         removeWinnerDialog: false,
@@ -259,12 +248,10 @@
         }
         axios.post('/api/v1/winner/' + selectedPrize.id, {
           number: this.result
-        }).then(response => {
+        }).then(() => {
           this.assigningWinning = false
           this.finishAddWinner(multiple, selectedPrize)
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
+        }).catch(() => {
           this.assigningWinning = false
         })
       },
@@ -350,18 +337,17 @@
           this.refreshPrizes()
           this.removingWinner = false
           this.removeWinnerDialog = false
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
+        }).catch(() => {
           this.removingWinner = false
         })
       },
       refreshPrizes () {
+        this.refreshing = true
         axios.get('/api/v1/prizes').then(response => {
           this.internalPrizes = response.data
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
+          this.refreshing = false
+        }).catch(() => {
+          this.refreshing = false
         })
       },
       removeAllWinners () {
@@ -372,9 +358,7 @@
           this.removeAllWinnersDialog = false
           this.refreshPrizes()
           this.prize = null
-        }).catch(error => {
-          console.log(error)
-          this.showError(error)
+        }).catch(() => {
           this.removingAllWinners = false
         })
       }

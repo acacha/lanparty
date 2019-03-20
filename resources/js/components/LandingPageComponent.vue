@@ -492,11 +492,9 @@
   import { mapGetters } from 'vuex'
   import * as actions from '../store/action-types'
   import sleep from '../utils/sleep'
-  import withSnackbar from './mixins/withSnackbar'
 
   export default {
     name: 'LandingPage',
-    mixins: [withSnackbar],
     data () {
       return {
         internalAction: this.action,
@@ -646,14 +644,7 @@
             this.registerLoading = false
             this.showRegister = false
             window.location = '/home'
-          }).catch(error => {
-            if (error.response && error.response.status === 422) {
-              this.showError({
-                message: 'Les dades no són vàlides'
-              })
-            } else {
-              this.showError(error)
-            }
+          }).catch(() => {
             this.registerErrors = error.response.data.errors
           }).then(() => {
             this.registerLoading = false
@@ -671,14 +662,7 @@
             this.loginLoading = false
             this.showLogin = false
             window.location = '/home'
-          }).catch(error => {
-            if (error.response && error.response.status === 422) {
-              this.showError({
-                message: 'Les dades no són vàlides'
-              })
-            } else {
-              this.showError(error)
-            }
+          }).catch(() => {
             this.loginErrors = error.response.data.errors
           }).then(() => {
             this.loginLoading = false

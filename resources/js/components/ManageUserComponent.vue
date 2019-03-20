@@ -1,15 +1,5 @@
 <template>
     <div>
-        <v-snackbar
-                :timeout="6000"
-                :color="snackbarColor"
-                v-model="snackbar"
-                :multi-line="true"
-        >
-            {{ snackbarText }}<br/>
-            {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
-        </v-snackbar>
         <v-container fluid grid-list-md v-show="showSelectedUser">
             <v-layout row wrap>
                 <v-flex xs12 md4>
@@ -248,7 +238,6 @@
   import { mapGetters } from 'vuex'
   import _ from 'lodash'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
-  import withSnackbar from './mixins/withSnackbar'
   import Gravatar from './GravatarComponent.vue'
   import * as actions from '../store/action-types'
   import * as mutations from '../store/mutation-types'
@@ -257,7 +246,7 @@
 
   export default {
     name: 'ManageUser',
-    mixins: [ interactsWithGravatar, withSnackbar, randomColor ],
+    mixins: [ interactsWithGravatar, randomColor ],
     components: { Gravatar },
     data () {
       return {
@@ -317,17 +306,12 @@
       pay (user) {
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_PAY, user).then().catch(error => {
-          this.showError(error)
-        }).then(() => {
           this.loadingPayments = false
         })
       },
       unpay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_UNPAY, user).then().catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        this.$store.dispatch(actions.USER_UNPAY, user).then().catch(() => {
           this.loadingPayments = false
         })
       },
@@ -337,10 +321,7 @@
           this.unassignNumbersDone = true
           this.$store.commit(mutations.SET_SELECTED_USER_NUMBERS, [])
           sleep(1000).then(() => { this.unassignNumbersDialog = false; this.unassignNumbersDone = false })
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        }).catch(() => {
           this.unassigningNumbers = false
         })
       },
@@ -349,10 +330,7 @@
         this.$store.dispatch(actions.UNREGISTER_ALL_EVENTS, this.selectedUser).then(result => {
           this.unregisterEventsDone = true
           sleep(1000).then(() => { this.unregisterEventsDialog = false; this.unregisterEventsDone = false })
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        }).catch(() => {
           this.unregisteringEvents = false
         })
       },
@@ -362,10 +340,7 @@
           this.numberAssigned = true
           this.$store.commit(mutations.ADD_NUMBER_TO_SELECTED_USER_NUMBERS, result.data)
           sleep(1000).then(() => { this.assignNumberDialog = false; this.numberAssigned = false })
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        }).catch(() => {
           this.assigningNumber = false
         })
       },
@@ -375,10 +350,7 @@
           this.numberUnassigned = true
           this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, number)
           sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        }).catch(() => {
           this.unassigningNumber = false
           this.confirmingUnassigningNumber = null
         })
@@ -397,10 +369,7 @@
       },
       unregisterEvent (event) {
         this.unregisteringEvent = true
-        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).catch(() => {
           this.unregisteringEvent = false
           this.confirmingUnregisterEvent = null
         })
@@ -410,10 +379,7 @@
         this.$store.dispatch(actions.REGISTER_USER_TO_EVENT, { user: this.selectedUser, event: this.eventToRegister }).then((response) => {
           this.eventRegistered = true
           sleep(1000).then(() => { this.registerUserToEvent = false; this.eventRegistered = false })
-        }).catch(error => {
-          console.dir(error)
-          this.showError(error)
-        }).then(() => {
+        }).catch(() => {
           this.registeringEvent = false
         })
       }

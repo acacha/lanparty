@@ -1,15 +1,6 @@
 <template>
     <div>
-        <v-snackbar
-                :timeout="6000"
-                :color="snackbarColor"
-                v-model="snackbar"
-                :multi-line="true"
-        >
-            {{ snackbarText }}<br/>
-            {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
-        </v-snackbar>
+        <snackbar></snackbar>
         <v-dialog fullscreen v-model="showInscribeToGroupEvent" transition="dialog-bottom-transition"
                   :overlay="false"
                   scrollable>
@@ -320,7 +311,6 @@
 
 <script>
   import InteractsWithGravatar from './mixins/interactsWithGravatar'
-  import withSnackbar from './mixins/withSnackbar'
   import Group from './GroupComponent.vue'
   import * as mutations from '../store/mutation-types'
   import * as actions from '../store/action-types'
@@ -331,7 +321,7 @@
   export default {
     name: 'Events',
     components: { Group },
-    mixins: [InteractsWithGravatar, withSnackbar],
+    mixins: [InteractsWithGravatar],
     data () {
       return {
         showInscribeToGroupEvent: false,
@@ -400,17 +390,13 @@
         console.log('TODO EDIT GROUP')
       },
       unsubscribeGroup (event, group) {
-        this.$store.dispatch(actions.UNREGISTER_GROUP_TO_EVENT, {event, group}).then(response => {
+        this.$store.dispatch(actions.UNREGISTER_GROUP_TO_EVENT, {event, group}).then(() => {
           this.$store.commit(mutations.REMOVE_GROUP_FROM_EVENT, {event, group})
-        }).catch(error => {
-          this.showError(error)
         })
       },
       unsubscribeUser (event, user) {
         this.$store.dispatch(actions.REMOVE_USER_FROM_EVENT, {user, event}).then(response => {
           this.$store.commit(mutations.REMOVE_USER_FROM_EVENT, {event, user})
-        }).catch(error => {
-          this.showError(error)
         })
       },
       expand (event, props) {
@@ -430,10 +416,7 @@
           this.showInscribeToGroupEvent = true
           this.currentEvent = event
         } else {
-          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user}).catch(error => {
-            console.dir(error)
-            this.showError(error)
-          })
+          this.$store.dispatch(actions.REGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user})
         }
       },
       obtainGroup (event, user) {
@@ -448,10 +431,7 @@
           const group = this.obtainGroup(event, this.user)
           this.unsubscribeGroup(event, group)
         } else {
-          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user}).catch(error => {
-            console.dir(error)
-            this.showError(error.message)
-          })
+          this.$store.dispatch(actions.UNREGISTER_CURRENT_USER_TO_EVENT, {event, user: this.user})
         }
       }
     },

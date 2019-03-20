@@ -15,16 +15,7 @@
 </head>
 <body>
    <v-app id="app" v-cloak>
-       <v-snackbar
-               :timeout="6000"
-               :color="snackbarColor"
-               v-model="snackbar"
-               :multi-line="true"
-       >
-           @{{ snackbarText }}<br/>
-           @{{ snackbarSubtext }}
-           <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
-       </v-snackbar>
+       <snackbar></snackbar>
        <main-navigation-drawer v-model="drawer"></main-navigation-drawer>
        <main-toolbar title="{{ config('app.shortname', 'Laravel') }}"
                      @toggleleft="drawer=!drawer"

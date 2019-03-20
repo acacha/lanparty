@@ -14,7 +14,7 @@
                     </v-flex>
                     <v-flex xs12>
                         <h3>{{ user.name }}</h3>
-                        <a href="https://en.gravatar.com/connect/">Canvia el teu avatar a Gravatar</a>
+                        <a href="https://en.gravatar.com/connect/" target="_blank">Canvia el teu avatar a Gravatar</a>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -154,6 +154,7 @@ export default {
       this.changingPassword = true
       this.$store.dispatch(actions.REMEMBER_PASSWORD, this.user.email).then(response => {
         this.$snackbar.showMessage('Se us ha enviat un email per tal de modificar la paraula de pas')
+        this.changingPassword = false
       }).catch(() => {
         this.changingPassword = false
       })

@@ -22,7 +22,6 @@ import Gravatar from './components/GravatarComponent.vue'
 import Events from './components/EventsComponent.vue'
 import UserNumbers from './components/UserNumbersComponent.vue'
 import Share from './components/ShareComponent.vue'
-import withSnackbar from './components/mixins/withSnackbar'
 import Sorteig from './components/SorteigComponent.vue'
 import Prizes from './components/PrizesComponent.vue'
 import Partners from './components/PartnersComponent.vue'
@@ -50,6 +49,7 @@ import helpers from './utils/helpers'
 
 window.Vue = Vue;
 window.Vuetify = Vuetify;
+window.Vue.use(Vuetify)
 window.Vue.use(snackbar)
 window.Vue.use(permissions)
 window.Vue.use(confirm)
@@ -155,7 +155,6 @@ const app = new Vue({
     'main-toolbar': MainToolbar,
     'user-info-drawer': UserInfoDrawer
   },
-  mixins: [ withSnackbar ],
   computed: {
     ...mapGetters({
       user: 'user'

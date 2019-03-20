@@ -1,15 +1,5 @@
 <template>
     <v-card tile>
-        <v-snackbar
-                :timeout="6000"
-                :color="snackbarColor"
-                v-model="snackbar"
-                :multi-line="true"
-        >
-            {{ snackbarText }}<br/>
-            {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
-        </v-snackbar>
         <v-toolbar card dark color="primary">
             <v-btn icon @click.native="close" dark>
                 <v-icon>close</v-icon>
@@ -94,14 +84,13 @@
   import VUsersSearch from './VUsersSearchComponent.vue'
   import { mapGetters } from 'vuex'
   import * as actions from '../store/action-types'
-  import withSnackbar from './mixins/withSnackbar'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import sleep from '../utils/sleep'
 
   export default {
     name: 'Group',
     components: { VUsersSearch },
-    mixins: [withSnackbar, interactsWithGravatar],
+    mixins: [interactsWithGravatar],
     data () {
       return {
         alert: true,
@@ -193,7 +182,7 @@
       userSelected (n, user) {
         if (user) {
           if (this.isUserAlreadySelected(user)) {
-            this.showError({message: "L'usuari ja ha estat seleccionat prèviament!"})
+            this.$snackbar.showError({message: "L'usuari ja ha estat seleccionat prèviament!"})
             return
           }
           this.ids[n] = user.id
@@ -230,10 +219,7 @@
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
             this.result = true
             sleep(3000).then(() => { this.close() })
-          }).catch(error => {
-            console.dir(error)
-            this.showError(error)
-          }).then(() => {
+          }).catch(() => {
             this.registering = false
           })
         }
