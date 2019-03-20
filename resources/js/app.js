@@ -26,6 +26,7 @@ import withSnackbar from './components/mixins/withSnackbar'
 import Sorteig from './components/SorteigComponent.vue'
 import Prizes from './components/PrizesComponent.vue'
 import Partners from './components/PartnersComponent.vue'
+import MainNavigationDrawer from './components/ui/MainNavigationDrawer'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -83,7 +84,8 @@ const app = new Vue({
     Share,
     Sorteig,
     Prizes,
-    Partners
+    Partners,
+    'main-navigation-drawer': MainNavigationDrawer
   },
   mixins: [ withSnackbar ],
   computed: {
@@ -154,15 +156,6 @@ const app = new Vue({
         })
       }
       return true
-    },
-    menuItemSelected (item) {
-      if (item.href) {
-        if (item.new) {
-          window.open(item.href)
-        } else {
-          window.location.href = item.href;
-        }
-      }
     }
   },
   props: {

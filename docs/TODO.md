@@ -1,3 +1,24 @@
+# Menu navegació esquerra
+
+- [X] Que siguin links els mòduls i no només responguin a clicks
+- [X] Marcar el menú seleccionat/actiu amb un color diferent
+- [X] NavigationDrawer moguda a un component a mida 
+
+# Events Manager
+- [ ] Apartat Events Manager
+  - [ ] Test web i controlador més vista i component Vue
+
+# Users Manager
+
+# Environment
+
+- [X] Separar fitxer env en local del de explotació
+
+# Bugs
+
+- [ ] Error 500 (Server Error sense més dades) Pàgina de login
+  - [ ] Crear regression test
+  
 # Crear branca de producció
 
 - [ ] Crear la branca

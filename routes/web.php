@@ -1,43 +1,41 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\GroupAvatarController;
+use App\Http\Controllers\InvitationsController;
+use App\Http\Controllers\ManageParticipantsController;
+use App\Http\Controllers\ParticipantMessagesController;
+use App\Http\Controllers\ParticipantsHomePageController;
+use App\Http\Controllers\PartnersController;
+use App\Http\Controllers\PrizesController;
+use App\Http\Controllers\SorteigController;
+use App\Http\Controllers\WelcomeController;
 
-//Auth::loginUsingId(1);
+Route::get('/', '\\' . WelcomeController::class . '@index');
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('/premis', 'PrizesController@show');
-Route::get('/colaboradors', 'PartnersController@show');
+Route::get('/premis', '\\' . PrizesController::class . '@show');
+Route::get('/colaboradors', '\\' . PartnersController::class . '@show');
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', 'ParticipantsHomePageController@index');
-    Route::get('/manage/participants', 'ManageParticipantsController@index')
+    Route::get('/home', '\\' . ParticipantsHomePageController::class . '@index');
+    Route::get('/manage/participants', '\\' . ManageParticipantsController::class. '@index')
         ->name('manage.participants');
 
-//    Route::get('/manage/events/{event}/messages', 'ParticipantMessagesController@index');
-    Route::post('/manage/events/{event}/messages', 'ParticipantMessagesController@store')
+    Route::get('/manage/events', '\\' . Eve::class . '@store');
+
+    Route::post('/manage/events/{event}/messages', '\\' .ParticipantMessagesController::class . '@store')
         ->name('manage.event-messages.store');
 
-    Route::get('/manage/invitations/{code}', 'InvitationsController@show')
+    Route::get('/manage/invitations/{code}', '\\' . InvitationsController::class . '@show')
         ->name('manage.invitations.show');
 
-    Route::get('/group/{group}/avatar', 'GroupAvatarController@show');
+    Route::get('/group/{group}/avatar', '\\' . GroupAvatarController::class . '@show');
 
-    Route::post('/group/{group}/avatar','GroupAvatarController@store');
+    Route::post('/group/{group}/avatar','\\' . GroupAvatarController::class . '@store');
 
     // Sorteig
-    Route::get('/manage/sorteig', 'SorteigController@index')
+    Route::get('/manage/sorteig', '\\' . SorteigController::class . '@index')
         ->name('manage.sorteig');
 
 });

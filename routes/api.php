@@ -1,5 +1,22 @@
 <?php
 
+use App\Http\Controllers\Api\EventsController;
+use App\Http\Controllers\AssignNumberToUserController;
+use App\Http\Controllers\AvailablePrizesController;
+use App\Http\Controllers\LoggedUserController;
+use App\Http\Controllers\MembersController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\NumbersController;
+use App\Http\Controllers\PrizesController;
+use App\Http\Controllers\RegisterGroupToEventController;
+use App\Http\Controllers\RegisterToEventController;
+use App\Http\Controllers\RegisterUserToAllEventsController;
+use App\Http\Controllers\RegisterUserToEventController;
+use App\Http\Controllers\UnassignNumbersToUserController;
+use App\Http\Controllers\UserPaymentsController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\WinnerController;
+use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
 
 /*
@@ -18,63 +35,62 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix'=>'v1'], function() {
-    Route::post('/newsletter', 'NewsletterController@store');
-    Route::get('/events', 'EventsController@index');
+    Route::post('/newsletter', '\\' . NewsletterController::class . '@store');
+    Route::get('/events', '\\' . EventsController::class . '@index');
     //Prizes
-    Route::get('/prizes','PrizesController@index');
-    Route::get('/available_prizes','AvailablePrizesController@index');
+    Route::get('/prizes','\\' . PrizesController::class . '@index');
+    Route::get('/available_prizes','\\' . AvailablePrizesController::class . '@index');
 
 });
 
 Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Users
-    Route::get('/users', 'UsersController@index');
+    Route::get('/users', '\\' . UsersController::class . '@index');
 
-    Route::put('/users/{user}', 'UsersController@update');
+    Route::put('/users/{user}', '\\' . UsersController::class . '@update');
 
-    Route::put('/user', 'LoggedUserController@update');
+    Route::put('/user', '\\' . LoggedUserController::class .'@update');
 
     //Members
-    Route::delete('/group/{group}/member', 'MembersController@destroy');
+    Route::delete('/group/{group}/member', '\\' . MembersController::class . '@destroy');
 
     //Numbers
-    Route::get('/numbers', 'NumbersController@index');
+    Route::get('/numbers', '\\' . NumbersController::class . '@index');
 
     //Register Auth user to events
-    Route::post('/events/{event}/register', 'RegisterToEventController@store');
-    Route::delete('/events/{event}/register', 'RegisterToEventController@destroy');
+    Route::post('/events/{event}/register', '\\' . RegisterToEventController::class . '@store');
+    Route::delete('/events/{event}/register', '\\' . RegisterToEventController::class . '@destroy');
 
     //Register users to events
-    Route::post('/events/{event}/register/user/{user}', 'RegisterUserToEventController@store');
-    Route::delete('/events/{event}/register/user/{user}', 'RegisterUserToEventController@destroy');
+    Route::post('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@store');
+    Route::delete('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@destroy');
 
-    Route::delete('/events/register/user/{user}', 'RegisterUserToAllEventsController@destroy');
+    Route::delete('/events/register/user/{user}', '\\' . RegisterUserToAllEventsController::class . '@destroy');
 
     //Register group to event
-    Route::post('/events/{event}/register_group', 'RegisterGroupToEventController@store');
+    Route::post('/events/{event}/register_group', '\\' . RegisterGroupToEventController::class . '@store');
 
-    Route::delete('/events/{event}/register_group/{group}', 'RegisterGroupToEventController@destroy');
+    Route::delete('/events/{event}/register_group/{group}', '\\' . RegisterGroupToEventController::class . '@destroy');
 
     // ASSIGN NUMBERS
     // Assign first available number to user
-    Route::post('/user/{user}/assign_number', 'AssignNumberToUserController@store');
+    Route::post('/user/{user}/assign_number', '\\' . AssignNumberToUserController::class . '@store');
     // Unassign/free number
-    Route::delete('/number/{number}/assign', 'AssignNumberToUserController@destroy');
+    Route::delete('/number/{number}/assign', '\\' . AssignNumberToUserController::class . '@destroy');
     // Unassign all numbers assigned to an user
-    Route::post('/user/{user}/unassign_numbers', 'UnassignNumbersToUserController@store');
+    Route::post('/user/{user}/unassign_numbers', '\\' . UnassignNumbersToUserController::class . '@store');
 
     //Payments
-    Route::post('/user/{user}/pay', 'UserPaymentsController@store');
-    Route::delete('/user/{user}/pay', 'UserPaymentsController@destroy');
+    Route::post('/user/{user}/pay', '\\' . UserPaymentsController::class . '@store');
+    Route::delete('/user/{user}/pay', '\\' . UserPaymentsController::class . '@destroy');
 
     //Winners
-    Route::delete('/winners', 'WinnersController@destroy');
+    Route::delete('/winners', '\\' . WinnersController::class . '@destroy');
 
     //Winner
-    Route::get('/winner', 'WinnerController@index');
-    Route::delete('/winner/{prize}', 'WinnerController@destroy');
-    Route::post('/winner/{prize}', 'WinnerController@store');
-
+    Route::get('/winner', '\\' . WinnerController::class . ' @index');
+    Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
+    Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
 
 });
 

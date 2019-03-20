@@ -11,7 +11,9 @@ use App\Prize;
 use App\Ticket;
 use App\User;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Role as LanPartyRole;
 
 if (!function_exists('initialize_partners')) {
     function initialize_partners()
@@ -703,4 +705,23 @@ if (!function_exists('formatted_logged_user')) {
     }
 }
 
+if (!function_exists('initialize_manager_role')) {
+    function initialize_manager_role()
+    {
+        $role = Role::firstOrCreate(['name' => LanPartyRole::MANAGER['name']]);
+        $permissions = manager_permissions();
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+            $role->givePermissionTo($permission);
+        }
+    }
+}
 
+if (!function_exists('manager_permissions')) {
+    function manager_permissions()
+    {
+        return [
+//            'chat.index',
+        ];
+    }
+}
