@@ -59,11 +59,11 @@
                                 </v-btn>
                             </v-flex>
                             <v-flex xs12>
-                                <a href="/password/reset" color="blue darken-2">
+                                <a href="/password/reset" color="primary darken-2">
                                     Recorda'm la paraula de pas</a>
                             </v-flex>
                             <v-flex xs12>
-                                <a href="/register" color="blue darken-2">
+                                <a href="/register" color="primary darken-2">
                                     Registra't
                                 </a>
                             </v-flex>
@@ -72,8 +72,8 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-2" flat @click.native="showLogin = false">Tancar</v-btn>
-                        <v-btn color="blue darken-2" class="white--text" @click.native="login" :loading="loginLoading">Entrar</v-btn>
+                        <v-btn color="primary darken-2" flat @click.native="showLogin = false">Tancar</v-btn>
+                        <v-btn color="primary darken-2" class="white--text" @click.native="login" :loading="loginLoading">Entrar</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                 </v-card>
@@ -155,14 +155,14 @@
                             </svg>
                             <span class="ml-1">Entra amb Facebook</span>
                         </v-btn>
-                        <a href="/login" color="blue darken-2">
+                        <a href="/login" color="primary darken-2">
                             Ja tinc un usuari
                         </a>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
-                        <v-btn :loading="registerLoading" color="blue darken-1" class="white--text" @click.native="register">Registra'm</v-btn>
+                        <v-btn color="primary darken-1" flat @click.native="showRegister = false">Tancar</v-btn>
+                        <v-btn :loading="registerLoading" color="primary darken-1" class="white--text" @click.native="register">Registra'm</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -190,16 +190,16 @@
                                     required
                             ></v-text-field>
                         </v-form>
-                        <a href="/login" color="blue darken-2">
+                        <a href="/login" color="primary darken-2">
                             Entrar
                         </a> &nbsp; |
-                        <a href="/register" color="blue darken-2">
+                        <a href="/register" color="primary darken-2">
                             Registra't
                         </a>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showRememberPassword = false">Tancar</v-btn>
+                        <v-btn color="primary darken-1" flat @click.native="showRememberPassword = false">Tancar</v-btn>
                         <v-btn
                                 :loading="rememberPasswordLoading"
                                 flat
@@ -256,7 +256,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="showResetPassword = false">Tancar</v-btn>
+                        <v-btn color="primary darken-1" flat @click.native="showResetPassword = false">Tancar</v-btn>
                         <v-btn
                                 :loading="resetPasswordLoading"
                                 flat
@@ -465,7 +465,7 @@
                 </v-container>
             </section>
 
-            <v-footer class="blue darken-3">
+            <v-footer class="primary darken-3">
                 <v-layout row wrap align-center>
                     <v-flex xs12>
                         <div class="white--text ml-3">

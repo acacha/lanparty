@@ -8,7 +8,7 @@
                         <v-chip label color="orange darken-3" text-color="white">
                             <v-icon left>group</v-icon>Total: {{ this.internalUsers.length }}
                         </v-chip>
-                        <v-chip label color="green darken-3" text-color="white">
+                        <v-chip label color="success darken-3" text-color="white">
                             <v-icon left>group</v-icon>Pagats: {{ this.paidInternalusers.length }}
                         </v-chip>
                     </v-flex>

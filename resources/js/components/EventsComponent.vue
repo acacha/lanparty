@@ -12,7 +12,7 @@
             ></group>
         </v-dialog>
         <v-card>
-            <v-card-title class="blue darken-3 white--text"><h2>Events</h2></v-card-title>
+            <v-card-title class="primary darken-3 white--text"><h2>Events</h2></v-card-title>
             <v-card-text class="px-0 mb-2 hidden-sm-and-down">
                 <v-data-table
                         :headers="headers"
@@ -47,7 +47,7 @@
                                           :input-value="props.item.inscribed"
                                           @change="toogleInscription(props.item)"
                                           :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
-                                <!--<v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">-->
+                                <!--<v-btn flat icon color="success" v-if="props.item.leading" @click="editGroupRegistration">-->
                                     <!--<v-icon>mode_edit</v-icon>-->
                                 <!--</v-btn>-->
                             </td>
@@ -74,7 +74,7 @@
                                                 </v-list-tile-content>
                                                 <!--<v-list-tile-action v-if="canEditGroup(group)">-->
                                                     <!--<v-btn icon ripple @click.stop="editGroup(group)">-->
-                                                        <!--<v-icon color="green darken-1">mode_edit</v-icon>-->
+                                                        <!--<v-icon color="success darken-1">mode_edit</v-icon>-->
                                                     <!--</v-btn>-->
 
                                                 <!--</v-list-tile-action>-->
@@ -184,7 +184,7 @@
                                                               :disabled="props.item.available_tickets < 1 && !props.item.inscribed"></v-switch>
 
 
-                                                    <v-btn flat icon color="green" v-if="props.item.leading" @click="editGroupRegistration">
+                                                    <v-btn flat icon color="success" v-if="props.item.leading" @click="editGroupRegistration">
                                                         <v-icon>mode_edit</v-icon>
                                                     </v-btn>
 
@@ -229,13 +229,13 @@
                                                     <!--<v-list-tile-action v-if="canEditGroup(group)">-->
 
                                                         <!--<v-btn icon ripple @click.stop="editGroup(group)">-->
-                                                            <!--<v-icon color="green darken-1">mode_edit</v-icon>-->
+                                                            <!--<v-icon color="success darken-1">mode_edit</v-icon>-->
                                                         <!--</v-btn>-->
 
                                                     <!--</v-list-tile-action>-->
                                                     <v-list-tile-action v-if="canDeleteGroup(group)">
                                                         <v-btn icon ripple @click.stop="unsubscribeGroup(props.item,group)">
-                                                            <v-icon color="red darken-1">delete</v-icon>
+                                                            <v-icon color="error darken-1">delete</v-icon>
                                                         </v-btn>
                                                     </v-list-tile-action>
                                                     <!--<v-list-tile-action v-if="memberOf(group,this.user)">-->

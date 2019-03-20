@@ -21,7 +21,7 @@
         >
             <v-btn
                     slot="activator"
-                    color="blue darken-2"
+                    color="primary darken-2"
                     dark
                     fab
                     hover
@@ -33,7 +33,7 @@
                     fab
                     dark
                     small
-                    color="green"
+                    color="success"
             >
                 <v-icon>edit</v-icon>
             </v-btn>

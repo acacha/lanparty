@@ -53,7 +53,7 @@
                             </v-card-title>
                             <v-card-actions>
                                 <v-btn flat
-                                       color="green"
+                                       color="success"
                                        :disabled="assigningWinning"
                                        :loading="assigningWinning"
                                        @click="addWinner">Assignar regal</v-btn>
@@ -76,8 +76,8 @@
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn color="green darken-1" flat @click.native="removeAllWinnersDialog = false">Cancel·lar</v-btn>
-                                    <v-btn color="red darken-1" flat
+                                    <v-btn color="success darken-1" flat @click.native="removeAllWinnersDialog = false">Cancel·lar</v-btn>
+                                    <v-btn color="error darken-1" flat
                                            :disabled="removingAllWinners"
                                            :loading="removingAllWinners"
                                            @click.native="removeAllWinners">Eliminar tots</v-btn>
@@ -103,8 +103,8 @@
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn color="green darken-1" flat @click.native="removeWinnerDialog = false">Cancel·lar</v-btn>
-                                                <v-btn color="red darken-1" flat
+                                                <v-btn color="success darken-1" flat @click.native="removeWinnerDialog = false">Cancel·lar</v-btn>
+                                                <v-btn color="error darken-1" flat
                                                        :disabled="removingWinner"
                                                        :loading="removingWinner"
                                                        @click.native="removeWinner(winner)">Eliminar</v-btn>

@@ -55,7 +55,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn :loading="updatingUser" flat color="green" @click="updateUser" v-if="editingUser">
+                <v-btn :loading="updatingUser" flat color="success" @click="updateUser" v-if="editingUser">
                     <v-icon right dark>save</v-icon>
                     Guardar
                 </v-btn>

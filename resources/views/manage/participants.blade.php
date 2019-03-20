@@ -12,7 +12,7 @@
             @endif
             <v-flex xs12>
                 <v-card>
-                    <v-card-title class="blue darken-3 white--text">
+                    <v-card-title class="primary darken-3 white--text">
                         <h3>Usuaris</h3>
                     </v-card-title>
                     <v-card-text class="px-0 mb-2">
@@ -23,7 +23,7 @@
             </v-flex>
             <v-flex xs12>
                 <v-card>
-                    <v-card-title class="blue darken-3 white--text">
+                    <v-card-title class="primary darken-3 white--text">
                         <h3>Números del sorteig</h3>
                     </v-card-title>
                     <v-card-text class="px-0 mb-2">

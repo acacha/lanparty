@@ -4,7 +4,7 @@
             <v-layout row wrap>
                 <v-flex xs12 md4>
                     <v-card flat class="elevation-5">
-                        <v-card-title class="blue darken-3 white--text"><h4>User</h4></v-card-title>
+                        <v-card-title class="primary darken-3 white--text"><h4>User</h4></v-card-title>
                         <v-container fluid grid-list-md>
                             <v-layout row wrap>
                                 <v-flex xs12 md4>
@@ -65,7 +65,7 @@
                 </v-flex>
                 <v-flex xs12 md8>
                     <v-card class="mb-2">
-                        <v-card-title class="blue darken-3 white--text"><h4>Números</h4></v-card-title>
+                        <v-card-title class="primary darken-3 white--text"><h4>Números</h4></v-card-title>
 
                         <v-data-table
                                 :items="selectedUser.numbers"
@@ -103,7 +103,7 @@
                             </v-btn>
                             <v-dialog v-model="assignNumberDialog" max-width="500px">
                                 <v-card>
-                                    <v-card-title class="blue darken-3 white--text">
+                                    <v-card-title class="primary darken-3 white--text">
                                         <span>Assignar número</span>
                                     </v-card-title>
                                     <v-card-text>
@@ -139,7 +139,7 @@
                         </v-card-actions>
                     </v-card>
                     <v-card>
-                        <v-card-title class="blue darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
+                        <v-card-title class="primary darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
                         <v-data-table
                                 :items="selectedUser.events"
                                 hide-actions
@@ -173,7 +173,7 @@
                             </v-btn>
                             <v-dialog v-model="registerUserToEvent" max-width="750px">
                                 <v-card>
-                                    <v-card-title class="blue darken-3 white--text">
+                                    <v-card-title class="primary darken-3 white--text">
                                         <span>Inscriure a un esdeveniment</span>
                                     </v-card-title>
                                     <v-card-text>

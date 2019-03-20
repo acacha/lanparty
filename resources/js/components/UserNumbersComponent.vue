@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-title class="blue darken-3 white--text"><h2>Números del sorteig</h2></v-card-title>
+        <v-card-title class="primary darken-3 white--text"><h2>Números del sorteig</h2></v-card-title>
         <v-card-text class="px-0 mb-2">
             <v-list subheader v-if="user.numbers.length > 0">
                 <v-tooltip v-for="number in user.numbers" :key="number.id" top>
