@@ -6,6 +6,8 @@ use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
 use App\Exceptions\NotEnoughTicketsException;
 use App\Exceptions\UserAlreadyInscribedException;
+use App\Traits\ApiURI;
+use App\Traits\FormattedDates;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,9 +18,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
-//    protected $appends = ['inscribed','tickets','available_tickets','assigned_tickets'];
+    use ApiURI, FormattedDates;
 
     protected $guarded = [];
+
+    public static function events()
+    {
+        return map_collection(Event::all());
+    }
 
     /**
      * Add registrations (tickets available) for event
@@ -126,7 +133,7 @@ class Event extends Model
 
     /**
      * Register group to event.
-     * 
+     *
      * @param Group $group
      */
     public function registerGroup(Group $group)
@@ -285,6 +292,48 @@ class Event extends Model
     public function scopeUnpublished($query)
     {
         return $query->whereNull('published_at');
+    }
+
+    public function map()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'inscription_type_id' => $this->inscription_type_id,
+            'image' => $this->image,
+            'regulation' => $this->regulation,
+            'participants_number' => (int) $this->participants_number,
+            'api_uri' => $this->api_uri,
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+        ];
+    }
+
+    public function mapSimple()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'inscription_type_id' => $this->inscription_type_id,
+            'image' => $this->image,
+            'regulation' => $this->regulation,
+            'participants_number' => (int) $this->participants_number,
+            'api_uri' => $this->api_uri,
+            'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
+            'updated_at' => $this->updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+        ];
     }
 
 }

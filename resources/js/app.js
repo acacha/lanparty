@@ -27,6 +27,7 @@ import Sorteig from './components/SorteigComponent.vue'
 import Prizes from './components/PrizesComponent.vue'
 import Partners from './components/PartnersComponent.vue'
 import MainNavigationDrawer from './components/ui/MainNavigationDrawer'
+import MainToolbar from './components/ui/MainToolbar'
 
 import store from './store'
 import * as actions from './store/action-types'
@@ -78,14 +79,15 @@ const app = new Vue({
     NumbersSearch,
     ManageUser,
     LandingPage,
-    Gravatar,
+    'gravatar': Gravatar,
     Events,
     UserNumbers,
     Share,
     Sorteig,
     Prizes,
     Partners,
-    'main-navigation-drawer': MainNavigationDrawer
+    'main-navigation-drawer': MainNavigationDrawer,
+    'main-toolbar': MainToolbar
   },
   mixins: [ withSnackbar ],
   computed: {
@@ -145,9 +147,6 @@ const app = new Vue({
       }).then(() => {
         this.changingPassword = false
       })
-    },
-    toogleRightDrawer() {
-      this.drawerRight = ! this.drawerRight
     },
     checkRoles (item) {
       if (item.role) {

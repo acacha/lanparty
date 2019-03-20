@@ -8,6 +8,7 @@ use App\Http\Controllers\ParticipantsHomePageController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PrizesController;
 use App\Http\Controllers\SorteigController;
+use App\Http\Controllers\Web\EventsController;
 use App\Http\Controllers\WelcomeController;
 
 Route::get('/', '\\' . WelcomeController::class . '@index');
@@ -22,7 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/manage/participants', '\\' . ManageParticipantsController::class. '@index')
         ->name('manage.participants');
 
-    Route::get('/manage/events', '\\' . Eve::class . '@store');
+    Route::get('/manage/events', '\\' . EventsController::class . '@index');
 
     Route::post('/manage/events/{event}/messages', '\\' .ParticipantMessagesController::class . '@store')
         ->name('manage.event-messages.store');
