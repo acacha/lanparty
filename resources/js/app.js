@@ -28,9 +28,9 @@ import Prizes from './components/PrizesComponent.vue'
 import Partners from './components/PartnersComponent.vue'
 import MainNavigationDrawer from './components/ui/MainNavigationDrawer'
 import MainToolbar from './components/ui/MainToolbar'
+import UserInfoDrawer from './components/ui/UserInfoDrawer'
 
 import store from './store'
-import * as actions from './store/action-types'
 import * as mutations from './store/mutation-types'
 
 import { mapGetters } from 'vuex'
@@ -52,26 +52,7 @@ const app = new Vue({
   data: () => ({
     dialog: false,
     drawer: null,
-    drawerRight: false,
-    logoutLoading: false,
-    editingUser: false,
-    updatingUser: false,
-    changingPassword: false,
-    items: [
-      { icon: 'home', text: 'Home', href: '/home' },
-      { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', new: true  },
-      { icon: 'favorite_border', text: 'Premis', href: '/premis', new: true },
-      // { icon: 'settings', text: 'Settings' },
-      // { icon: 'chat_bubble', text: 'Contact' },
-      { heading: 'Links'},
-      { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', new: true },
-      { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
-      { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , new: true },
-      { icon: 'link', text: 'Streaming (Twitch)', href: 'https://www.twitch.tv/iesebrelanparty' , new: true },
-      { heading: 'Administració', role: 'Manager'},
-      { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' },
-      { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true }
-    ]
+    drawerRight: false
   }),
   components: {
     UsersSearch,
@@ -87,7 +68,8 @@ const app = new Vue({
     Prizes,
     Partners,
     'main-navigation-drawer': MainNavigationDrawer,
-    'main-toolbar': MainToolbar
+    'main-toolbar': MainToolbar,
+    'user-info-drawer': UserInfoDrawer
   },
   mixins: [ withSnackbar ],
   computed: {
@@ -96,58 +78,6 @@ const app = new Vue({
     })
   },
   methods: {
-    logout() {
-      this.logoutLoading = true
-      this.$store.dispatch(actions.LOGOUT).then(response => {
-        window.location = '/'
-      }).catch(error => {
-        console.log(error)
-      }).then(() => {
-        this.logoutLoading = false
-      })
-    },
-    editUser() {
-      this.editingUser = true
-      this.$nextTick(this.$refs.email.focus)
-    },
-    updateEmail (email) {
-      this.$store.commit(mutations.USER, {...this.user, email})
-    },
-    updateName(name) {
-      this.$store.commit(mutations.USER, {...this.user, name})
-    },
-    updateGivenName (givenName){
-      this.$store.commit(mutations.USER,{...this.user, givenName})
-    },
-    updateSn1(sn1){
-      this.$store.commit(mutations.USER,{...this.user, sn1})
-    },
-    updateSn2(sn2){
-      this.$store.commit(mutations.USER,{...this.user, sn2})
-    },
-    updateUser () {
-      this.updatingUser = true
-      this.$store.dispatch(actions.UPDATE_USER, this.user).then(response => {
-        this.showMessage('Usuari modificat correctament')
-      }).catch(error => {
-        console.dir(error)
-        this.showError(error)
-      }).then(() => {
-        this.editingUser = false
-        this.updatingUser = false
-      })
-    },
-    changePassword() {
-      this.changingPassword = true
-      this.$store.dispatch(actions.REMEMBER_PASSWORD, this.user.email).then(response => {
-        this.showMessage(`Se us ha enviat un email per tal de modificar la paraula de pas`)
-      }).catch(error => {
-        console.dir(error)
-        this.showError(error)
-      }).then(() => {
-        this.changingPassword = false
-      })
-    },
     checkRoles (item) {
       if (item.role) {
         return this.$store.getters.roles.find(function(role) {
