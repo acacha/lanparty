@@ -311,7 +311,9 @@
       },
       unpay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_UNPAY, user).then().catch(() => {
+        this.$store.dispatch(actions.USER_UNPAY, user).then(() => {
+          this.loadingPayments = true
+        }).catch(() => {
           this.loadingPayments = false
         })
       },
@@ -320,6 +322,7 @@
         this.$store.dispatch(actions.UNASSIGN_NUMBERS_TO_USER, this.selectedUser).then(result => {
           this.unassignNumbersDone = true
           this.$store.commit(mutations.SET_SELECTED_USER_NUMBERS, [])
+          this.unassigningNumbers = false
           sleep(1000).then(() => { this.unassignNumbersDialog = false; this.unassignNumbersDone = false })
         }).catch(() => {
           this.unassigningNumbers = false
@@ -329,6 +332,7 @@
         this.unregisteringEvents = true
         this.$store.dispatch(actions.UNREGISTER_ALL_EVENTS, this.selectedUser).then(result => {
           this.unregisterEventsDone = true
+          this.unregisteringEvents = false
           sleep(1000).then(() => { this.unregisterEventsDialog = false; this.unregisterEventsDone = false })
         }).catch(() => {
           this.unregisteringEvents = false
@@ -339,6 +343,7 @@
         this.$store.dispatch(actions.ASSIGN_NUMBER_TO_USER, { user: this.selectedUser, description: this.description }).then(result => {
           this.numberAssigned = true
           this.$store.commit(mutations.ADD_NUMBER_TO_SELECTED_USER_NUMBERS, result.data)
+          this.assigningNumber = false
           sleep(1000).then(() => { this.assignNumberDialog = false; this.numberAssigned = false })
         }).catch(() => {
           this.assigningNumber = false
@@ -349,6 +354,7 @@
         this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
           this.numberUnassigned = true
           this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, number)
+          this.unassigningNumber = false
           sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
         }).catch(() => {
           this.unassigningNumber = false
@@ -369,7 +375,10 @@
       },
       unregisterEvent (event) {
         this.unregisteringEvent = true
-        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).catch(() => {
+        this.$store.dispatch(actions.UNREGISTER_USER_TO_EVENT, { user: this.selectedUser, event }).then(() => {
+          this.unregisteringEvent = false
+          this.confirmingUnregisterEvent = null
+        }).catch(() => {
           this.unregisteringEvent = false
           this.confirmingUnregisterEvent = null
         })
@@ -378,6 +387,7 @@
         this.registeringEvent = true
         this.$store.dispatch(actions.REGISTER_USER_TO_EVENT, { user: this.selectedUser, event: this.eventToRegister }).then((response) => {
           this.eventRegistered = true
+          this.registeringEvent = false
           sleep(1000).then(() => { this.registerUserToEvent = false; this.eventRegistered = false })
         }).catch(() => {
           this.registeringEvent = false

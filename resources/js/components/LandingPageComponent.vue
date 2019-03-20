@@ -645,9 +645,8 @@
             this.showRegister = false
             window.location = '/home'
           }).catch(() => {
-            this.registerErrors = error.response.data.errors
-          }).then(() => {
             this.registerLoading = false
+            this.registerErrors = error.response.data.errors
           })
         }
       },
@@ -663,9 +662,8 @@
             this.showLogin = false
             window.location = '/home'
           }).catch(() => {
-            this.loginErrors = error.response.data.errors
-          }).then(() => {
             this.loginLoading = false
+            this.loginErrors = error.response.data.errors
           })
         }
       },

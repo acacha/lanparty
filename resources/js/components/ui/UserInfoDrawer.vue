@@ -145,6 +145,8 @@ export default {
       this.updatingUser = true
       this.$store.dispatch(actions.UPDATE_USER, this.user).then(response => {
         this.$snackbar.showMessage('Usuari modificat correctament')
+        this.editingUser = false
+        this.updatingUser = false
       }).catch(() => {
         this.editingUser = false
         this.updatingUser = false

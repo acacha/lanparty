@@ -218,6 +218,7 @@
 
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
             this.result = true
+            this.registering = false
             sleep(3000).then(() => { this.close() })
           }).catch(() => {
             this.registering = false
