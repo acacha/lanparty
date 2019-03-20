@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\web;
 
-use App\Event;
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**

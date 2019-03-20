@@ -3,14 +3,7 @@
  * using reactive data binding and reusable components. Vue's API is clean
  * and simple, leaving you to focus on building your next great project.
  */
-import Vue from 'vue'
-import Vuetify from 'vuetify'
 import Axios from 'axios'
-
-window.Vue = Vue;
-window.Vuetify = Vuetify;
-
-Vue.use(Vuetify)
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

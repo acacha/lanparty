@@ -153,7 +153,7 @@ export default {
     changePassword() {
       this.changingPassword = true
       this.$store.dispatch(actions.REMEMBER_PASSWORD, this.user.email).then(response => {
-        this.showMessage('Se us ha enviat un email per tal de modificar la paraula de pas')
+        this.$snackbar.showMessage('Se us ha enviat un email per tal de modificar la paraula de pas')
       }).catch(() => {
         this.changingPassword = false
       })

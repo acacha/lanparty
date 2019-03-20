@@ -29,7 +29,9 @@ import Partners from './components/PartnersComponent.vue'
 import MainNavigationDrawer from './components/ui/MainNavigationDrawer'
 import MainToolbar from './components/ui/MainToolbar'
 import UserInfoDrawer from './components/ui/UserInfoDrawer'
-
+import snackbar from './plugins/snackbar'
+import permissions from './plugins/permissions'
+import confirm from './plugins/confirm/index.js'
 import store from './store'
 import * as mutations from './store/mutation-types'
 
@@ -42,9 +44,91 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import 'font-awesome/css/font-awesome.min.css'
 
 import 'vuetify/dist/vuetify.min.css'
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+import helpers from './utils/helpers'
+
+window.Vue = Vue;
+window.Vuetify = Vuetify;
+window.Vue.use(snackbar)
+window.Vue.use(permissions)
+window.Vue.use(confirm)
+
+window.helpers = helpers
 
 store.commit(mutations.USER,  user)
 if (window.user ) store.commit(mutations.LOGGED, true)
+
+window.axios.interceptors.response.use((response) => {
+  return response
+}, function (error) {
+  if (window.disableInterceptor) return Promise.reject(error)
+  if (error && error.response) {
+    if (error.response.status === 419) {
+      return window.helpers.getCsrfToken().then((token) => {
+        window.helpers.updateCsrfToken(token)
+        error.config.headers['X-CSRF-TOKEN'] = token
+        return window.axios.request(error.config)
+      }).catch(e => {
+        console.log("NO s'ha pogut obtenir el CSRFTOKEN")
+        console.log(e)
+      })
+    }
+    if (error.response.status === 401) {
+      window.Vue.prototype.$snackbar.showError("No heu entrat al sistema o ha caducat la sessió. Renviant-vos a l'entrada del sistema")
+      const loginUrl = location.pathname ? '/login?back=' + location.pathname : '/login'
+      setTimeout(function () { window.location = loginUrl }, 3000)
+      // Break the promise chain -> https://github.com/axios/axios/issues/715
+      return new Promise(() => {})
+    }
+    if (error.response.status === 403) {
+      window.Vue.prototype.$snackbar.showSnackBar(
+        'Error 403!',
+        'error',
+        'No teniu permisos per realitzar aquesta acció.',
+        'center'
+      )
+    }
+    if (error.response.status === 422) {
+      window.Vue.prototype.$snackbar.showSnackBar(
+        error.response.data.message,
+        'error',
+        window.helpers.printObject(error.response.data.errors),
+        'center'
+      )
+    }
+    if (error.response.status === 404) {
+      window.Vue.prototype.$snackbar.showSnackBar(
+        'Error 404!',
+        'error',
+        "No s'ha pogut trobar al servidor el recurs que demaneu.",
+        'center'
+      )
+    }
+    if (error.response.status === 405) {
+      window.Vue.prototype.$snackbar.showSnackBar(
+        'Error 405!',
+        'error',
+        'Tipus de petició HTTP incorrecte.',
+        'center'
+      )
+    }
+    if (error.response.status === 500) {
+      window.Vue.prototype.$snackbar.showSnackBar(
+        'Error 500!',
+        'error',
+        'Error inesperat al servidor',
+        'center'
+      )
+    }
+    return Promise.reject(error)
+  }
+  if (error && error.request) {
+    window.Vue.prototype.$snackbar.showError("Error de xarxa! No s'ha obtingut cap resposta a la vostra petició. Consulteu l'estat de la xarxa.")
+    window.Vue.prototype.$snackbar.showSnackBar('Error de xarxa!', 'error', "No s'ha obtingut cap resposta a la vostra petició. Consulteu l'estat de la xarxa.")
+    return Promise.reject(error)
+  }
+})
 
 const app = new Vue({
   el: '#app',

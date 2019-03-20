@@ -8,6 +8,7 @@ use App\Http\Controllers\ParticipantsHomePageController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PrizesController;
 use App\Http\Controllers\SorteigController;
+use App\Http\Controllers\Web\CsrfTokenController;
 use App\Http\Controllers\Web\EventsController;
 use App\Http\Controllers\WelcomeController;
 
@@ -17,6 +18,9 @@ Route::get('/premis', '\\' . PrizesController::class . '@show');
 Route::get('/colaboradors', '\\' . PartnersController::class . '@show');
 
 Auth::routes();
+
+// CSRF TOKEN
+Route::get('/csrftoken','\\'. CsrfTokenController::class . '@show');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', '\\' . ParticipantsHomePageController::class . '@index');
