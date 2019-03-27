@@ -1,6 +1,12 @@
 <template>
-    <v-snackbar :timeout="timeout" :color="color" v-model="show">
-        {{ message }}
+    <v-snackbar
+            :timeout="timeout"
+            :color="color"
+            v-model="show"
+            :multi-line="true"
+            v-bind:style="{'text-align': textAlign}">
+        {{ message }}<br/>
+        {{ subtext }}
         <v-btn dark flat @click="show=false">Tancar</v-btn>
     </v-snackbar>
 </template>
@@ -10,10 +16,12 @@ import EventBus from '../../eventBus'
 export default {
   data () {
     return {
-      message: 'Prova',
+      message: '',
+      subtext: '',
       timeout: 3000,
       color: 'success',
-      show: false
+      show: false,
+      textAlign: 'inherit'
     }
   },
   methods: {
@@ -26,6 +34,14 @@ export default {
       this.message = error
       this.color = 'error'
       this.show = true
+    },
+    showSnackBar (message, color, subtext, textAlign) {
+      console.log('p showSnackBar')
+      this.message = message
+      this.color = color
+      this.subtext = subtext
+      this.textAlign = textAlign
+      this.show = true
     }
   },
   mounted () {
@@ -34,6 +50,10 @@ export default {
     })
     EventBus.$on('showSnackbarMessage', (message) => {
       this.showMessage(message)
+    })
+    EventBus.$on('showSnackBar', (message, color, subtext, textAlign) => {
+      console.log('on showSnackBar!!')
+      this.showSnackBar(message, color, subtext, textAlign)
     })
   }
 }

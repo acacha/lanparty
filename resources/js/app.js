@@ -91,8 +91,12 @@ window.axios.interceptors.response.use((response) => {
       )
     }
     if (error.response.status === 422) {
+      console.log('HEY!!!!!')
+      console.log(window.Vue.prototype.$snackbar)
+      console.log(error.response.data)
+      console.log('PROVA')
       window.Vue.prototype.$snackbar.showSnackBar(
-        error.response.data.message,
+        'Les dades proporcionades no són vàlides',
         'error',
         window.helpers.printObject(error.response.data.errors),
         'center'

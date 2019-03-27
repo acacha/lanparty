@@ -664,7 +664,6 @@
             window.location = '/home'
           }).catch(() => {
             this.loginLoading = false
-            this.loginErrors = error.response.data.errors
           })
         }
       },
@@ -697,11 +696,7 @@
             this.showResetPassword = false
             window.location = '/home'
           })
-        }).catch(error => {
-          this.resetErrorMessage = error.response.data.message
-          this.resetErrors = error.response.data.errors
-          console.log(error)
-        }).then(() => {
+        }).catch(() => {
           this.resetPasswordLoading = false
         })
       }
