@@ -8,6 +8,17 @@
 - [ ] Apartat Events Manager
   - [ ] Test web i controlador més vista i component Vue
 
+Camps:
+  - [ ]
+    $table->increments('id');
+              $table->string('name');
+              $table->unsignedInteger('inscription_type_id');
+              $table->string('image');
+              $table->string('regulation');
+              $table->integer('participants_number')->nullable();
+              $table->datetime('published_at')->nullable();
+              $table->timestamps();  
+
 # Users Manager
 
 # Environment
