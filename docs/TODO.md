@@ -11,7 +11,9 @@ Procediment inici nou periode Lanparty
  - Events nous: CRUD
 - Generador de tickets:
   - Per cada event possibilitat de regenerar tickets
-- Assignació de números  
+- Assignació de números
+  - Generador de números (indicar quantitat)
+  - Crear uns quants números més  
 - Gestionar managers:
  - Treure rol company altres anys
  - Invitar nous companys/managers 
