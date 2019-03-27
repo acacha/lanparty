@@ -1,15 +1,16 @@
 <template>
     <v-app light>
-        <v-snackbar
-                :timeout="6000"
-                :color="snackbarColor"
-                v-model="snackbar"
-                :multi-line="true"
-        >
-            {{ snackbarText }}<br/>
-            {{ snackbarSubtext }}
-            <v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>
-        </v-snackbar>
+        <!--<v-snackbar-->
+                <!--:timeout="6000"-->
+                <!--:color="snackbarColor"-->
+                <!--v-model="snackbar"-->
+                <!--:multi-line="true"-->
+        <!--&gt;-->
+            <!--{{ snackbarText }}<br/>-->
+            <!--{{ snackbarSubtext }}-->
+            <!--<v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>-->
+        <!--</v-snackbar>-->
+        <snackbar></snackbar>
         <v-toolbar class="white">
             <v-toolbar-title class="hidden-xs-only">Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
