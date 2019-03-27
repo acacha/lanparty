@@ -88,7 +88,7 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/winners', '\\' . WinnersController::class . '@destroy');
 
     //Winner
-    Route::get('/winner', '\\' . WinnerController::class . ' @index');
+    Route::get('/winner', '\\' . WinnerController::class . '@index');
     Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
 

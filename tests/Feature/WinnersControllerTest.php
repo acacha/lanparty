@@ -27,6 +27,7 @@ class WinnersControllerTest extends TestCase
     /** @test */
     public function users_can_list_winners()
     {
+        $this->withoutExceptionHandling();
         seed_database();
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');

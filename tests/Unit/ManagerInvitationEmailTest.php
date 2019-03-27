@@ -25,7 +25,7 @@ class ManagerInvitationEmailTest extends TestCase
 
         $email = new ManagerInvitationEmail($invitation);
 
-        $this->assertContains(url('/manage/invitations/TESTCODE1234'), $email->render());
+        $this->assertStringContainsString(url('/manage/invitations/TESTCODE1234'), $email->render());
     }
 
     /** @test */

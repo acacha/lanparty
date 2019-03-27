@@ -25,5 +25,29 @@ class EventsControllerTest extends TestCase
         $response->assertViewHas('events');
     }
 
-    // TODO Autorització redirect a Login i 403
+    /** @test */
+    public function superadmin_can_see_events_module()
+    {
+        $this->loginAsSuperAdmin('web');
+        $response = $this->json('GET','/manage/events');
+        $response->assertSuccessful();
+        $response->assertViewIs('manage.events.index');
+        $response->assertViewHas('events');
+    }
+
+    /** @test */
+    public function regular_user_cannot_see_events_module()
+    {
+        $this->login('web');
+        $response = $this->json('GET','/manage/events');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function guest_user_cannot_see_events_module()
+    {
+        $response = $this->json('GET','/manage/events');
+        $response->assertStatus(401);
+    }
+
 }

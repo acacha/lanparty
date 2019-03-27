@@ -1,3 +1,22 @@
+# Canvi periode acadèmic
+
+Procediment inici nou periode Lanparty
+
+- Dades generals:
+  - Dies Lanparty
+  - Data inici inscripció usuaris
+  - Aturar inscripcions al final lanparty
+- Canviar els events
+ - Events antics (arxivar): archived_at: no mostrar els esdeveniments archived!
+ - Events nous: CRUD
+- Generador de tickets:
+  - Per cada event possibilitat de regenerar tickets
+- Assignació de números
+  - Generador de números (indicar quantitat)
+  - Crear uns quants números més  
+- Gestionar managers:
+ - Treure rol company altres anys
+ - Invitar nous companys/managers 
 # Menu navegació esquerra
 
 - [X] Que siguin links els mòduls i no només responguin a clicks
@@ -16,6 +35,7 @@
        - [ ] inline: En la mateixa taula
        - [ ] dialeg
     - [ ] Delete
+    - [ ] Delete múltiple
     - [ ] Show
   - [ ] Component Vue
     - [ ] Component Principal (Events)
