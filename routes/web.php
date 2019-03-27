@@ -10,6 +10,7 @@ use App\Http\Controllers\PrizesController;
 use App\Http\Controllers\SorteigController;
 use App\Http\Controllers\Web\CsrfTokenController;
 use App\Http\Controllers\Web\EventsController;
+use App\Http\Controllers\Web\ManagersController;
 use App\Http\Controllers\WelcomeController;
 
 Route::get('/', '\\' . WelcomeController::class . '@index');
@@ -42,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Sorteig
     Route::get('/manage/sorteig', '\\' . SorteigController::class . '@index')
         ->name('manage.sorteig');
+
+    Route::get('/manage/managers', '\\' . ManagersController::class . '@index');
 
 });
 

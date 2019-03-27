@@ -16,13 +16,39 @@ class ManagersControllerTest extends TestCase
     use RefreshDatabase, CanLogin;
 
     /** @test */
-    public function manager_can_see_events_module()
+    public function manager_can_see_managers_module()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsManager('web');
-        $response = $this->json('GET','/manage/events');
+        $response = $this->json('GET','/manage/managers');
         $response->assertSuccessful();
-        $response->assertViewIs('manage.events.index');
-        $response->assertViewHas('events');
+        $response->assertViewIs('manage.managers.index');
+        $response->assertViewHas('managers');
+    }
+
+    /** @test */
+    public function superadmin_can_see_managers_module()
+    {
+        $this->loginAsSuperAdmin('web');
+        $response = $this->json('GET','/manage/managers');
+        $response->assertSuccessful();
+        $response->assertViewIs('manage.managers.index');
+        $response->assertViewHas('managers');
+    }
+
+    /** @test */
+    public function regular_user_cannot_see_managers_module()
+    {
+        $this->login('web');
+        $response = $this->json('GET','/manage/managers');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function guest_user_cannot_see_managers_module()
+    {
+        $response = $this->json('GET','/manage/managers');
+        $response->assertStatus(401);
     }
 
 }

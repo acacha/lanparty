@@ -508,12 +508,13 @@ if (!function_exists('initialize_roles')) {
     {
         $roles = [
             'Participant',
-            'Manager'
         ];
 
         foreach ($roles as $role) {
             $role = Role::firstOrCreate(['name' => $role]);
         }
+
+        initialize_manager_role();
     }
 }
 
@@ -721,7 +722,8 @@ if (!function_exists('manager_permissions')) {
     function manager_permissions()
     {
         return [
-            'events.index'
+            'events.index',
+            'managers.index'
         ];
     }
 }
