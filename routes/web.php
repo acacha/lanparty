@@ -43,5 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/manage/sorteig', '\\' . SorteigController::class . '@index')
         ->name('manage.sorteig');
 
+    Route::get('/manage/managers', '\\' . ManagersController::class . '@index');
+
 });
 

@@ -721,7 +721,8 @@ if (!function_exists('manager_permissions')) {
     function manager_permissions()
     {
         return [
-            'events.index'
+            'events.index',
+            'managers.index'
         ];
     }
 }
