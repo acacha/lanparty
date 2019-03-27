@@ -16,7 +16,10 @@ class NewsletterTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    /**
+     * @test
+     * @group skip
+     */
     public function guest_users_can_subscribe_to_newsletter()
     {
         Newsletter::shouldReceive('subscribePending')

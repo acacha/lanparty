@@ -61,7 +61,10 @@ class WinnersControllerTest extends TestCase
 
     }
 
-    /** @test */
+    /**
+     * @test
+     * @group prova
+     */
     public function can_remove_all_winners()
     {
         seed_database();
@@ -93,6 +96,7 @@ class WinnersControllerTest extends TestCase
     /** @test */
     public function user_cannot_remove_all_winners()
     {
+      $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
         $response = $this->json('DELETE','api/v1/winners');
