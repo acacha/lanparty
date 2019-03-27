@@ -1,9 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/push_message.js": "/js/push_message.js",
-    "/js/app.3f403ec0e4735b2dfcb3.hot-update.js": "/js/app.3f403ec0e4735b2dfcb3.hot-update.js",
-    "/js/app.b65b2bc97d47b5935e15.hot-update.js": "/js/app.b65b2bc97d47b5935e15.hot-update.js",
-    "/js/app.287bf40dd554014816f5.hot-update.js": "/js/app.287bf40dd554014816f5.hot-update.js",
-    "/js/app.e8e999d92f511346f89f.hot-update.js": "/js/app.e8e999d92f511346f89f.hot-update.js",
-    "/js/app.a7450305744c6aef9ac1.hot-update.js": "/js/app.a7450305744c6aef9ac1.hot-update.js"
+    "/js/push_message.js": "/js/push_message.js"
 }
