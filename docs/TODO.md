@@ -5,16 +5,32 @@
 - [X] NavigationDrawer moguda a un component a mida 
 
 # Events Manager
-- [ ] Apartat Events Manager
-  - [ ] Test web i controlador més vista i component Vue
-
+- [X] Apartat Events Manager
+  - [X] Test web i controlador més vista i component Vue
+  - [ ] Crear test api TDD: /api/v1/events CRUD
+    - [ ] Index (refresh)
+    - [ ] Store normal
+    - [ ] Store amb validació (comprovar el 422). Objecte request amb validation
+    - [ ] Només managers (objecte request autorització 403 i 401)
+    - [ ] Edit -> 
+       - [ ] inline: En la mateixa taula
+       - [ ] dialeg
+    - [ ] Delete
+    - [ ] Show
+  - [ ] Component Vue
+    - [ ] Component Principal (Events)
+      - [ ] Separar en subcomponents: 1 màxim de 1 window.axios per component   
+      - [ ] event-add: Botó Add (FAB)
+      - [ ] event-list: datatables amb refresh
+      - [ ] event-delete: amb confirm
+      - [ ] event-edit
 Camps:
-  - [ ]
+  - 
     $table->increments('id');
               $table->string('name');
               $table->unsignedInteger('inscription_type_id');
               $table->string('image');
-              $table->string('regulation');
+              $table->string('regulation'); // URL Validació
               $table->integer('participants_number')->nullable();
               $table->datetime('published_at')->nullable();
               $table->timestamps();  

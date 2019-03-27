@@ -18,11 +18,12 @@ class EventsControllerTest extends TestCase
     /** @test */
     public function manager_can_see_events_module()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsManager('web');
         $response = $this->json('GET','/manage/events');
         $response->assertSuccessful();
         $response->assertViewIs('manage.events.index');
         $response->assertViewHas('events');
     }
+
+    // TODO Autorització redirect a Login i 403
 }
