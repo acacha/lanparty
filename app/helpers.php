@@ -721,7 +721,8 @@ if (!function_exists('manager_permissions')) {
     function manager_permissions()
     {
         return [
-//            'chat.index',
+            'events.index',
+            'events.store'
         ];
     }
 }
