@@ -21,6 +21,7 @@ class PremisControllerTest extends TestCase
    */
   public function manager_can_see_premis_module()
   {
+    $this->withoutExceptionHandling();
     $this->loginAsSuperAdmin('web');
     $response = $this->json('GET','/manage/premis');
     $response->assertSuccessful();
