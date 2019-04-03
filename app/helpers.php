@@ -508,12 +508,13 @@ if (!function_exists('initialize_roles')) {
     {
         $roles = [
             'Participant',
-            'Manager'
         ];
 
         foreach ($roles as $role) {
             $role = Role::firstOrCreate(['name' => $role]);
         }
+
+        initialize_manager_role();
     }
 }
 
