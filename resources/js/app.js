@@ -163,13 +163,9 @@ const app = new Vue({
     'main-toolbar': MainToolbar,
     'user-info-drawer': UserInfoDrawer,
     'events-manage': EventsManage,
-<<<<<<< HEAD
     'events-list': EventsList,
-    'managers-manage': ManagersManage
-=======
     'managers-manage': ManagersManage,
     'partners-manage': PartnersManage
->>>>>>> f8b6bc0861f4dc3629d4b61573009bd2beec84df
   },
   computed: {
     ...mapGetters({
