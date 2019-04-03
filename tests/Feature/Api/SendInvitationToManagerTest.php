@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  *
  * @package Tests\Feature
  */
-class AcceptInvitationTest extends TestCase
+class SendInvitationToManagerTest extends TestCase
 {
     use RefreshDatabase, CanLogin;
 
