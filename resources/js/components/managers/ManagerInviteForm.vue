@@ -26,7 +26,9 @@ export default {
   methods: {
    send () {
      this.loading = true
-     window.axios.get('/api/v1/manage/managers/send_invitation/' + this.email).then(() => {
+     window.axios.post('/api/v1/manage/managers/send_invitation', {
+       email: this.email
+     }).then(() => {
        this.loading = false
      }) .catch(() => {
        this.loading = false
