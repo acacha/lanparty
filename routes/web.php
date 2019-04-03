@@ -17,6 +17,7 @@ Route::get('/', '\\' . WelcomeController::class . '@index');
 
 
 Route::get('/colaboradors', '\\' . PartnersController::class . '@show');
+Route::get('/premis', '\\' . PrizesController::class . '@index');
 
 Auth::routes();
 
@@ -29,6 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('manage.participants');
 
     Route::get('/manage/events', '\\' . EventsController::class . '@index');
+
+    Route::get('/manage/prizes/','\\'.PrizesController::class.'index');
 
     Route::post('/manage/events/{event}/messages', '\\' .ParticipantMessagesController::class . '@store')
         ->name('manage.event-messages.store');
@@ -46,6 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/managers', '\\' . ManagersController::class . '@index');
 
-  Route::get('/premis', '\\' . PrizesController::class . '@index');
+
 });
 

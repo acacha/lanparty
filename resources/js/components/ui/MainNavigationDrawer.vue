@@ -82,6 +82,7 @@ export default {
         { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' },
         { icon: 'face', text: 'Managers', href: '/manage/managers', role: 'Manager' },
         { icon: 'event', text: 'Events', href: '/manage/events', role: 'Manager' },
+        { icon: 'event', text: 'Premis', href: '/manage/premis', role: 'Manager' },
         { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true }
       ]
     }

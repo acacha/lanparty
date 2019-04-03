@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Prizes\PrizesIndex;
 use App\Prize;
 
 
@@ -19,7 +18,7 @@ class PrizesController extends Controller
      * List.
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index(PrizesIndex $request)
+    public function index()
     {
       $prizes = Prize::with(['partner','user','number','number.user'])->get();
       return view('prizes',compact('prizes'));
