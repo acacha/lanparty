@@ -19,6 +19,7 @@ class EventsController extends Controller
      */
     public function index(EventsIndex $request)
     {
+//        dd('hola');
         $events = Event::events();
         return view('manage.events.index', compact('events'));
     }
