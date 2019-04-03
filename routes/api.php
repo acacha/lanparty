@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\EventsController;
+use App\Http\Controllers\Api\SendInvitationToManager;
 use App\Http\Controllers\AssignNumberToUserController;
 use App\Http\Controllers\AvailablePrizesController;
 use App\Http\Controllers\LoggedUserController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\NumbersController;
-use App\Http\Controllers\PrizesController;
 use App\Http\Controllers\RegisterGroupToEventController;
 use App\Http\Controllers\RegisterToEventController;
 use App\Http\Controllers\RegisterUserToAllEventsController;
@@ -15,6 +15,7 @@ use App\Http\Controllers\RegisterUserToEventController;
 use App\Http\Controllers\UnassignNumbersToUserController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\Web\PrizesController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
@@ -91,6 +92,9 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::get('/winner', '\\' . WinnerController::class . '@index');
     Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
+
+    Route::get('/manage/managers/send_invitation/{email}', '\\' . SendInvitationToManager::class . '@send');
+
 
 });
 
