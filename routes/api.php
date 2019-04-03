@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\EventsController;
+use App\Http\Controllers\Api\SendInvitationToManager;
 use App\Http\Controllers\AssignNumberToUserController;
 use App\Http\Controllers\AvailablePrizesController;
 use App\Http\Controllers\LoggedUserController;
@@ -91,6 +92,8 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::get('/winner', '\\' . WinnerController::class . '@index');
     Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
+
+    Route::post('/manage/managers/send_invitation', '\\' . SendInvitationToManager::class . '@send');
 
 });
 

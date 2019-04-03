@@ -724,7 +724,9 @@ if (!function_exists('manager_permissions')) {
         return [
             'events.index',
             'managers.index',
-            'prizes.index'
+            'prizes.index',
+            'managers.invitation.send',
+            'partners.index'
         ];
     }
 }
@@ -737,4 +739,3 @@ if (! function_exists('map_collection')) {
         });
     }
 }
-
