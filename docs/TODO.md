@@ -1,3 +1,8 @@
+# Managers Management
+
+- [ ] Mostrar la llista de Managers
+- [ ] Enviar invitació a un manager
+
 # Canvi periode acadèmic
 
 Procediment inici nou periode Lanparty
@@ -17,6 +22,7 @@ Procediment inici nou periode Lanparty
 - Gestionar managers:
  - Treure rol company altres anys
  - Invitar nous companys/managers 
+ 
 # Menu navegació esquerra
 
 - [X] Que siguin links els mòduls i no només responguin a clicks

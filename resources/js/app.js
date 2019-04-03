@@ -22,6 +22,7 @@ import Gravatar from './components/GravatarComponent.vue'
 import Events from './components/EventsComponent.vue'
 import UserNumbers from './components/UserNumbersComponent.vue'
 import EventsManage from './components/events/EventsManage.vue'
+import ManagersManage from './components/managers/ManagersManage.vue'
 import Share from './components/ShareComponent.vue'
 import Sorteig from './components/SorteigComponent.vue'
 import Prizes from './components/PrizesComponent.vue'
@@ -159,7 +160,8 @@ const app = new Vue({
     'main-navigation-drawer': MainNavigationDrawer,
     'main-toolbar': MainToolbar,
     'user-info-drawer': UserInfoDrawer,
-    'events-manage': EventsManage
+    'events-manage': EventsManage,
+    'managers-manage': ManagersManage
   },
   computed: {
     ...mapGetters({
