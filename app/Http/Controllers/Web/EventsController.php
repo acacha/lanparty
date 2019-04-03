@@ -14,6 +14,7 @@ use App\Http\Requests\Events\EventsIndex;
 class EventsController extends Controller
 {
     /**
+     * @param EventsIndex $request
      * @return mixed
      */
     public function index(EventsIndex $request)
