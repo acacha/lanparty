@@ -723,7 +723,8 @@ if (!function_exists('manager_permissions')) {
     {
         return [
             'events.index',
-            'managers.index'
+            'managers.index',
+            'partners.index'
         ];
     }
 }
