@@ -17,7 +17,7 @@ class ManagersController extends Controller
      */
     public function index(ManagersIndex $request)
     {
-        $managers = [];
+        $managers = collect([]);
         return view('manage.managers.index', compact('managers'));
     }
 }

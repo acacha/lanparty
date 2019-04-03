@@ -18,7 +18,6 @@ class ManagersControllerTest extends TestCase
     /** @test */
     public function manager_can_see_managers_module()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsManager('web');
         $response = $this->json('GET','/manage/managers');
         $response->assertSuccessful();
