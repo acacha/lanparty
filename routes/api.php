@@ -16,6 +16,7 @@ use App\Http\Controllers\UnassignNumbersToUserController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Web\PrizesController;
+use App\Http\Controllers\Web\PartnersController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
@@ -40,6 +41,8 @@ Route::group(['prefix'=>'v1'], function() {
     Route::get('/events', '\\' . EventsController::class . '@index');
     //Prizes
     Route::get('/prizes','\\' . PrizesController::class . '@index');
+    Route::get('/partners','\\' . PartnersController::class . '@index');
+
     Route::get('/available_prizes','\\' . AvailablePrizesController::class . '@index');
 
 });

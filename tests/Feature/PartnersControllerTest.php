@@ -14,13 +14,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class PartnersControllerTest extends TestCase
 {
     use RefreshDatabase;
-
     /** @test */
-    public function can_see_partners()
+    public function partners_could_be_publicly_seen()
     {
-        $response = $this->get('colaboradors');
+        $this->withoutExceptionHandling();
+
+        $response = $this->get('partners');
         $response->assertSuccessful();
         $response->assertViewIs('partners');
-        $response->assertViewHas('partners');;
+        $response->assertViewHas('partners');
+    }
+
+    /** @test */
+    public function can_list_partners()
+    {
+        $this->withoutExceptionHandling();
+        $response = $this->json('GET','/api/v1/partners');
+        $response->assertSuccessful();
     }
 }
