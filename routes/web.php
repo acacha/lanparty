@@ -6,16 +6,16 @@ use App\Http\Controllers\ManageParticipantsController;
 use App\Http\Controllers\ParticipantMessagesController;
 use App\Http\Controllers\ParticipantsHomePageController;
 use App\Http\Controllers\PartnersController;
-use App\Http\Controllers\PrizesController;
 use App\Http\Controllers\SorteigController;
 use App\Http\Controllers\Web\CsrfTokenController;
 use App\Http\Controllers\Web\EventsController;
 use App\Http\Controllers\Web\ManagersController;
+use App\Http\Controllers\Web\PrizesController;
 use App\Http\Controllers\WelcomeController;
 
 Route::get('/', '\\' . WelcomeController::class . '@index');
 
-Route::get('/premis', '\\' . PrizesController::class . '@show');
+
 Route::get('/colaboradors', '\\' . PartnersController::class . '@show');
 
 Auth::routes();
@@ -46,5 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/managers', '\\' . ManagersController::class . '@index');
 
+  Route::get('/premis', '\\' . PrizesController::class . '@index');
 });
 

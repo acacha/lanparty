@@ -722,8 +722,15 @@ if (!function_exists('manager_permissions')) {
     function manager_permissions()
     {
         return [
+<<<<<<< HEAD
             'events.index',
-            'managers.index'
+            'managers.index',
+          'prizes.index'
+
+=======
+            'managers.index',
+            'events.index'
+>>>>>>> 4bb7154c3f102fc66ef33810946ac9ff5d8325d7
         ];
     }
 }
@@ -736,3 +743,4 @@ if (! function_exists('map_collection')) {
         });
     }
 }
+

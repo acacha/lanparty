@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+<<<<<<< HEAD
     "/js/push_message.js": "/js/push_message.js",
     "/js/app.d7e612e85c87376a3857.hot-update.js": "/js/app.d7e612e85c87376a3857.hot-update.js",
     "/js/app.0a9e5de2a03e9b39bf28.hot-update.js": "/js/app.0a9e5de2a03e9b39bf28.hot-update.js",
@@ -24,4 +25,11 @@
     "/js/app.3fe1b909f449ad61f21f.hot-update.js": "/js/app.3fe1b909f449ad61f21f.hot-update.js",
     "/js/app.2f444aa3173e65b4aef8.hot-update.js": "/js/app.2f444aa3173e65b4aef8.hot-update.js",
     "/js/app.4ec92bda9d7b93a81f54.hot-update.js": "/js/app.4ec92bda9d7b93a81f54.hot-update.js"
+=======
+<<<<<<< HEAD
+=======
+    "/css/app.css": "/css/app.css",
+>>>>>>> 4bb7154c3f102fc66ef33810946ac9ff5d8325d7
+    "/js/push_message.js": "/js/push_message.js"
+>>>>>>> 18728fc98e7047ba958aec5aef7078ec4311c6fc
 }
