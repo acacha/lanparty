@@ -93,8 +93,7 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
 
-    Route::get('/manage/managers/send_invitation/{email}', '\\' . SendInvitationToManager::class . '@send');
-
+    Route::post('/manage/managers/send_invitation', '\\' . SendInvitationToManager::class . '@send');
 
 });
 

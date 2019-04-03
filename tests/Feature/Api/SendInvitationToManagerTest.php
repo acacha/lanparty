@@ -20,8 +20,18 @@ class AcceptInvitationTest extends TestCase
     {
         $this->loginAsManager('api');
         $email = 'pepepardo@jeans.com';
-        $response = $this->get('/api/v1/manage/managers/send_invitation/' . $email);
+        $response = $this->post('/api/v1/manage/managers/send_invitation/', [
+            'email' => $email
+        ]);
         $response->assertSuccessful();
+    }
+
+    /** @test */
+    function manager_can_send_invitation_to_user_to_be_manager_validation()
+    {
+        $this->loginAsManager('api');
+        $response = $this->post('/api/v1/manage/managers/send_invitation/');
+        $response->assertStatus(422);
     }
 
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Event;
+use App\Facades\InvitationCode;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EventResource;
+use App\Http\Requests\Managers\SendInvitationToManagerSend;
+use App\Invitation;
 
 /**
  * Class SendInvitationToManager.
@@ -18,6 +19,10 @@ class SendInvitationToManager extends Controller
      */
     public function send(SendInvitationToManagerSend $request)
     {
-        dd('dsasd');
+        Invitation::create([
+            'email' => $request->email,
+            // Facades
+            'code' => InvitationCode::generate() // resolve('mail')->generate()
+        ])->send();
     }
 }
