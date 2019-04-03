@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web;
+namespace Tests\Feature;
 
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
@@ -19,7 +19,6 @@ class PrizesControllerTest extends TestCase
     /** @test */
     public function prizes_could_be_publicly_seen()
     {
-        $this->loginAsManager('web');
         $response = $this->get('premis');
         $response->assertSuccessful();
         $response->assertViewIs('prizes');
@@ -29,10 +28,7 @@ class PrizesControllerTest extends TestCase
     /** @test */
     public function can_list_prizes()
     {
-      $this->withoutExceptionHandling();
-      $this->loginAsManager('web');
         $response = $this->json('GET','/api/v1/prizes');
-
         $response->assertSuccessful();
     }
 }
