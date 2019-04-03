@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Partners\PartnersIndex;
+use App\Role;
 
 /**
  * Class ManagersController.
@@ -17,7 +18,7 @@ class PartnersController extends Controller
      */
     public function index(PartnersIndex $request)
     {
-        $partners = collect([]);
+        $partners = collect(Role::findByName('Manager')->users);
         return view('manage.partners.index', compact('partners'));
     }
 }

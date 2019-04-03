@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Managers\ManagersIndex;
-use App\Role;
 
 /**
  * Class ManagersController.
@@ -18,7 +17,7 @@ class ManagersController extends Controller
      */
     public function index(ManagersIndex $request)
     {
-        $managers = collect(Role::findByName('Manager')->users);
+        $managers = collect([]);
         return view('manage.managers.index', compact('managers'));
     }
 }
