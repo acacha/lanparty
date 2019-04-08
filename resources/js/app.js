@@ -50,6 +50,7 @@ import 'vuetify/dist/vuetify.min.css'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import helpers from './utils/helpers'
+import PrizesManage from "./components/prizes/PrizesManage";
 
 window.Vue = Vue;
 window.Vuetify = Vuetify;
@@ -165,7 +166,8 @@ const app = new Vue({
     'events-manage': EventsManage,
     'events-list': EventsList,
     'managers-manage': ManagersManage,
-    'partners-manage': PartnersManage
+    'partners-manage': PartnersManage,
+    'prizes-manage': PrizesManage
   },
   computed: {
     ...mapGetters({
