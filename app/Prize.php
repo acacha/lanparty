@@ -15,7 +15,13 @@ class Prize extends Model
   use FormattedDates;
     protected $guarded = [];
 
-    /**
+  public static function prizes()
+  {
+    return map_collection(Prize::all());
+  }
+
+
+  /**
      * Get the partner that owns the prize.
      */
     public function partner()

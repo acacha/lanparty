@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/events', '\\' . EventsController::class . '@index');
 
-    //Route::get('/manage/prizes/','\\'.PrizesController::class.'@index');
+    Route::get('/manage/prizes/','\\'.PrizesController::class.'@index');
 
     Route::post('/manage/events/{event}/messages', '\\' .ParticipantMessagesController::class . '@store')
         ->name('manage.event-messages.store');
