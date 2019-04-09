@@ -85,7 +85,6 @@ export default {
         { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true },
         { icon: 'group', text: 'Col·laboradors', href: '/manage/partners', role: 'Manager', new : true },
         {icon:'card_giftcard',text:'Premis',href:'/manage/prizes',role:'Manager', new: true}
-
       ]
     }
   },
