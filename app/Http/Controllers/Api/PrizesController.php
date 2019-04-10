@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Prizes\PrizesDestroy;
@@ -25,7 +25,12 @@ class PrizesController extends Controller
      */
     public function index(PrizesIndex $request)
     {
-        return Prize::orderBy('created_at','desc')->get();
+        dd("asd");
+
+//        return Prize::orderBy('created_at','desc')->get();
+        $prize = map_collection(Prize::orderBy('created_at','desc')->get());
+        return $prize;
+
     }
     public function show(PrizesShow $request, Prize $prize)
     {

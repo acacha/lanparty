@@ -15,7 +15,7 @@ use App\Http\Controllers\RegisterUserToEventController;
 use App\Http\Controllers\UnassignNumbersToUserController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\Web\PrizesController;
+use App\Http\Controllers\Api\PrizesController;
 use App\Http\Controllers\Web\PartnersController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
@@ -96,11 +96,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::post('/manage/managers/send_invitation', '\\' . SendInvitationToManager::class . '@send');
 
 
-    Route::get('/prizes', 'Api\PrizesController@index');
-    Route::post('/prizes', 'Api\PrizesController@store');
-    Route::get('/prizes/{prize}', 'Api\PrizesController@show');
-    Route::put('/prizes/{prize}', 'Api\PrizesController@update');
-    Route::delete('/prizes/{prize}', 'Api\PrizesController@destroy');
+    Route::get('/prizes', '\\' . PrizesController::class . '@index');
+    Route::post('/prizes', '\\' . PrizesController::class . '@store');
+    Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');
+    Route::put('/prizes/{prize}', '\\' . PrizesController::class . '@update');
+    Route::delete('/prizes/{prize}', '\\' . PrizesController::class . '@destroy');
 
 });
 

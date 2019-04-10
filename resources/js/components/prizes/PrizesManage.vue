@@ -119,12 +119,12 @@
       methods: {
         refresh() {
           this.loading = true
-          // setTimeout(() => { this.loading = false }, 5000)
-          window.axios.get('/v1/api/prizes').then(response => {
-            this.dataPrizes = response.data
+          window.axios.get('/api/v1/prizes').then(response => {
+            this.dataTags = response.data
             this.loading = false
-            this.$snackbar.showMessage("S'han actualitzat correctament els prizes ")
+            this.$snackbar.showMessage("S'han actualitzat correctament els tags ")
           }).catch(error => {
+            this.$snackbar.showError(error)
             this.loading = false
           })
         }
