@@ -68,12 +68,9 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Register users to events
     Route::post('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@store');
     Route::delete('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@destroy');
-
     Route::delete('/events/register/user/{user}', '\\' . RegisterUserToAllEventsController::class . '@destroy');
-
     //Register group to event
     Route::post('/events/{event}/register_group', '\\' . RegisterGroupToEventController::class . '@store');
-
     Route::delete('/events/{event}/register_group/{group}', '\\' . RegisterGroupToEventController::class . '@destroy');
 
     // ASSIGN NUMBERS
@@ -97,6 +94,13 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
 
     Route::post('/manage/managers/send_invitation', '\\' . SendInvitationToManager::class . '@send');
+
+
+    Route::get('/prizes', 'Api\PrizesController@index');
+    Route::post('/prizes', 'Api\PrizesController@store');
+    Route::get('/prizes/{prize}', 'Api\PrizesController@show');
+    Route::put('/prizes/{prize}', 'Api\PrizesController@update');
+    Route::delete('/prizes/{prize}', 'Api\PrizesController@destroy');
 
 });
 

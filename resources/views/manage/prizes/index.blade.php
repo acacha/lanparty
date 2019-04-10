@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<prizes-manage :prizes="{{ $partners }}"></prizes-manage>
+<prizes-manage :prizes="{{ $prizes }}"></prizes-manage>
 @endsection
