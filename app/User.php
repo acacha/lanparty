@@ -123,4 +123,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Ticket::class);
     }
+
+    /**
+     * @return mixed
+     */
+    public function isSuperAdmin()
+    {
+        return $this->admin;
+    }
 }

@@ -28,8 +28,7 @@ class ManagersControllerTest extends TestCase
     /** @test */
     public function superadmin_can_see_managers_module()
     {
-        $this->withoutExceptionHandling();
-        $this->loginAsSuperAdmin('web');
+        $this->loginAsSuperAdmin('api');
         $response = $this->json('GET','/manage/managers');
         $response->assertSuccessful();
         $response->assertViewIs('manage.managers.index');
