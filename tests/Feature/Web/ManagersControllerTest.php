@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\web;
 
+use App\Role;
+use App\User;
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,6 +25,26 @@ class ManagersControllerTest extends TestCase
         $response->assertSuccessful();
         $response->assertViewIs('manage.managers.index');
         $response->assertViewHas('managers');
+    }
+
+    /** @test */
+    public function manager_can_see_managers_module_with_some_managers()
+    {
+        $manager = Role::create([
+            'name' => 'Manager'
+        ]);
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardojeans@gmail.com'
+        ]);
+        $user->assignRole($manager);
+        $this->loginAsManager('web');
+        $response = $this->get('/manage/managers');
+        $response->assertSuccessful();
+        $response->assertViewIs('manage.managers.index');
+        $response->assertViewHas('managers', function ($managers) {
+            return is_array($managers->toArray()) && count($managers) === 2;
+        });
     }
 
     /** @test */
