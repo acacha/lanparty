@@ -1,5 +1,5 @@
 <template>
-    <span>paco</span>
+    <span>manolo</span>
 </template>
 
 <script>

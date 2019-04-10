@@ -6,7 +6,7 @@ use App\Http\Controllers\ManageParticipantsController;
 use App\Http\Controllers\ParticipantMessagesController;
 use App\Http\Controllers\ParticipantsHomePageController;
 use App\Http\Controllers\PartnersController as Partners;
-use App\Http\Controllers\PartnersController;
+use App\Http\Controllers\Web\PartnersController;
 use App\Http\Controllers\Web\PrizesController;
 use App\Http\Controllers\SorteigController;
 use App\Http\Controllers\Web\CsrfTokenController;
