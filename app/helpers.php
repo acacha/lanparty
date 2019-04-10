@@ -528,6 +528,7 @@ if (!function_exists('create_admin_user')) {
             'givenName' => config('lanparty.admin_givenName'),
             'sn1' => config('lanparty.admin_sn1'),
             'sn2' => config('lanparty.admin_sn2'),
+            'admin' => true
         ]);
     }
 }
@@ -737,5 +738,24 @@ if (! function_exists('map_collection')) {
         return $collection->map(function($item) {
             return $item->map();
         });
+    }
+}
+
+if (!function_exists('initialize_gates')) {
+    function initialize_gates()
+    {
+        Gate::before(function ($user, $ability) {
+            if ($user->isSuperAdmin()) {
+                return true;
+            }
+        });
+
+//        Gate::define('show-personal-data', function ($user) {
+//            return $user->hasRole(['UsersManager']);
+//        } );
+//
+//        Gate::define('calculate-lessons', function ($user) {
+//            return $user->hasRole(['LessonsManager']);
+//        });
     }
 }

@@ -30,7 +30,6 @@ class PartnersControllerTest extends TestCase
     /** @test */
     public function superadmin_can_see_partners_module()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('web');
         $response = $this->json('GET','/manage/partners');
         $response->assertSuccessful();

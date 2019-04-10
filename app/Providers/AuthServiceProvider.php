@@ -28,5 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
+        initialize_gates();
+
     }
 }
