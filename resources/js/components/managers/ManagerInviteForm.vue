@@ -26,11 +26,11 @@ export default {
   methods: {
    send () {
      this.loading = true
-     window.axios.post('/api/v1/manage/managers/send_invitation', {
-       email: this.email
-     }).then(() => {
+     window.axios.post('/api/v1/manage/managers/send_invitation', { email: this.email }).then(() => {
+       this.email = ''
        this.loading = false
-     }) .catch(() => {
+       this.$snackbar.showMessage('Invitació enviada correctament')
+     }).catch(() => {
        this.loading = false
      })
    }
