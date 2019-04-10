@@ -19,7 +19,7 @@ class ManagersControllerTest extends TestCase
     public function manager_can_see_managers_module()
     {
         $this->loginAsManager('web');
-        $response = $this->json('GET','/manage/managers');
+        $response = $this->get('/manage/managers');
         $response->assertSuccessful();
         $response->assertViewIs('manage.managers.index');
         $response->assertViewHas('managers');
@@ -28,8 +28,8 @@ class ManagersControllerTest extends TestCase
     /** @test */
     public function superadmin_can_see_managers_module()
     {
-        $this->loginAsSuperAdmin('api');
-        $response = $this->json('GET','/manage/managers');
+        $this->loginAsSuperAdmin('web');
+        $response = $this->get('/manage/managers');
         $response->assertSuccessful();
         $response->assertViewIs('manage.managers.index');
         $response->assertViewHas('managers');
@@ -39,15 +39,15 @@ class ManagersControllerTest extends TestCase
     public function regular_user_cannot_see_managers_module()
     {
         $this->login('web');
-        $response = $this->json('GET','/manage/managers');
+        $response = $this->get('/manage/managers');
         $response->assertStatus(403);
     }
 
     /** @test */
     public function guest_user_cannot_see_managers_module()
     {
-        $response = $this->json('GET','/manage/managers');
-        $response->assertStatus(401);
+        $response = $this->get('/manage/managers');
+        $response->assertRedirect('/login');
     }
 
 }
