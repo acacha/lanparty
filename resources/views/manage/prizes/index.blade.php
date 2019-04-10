@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-  <h1>TODO</h1>
+<prizes-manage :prizes="{{ $partners }}"></prizes-manage>
 @endsection
