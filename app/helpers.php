@@ -724,6 +724,10 @@ if (!function_exists('manager_permissions')) {
     {
         return [
             'events.index',
+            'events.store',
+            'events.destroy',
+            'events.show',
+            'events.update',
             'managers.index',
             'prizes.index',
             'managers.invitation.send',

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @package App\Http\Requests
  */
-class EventsIndex extends FormRequest
+class EventsShow extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class EventsIndex extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('events.index');
+        return Auth::user()->can('events.show');
     }
 
     /**
@@ -30,7 +30,6 @@ class EventsIndex extends FormRequest
     public function rules()
     {
         return [
-
             //
         ];
     }
