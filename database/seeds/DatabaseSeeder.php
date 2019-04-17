@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        initialize_gates();
+
         seed_database();
 
         initialize_roles();

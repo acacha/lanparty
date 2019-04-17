@@ -11,6 +11,7 @@ use App\Partner;
  */
 class PartnersController extends Controller
 {
+
     /**
      * Show.
      *

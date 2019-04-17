@@ -15,7 +15,8 @@ use App\Http\Controllers\RegisterUserToEventController;
 use App\Http\Controllers\UnassignNumbersToUserController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\Web\PrizesController;
+use App\Http\Controllers\Api\PrizesController;
+use App\Http\Controllers\Web\PartnersController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
@@ -40,6 +41,8 @@ Route::group(['prefix'=>'v1'], function() {
     Route::get('/events', '\\' . EventsController::class . '@index');
     //Prizes
     Route::get('/prizes','\\' . PrizesController::class . '@index');
+    Route::get('/partners','\\' . PartnersController::class . '@index');
+
     Route::get('/available_prizes','\\' . AvailablePrizesController::class . '@index');
 
 });
@@ -65,12 +68,9 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Register users to events
     Route::post('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@store');
     Route::delete('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@destroy');
-
     Route::delete('/events/register/user/{user}', '\\' . RegisterUserToAllEventsController::class . '@destroy');
-
     //Register group to event
     Route::post('/events/{event}/register_group', '\\' . RegisterGroupToEventController::class . '@store');
-
     Route::delete('/events/{event}/register_group/{group}', '\\' . RegisterGroupToEventController::class . '@destroy');
 
     // ASSIGN NUMBERS
@@ -93,8 +93,14 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
 
-    Route::get('/manage/managers/send_invitation/{email}', '\\' . SendInvitationToManager::class . '@send');
+    Route::post('/manage/managers/send_invitation', '\\' . SendInvitationToManager::class . '@send');
 
+
+    Route::get('/prizes', '\\' . PrizesController::class . '@index');
+    Route::post('/prizes', '\\' . PrizesController::class . '@store');
+    Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');
+    Route::put('/prizes/{prize}', '\\' . PrizesController::class . '@update');
+    Route::delete('/prizes/{prize}', '\\' . PrizesController::class . '@destroy');
 
 });
 

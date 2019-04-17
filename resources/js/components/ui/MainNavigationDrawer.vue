@@ -82,7 +82,9 @@ export default {
         { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' },
         { icon: 'face', text: 'Managers', href: '/manage/managers', role: 'Manager' },
         { icon: 'event', text: 'Events', href: '/manage/events', role: 'Manager' },
-        { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true }
+        { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true },
+        { icon: 'group', text: 'Col·laboradors', href: '/manage/partners', role: 'Manager', new : true },
+        {icon:'card_giftcard',text:'Premis',href:'/manage/prizes',role:'Manager', new: true}
       ]
     }
   },

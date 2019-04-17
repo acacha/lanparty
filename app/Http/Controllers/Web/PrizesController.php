@@ -21,7 +21,9 @@ class PrizesController extends Controller
      */
     public function index(PrizesIndex $request)
     {
-      $prizes = Prize::with(['partner','user','number','number.user'])->get();
-      return view('prizes',compact('prizes'));
+      //$prizes = Prize::with(['partner','user','number','number.user'])->get();
+      $prizes = Prize::prizes();
+      return view('manage.prizes.index',compact('prizes'));
+
     }
 }

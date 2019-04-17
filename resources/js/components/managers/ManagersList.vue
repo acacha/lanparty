@@ -7,13 +7,13 @@
             expand
     >
         <template slot="items" slot-scope="props">
-            <tr @click="expand($event, props)">
+            <tr>
                 <td class="text-xs-left" v-text="props.item.name"></td>
                 <td class="text-xs-left" v-text="props.item.email"></td>
                 <td class="text-xs-left" v-text="props.item.created_at"></td>
                 <td class="text-xs-left" v-text="props.item.updated_at"></td>
                 <td class="text-xs-right d-flex" >
-                    TODO ACCIONS
+                    <manager-delete :manager="props.item"></manager-delete>
                 </td>
             </tr>
         </template>
@@ -21,8 +21,12 @@
 </template>
 
 <script>
+import ManagerDelete from './ManagerDelete'
 export default {
   name: 'ManagersList',
+  components: {
+    'manager-delete': ManagerDelete
+  },
   data () {
     return {
       dataManagers: this.managers,

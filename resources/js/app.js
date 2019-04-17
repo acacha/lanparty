@@ -22,7 +22,9 @@ import Gravatar from './components/GravatarComponent.vue'
 import Events from './components/EventsComponent.vue'
 import UserNumbers from './components/UserNumbersComponent.vue'
 import EventsManage from './components/events/EventsManage.vue'
+import EventsList from './components/events/EventsList.vue'
 import ManagersManage from './components/managers/ManagersManage.vue'
+import PartnersManage from './components/partners/PartnersManage.vue'
 import Share from './components/ShareComponent.vue'
 import Sorteig from './components/SorteigComponent.vue'
 import Prizes from './components/PrizesComponent.vue'
@@ -48,6 +50,7 @@ import 'vuetify/dist/vuetify.min.css'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import helpers from './utils/helpers'
+import PrizesManage from "./components/prizes/PrizesManage";
 
 window.Vue = Vue;
 window.Vuetify = Vuetify;
@@ -161,7 +164,10 @@ const app = new Vue({
     'main-toolbar': MainToolbar,
     'user-info-drawer': UserInfoDrawer,
     'events-manage': EventsManage,
-    'managers-manage': ManagersManage
+    'events-list': EventsList,
+    'managers-manage': ManagersManage,
+    'partners-manage': PartnersManage,
+    'prizes-manage': PrizesManage
   },
   computed: {
     ...mapGetters({

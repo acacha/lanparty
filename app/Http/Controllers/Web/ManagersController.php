@@ -18,7 +18,7 @@ class ManagersController extends Controller
      */
     public function index(ManagersIndex $request)
     {
-        $managers = collect(Role::findByName('Manager')->users);
+        $managers = Role::findByName('Manager')->users;
         return view('manage.managers.index', compact('managers'));
     }
 }

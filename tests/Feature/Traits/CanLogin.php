@@ -66,6 +66,7 @@ trait CanLogin
         $user = factory(User::class)->create();
         $user->admin = true;
         $user->save();
+        $user = $user->fresh();
         $this->actingAs($user,$guard);
         return $user;
     }
