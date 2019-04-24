@@ -1,3 +1,14 @@
+# Canvis a competicions:
+
+- Competició per grups
+Counter Strike - Global Offensive (grups de 3 components): Limitat a 25 grups
+Overwatch (grups de 6 components): Limitat a 15 grups
+League of Legends (grups de 5 components): Limitat a 25 grups
+- Competició Individual
+FIFA19: Limitat a 32 places
+
+- [ ] Canviar la Landing Page el Age of empires per un FIFA 19
+
 # Registre usuaris
 
 - [X] Checkbox acceptar condicions
@@ -6,6 +17,7 @@
   - [X] env(URL)/condicions
   - [ ] Redireccionar la URL condicions a on pertoqui
 - [X] Login -> recordar usuari
+
 
 # Managers Management
 

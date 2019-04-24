@@ -7,107 +7,9 @@
 
             <login-dialog :action="action" :registrations-enabled="registrationsEnabled"></login-dialog>
             <register-dialog :action="action" :registrations-enabled="registrationsEnabled"></register-dialog>
-            <v-dialog v-model="showRememberPassword" persistent max-width="500px">
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Recordeu-me la paraula de pas</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-alert v-if="rememberErrorMessage" color="error" icon="warning" value="true" dismissible>
-                            <h3>{{rememberErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in rememberErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
-                        <v-form v-model="valid">
-                            <v-text-field
-                                    label="Correu electrònic"
-                                    v-model="emailRememberPassword"
-                                    :rules="emailRules"
-                                    :error="loginErrors['email']"
-                                    :error-messages="loginErrors['email']"
-                                    required
-                            ></v-text-field>
-                        </v-form>
-                        <a href="/login" color="primary darken-2">
-                            Entrar
-                        </a> &nbsp; |
-                        <a href="/register" color="primary darken-2">
-                            Registra't
-                        </a>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary darken-1" flat @click.native="showRememberPassword = false">Tancar</v-btn>
-                        <v-btn
-                                :loading="rememberPasswordLoading"
-                                flat
-                                :color="rememberPasswordLoadingDone ? 'green' : 'blue'"
-                                @click.native="rememberPassword"
-                        >
-                            <v-icon v-if="!rememberPasswordLoadingDone">mail_outline</v-icon>
-                            <v-icon v-else>done</v-icon>
-                            &nbsp;
-                            <template v-if="!rememberPasswordLoadingDone">Enviar</template>
-                            <template v-else>Fet</template>
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <v-dialog v-model="showResetPassword" persistent max-width="500px">
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Restaureu la paraula de pas</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-alert v-if="resetErrorMessage" color="error" icon="warning" value="true" dismissible>
-                            <h3>{{resetErrorMessage}}</h3>
-                            <p v-for="(error, errorKey) in resetErrors">{{errorKey}} : {{ error[0] }}</p>
-                        </v-alert>
-                        <v-form v-model="valid">
-                            <v-text-field
-                                    label="Correu electrònic"
-                                    v-model="internalResetPasswordEmail"
-                                    :rules="emailRules"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    name="resetPassword"
-                                    label="Paraula de pas"
-                                    v-model="resetPassword"
-                                    :rules="passwordRules"
-                                    hint="Com a mínim 6 caràcters"
-                                    min="6"
-                                    type="password"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    name="resetPasswordConfirmation"
-                                    label="Confirmació paraula de pas"
-                                    v-model="resetPasswordConfirmation"
-                                    :rules="passwordConfirmationRules"
-                                    hint="Com a mínim 6 caràcters"
-                                    min="6"
-                                    type="password"
-                                    required
-                            ></v-text-field>
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary darken-1" flat @click.native="showResetPassword = false">Tancar</v-btn>
-                        <v-btn
-                                :loading="resetPasswordLoading"
-                                flat
-                                :color="resetPasswordLoadingDone ? 'green' : 'blue'"
-                                @click.native="reset"
-                        >
-                            <v-icon v-if="resetPasswordLoadingDone">done</v-icon>
-                            &nbsp;
-                            <template v-if="!resetPasswordLoadingDone">Restaurar</template>
-                            <template v-else>Fet</template>
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+            <remember-password-dialog :action="action"></remember-password-dialog>
+            <reset-password-dialog :action="action" :email="resetPasswordEmail" :reset-password-token="resetPasswordToken"></reset-password-dialog>
+
         </v-toolbar>
         <v-content>
             <section>
@@ -125,41 +27,7 @@
                                 <register-dialog :action="action" :registrations-enabled="registrationsEnabled" color="orange darken-3 mt-2" :large="true" :dark="true"></register-dialog>
                             </template>
                             <template v-else>
-                                <v-card class="elevation-0 text-xs-center" style="width: 400px;">
-                                    <v-card-title style="align-items: center;justify-content: center;">
-                                        <span class="title">Llista de correu electrònic</span>
-                                        <em class="subheading">Apunta't i sigues el primer en rebre tota la informació de la LAN Party!</em>
-                                    </v-card-title>
-                                    <v-card-text>
-                                        <v-form v-model="valid">
-                                            <v-text-field
-                                                    name="email"
-                                                    label="E-mail"
-                                                    v-model="emailMailingList"
-                                                    :rules="emailRules"
-                                                    required
-                                                    box
-                                                    autofocus
-                                                    auto-grow
-                                            ></v-text-field>
-                                        </v-form>
-                                        <template v-if="newsletterSubscriptionDone">Comproveu el vostre email i seguiu les passes indicades!</template>
-                                        <v-btn
-                                                :loading="newsLetterLoading"
-                                                class="darken-3 mt-2"
-                                                :class="{ green: newsletterSubscriptionDone, orange: !newsletterSubscriptionDone }"
-                                                dark
-                                                large
-                                                @click.native="addEmailToMailingList"
-                                        >
-                                            <v-icon v-if="!newsletterSubscriptionDone">mail_outline</v-icon>
-                                            <v-icon v-else>done</v-icon>
-                                            &nbsp;
-                                            <template v-if="!newsletterSubscriptionDone">Apunta'm</template>
-                                            <template v-else>Fet</template>
-                                        </v-btn>
-                                    </v-card-text>
-                                </v-card>
+                                <mailing-list-card></mailing-list-card>
                             </template>
                         </template>
                     </v-layout>
@@ -250,40 +118,7 @@
                 <v-parallax src="/img/LanpartyLanding2.jpg" height="380">
                     <v-layout column align-center justify-center>
                         <template v-if="registrationsEnabled">
-                            <v-card class="elevation-0 text-xs-center" style="width: 400px;">
-                                <v-card-title style="align-items: center;justify-content: center;">
-                                    <span class="title">Llista de correu electrònic</span>
-                                    <em class="subheading mt-3">Apunta't i sigues el primer en rebre tota la informació de la LAN party!</em>
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-form v-model="valid">
-                                        <v-text-field
-                                                name="email"
-                                                label="E-mail"
-                                                v-model="emailMailingList"
-                                                :rules="emailRules"
-                                                required
-                                                box
-                                                auto-grow
-                                        ></v-text-field>
-                                    </v-form>
-                                    <template v-if="newsletterSubscriptionDone">Comproveu el vostre email i seguiu les passes indicades!</template>
-                                    <v-btn
-                                            :loading="newsLetterLoading"
-                                            class="darken-3 mt-2"
-                                            :class="{ green: newsletterSubscriptionDone, orange: !newsletterSubscriptionDone }"
-                                            dark
-                                            large
-                                            @click.native="addEmailToMailingList"
-                                    >
-                                        <v-icon v-if="!newsletterSubscriptionDone">mail_outline</v-icon>
-                                        <v-icon v-else>done</v-icon>
-                                        &nbsp;
-                                        <template v-if="!newsletterSubscriptionDone">Apunta'm</template>
-                                        <template v-else>Fet</template>
-                                    </v-btn>
-                                </v-card-text>
-                            </v-card>
+                            <mailing-list-card></mailing-list-card>
                         </template>
                     </v-layout>
                 </v-parallax>
@@ -321,72 +156,21 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as actions from '../store/action-types'
-import sleep from '../utils/sleep'
 import LoginDialog from '../auth/LoginDialog'
 import RegisterDialog from '../auth/RegisterDialog'
+import RememberPasswordDialog from '../auth/RememberPasswordDialog'
+import ResetPasswordDialog from '../auth/ResetPasswordDialog'
+import MailingListCard from '../mailing/MailingListCard'
 
 export default {
   name: 'LandingPage',
   components: {
     'login-dialog': LoginDialog,
-    'register-dialog': RegisterDialog
+    'register-dialog': RegisterDialog,
+    'remember-password-dialog': RememberPasswordDialog,
+    'reset-password-dialog': ResetPasswordDialog,
+    'mailing-list-card': MailingListCard
   },
-  data () {
-      return {
-        internalAction: this.action,
-        loginLoading: false,
-        loginErrors: [],
-        registerLoading: false,
-        registerErrors: [],
-        valid: false,
-        name: '',
-        nameRules: [
-          (v) => !!v || 'El nom d\'usuari és un camp obligatori',
-          (v) => v.length <= 255 || 'El nom d\'usuari ha de tenir com a màxim 255 caracters'
-        ],
-        newsLetterLoading: false,
-        newsletterSubscriptionDone: false,
-        emailMailingList: '',
-        emailRememberPassword: '',
-        rememberPasswordLoading: false,
-        rememberPasswordLoadingDone: false,
-        rememberErrorMessage: '',
-        rememberErrors: [],
-        resetPasswordLoading: false,
-        resetPasswordLoadingDone: false,
-        resetErrorMessage: '',
-        resetErrors: [],
-        internalResetPasswordEmail: this.resetPasswordEmail,
-        resetPassword: '',
-        resetPasswordConfirmation: '',
-        email: '',
-        emailRules: [
-          (v) => !!v || 'El email és obligatori',
-          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'S\'ha d\'indicar un email vàlid'
-        ],
-        password: '',
-        passwordRules: [
-          (v) => !!v || 'La paraula de pas és obligatòria',
-          (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
-        ],
-        passwordConfirmation: '',
-        passwordConfirmationRules: [
-          (v) => !!v || 'La paraula de pas és obligatòria',
-          (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
-        ],
-        registerEmail: '',
-        registerPassword: '',
-        givenName: '',
-        givenNameRules: [
-          (v) => !!v || 'El nom és obligatori'
-        ],
-        sn1: '',
-        sn1Rules: [
-          (v) => !!v || 'El segon cognom és obligatori'
-        ],
-        sn2: ''
-      }
-    },
   props: {
       action: {
         type: String,
@@ -406,135 +190,9 @@ export default {
       }
     },
   computed: {
-      ...mapGetters([
-        'logged'
-      ]),
-      showResetPassword: {
-        get () {
-          if (this.internalAction && this.internalAction === 'reset_password') return true
-          return false
-        },
-        set (value) {
-          if (value) this.internalAction = 'reset_password'
-          else this.internalAction = null
-        }
-      },
-      showRememberPassword: {
-        get () {
-          if (this.internalAction && this.internalAction === 'request_new_password') return true
-          return false
-        },
-        set (value) {
-          if (value) this.internalAction = 'request_new_password'
-          else this.internalAction = null
-        }
-      },
-      showRegister: {
-        get () {
-          if (this.internalAction && this.internalAction === 'register') return true
-          return false
-        },
-        set (value) {
-          if (value) this.internalAction = 'register'
-          else this.internalAction = null
-        }
-      },
-      showLogin: {
-        get () {
-          if (this.internalAction && this.internalAction === 'login') return true
-          return false
-        },
-        set (value) {
-          if (value) this.internalAction = 'login'
-          else this.internalAction = null
-        }
-      }
-    },
-  methods: {
-      addEmailToMailingList () {
-        this.newsLetterLoading = true
-        this.$store.dispatch(actions.SUBSCRIBE_TO_NEWSLETTER, this.emailMailingList).then(response => {
-          this.newsletterSubscriptionDone = true
-        }).catch(error => {
-          console.log(error)
-          if (error.response.status !== 422) {
-            this.newsletterSubscriptionDone = true
-          }
-        }).then(() => {
-          this.newsLetterLoading = false
-        })
-      },
-      register () {
-        if (this.$refs.registrationForm.validate()) {
-          this.registerLoading = true
-          const user = {
-            'name': this.name,
-            'email': this.registerEmail,
-            'password': this.registerPassword,
-            'password_confirmation': this.passwordConfirmation,
-            'givenName': this.givenName,
-            'sn1': this.sn1,
-            'sn2': this.sn2
-          }
-          this.$store.dispatch(actions.REGISTER, user).then(response => {
-            this.registerLoading = false
-            this.showRegister = false
-            window.location = '/home'
-          }).catch(() => {
-            this.registerLoading = false
-            this.registerErrors = error.response.data.errors
-          })
-        }
-      },
-      login () {
-        if (this.$refs.loginForm.validate()) {
-          this.loginLoading = true
-          const credentials = {
-            'email': this.email,
-            'password': this.password
-          }
-          this.$store.dispatch(actions.LOGIN, credentials).then(response => {
-            this.loginLoading = false
-            this.showLogin = false
-            window.location = '/home'
-          }).catch(() => {
-            this.loginLoading = false
-          })
-        }
-      },
-      rememberPassword () {
-        this.rememberPasswordLoading = true
-        this.$store.dispatch(actions.REMEMBER_PASSWORD, this.emailRememberPassword).then(response => {
-          this.rememberPasswordLoading = false
-          this.rememberPasswordLoadingDone = true
-          sleep(4000).then(() => { this.showRememberPassword = false })
-        }).catch(error => {
-          this.rememberErrorMessage = error.response.data.message
-          this.rememberErrors = error.response.data.errors
-          console.log(error)
-        }).then(() => {
-          this.rememberPasswordLoading = false
-        })
-      },
-      reset () {
-        const user = {
-          'email': this.internalResetPasswordEmail,
-          'password': this.resetPassword,
-          'password_confirmation': this.resetPasswordConfirmation,
-          'token': this.resetPasswordToken
-        }
-        this.resetPasswordLoading = true
-        this.$store.dispatch(actions.RESET_PASSWORD, user).then(response => {
-          this.resetPasswordLoading = false
-          this.resetPasswordLoadingDone = true
-          sleep(4000).then(() => {
-            this.showResetPassword = false
-            window.location = '/home'
-          })
-        }).catch(() => {
-          this.resetPasswordLoading = false
-        })
-      }
-    }
+    ...mapGetters([
+      'logged'
+    ])
+  }
 }
 </script>
