@@ -122,14 +122,7 @@
 
                         <template v-if="!logged">
                             <template v-if="registrationsEnabled">
-                                <v-btn
-                                        class="orange darken-3 mt-2"
-                                        dark
-                                        large
-                                        @click.native="showRegister = true"
-                                >
-                                    Registra't
-                                </v-btn>
+                                <register-dialog :action="action" :registrations-enabled="registrationsEnabled" color="orange darken-3 mt-2" :large="true" :dark="true"></register-dialog>
                             </template>
                             <template v-else>
                                 <v-card class="elevation-0 text-xs-center" style="width: 400px;">

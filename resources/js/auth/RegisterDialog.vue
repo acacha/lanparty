@@ -8,7 +8,12 @@
                 v-model="show"
                 persistent>
             <template v-if="registrationsEnabled">
-                <v-btn slot="activator">Registra't</v-btn>
+                <v-btn
+                        slot="activator"
+                        :color="color"
+                        :large="large"
+                        :dark="dark"
+                >Registra't</v-btn>
             </template>
             <v-card class="pa-3">
                 <v-card-title>
@@ -150,6 +155,18 @@ export default {
     }
   },
   props: {
+    color: {
+      type: String,
+      default: ''
+    },
+    large: {
+      type: Boolean,
+      default: false
+    },
+    dark: {
+      type: Boolean,
+      default: false
+    },
     action: {
       type: String,
       default: null
