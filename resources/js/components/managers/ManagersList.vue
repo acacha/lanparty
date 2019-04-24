@@ -21,7 +21,7 @@
                 <td class="text-xs-left" v-text="props.item.created_at"></td>
                 <td class="text-xs-left" v-text="props.item.updated_at"></td>
                 <td class="text-xs-right d-flex" >
-                    <manager-delete :manager="props.item"></manager-delete>
+                    <manager-delete @deleted="refresh" :manager="props.item"></manager-delete>
                 </td>
             </tr>
         </template>
@@ -62,6 +62,7 @@ export default {
       window.axios('/api/v1/managers').then(response => {
         this.dataManagers = response.data
         this.loading= false
+        this.$snackbar.showMessage('Managers actualitzats correctament');
       }).catch(() => {
         this.loading= false
       })
