@@ -732,7 +732,8 @@ if (!function_exists('manager_permissions')) {
             'prizes.index',
             'managers.invitation.send',
             'partners.index',
-            'users.index'
+            'users.index',
+            'user.manager.destroy'
         ];
     }
 }

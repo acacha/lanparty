@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\EventsController;
+use App\Http\Controllers\Api\ManagersController;
 use App\Http\Controllers\Api\SendInvitationToManager;
+use App\Http\Controllers\Api\UsersManagersController;
 use App\Http\Controllers\AssignNumberToUserController;
 use App\Http\Controllers\AvailablePrizesController;
 use App\Http\Controllers\LoggedUserController;
@@ -111,6 +113,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/events/{event}', '\\' . EventsController::class . '@destroy');
     Route::put('/events/{event}', '\\' . EventsController::class . '@update');
 
+    //UserManager
+    Route::delete('/user/{user}/manager', '\\' . UsersManagersController::class . '@destroy');
+
+    //Managers
+    Route::get('/managers', '\\' . ManagersController::class . '@index');
 
 });
 
