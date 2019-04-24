@@ -3,13 +3,14 @@
         <v-dialog
                 v-if="!logged"
                 @keydown.esc="show=false"
-                fullscreen
+                :fullscreen="$vuetify.breakpoint.smAndDown"
+                max-width="900px"
                 v-model="show"
                 persistent>
             <template v-if="registrationsEnabled">
                 <v-btn slot="activator">Registra't</v-btn>
             </template>
-            <v-card>
+            <v-card class="pa-3">
                 <v-card-title>
                     <span class="headline">Alta d'usuari</span>
                 </v-card-title>
@@ -70,16 +71,7 @@
                         ></v-text-field>
                     </v-form>
                     <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
-                        <svg class="facebook" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                             width="266.893px" height="266.895px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
-                             xml:space="preserve">
-                                <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
-                                    c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
-                                    H248.082z"/>
-                            <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
-                                    l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
-                                    v99.803H182.409z"/>
-                                </svg>
+                        <v-icon class="mr-2">fab fa-facebook</v-icon>
                         <span class="ml-1">Entra amb Facebook</span>
                     </v-btn>
                     <a href="/login" color="primary darken-2">
