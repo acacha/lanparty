@@ -9,7 +9,7 @@
         <template v-if="registrationsEnabled">
             <v-btn color="primary" dark slot="activator">Entrar</v-btn>
         </template>
-        <v-card>
+        <v-card class="pa-3">
             <v-card-title>
                 <span class="headline">Login</span>
             </v-card-title>
@@ -32,8 +32,17 @@
                             type="password"
                             required
                     ></v-text-field>
+                    <v-tooltip bottom class="pb-0">
+                        <v-checkbox
+                                slot="activator"
+                                name="remember"
+                                v-model="remember"
+                                label="Recordeu el meu usuari"
+                        ></v-checkbox>
+                        <span>Es recordara el vostre usuari en aquesta màquina</span>
+                    </v-tooltip>
                 </v-form>
-                <v-container grid-list-md text-xs-center class="pa-0 ma-0">
+                <v-container grid-list-md text-xs-center class="pa-2 ma-2">
                     <v-layout row wrap>
                         <v-flex xs12>
                             <a href="/password/reset" color="primary darken-2">
@@ -84,7 +93,8 @@ export default {
       passwordRules: [
         (v) => !!v || 'La paraula de pas és obligatòria',
         (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
-      ]
+      ],
+      remember: false
     }
   },
   props: {
@@ -116,9 +126,12 @@ export default {
     login () {
       if (this.$refs.loginForm.validate()) {
         this.loading = true
-        const credentials = {
+        let credentials = {
           'email': this.email,
           'password': this.password
+        }
+        if (this.remember) {
+          credentials['remember'] = true
         }
         this.$store.dispatch(actions.LOGIN, credentials).then(() => {
           this.loading = false
