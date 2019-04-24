@@ -1,84 +1,12 @@
 <template>
     <v-app light>
-        <!--<v-snackbar-->
-                <!--:timeout="6000"-->
-                <!--:color="snackbarColor"-->
-                <!--v-model="snackbar"-->
-                <!--:multi-line="true"-->
-        <!--&gt;-->
-            <!--{{ snackbarText }}<br/>-->
-            <!--{{ snackbarSubtext }}-->
-            <!--<v-btn dark flat @click.native="snackbar = false">Tancar</v-btn>-->
-        <!--</v-snackbar>-->
         <snackbar></snackbar>
         <v-toolbar class="white">
             <v-toolbar-title class="hidden-xs-only">Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-show="!logged" v-model="showLogin" persistent max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly">
-                <template v-if="registrationsEnabled">
-                    <v-btn color="primary" dark slot="activator">Entrar</v-btn>
-                </template>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Login</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-form ref="loginForm" v-model="valid">
-                            <v-text-field
-                                    name="email"
-                                    label="E-mail"
-                                    v-model="email"
-                                    :rules="emailRules"
-                                    required
-                            ></v-text-field>
-                            <v-text-field
-                                    name="password"
-                                    label="Paraula de pas"
-                                    v-model="password"
-                                    :rules="passwordRules"
-                                    hint="At least 6 characters"
-                                    min="6"
-                                    type="password"
-                                    required
-                            ></v-text-field>
-                        </v-form>
-                        <v-container grid-list-md text-xs-center>
-                            <v-layout row wrap>
-                            <v-flex xs12>
-                                <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
-                                    <svg class="facebook" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     width="266.893px" height="266.895px" viewBox="0 0 266.893 266.895" enable-background="new 0 0 266.893 266.895"
-                                     xml:space="preserve">
-                                        <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
-                                            c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
-                                            H248.082z"/>
-                                        <path id="f" fill="#FFFFFF" d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935
-                                            l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585
-                                            v99.803H182.409z"/>
-                                    </svg>
-                                    <span class="ml-1">Entra amb Facebook</span>
-                                </v-btn>
-                            </v-flex>
-                            <v-flex xs12>
-                                <a href="/password/reset" color="primary darken-2">
-                                    Recorda'm la paraula de pas</a>
-                            </v-flex>
-                            <v-flex xs12>
-                                <a href="/register" color="primary darken-2">
-                                    Registra't
-                                </a>
-                            </v-flex>
-                        </v-layout>
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary darken-2" flat @click.native="showLogin = false">Tancar</v-btn>
-                        <v-btn color="primary darken-2" class="white--text" @click.native="login" :loading="loginLoading">Entrar</v-btn>
-                        <v-spacer></v-spacer>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+
+            <login-dialog></login-dialog>
+
             <v-dialog fullscreen v-if="!logged" v-model="showRegister" persistent>
                 <template v-if="registrationsEnabled">
                     <v-btn slot="activator">Registra't</v-btn>
@@ -490,13 +418,17 @@
 </style>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import * as actions from '../store/action-types'
-  import sleep from '../utils/sleep'
+import { mapGetters } from 'vuex'
+import * as actions from '../store/action-types'
+import sleep from '../utils/sleep'
+import LoginDialog from '../auth/LoginDialog'
 
-  export default {
-    name: 'LandingPage',
-    data () {
+export default {
+  name: 'LandingPage',
+  components: {
+    'login-dialog': LoginDialog
+  },
+  data () {
       return {
         internalAction: this.action,
         loginLoading: false,
@@ -552,7 +484,7 @@
         sn2: ''
       }
     },
-    props: {
+  props: {
       action: {
         type: String,
         default: null
@@ -570,7 +502,7 @@
         default: null
       }
     },
-    computed: {
+  computed: {
       ...mapGetters([
         'logged'
       ]),
@@ -615,7 +547,7 @@
         }
       }
     },
-    methods: {
+  methods: {
       addEmailToMailingList () {
         this.newsLetterLoading = true
         this.$store.dispatch(actions.SUBSCRIBE_TO_NEWSLETTER, this.emailMailingList).then(response => {
@@ -701,5 +633,5 @@
         })
       }
     }
-  }
+}
 </script>

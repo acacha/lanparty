@@ -1,3 +1,11 @@
+# Registre usuaris
+
+- [ ] Checkbox acceptar condicions
+- [ ] Link fixe a les normes/condicions:
+  - [ ] lanparty.iesebre.com/condicions
+  - [ ] env(URL)/condicions
+- [ ] Login i Register -> recordar usuari
+
 # Managers Management
 
 - [ ] Mostrar la llista de Managers
