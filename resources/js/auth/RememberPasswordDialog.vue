@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="show" persistent max-width="500px" @keydown.esc="show=false"
     >
-        <v-card>
+        <v-card class="pa-3">
             <v-card-title>
                 <span class="headline">Recordeu-me la paraula de pas</span>
             </v-card-title>

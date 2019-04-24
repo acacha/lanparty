@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="show" persistent max-width="500px">
-        <v-card>
+        <v-card class="pa-3">
             <v-card-title>
                 <span class="headline">Restaureu la paraula de pas</span>
             </v-card-title>
