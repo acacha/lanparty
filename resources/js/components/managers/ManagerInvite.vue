@@ -1,8 +1,8 @@
 <template>
     <v-card>
-        <v-card-title primary-title>
+        <v-card-text>
             <manager-invite-form></manager-invite-form>
-        </v-card-title>
+        </v-card-text>
     </v-card>
 </template>
 

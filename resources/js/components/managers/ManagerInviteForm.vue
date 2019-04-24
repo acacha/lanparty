@@ -1,7 +1,7 @@
 <template>
     <form>
         <v-text-field
-                label="Email de l'usuari a invitar"
+                label="Email a on voleu enviar la invitació"
                 v-model="email"
                 required
         ></v-text-field>
@@ -9,7 +9,6 @@
                 color="primary"
                 @click="send"
                 :loading="loading"
-                :disabled="loading"
         >Enviar</v-btn>
     </form>
 </template>

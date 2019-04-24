@@ -35,6 +35,26 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function users()
+    {
+        return map_collection(User::all());
+    }
+
+    public function map()
+    {
+        return [
+          'id' => $this->id,
+          'name' => $this->name,
+          'email' => $this->email,
+          'givenName' => $this->givenName,
+          'sn1' => $this->sn1,
+          'sn2' => $this->sn2,
+          'admin' => $this->admin,
+          'created_at' => $this->created_at,
+          'updated_at' => $this->updated_at
+        ];
+    }
+
     /**
      * Get the numbers assigned to the user.
      */

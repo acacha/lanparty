@@ -14,6 +14,7 @@ use App\Http\Controllers\Web\EventsController;
 use App\Http\Controllers\Web\ManagersController;
 
 use App\Http\Controllers\PrizesController as Premis;
+use App\Http\Controllers\Web\UsersController;
 use App\Http\Controllers\WelcomeController;
 
 Route::get('/condicions', function () {
@@ -56,6 +57,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/managers', '\\' . ManagersController::class . '@index');
     Route::get('/manage/partners', '\\' . PartnersController::class . '@index');
+
+
+    Route::get('/manage/users', '\\' . UsersController::class . '@index');
 
 });
 
