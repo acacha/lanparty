@@ -1,8 +1,8 @@
 <template>
     <v-card>
-        <v-card-title primary-title>
-            <manager-invite-form></manager-invite-form>
-        </v-card-title>
+        <v-card-text>
+            <manager-invite-form :users="users"></manager-invite-form>
+        </v-card-text>
     </v-card>
 </template>
 
@@ -12,6 +12,12 @@ export default {
   name: 'ManagerInvite',
   components: {
     'manager-invite-form': ManagerInviteForm
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

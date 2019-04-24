@@ -2,7 +2,7 @@
     <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
             <v-flex xs12>
-                <manager-invite></manager-invite>
+                <manager-invite :users="users"></manager-invite>
             </v-flex>
             <v-flex xs12>
                 <managers-list :managers="managers"></managers-list>
@@ -22,6 +22,10 @@ export default {
   },
   props: {
     managers: {
+      type: Array,
+      required: true
+    },
+    users: {
       type: Array,
       required: true
     }

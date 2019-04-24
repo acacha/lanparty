@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -14,6 +15,47 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function map()
+    {
+        $user = User::create([
+            'name' => 'Pepe',
+            'email' => 'pepepardo@jeans.com',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'givenName' => 'Pepe'
+        ]);
+        $mappedUser = $user->map();
+        $this->assertEquals($mappedUser['id'],1);
+        $this->assertEquals($mappedUser['name'],'Pepe');
+        $this->assertEquals($mappedUser['email'],'pepepardo@jeans.com');
+        $this->assertEquals($mappedUser['givenName'],'Pepe');
+        $this->assertEquals($mappedUser['sn1'],'Pardo');
+        $this->assertEquals($mappedUser['sn2'],'Jeans');
+        $this->assertEquals($mappedUser['admin'],false);
+        $this->assertEquals($mappedUser['manager'],false);
+        $this->assertNotNull($mappedUser['created_at']);
+        $this->assertNotNull($mappedUser['updated_at']);
+    }
+
+    /** @test */
+    public function isManager()
+    {
+        $user = User::create([
+            'name' => 'Pepe',
+            'email' => 'pepepardo@jeans.com',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'givenName' => 'Pepe'
+        ]);
+        $this->assertFalse($user->isManager());
+        $user->assignRole(Role::create([
+            'name' => 'Manager'
+        ]));
+        $user=$user->fresh();
+        $this->assertTrue($user->isManager());
+    }
 
     /** @test */
     function can_get_formatted_created_at_date()
