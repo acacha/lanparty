@@ -16,6 +16,11 @@ use App\Http\Controllers\Web\ManagersController;
 use App\Http\Controllers\PrizesController as Premis;
 use App\Http\Controllers\WelcomeController;
 
+Route::get('/condicions', function () {
+    // TODO
+    return redirect('http://www.google.com');
+});
+
 Route::get('/', '\\' . WelcomeController::class . '@index');
 
 Route::get('/premis', '\\' . Premis::class . '@index');
