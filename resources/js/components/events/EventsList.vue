@@ -25,8 +25,10 @@
               {{ event.inscription_type_id }}
             </td>
             <td>
-              <!-- {{ event.image }} -->
               <v-img :src="event.image"></v-img>
+            </td>
+            <td>
+              <a :href="event.regulation" target="_blank">{{ event.name }}</a>
             </td>
             <td>
               {{ event.participants_number }}
