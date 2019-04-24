@@ -1,10 +1,10 @@
 <template>
     <form>
-        <v-text-field
-                label="Email a on voleu enviar la invitació"
+        <v-combobox
                 v-model="email"
-                required
-        ></v-text-field>
+                :items="emails"
+                label="Email a on voleu enviar la invitació"
+        ></v-combobox>
         <v-btn
                 color="primary"
                 @click="send"
@@ -19,9 +19,16 @@ export default {
  data () {
    return {
      email: '',
-     loading: false
+     loading: false,
+     emails: []
    }
- },
+  },
+  props: {
+    users: {
+      type: Array,
+      required: true
+    }
+  },
   methods: {
    send () {
      this.loading = true
@@ -30,9 +37,15 @@ export default {
        this.loading = false
        this.$snackbar.showMessage('Invitació enviada correctament')
      }).catch(() => {
+       console.log('ERROR!!!!!!!!!1')
        this.loading = false
      })
    }
+  },
+  created () {
+    this.emails = this.users.map((user) => {
+      return user.email
+    })
   }
 }
 </script>

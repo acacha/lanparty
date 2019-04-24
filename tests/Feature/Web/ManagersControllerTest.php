@@ -25,6 +25,7 @@ class ManagersControllerTest extends TestCase
         $response->assertSuccessful();
         $response->assertViewIs('manage.managers.index');
         $response->assertViewHas('managers');
+        $response->assertViewHas('users');
     }
 
     /** @test */

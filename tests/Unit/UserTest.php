@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Role;
 use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -33,8 +34,27 @@ class UserTest extends TestCase
         $this->assertEquals($mappedUser['sn1'],'Pardo');
         $this->assertEquals($mappedUser['sn2'],'Jeans');
         $this->assertEquals($mappedUser['admin'],false);
+        $this->assertEquals($mappedUser['manager'],false);
         $this->assertNotNull($mappedUser['created_at']);
         $this->assertNotNull($mappedUser['updated_at']);
+    }
+
+    /** @test */
+    public function isManager()
+    {
+        $user = User::create([
+            'name' => 'Pepe',
+            'email' => 'pepepardo@jeans.com',
+            'sn1' => 'Pardo',
+            'sn2' => 'Jeans',
+            'givenName' => 'Pepe'
+        ]);
+        $this->assertFalse($user->isManager());
+        $user->assignRole(Role::create([
+            'name' => 'Manager'
+        ]));
+        $user=$user->fresh();
+        $this->assertTrue($user->isManager());
     }
 
     /** @test */

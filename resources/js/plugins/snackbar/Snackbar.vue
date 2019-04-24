@@ -25,8 +25,9 @@ export default {
     }
   },
   methods: {
-    showMessage (message) {
+    showMessage (message, subtext = '') {
       this.message = message
+      this.subtext = subtext
       this.color = 'success'
       this.show = true
     },

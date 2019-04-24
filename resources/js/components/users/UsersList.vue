@@ -33,7 +33,10 @@
             <td>
               {{ user.sn2 }}
             </td>
-              <td>
+            <td>
+              {{ user.manager }}
+            </td>
+            <td>
               {{ user.admin }}
             </td>
             <td>
@@ -71,6 +74,7 @@ export default {
         { text: 'Cognom 1', value: 'sn1' },
         { text: 'Cognom 2', value: 'sn2' },
         { text: 'Admin', value: 'admin' },
+        { text: 'Manager', value: 'manager' },
         { text: 'Creat', value: 'created_at' },
         { text: 'Modificat', value: 'updated_at' },
         { text: 'Accions', sortable: false, value: 'full_search' }
