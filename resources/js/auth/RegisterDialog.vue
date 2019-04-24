@@ -69,6 +69,16 @@
                                 label="2n cognom"
                                 v-model="sn2"
                         ></v-text-field>
+                        <v-checkbox
+                                name="accept"
+                                v-model="accept"
+                                :rules="acceptRules"
+                                required
+                        >
+                            <span slot="label">
+                                <a href="/condicions">Accepteu els termes i condicións d'ús del lloc web</a>
+                            </span>
+                        </v-checkbox>
                     </v-form>
                     <v-btn href="/auth/facebook" style="background-color: #3b5998;" class="white--text">
                         <v-icon class="mr-2">fab fa-facebook</v-icon>
@@ -132,7 +142,11 @@ export default {
       sn1Rules: [
         (v) => !!v || 'El segon cognom és obligatori'
       ],
-      sn2: ''
+      sn2: '',
+      accept: false,
+      acceptRules: [
+        (v) => !!v || "És obligatori acceptar els termes i condicions d'ús del lloc web"
+      ],
     }
   },
   props: {
