@@ -1,5 +1,6 @@
 <template>
-    <v-dialog v-model="show" persistent max-width="500px">
+    <v-dialog v-model="show" persistent max-width="500px" @keydown.esc="show=false"
+    >
         <v-card>
             <v-card-title>
                 <span class="headline">Recordeu-me la paraula de pas</span>
@@ -9,7 +10,7 @@
                     <h3>{{errorMessage}}</h3>
                     <p v-for="(error, errorKey) in errors">{{errorKey}} : {{ error[0] }}</p>
                 </v-alert>
-                <v-form v-model="valid">
+                <v-form v-model="valid" class="mb-2">
                     <v-text-field
                             label="Correu electrònic"
                             v-model="email"
@@ -31,8 +32,8 @@
                 <v-btn color="primary darken-1" flat @click.native="show = false">Tancar</v-btn>
                 <v-btn
                         :loading="loading"
-                        flat
-                        :color="loadingDone ? 'green' : 'blue'"
+                        :disabled="!valid"
+                        :color="loadingDone ? 'green' : 'primary'"
                         @click.native="rememberPassword"
                 >
                     <v-icon v-if="!loadingDone">mail_outline</v-icon>
@@ -54,6 +55,7 @@ export default {
   name: 'RememberPasswordDialog',
   data () {
     return {
+      internalAction: this.action,
       errorMessage: '',
       errors: [],
       loading: false,
@@ -64,6 +66,12 @@ export default {
         (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'S\'ha d\'indicar un email vàlid'
       ],
       valid: false
+    }
+  },
+  props: {
+    action: {
+      type: String,
+      default: null
     }
   },
   computed: {
@@ -80,7 +88,7 @@ export default {
   },
   methods: {
     rememberPassword () {
-      this.rememberPasswordLoading = true
+      this.loading = true
       this.$store.dispatch(actions.REMEMBER_PASSWORD, this.email).then(() => {
         this.loading = false
         this.loadingDone = true
