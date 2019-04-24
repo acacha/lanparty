@@ -1,3 +1,14 @@
+# Landing Page
+
+- [ ] Link a la web facebook: https://www.facebook.com/LanPartyIesEbre/
+- [ ] Cartell: posar a la Landing Page -> link fixe /cartell
+- [ ] Programa: link al programa: /programa
+- [ ] Preu de la inscripció? 3€
+- [ ] Llista de premis
+- [ ] Col·laboradors
+- [ ] Apartat de contacte
+- [ ] Apartat de com arribar: Google Maps
+
 # Canvis a competicions:
 
 - Competició per grups
