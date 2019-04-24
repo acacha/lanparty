@@ -24,7 +24,7 @@ export default {
   methods: {
     remove() {
       this.loading = true
-      window.axios.delete('/api/v1/user' + this.manager.id + '/manager').then(() => {
+      window.axios.delete('/api/v1/user/' + this.manager.id + '/manager').then(() => {
         this.loading = false
       }).catch(() => {
         this.loading = false

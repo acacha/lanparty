@@ -1,11 +1,19 @@
 <template>
-    <v-data-table
-            :headers="headers"
-            :items="dataManagers"
-            hide-actions
-            item-key="name"
-            expand
-    >
+    <span>
+        <v-toolbar color="primary" dense>
+            <v-toolbar-title class="white--text">Managers</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon class="white--text" :loading="loading" :disabled="loading" @click="refresh">
+                <v-icon>refresh</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <v-data-table
+                :headers="headers"
+                :items="dataManagers"
+                hide-actions
+                item-key="name"
+                expand
+        >
         <template slot="items" slot-scope="props">
             <tr>
                 <td class="text-xs-left" v-text="props.item.name"></td>
@@ -18,6 +26,8 @@
             </tr>
         </template>
     </v-data-table>
+    </span>
+
 </template>
 
 <script>
@@ -29,6 +39,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       dataManagers: this.managers,
       headers: [
         { text: 'Nom', align: 'left', value: 'name' },
@@ -43,6 +54,17 @@ export default {
     managers: {
       type: Array,
       required: true,
+    }
+  },
+  methods: {
+    refresh () {
+      this.loading= true
+      window.axios('/api/v1/managers').then(response => {
+        this.dataManagers = response.data
+        this.loading= false
+      }).catch(() => {
+        this.loading= false
+      })
     }
   }
 }
