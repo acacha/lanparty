@@ -1,18 +1,18 @@
 <template>
   <span>
     <events-list :events="events"></events-list>
-    <tasks-create v-show="dataTasks.length > 0" v-if="$can('user.tasks.store')" :users="users" @created="add" :uri="uri"></tasks-create>
+    <events-create @created="add"></events-create>
   </span>
 </template>
 <script>
 import EventsList from './EventsList'
-import TasksCreate from './TasksCreate'
+import EventsCreate from './EventsCreate'
 
 export default {
   name: 'EventsManage',
   components: {
     'events-list': EventsList,
-    'tasks-create': TasksCreate
+    'events-create': EventsCreate
   },
   props: {
     events: {
