@@ -51,10 +51,13 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import helpers from './utils/helpers'
 import PrizesManage from "./components/prizes/PrizesManage";
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 window.Vue = Vue;
 window.Vuetify = Vuetify;
-window.Vue.use(Vuetify)
+window.Vue.use(Vuetify, {
+  iconfont: 'mdi'
+})
 window.Vue.use(snackbar)
 window.Vue.use(permissions)
 window.Vue.use(confirm)
