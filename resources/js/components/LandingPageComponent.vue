@@ -4,12 +4,29 @@
         <v-toolbar class="white">
             <v-toolbar-title class="hidden-xs-only">Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-
+            <v-btn class="hidden-xs-only" @click="$vuetify.goTo('#competicions')" flat>
+                Competicions
+            </v-btn>
+            <v-btn class="hidden-xs-only" href="#premis" flat>
+                Premis
+            </v-btn>
+            <v-btn class="hidden-xs-only" href="#colaboradors" flat>
+                Col·laboradors
+            </v-btn>
+            <v-btn href="https://www.facebook.com/LanPartyIesEbre" target="_blank" flat icon color="primary">
+                <v-icon>fab fa-facebook</v-icon>
+            </v-btn>
+            <v-btn class="hidden-xs-only" @click="$vuetify.goTo('#contacte')" flat>
+                <v-icon class="mr-2">email</v-icon> Contacte
+            </v-btn>
+            <v-btn class="hidden-xs-only" @click="$vuetify.goTo('#onsom')" flat>
+                <v-icon class="mr-2" >place</v-icon> On som?
+            </v-btn>
+            <v-spacer></v-spacer>
             <login-dialog :action="action" :registrations-enabled="registrationsEnabled"></login-dialog>
             <register-dialog :action="action" :registrations-enabled="registrationsEnabled"></register-dialog>
             <remember-password-dialog :action="action"></remember-password-dialog>
             <reset-password-dialog :action="action" :email="resetPasswordEmail" :reset-password-token="resetPasswordToken"></reset-password-dialog>
-
         </v-toolbar>
         <v-content>
             <section>
@@ -34,7 +51,7 @@
                 </v-parallax>
             </section>
 
-            <section style="background-color: white">
+            <section id="competicions" style="background-color: white">
                 <v-layout
                         column
                         wrap
@@ -124,7 +141,78 @@
                 </v-parallax>
             </section>
 
-            <section>
+            <section id="contacte">
+                <v-container>
+                <v-flex
+                            xs8
+                            offset-xs2
+                    >
+                        <v-card>
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">Contacte</h3>
+                                </div>
+                            </v-card-title>
+
+                            <v-card-text>
+                                <v-list>
+                                    <v-list-tile>
+                                        <v-list-tile-avatar
+                                                color="accent"
+                                        >
+                                            <v-icon
+                                                    class="elevation-4"
+                                                    dark
+                                            >
+                                                email
+                                            </v-icon>
+                                        </v-list-tile-avatar>
+                                        <v-list-tile-title>CORREU</v-list-tile-title>
+                                        <v-list-tile-sub-title>
+                                            LANPARTY@IESEBRE.COM
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile>
+                                    <v-list-tile>
+                                        <v-list-tile-avatar
+                                                color="accent"
+                                        >
+                                            <v-icon
+                                                    class="elevation-4"
+                                                    dark
+                                            >
+                                                place
+                                            </v-icon>
+                                        </v-list-tile-avatar>
+                                        <v-list-tile-title>ADREÇA</v-list-tile-title>
+                                        <v-list-tile-sub-title>
+                                            AV. COLOM 34-42 43500 TORTOSA
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile>
+                                    <v-list-tile>
+                                        <v-list-tile-avatar
+                                                color="accent"
+                                        >
+                                            <v-icon
+                                                    class="elevation-4"
+                                                    dark
+                                            >
+                                                phone
+                                            </v-icon>
+                                        </v-list-tile-avatar>
+                                        <v-list-tile-title>TELÈFON</v-list-tile-title>
+                                        <v-list-tile-sub-title>
+                                            977500949 Fax: 977503064
+                                        </v-list-tile-sub-title>
+                                    </v-list-tile>
+                                </v-list>
+
+                            </v-card-text>
+                        </v-card>
+                    </v-flex>
+                </v-container>
+            </section>
+
+            <section id="onsom">
                 <v-container>
                     <div id="googleMap" style="width:100%;height:400px;"></div>
                 </v-container>
