@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ArchivedEventsController;
 use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\ManagersController;
 use App\Http\Controllers\Api\SendInvitationToManager;
@@ -118,6 +119,14 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     //Managers
     Route::get('/managers', '\\' . ManagersController::class . '@index');
+
+    // ArchiveEvents
+    // POST -> Crear un nou event archivat -> Passar event existent de normal a archivat (deleted_at/soft_deleted)
+    Route::post('/archived_events/{event}', '\\' . ArchivedEventsController::class . '@store');
+    Route::delete('/archived_events/{event}', '\\' . ArchivedEventsController::class . '@destroy');
+
+    // AllEvents
+//    Route::get('/all_events', '\\' . AllEventsController::class . '@index');
 
 });
 

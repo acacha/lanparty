@@ -1,13 +1,36 @@
 <template>
   <span>
-    <v-toolbar color="primary">
+    <v-toolbar color="primary" dense>
       <v-toolbar-title class="white--text">Events</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <v-tooltip bottom>
+          <v-btn slot="activator" id="events_refresh_button" icon class="white--text" @click="refresh" :loading="loading" :disabled="loading">
+              <v-icon>refresh</v-icon>
+          </v-btn>
+          <span>Actualitzar</span>
+      </v-tooltip>
     </v-toolbar>
     <v-card>
       <v-card-title>
-        <v-layout wrap>
-          <v-flex lg5>
-            <v-text-field append-icon="search" label="Buscar" v-model="search"></v-text-field>
+         <v-layout>
+          <v-flex xs10 style="align-self: flex-end;">
+              <v-layout>
+                  <v-flex xs4 class="text-sm-left" style="align-self: center;">
+                      TODO FILTERS: Show removed events
+                  </v-flex>
+                  <v-flex xs7>
+                  </v-flex>
+              </v-layout>
+          </v-flex>
+          <v-flex xs3>
+              <v-text-field
+                      append-icon="search"
+                      label="Buscar"
+                      single-line
+                      hide-details
+                      v-model="search"
+              ></v-text-field>
           </v-flex>
         </v-layout>
       </v-card-title>
@@ -45,11 +68,12 @@
             <td>
               {{ event.updated_at }}
             </td>
-            <!-- <td class="d-flex">
-              <event-show v-if="$can('user.events.show')" :users="users" :event="event" :uri="uri" :loading="showing" :disabled="showing"></event-show>
-              <event-update v-if="$can('user.events.update')" :users="users" :event="event" @updated="updateTask" :uri="uri" :loading="editing" :disabled="editing"></event-update>
-              <event-destroy v-if="$can('user.events.destroy')" :event="event" @removed="removeTask" :uri="uri"></event-destroy>
-            </td> -->
+            <td>
+                <event-publish :event="event"></event-publish>
+                <event-unarchive :event="event"></event-unarchive>
+                <event-archive :event="event"></event-archive>
+                <event-delete  :event="event"></event-delete>
+            </td>
           </tr>
         </template>
       </v-data-table>
@@ -57,8 +81,18 @@
   </span>
 </template>
 <script>
+import EventPublish from './EventPublish'
+import EventArchive from './EventArchive'
+import EventUnArchive from './EventUnArchive'
+import EventDelete from './EventDelete'
 export default {
   name: 'EventsList',
+  components: {
+    'event-publish': EventPublish,
+    'event-archive': EventArchive,
+    'event-unarchive': EventUnArchive,
+    'event-delete': EventDelete
+  },
   data() {
     return {
       search: '',
@@ -86,6 +120,18 @@ export default {
     events: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    refresh () {
+      this.loading = true
+      window.axios.get('/api/v1/events').then((response) => {
+        this.dataEvents = response.data
+        this.loading = false
+        this.$snackbar.showMessage('Events actualitzats correctament')
+      }).catch(() => {
+        this.loading = false
+      })
     }
   }
 }

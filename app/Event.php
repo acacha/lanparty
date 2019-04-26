@@ -30,12 +30,7 @@ class Event extends Model
 
     public static function published_events()
     {
-        return map_collection(Event::published());
-    }
-
-    public static function active_events()
-    {
-        return map_collection(Event::active());
+        return map_collection(Event::published()->get());
     }
 
     /**

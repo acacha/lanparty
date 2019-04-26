@@ -1,8 +1,12 @@
 <template>
-  <span>
-    <events-list :events="events"></events-list>
-    <events-create @created="add"></events-create>
-  </span>
+  <v-container grid-list-md text-xs-center fluid>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <events-list :events="events"></events-list>
+        <events-create @created="add"></events-create>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 <script>
 import EventsList from './EventsList'
