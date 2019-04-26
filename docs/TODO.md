@@ -12,7 +12,17 @@
     
 Apartat /manage/participants:
 
-     
+- [ ] Afegir un desplegable que mostri les diferents sessions de tickets
+- [ ] Es pot no marcar cap sessió aleshores es mostren dades de totes les sessions
+  - [ ] Un cop escollida sessió mostrar només usuaris han pagat aquella sessió 
+    
+## Control de números de sorteig
+
+- [X] Assignar número -> assignar usuari a un numero disponible (de la llista de numeros disponibles taula numbers)
+  - [X] Afegir columna session a cada numero (taula numbers)
+    - [X] Permet indicar a quina sessió correspon el numero
+    - [X] String lliure -> nosaltres farem sessió per any -> 2018 2019
+    - [X] Actualitzar a explotació els numbers diponibles a sessió 2018   
 
 # Gestió Events
 
