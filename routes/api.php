@@ -123,10 +123,15 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     // ArchiveEvents
     // POST -> Crear un nou event archivat -> Passar event existent de normal a archivat (deleted_at/soft_deleted)
     Route::post('/archived_events/{event}', '\\' . ArchivedEventsController::class . '@store');
-    Route::delete('/archived_events/{event}', '\\' . ArchivedEventsController::class . '@destroy');
+    Route::delete('/archived_events/{allevent}', '\\' . ArchivedEventsController::class . '@destroy');
 
     // AllEvents
 //    Route::get('/all_events', '\\' . AllEventsController::class . '@index');
 
+});
+
+Route::bind('allevent', function($id)
+{
+    return App\Event::withTrashed()->where('id', $id)->first();
 });
 
