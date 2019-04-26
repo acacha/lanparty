@@ -28,6 +28,11 @@ class Event extends Model
         return map_collection(Event::all());
     }
 
+    public static function all_events()
+    {
+        return map_collection(Event::withTrashed()->get());
+    }
+
     public static function published_events()
     {
         return map_collection(Event::published()->get());

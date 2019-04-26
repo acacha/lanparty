@@ -70,9 +70,9 @@
             </td>
             <td>
                 <event-publish :event="event"></event-publish>
-                <event-unarchive :event="event"></event-unarchive>
-                <event-archive :event="event"></event-archive>
-                <event-delete  :event="event"></event-delete>
+                <event-unarchive :event="event" @unarchived="refresh"></event-unarchive>
+                <event-archive :event="event"  @archived="refresh"></event-archive>
+                <event-delete :event="event"></event-delete>
             </td>
           </tr>
         </template>
@@ -125,7 +125,7 @@ export default {
   methods: {
     refresh () {
       this.loading = true
-      window.axios.get('/api/v1/events').then((response) => {
+      window.axios.get('/api/v1/all_events').then((response) => {
         this.dataEvents = response.data
         this.loading = false
         this.$snackbar.showMessage('Events actualitzats correctament')

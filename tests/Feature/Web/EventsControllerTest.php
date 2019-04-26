@@ -18,6 +18,7 @@ class EventsControllerTest extends TestCase
     /** @test */
     public function manager_can_see_events_module()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsManager('web');
         $response = $this->json('GET','/manage/events');
         $response->assertSuccessful();

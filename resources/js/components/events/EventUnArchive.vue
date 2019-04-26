@@ -1,7 +1,7 @@
 <template>
     <v-tooltip bottom v-if="event.deleted_at">
         <v-btn slot="activator" icon class="mx-0" @click="archive" :loading="unarchiving" :disabled="unarchiving">
-            <v-icon color="primary">archive</v-icon>
+            <v-icon color="primary">unarchive</v-icon>
         </v-btn>
         <span>Activar l'event</span>
     </v-tooltip>
@@ -33,6 +33,7 @@
         window.axios.delete('/api/v1/archived_events/' + this.event.id).then(() => {
           this.unarchiving = false
           this.$snackbar.showMessage('Event activat correctament')
+          this.$emit('unarchived')
         }).catch(() => {
           this.unarchiving = false
         })

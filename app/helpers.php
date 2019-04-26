@@ -745,6 +745,7 @@ if (!function_exists('manager_permissions')) {
             'user.manager.destroy',
             'archived.events.store',
             'archived.events.destroy',
+            'all.events.index',
         ];
     }
 }

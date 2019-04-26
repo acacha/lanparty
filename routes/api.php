@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AllEventsController;
 use App\Http\Controllers\Api\ArchivedEventsController;
 use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\ManagersController;
@@ -126,7 +127,7 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/archived_events/{allevent}', '\\' . ArchivedEventsController::class . '@destroy');
 
     // AllEvents
-//    Route::get('/all_events', '\\' . AllEventsController::class . '@index');
+    Route::get('/all_events', '\\' . AllEventsController::class . '@index');
 
 });
 

@@ -1,5 +1,5 @@
 <template>
-    <v-tooltip bottom>
+    <v-tooltip bottom v-if="!event.deleted_at">
         <v-btn slot="activator" icon class="mx-0" @click="archive" :loading="archiving" :disabled="archiving">
             <v-icon color="warning">archive</v-icon>
         </v-btn>
@@ -33,6 +33,7 @@
         window.axios.post('/api/v1/archived_events/' + this.event.id).then(() => {
           this.archiving = false
           this.$snackbar.showMessage('Event archivat correctament')
+          this.$emit('archived')
         }).catch(() => {
           this.archiving = false
         })
