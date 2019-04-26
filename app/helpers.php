@@ -723,7 +723,9 @@ if (!function_exists('initialize_manager_role')) {
         $permissions = manager_permissions();
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
-            $role->givePermissionTo($permission);
+            try {
+                $role->givePermissionTo($permission);
+            } catch (\Exception $e) {}
         }
     }
 }
