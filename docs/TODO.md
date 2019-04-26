@@ -1,3 +1,31 @@
+# Gestió usuaris
+
+- [ ] Mantenir usuaris altres anys
+
+## Control de pagament
+
+- [ ] Pagar -> assignar ticket (de la llista de tickets disponibles)
+
+# Gestió Events
+
+- [X] Afegir suport SofDeletes
+- [X] Mostrar a EventsManager tots els events (softdeleted i normals)
+  - [X] Controlador i testos nous AllEvents
+- [X] A la vista events per a usuaris (/home) només mostrar els events published i no deleted_at
+- [X] Creades accions noves per archivar i activar (deleted_at) events
+  - [X] Creats controladors i testos
+  
+## CREAR TICKETS PER ALS ESDEVIMENTS
+
+- [ ] A Events Manager crear botó/acció afegir tickets  
+  
+## Afegir nou event
+
+- [ ] TODO
+
+## EDITAR EVENTS
+- [ ] TODO   
+
 # Landing Page
 
 - [X] Link a la web facebook: https://www.facebook.com/LanPartyIesEbre/

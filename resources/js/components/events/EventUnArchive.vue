@@ -23,7 +23,7 @@
     },
     methods: {
       async archive () {
-        let res = await this.$confirm('Esteu segurs que voleu activar aquest event?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+        let res = await this.$confirm('Esteu segurs que voleu activar aquest event?', { title: 'Esteu segurs?', buttonTrueText: 'Activar' })
         if (res) {
           this.archiveEvent()
         }

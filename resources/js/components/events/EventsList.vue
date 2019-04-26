@@ -17,7 +17,7 @@
           <v-flex xs10 style="align-self: flex-end;">
               <v-layout>
                   <v-flex xs4 class="text-sm-left" style="align-self: center;">
-                      TODO FILTERS: Show removed events
+                      TODO FILTERS
                   </v-flex>
                   <v-flex xs7>
                   </v-flex>
