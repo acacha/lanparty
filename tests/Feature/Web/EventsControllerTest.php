@@ -31,7 +31,6 @@ class EventsControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('web');
         $response = $this->json('GET','/manage/events');
-//        dd('hola');
         $response->assertSuccessful();
         $response->assertViewIs('manage.events.index');
 //        $response->assertViewHas('events');

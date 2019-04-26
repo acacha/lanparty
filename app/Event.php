@@ -10,6 +10,7 @@ use App\Traits\ApiURI;
 use App\Traits\FormattedDates;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Event.
@@ -18,13 +19,23 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
-    use ApiURI, FormattedDates;
+    use ApiURI, FormattedDates, SoftDeletes;
 
     protected $guarded = [];
 
     public static function events()
     {
         return map_collection(Event::all());
+    }
+
+    public static function published_events()
+    {
+        return map_collection(Event::published());
+    }
+
+    public static function active_events()
+    {
+        return map_collection(Event::active());
     }
 
     /**
@@ -275,6 +286,16 @@ class Event extends Model
     }
 
     /**
+     * Active scope: same as published
+     *
+     * @return string
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereNotNull('published_at');
+    }
+
+    /**
      * Published scope.
      *
      * @return string
@@ -311,7 +332,9 @@ class Event extends Model
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
-            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'published_at' => $this->published_at,
+            'deleted_at' => $this->deleted_at
         ];
     }
 

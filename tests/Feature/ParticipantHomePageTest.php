@@ -23,8 +23,6 @@ class ParticipantHomePageTest extends TestCase
      */
     public function see_user_numbers_and_events_info_at_home_page()
     {
-        $this->withoutExceptionHandling();
-
         $users = factory(User::class,5)->create();
         $user = $users->first();
 

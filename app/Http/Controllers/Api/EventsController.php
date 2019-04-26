@@ -24,7 +24,7 @@ class EventsController extends Controller
      */
     public function index(EventsIndex $request)
     {
-        return EventResource::collection(Event::published()->get());
+        return Event::published_events();
     }
 
     public function store(EventsStore $request)

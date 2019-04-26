@@ -34,6 +34,12 @@
               {{ event.participants_number }}
             </td>
             <td>
+              {{ event.published_at }}
+            </td>
+            <td>
+              {{ event.deleted_at }}
+            </td>
+            <td>
               {{ event.created_at }}
             </td>
             <td>
@@ -68,6 +74,8 @@ export default {
         { text: 'Imatge', value: 'image' },
         { text: 'Reglament', value: 'regulation' },
         { text: 'Número de participants', value: 'participants_number' },
+        { text: 'Publicat', value: 'published_at' },
+        { text: 'Esborrat', value: 'deleted_at' },
         { text: 'Creat', value: 'created_at' },
         { text: 'Modificat', value: 'updated_at' },
         { text: 'Accions', sortable: false, value: 'full_search' }

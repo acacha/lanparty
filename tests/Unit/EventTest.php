@@ -7,7 +7,9 @@ use App\Exceptions\GroupAlreadyInscribedException;
 use App\Exceptions\InscriptionException;
 use App\Exceptions\UserAlreadyInscribedException;
 use App\Group;
+use App\InscriptionType;
 use App\User;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

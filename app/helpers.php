@@ -451,8 +451,17 @@ if (!function_exists('create_events')) {
                 'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
                 'participants_number' => null,
                 'published_at' => null,
+            ],
+            [
+                'name' => 'Event archivat',
+                'inscription_type' => 'individual',
+                'image' => '/img/Fifa18.jpeg',
+                'tickets' => 20, // Número d'usuaris es poden inscriure
+                'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
+                'participants_number' => null,
+                'published_at' => '2018-01-15 12:00:00',
+                'deleted_at' => '2018-01-13 12:00:00',
             ]
-
         ];
 
         foreach ($events as $event) {
