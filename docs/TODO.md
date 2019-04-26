@@ -4,7 +4,15 @@
 
 ## Control de pagament
 
-- [ ] Pagar -> assignar ticket (de la llista de tickets disponibles)
+- [X] Pagar -> assignar ticket (de la llista de tickets disponibles)
+  - [X] Afegir columna session a cada ticket (taula tickets)
+    - [X] Permet indicar a quina sessió correspon el ticket
+    - [X] String lliure -> nosaltres farem sessió per any -> 2018 2019
+    - [X] Actualitzar a explotació els tickets diponibles a sessió 2018
+    
+Apartat /manage/participants:
+
+     
 
 # Gestió Events
 
