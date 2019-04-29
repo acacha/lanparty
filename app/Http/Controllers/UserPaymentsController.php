@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class UserPaymentsController.
- * 
+ *
  * @package App\Http\Controllers
  */
 class UserPaymentsController extends Controller
@@ -19,12 +19,12 @@ class UserPaymentsController extends Controller
      *
      * @param UserPaymentsRequest $request
      * @param User $user
-     * @return $this
+     * @return User
      */
     public function store(UserPaymentsRequest $request, User $user)
     {
-        if ($user->inscription_paid) abort(422,"L'usuari ja ha pagat la inscripció");
-        return $user->pay();
+        if (isset($user->inscription_paid[$request->session]) && $user->inscription_paid[$request->session]) abort(422,"L'usuari ja ha pagat la inscripció");
+        return $user->pay($request->session);
     }
 
     /**
@@ -37,6 +37,6 @@ class UserPaymentsController extends Controller
     public function destroy(UserPaymentsRequest $request, User $user)
     {
         if (!$user->inscription_paid) abort(422,"L'usuari no ha pagat el ticket");
-        return $user->unpay();
+        return $user->unpay($request->session);
     }
 }
