@@ -59,7 +59,7 @@
                 </v-layout>
 
                 <template v-for="n in numberOfParticipants()">
-                    <v-users-search :users="users" @input="userSelected(n+1,$event)" :label="'Participant ' + n"></v-users-search>
+                    <v-users-search :users="users" @input="userSelected(n+1, $event)" :label="'Participant ' + n" :return-object="true"></v-users-search>
                 </template>
 
                 <v-btn dark color="primary" @click.native="register" :loading="registering">Inscriure grup</v-btn>
@@ -215,7 +215,6 @@
             avatar: this.avatar,
             user_ids: JSON.stringify(userIds)
           }
-
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
             this.result = true
             this.registering = false

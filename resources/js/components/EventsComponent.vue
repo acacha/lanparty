@@ -198,11 +198,11 @@
                                         </div>
                                     </v-flex>
                                     <v-flex xs5>
-                                        <v-card-media
+                                        <v-img
                                                 :src="props.item.image"
                                                 height="125px"
                                                 contain
-                                        ></v-card-media>
+                                        ></v-img>
                                     </v-flex>
                                 </v-layout>
                             </v-container>

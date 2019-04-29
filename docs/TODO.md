@@ -1,6 +1,8 @@
 # ERRORS
 
-- [ ] 404 Al registrar un grup amb usuaris: URL:  https://lanparty.test/api/v1/events/3/register_group
+- [X] 404 Al registrar un grup amb usuaris: URL:  https://lanparty.test/api/v1/events/3/register_group
+  - [X] Arreglat tipic select no retornar object 
+  
 # Gestió usuaris
 
 - [ ] Mantenir usuaris altres anys
