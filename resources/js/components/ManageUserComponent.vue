@@ -26,6 +26,11 @@
                         <v-card-text class="px-0">
                             <v-form class="pl-3 pr-1 ma-0">
                                 <v-text-field readonly
+                                              label="Id"
+                                              :value="selectedUser.id"
+                                              readonly
+                                ></v-text-field>
+                                <v-text-field readonly
                                               label="Email"
                                               :value="selectedUser.email"
                                               readonly
@@ -304,20 +309,27 @@
     },
     methods: {
       tooglePayment (user) {
-        if (user.inscription_paid) this.unpay(user)
+        if (user.inscription_paid) {
+          if (user.inscription_paid[this.session]) this.unpay(user)
+          else this.pay(user)
+        }
         else this.pay(user)
       },
       pay (user) {
+        console.log('PAYY!!!!!!!!!')
+        console.log('session:')
+        console.log(this.session)
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_PAY, user).then(() => {
+        this.$store.dispatch(actions.USER_PAY, {user, session: this.session}).then(() => {
           this.loadingPayments = false })
           .catch(() => {
           this.loadingPayments = false
         })
       },
       unpay (user) {
+        console.log('UNPAYY!!!!!!!!! asdd')
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_UNPAY, user).then(() => {
+        this.$store.dispatch(actions.USER_UNPAY, user, this.session).then(() => {
           this.loadingPayments = false
         }).catch(() => {
           this.loadingPayments = false

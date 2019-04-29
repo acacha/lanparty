@@ -16,9 +16,11 @@ export default {
       })
     })
   },
-  [ actions.USER_PAY ] (context, user) {
+  [ actions.USER_PAY ] (context, {user, session} ) {
     return new Promise((resolve, reject) => {
-      users.pay(user).then(response => {
+      console.log('ACTION SESSION:')
+      console.log(session)
+      users.pay({user, session}).then(response => {
         context.commit(mutations.SET_SELECTED_USER_PAYMENT, true)
         context.commit(mutations.SET_USER_PAYMENT_STATE, {user, payment: true})
         resolve(response)
@@ -27,9 +29,9 @@ export default {
       })
     })
   },
-  [ actions.USER_UNPAY ] (context, user) {
+  [ actions.USER_UNPAY ] (context, user, session) {
     return new Promise((resolve, reject) => {
-      users.unpay(user).then(response => {
+      users.unpay(user, session).then(response => {
         context.commit(mutations.SET_SELECTED_USER_PAYMENT, false)
         context.commit(mutations.SET_USER_PAYMENT_STATE, {user, payment: false})
         resolve(response)
