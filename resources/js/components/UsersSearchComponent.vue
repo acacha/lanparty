@@ -13,7 +13,7 @@
                         </v-chip>
                     </v-flex>
                     <v-flex xs12>
-                        <v-users-search :users="internalUsers" @input="input"></v-users-search>
+                        <v-users-search :users="internalUsers" @input="input" :return-object="true"></v-users-search>
                     </v-flex>
                 </v-layout>
             </v-container>

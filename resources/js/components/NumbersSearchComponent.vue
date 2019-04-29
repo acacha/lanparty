@@ -19,13 +19,12 @@
                         ></v-checkbox>
                     </v-flex>
                     <v-flex xs12>
-                        <v-select
+                        <v-autocomplete
                                 label="Seleccioneu un número de sorteig"
                                 v-bind:items="filteredNumbers"
                                 v-model="selected_number_id"
                                 item-text="full_search"
-                                max-height="300"
-                                autocomplete
+                                :menu-props="{maxHeight:'300'}"
                                 clearable
                                 @input="input"
                         >
@@ -61,7 +60,7 @@
                                     </v-list-tile-content>
                                 </template>
                             </template>
-                        </v-select>
+                        </v-autocomplete>
                     </v-flex>
                 </v-layout>
             </v-container>

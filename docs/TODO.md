@@ -5,7 +5,7 @@
   
 # Gestió usuaris
 
-- [ ] Mantenir usuaris altres anys
+- [X] Mantenir usuaris altres anys
 
 ## Control de pagament
 
@@ -28,6 +28,7 @@ Apartat /manage/participants:
     - [X] Permet indicar a quina sessió correspon el numero
     - [X] String lliure -> nosaltres farem sessió per any -> 2018 2019
     - [X] Actualitzar a explotació els numbers diponibles a sessió 2018   
+
 
 # Gestió Events
 

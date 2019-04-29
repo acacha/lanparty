@@ -52,6 +52,7 @@ import Vuetify from 'vuetify'
 import helpers from './utils/helpers'
 import PrizesManage from "./components/prizes/PrizesManage";
 import UsersManage from "./components/users/UsersManage";
+import ParticipantsManage from "./components/participants/ParticipantsManage";
 
 window.Vue = Vue;
 window.Vuetify = Vuetify;
@@ -96,10 +97,6 @@ window.axios.interceptors.response.use((response) => {
       )
     }
     if (error.response.status === 422) {
-      console.log('HEY!!!!!')
-      console.log(window.Vue.prototype.$snackbar)
-      console.log(error.response.data)
-      console.log('PROVA')
       window.Vue.prototype.$snackbar.showSnackBar(
         'Les dades proporcionades no són vàlides',
         'error',
@@ -169,7 +166,8 @@ const app = new Vue({
     'managers-manage': ManagersManage,
     'partners-manage': PartnersManage,
     'prizes-manage': PrizesManage,
-    'users-manage': UsersManage
+    'users-manage': UsersManage,
+    'participants-manage': ParticipantsManage
   },
   computed: {
     ...mapGetters({
