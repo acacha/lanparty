@@ -26,7 +26,7 @@ class UsersControllerTest extends TestCase
         $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
         $event->addTickets(10);
         $paidUser = factory(User::class)->create();
-        $paidUser->pay();
+        $paidUser->pay('2018');
 
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
