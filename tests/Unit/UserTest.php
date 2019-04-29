@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Role;
+use App\Ticket;
 use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -91,12 +92,15 @@ class UserTest extends TestCase
             'user_id' => $user->id
         ]);
         $this->assertEquals(false, $user->inscription_paid);
-        $user->pay();
+        $user->pay('2018');
         $user->fresh();
         $this->assertDatabaseHas('tickets', [
             'user_id' => $user->id
         ]);
-        $this->assertEquals(true, $user->inscription_paid);
+        $this->assertCount(1, Ticket::where('user_id', $user->id)->get());
+
+        dd($user->inscription_paid);
+        $this->assertEquals(true, $user->inscription_paid['2018']);
     }
 
     /** @test */

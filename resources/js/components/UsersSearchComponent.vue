@@ -37,6 +37,10 @@
       }
     },
     props: {
+      session: {
+        type: String,
+        required: true
+      },
       users: {
         type: Array
       },
@@ -51,7 +55,7 @@
       },
       paidInternalusers () {
         return this.$store.getters.users.filter(function (user) {
-          return user.inscription_paid
+          return user.inscription_paid[this.session]
         })
       }
     },
