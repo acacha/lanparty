@@ -222,7 +222,7 @@ class EventsControllerTest extends TestCase
         ]);
         $event = factory(Event::class)->create();
         $eventArr = json_decode(json_encode($event), true);
-        dump($eventArr['name']);
+//        dump($eventArr['name']);
 
 
         $response = $this->json('PUT','/api/v1/events/' . $oldEvent->id, $eventArr);
@@ -231,7 +231,7 @@ class EventsControllerTest extends TestCase
         $newTask = $oldEvent->refresh();
         $this->assertNotNull($newTask);
         $this->assertEquals($eventArr['name'],$result->name);
-        dump($newTask->name);
+//        dump($newTask->name);
 //        $result = json_decode($response->getContent());
 //        $response->assertSuccessful();
 //        $this->assertEquals($result->name, $event->name);
