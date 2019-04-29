@@ -51,7 +51,8 @@ class AcceptInvitationTest extends TestCase
         $response = $this->get('/manage/invitations/TESTCODE1234');
 
         // TODO -> Realment torna un 404 però el test no permet assert si no posem 500?
-        $response->assertStatus(500);
+        // OK si passa és que falta npm run dev i hi ha
+        $response->assertStatus(404);
     }
 
     /** @test */
@@ -62,7 +63,8 @@ class AcceptInvitationTest extends TestCase
         $response = $this->get('/manage/invitations/TESTCODE1234');
 
         // TODO -> Realment torna un 404 però el test no permet assert si no posem 500?
-        $response->assertStatus(500);
+        // OK si passa és que falta npm run dev i hi ha
+        $response->assertStatus(404);
     }
 
 }
