@@ -305,14 +305,16 @@
       },
       pay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_PAY, user).then().catch(error => {
+        this.$store.dispatch(actions.USER_PAY, user).then(() => {
+          this.loadingPayments = false })
+          .catch(() => {
           this.loadingPayments = false
         })
       },
       unpay (user) {
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_UNPAY, user).then(() => {
-          this.loadingPayments = true
+          this.loadingPayments = false
         }).catch(() => {
           this.loadingPayments = false
         })
