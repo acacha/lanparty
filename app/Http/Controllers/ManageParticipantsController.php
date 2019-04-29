@@ -12,7 +12,8 @@ use App\User;
 use Auth;
 
 /**
- * Class ManageParticipantsController
+ * Class ManageParticipantsController.
+ *
  * @package App\Http\Controllers
  */
 class ManageParticipantsController extends Controller
