@@ -1,6 +1,14 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
+            <v-flex xs12>
+                <v-select
+                        :items="sessions"
+                        label="Standard"
+                ></v-select>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap v-if="session">
             <v-flex xs12 v-if="status">
                 <v-alert type="success" :value="true">
                     {{ status }}
@@ -42,6 +50,15 @@ export default {
     'users-search': UsersSearch,
     'numbers-search': NumbersSearch,
     'manage-user': ManageUser
+  },
+  data () {
+    return {
+      session: null,
+      sessions: [
+        '2018',
+        '2019'
+      ]
+    }
   },
   props: {
     events: {
