@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'sn2' => $this->sn2,
             'formatted_created_at_date' => $this->formatted_created_at_date,
             'full_search' => $this->full_search,
-            'inscription_paid' => $this->ticket_count ? true : false,
+            'inscription_paid' => $this->inscription_paid,
             'email' => $this->email,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

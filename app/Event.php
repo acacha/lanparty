@@ -47,7 +47,7 @@ class Event extends Model
     public function addRegistrations($quantity)
     {
         foreach (range(1, $quantity) as $i) {
-            $this->registrations()->create([]);
+            $this->registrations()->create();
         }
 
         return $this;

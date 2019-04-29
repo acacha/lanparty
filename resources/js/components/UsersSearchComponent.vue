@@ -54,7 +54,7 @@
         return this.$store.getters.users
       },
       paidInternalusers () {
-        return this.$store.getters.users.filter(function (user) {
+        return this.$store.getters.users.filter((user) => {
           return user.inscription_paid[this.session]
         })
       }

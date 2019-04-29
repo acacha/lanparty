@@ -47,6 +47,7 @@
     mixins: [ interactsWithGravatar ],
     data () {
       return {
+        internalUsers: this.users,
         selected_user_id: null
       }
     },
@@ -67,6 +68,11 @@
     methods: {
       input (user) {
         this.$emit('input', user)
+      }
+    },
+    watch: {
+      users (users) {
+        this.internalUsers = users
       }
     }
   }

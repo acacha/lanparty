@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Event;
+use App\Ticket;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -49,7 +50,8 @@ class UsersControllerTest extends TestCase
         // Check paid user
 
         $users = json_decode($response->getContent());
-        $this->assertTrue($users[5]->inscription_paid);
+//        dd($users[5]->inscription_paid->{'2018'});
+        $this->assertEquals(1, $users[5]->inscription_paid->{'2018'});
     }
 
     /** @test */
