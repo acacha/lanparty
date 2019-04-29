@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\User;
 use Tests\TestCase;
 use App\Invitation;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
@@ -51,6 +50,8 @@ class AcceptInvitationTest extends TestCase
 
         $response = $this->get('/manage/invitations/TESTCODE1234');
 
+        // TODO -> Realment torna un 404 però el test no permet assert si no posem 500?
+        // OK si passa és que falta npm run dev i hi ha
         $response->assertStatus(404);
     }
 
@@ -61,6 +62,8 @@ class AcceptInvitationTest extends TestCase
         $this->actingAs($user);
         $response = $this->get('/manage/invitations/TESTCODE1234');
 
+        // TODO -> Realment torna un 404 però el test no permet assert si no posem 500?
+        // OK si passa és que falta npm run dev i hi ha
         $response->assertStatus(404);
     }
 

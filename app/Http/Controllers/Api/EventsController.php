@@ -9,8 +9,6 @@ use App\Http\Requests\Events\EventsIndex;
 use App\Http\Requests\Events\EventsShow;
 use App\Http\Requests\Events\EventsStore;
 use App\Http\Requests\Events\EventsUpdate;
-use App\Http\Resources\EventResource;
-use Illuminate\Http\Request;
 
 /**
  * Class EventsController.

@@ -51,6 +51,7 @@ class ManagersControllerTest extends TestCase
     /** @test */
     public function superadmin_can_see_managers_module()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('web');
         $response = $this->get('/manage/managers');
         $response->assertSuccessful();

@@ -25,8 +25,6 @@ class PrizesController extends Controller
      */
     public function index(PrizesIndex $request)
     {
-        dd("asd");
-
 //        return Prize::orderBy('created_at','desc')->get();
         $prize = map_collection(Prize::orderBy('created_at','desc')->get());
         return $prize;

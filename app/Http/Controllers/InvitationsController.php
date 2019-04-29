@@ -23,7 +23,7 @@ class InvitationsController extends Controller
     {
         $invitation = Invitation::findByCode($code);
 
-        abort_if($invitation->hasBeenUsed(), 404);
+        abort_if($invitation->hasBeenUsed(), 404, 'La invitació ja ha estat utilitzada');
 
         $invitation->use();
 

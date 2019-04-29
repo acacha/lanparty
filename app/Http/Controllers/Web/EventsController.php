@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Event;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Events\EventsIndex;
+use App\Http\Requests\Events\ManageEventsIndex;
 
 /**
  * Class EventsController.
@@ -14,10 +14,10 @@ use App\Http\Requests\Events\EventsIndex;
 class EventsController extends Controller
 {
     /**
-     * @param EventsIndex $request
+     * @param ManageEventsIndex $request
      * @return mixed
      */
-    public function index(EventsIndex $request)
+    public function index(ManageEventsIndex $request)
     {
         $events = Event::all_events();
         return view('manage.events.index', compact('events'));

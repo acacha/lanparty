@@ -19,7 +19,7 @@ class EventsIndex extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('events.index');
+        return true;
     }
 
     /**

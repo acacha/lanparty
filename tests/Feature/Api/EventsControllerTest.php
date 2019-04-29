@@ -38,22 +38,45 @@ class EventsControllerTest extends TestCase
     }
 
     /** @test */
-    public function regular_user_cannot_get_events_module()
+    public function regular_user_can_get_events_module()
     {
         $this->login('api');
         $response = $this->json('GET','/api/v1/events');
-        $response->assertStatus(403);
+        $response->assertStatus(200);
     }
 
     /** @test */
-    public function guest_user_cannot_get_events_module()
+    public function guest_user_can_get_events_module()
     {
         $response = $this->json('GET','/api/v1/events');
-        $response->assertStatus(401);
+        $response->assertStatus(200);
     }
 
 
-
+    /** @test */
+    public function can_fetch_events()
+    {
+        $this->withoutExceptionHandling();
+        seed_database();
+        $response = $this->json('GET','/api/v1/events');
+        $response->assertSuccessful();
+        $this->assertCount(Event::published()->count(),json_decode($response->getContent()));
+        $response->assertJsonStructure([[
+            'id',
+            'name',
+            'inscription_type_id',
+            'image',
+            'published_at',
+            'created_at',
+            'updated_at',
+            'inscribed',
+            'tickets',
+            'available_tickets',
+            'assigned_tickets',
+            'registrations',
+            'regulation'
+        ]]);
+    }
 
     /**
      * @test
@@ -222,7 +245,7 @@ class EventsControllerTest extends TestCase
         ]);
         $event = factory(Event::class)->create();
         $eventArr = json_decode(json_encode($event), true);
-        dump($eventArr['name']);
+//        dump($eventArr['name']);
 
 
         $response = $this->json('PUT','/api/v1/events/' . $oldEvent->id, $eventArr);
@@ -231,7 +254,7 @@ class EventsControllerTest extends TestCase
         $newTask = $oldEvent->refresh();
         $this->assertNotNull($newTask);
         $this->assertEquals($eventArr['name'],$result->name);
-        dump($newTask->name);
+//        dump($newTask->name);
 //        $result = json_decode($response->getContent());
 //        $response->assertSuccessful();
 //        $this->assertEquals($result->name, $event->name);
