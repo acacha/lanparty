@@ -97,7 +97,10 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-        return count($this->ticket()->get()) ? true : false;
+//        dump($this->ticket()->get()->map(function ($ticket) {
+//            return [$ticket->session => 1];
+//        }));
+//        return count($this->ticket()->get()) ? true : false;
     }
 
     /**
@@ -124,9 +127,9 @@ class User extends Authenticatable
      *
      * @return $this
      */
-    public function pay()
+    public function pay($session)
     {
-        $this->ticket()->save(Ticket::firstAvailableTicket());
+        $this->ticket()->save(Ticket::firstAvailableTicket($session));
         return $this;
     }
 

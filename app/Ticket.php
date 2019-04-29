@@ -18,9 +18,11 @@ class Ticket extends Model
      *
      * @param $quantity
      */
-    public static function addTickets($quantity) {
+    public static function addTickets($quantity, $session) {
         foreach (range(1, $quantity ) as $value) {
-            Ticket::create();
+            Ticket::create([
+                'session' => $session
+            ]);
         }
     }
 
@@ -37,8 +39,8 @@ class Ticket extends Model
      *
      * @return mixed
      */
-    public static function firstAvailableTicket() {
-        return Ticket::available()->orderBy('id', 'asc')->first();
+    public static function firstAvailableTicket($session) {
+        return Ticket::available()->where('session',$session)->orderBy('id', 'asc')->first();
     }
 
     /**

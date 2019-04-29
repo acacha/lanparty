@@ -488,7 +488,7 @@ if (!function_exists('create_numbers')) {
 if (!function_exists('create_tickets')) {
     function create_tickets()
     {
-        Ticket::addTickets(250);
+        Ticket::addTickets(250,'2018');
     }
 }
 

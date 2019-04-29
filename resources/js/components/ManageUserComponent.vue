@@ -282,6 +282,10 @@
       }
     },
     props: {
+      session: {
+        type: String,
+        required: true
+      },
       events: {
         type: Array,
         required: true
