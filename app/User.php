@@ -97,10 +97,9 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-//        dump($this->ticket()->get()->map(function ($ticket) {
-//            return [$ticket->session => 1];
-//        }));
-//        return count($this->ticket()->get()) ? true : false;
+        return $this->ticket()->get()->countBy(function ($ticket) {
+            return $ticket->session;
+        })->toArray();
     }
 
     /**
