@@ -24,6 +24,7 @@ class RegisterGroupToEventController extends Controller
      *
      * @param Request $request
      * @param Event $event
+     * @return GroupResource
      */
     public function store(RegisterGroupToEventRequest $request, Event $event)
     {
