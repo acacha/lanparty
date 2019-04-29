@@ -1,14 +1,14 @@
 <template>
-    <v-select
+    <v-autocomplete
             prepend-icon="face"
             :label="label"
             :items="users"
             v-model="selected_user_id"
             item-text="full_search"
-            max-height="300"
-            autocomplete
+            :menu-props="{maxHeight:'300'}"
             clearable
             @input="input"
+            :return-object="returnObject"
     >
         <template slot="selection" slot-scope="data">
             <v-chip
@@ -37,7 +37,7 @@
                 </v-list-tile-content>
             </template>
         </template>
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <script>
@@ -51,6 +51,10 @@
       }
     },
     props: {
+      returnObject: {
+        type: Boolean,
+        required: false
+      },
       users: {
         type: Array,
         required: true

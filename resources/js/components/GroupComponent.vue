@@ -59,7 +59,7 @@
                 </v-layout>
 
                 <template v-for="n in numberOfParticipants()">
-                    <v-users-search :users="users" @input="userSelected(n+1,$event)" :label="'Participant ' + n"></v-users-search>
+                    <v-users-search :users="users" @input="userSelected(n+1, $event)" :label="'Participant ' + n" :return-object="true"></v-users-search>
                 </template>
 
                 <v-btn dark color="primary" @click.native="register" :loading="registering">Inscriure grup</v-btn>
@@ -180,6 +180,11 @@
         this.preview(this.avatar)
       },
       userSelected (n, user) {
+        console.log('userSelected')
+        console.log('n:')
+        console.log(n)
+        console.log('user:')
+        console.log(user)
         if (user) {
           if (this.isUserAlreadySelected(user)) {
             this.$snackbar.showError({message: "L'usuari ja ha estat seleccionat prèviament!"})
@@ -207,6 +212,8 @@
           let ids = Object.values(this.ids)
           let index = ids.indexOf(this.user.id)
 
+          console.log('this.selectedUsers:')
+          console.log(this.selectedUsers)
           let userIds = this.selectedUsers.map(user => user['id'])
 
           this.registering = true
@@ -215,7 +222,13 @@
             avatar: this.avatar,
             user_ids: JSON.stringify(userIds)
           }
-
+          console.log('HEY!!!!!!!!!!!!!!!')
+          console.log('userIds:')
+          console.log(userIds)
+          console.log('EVENT:')
+          console.log(event)
+          console.log('GROUP:')
+          console.log(group)
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
             this.result = true
             this.registering = false

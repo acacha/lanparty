@@ -45,8 +45,8 @@
                     </v-toolbar>
                     <v-card-title primary-title>
                         <v-card v-if="winner">
-                            <v-card-media :src="gravatarURL (winner.email)" height="250px">
-                            </v-card-media>
+                            <v-img :src="gravatarURL (winner.email)" height="250px">
+                            </v-img>
                             <v-card-title primary-title>
                                 <h1 class="display-1 mb-0">{{ winner.name }}</h1>
                                 <h3 class="headline mb-0">{{ userName(winner) }}</h3>
