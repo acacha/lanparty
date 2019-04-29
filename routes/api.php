@@ -44,7 +44,6 @@ Route::group(['prefix'=>'v1'], function() {
     Route::post('/newsletter', '\\' . NewsletterController::class . '@store');
     Route::get('/events', '\\' . EventsController::class . '@index');
 
-//    Route::post('/events/{event}', '\\' . EventsController::class . '@store');
     //Prizes
     Route::get('/prizes','\\' . PrizesController::class . '@index');
     Route::get('/partners','\\' . PartnersController::class . '@index');
@@ -107,8 +106,6 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');
     Route::put('/prizes/{prize}', '\\' . PrizesController::class . '@update');
     Route::delete('/prizes/{prize}', '\\' . PrizesController::class . '@destroy');
-
-    Route::get('/events', '\\' . EventsController::class . '@index');
 
     Route::post('/events', '\\' . EventsController::class . '@store');
     Route::get('/events/{event}', '\\' . EventsController::class . '@show');

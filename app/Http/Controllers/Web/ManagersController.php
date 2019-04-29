@@ -19,7 +19,11 @@ class ManagersController extends Controller
      */
     public function index(ManagersIndex $request)
     {
-        $managers = Role::findByName('Manager')->users;
+        $managers = collect([]);
+        try {
+            $managers = Role::findByName('Manager')->users;
+        } catch (\Exception $e) { }
+
         $users = User::users();
         return view('manage.managers.index', compact('managers','users'));
     }

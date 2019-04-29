@@ -334,7 +334,12 @@ class Event extends Model
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'published_at' => $this->published_at,
-            'deleted_at' => $this->deleted_at
+            'deleted_at' => $this->deleted_at,
+            'inscribed' => $this->inscribed,
+            'tickets' => $this->tickets,
+            'available_tickets' => $this->available_tickets,
+            'assigned_tickets' => $this->assigned_tickets,
+            'registrations' => $this->registrations,
         ];
     }
 
@@ -355,7 +360,12 @@ class Event extends Model
             'updated_at' => $this->updated_at,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
-            'formatted_updated_at_diff' => $this->formatted_updated_at_diff
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'inscribed' => $this->inscribed,
+            'tickets' => $this->tickets,
+            'available_tickets' => $this->available_tickets,
+            'assigned_tickets' => $this->assigned_tickets,
+            'registrations' => $this->registrations,
         ];
     }
 
