@@ -27,7 +27,7 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
             'session' => 2018
@@ -102,11 +102,11 @@ class UserPaymentTest extends TestCase
         $manager->assignRole('Manager');
         $this->actingAs($manager,'api');
         $user = factory(User::class)->create();
-        $this->assertCount(0, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
             'session' => 2018
         ]);
-        $this->assertCount( 0, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
         $response->assertStatus(422);
         $this->assertEquals('L\'usuari no ha pagat el ticket',json_decode($response->getContent())->message);
     }
@@ -119,12 +119,12 @@ class UserPaymentTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
 
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay');
 
         $response->assertStatus(403);
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
     }
 
     /** @test */
@@ -178,7 +178,7 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
             'session' => 2018

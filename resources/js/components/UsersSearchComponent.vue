@@ -65,7 +65,7 @@
         console.log('session:')
         console.log(this.session)
         return this.$store.getters.users.filter((user) => {
-          return user.inscription_paid[this.session]
+          return user.inscription_paid.includes(this.session)
         })
       },
       availableTickets () {

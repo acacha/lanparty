@@ -15,7 +15,7 @@
                                     <p class="text-xs-center">
                                         <v-switch
                                                 label="Pagat"
-                                                :input-value="selectedUser.inscription_paid"
+                                                :input-value="inscriptionPaid"
                                                 @change="togglePayment(selectedUser)"
                                                 :loading="loadingPayments"
                                                 :disabled="loadingPayments"
@@ -298,6 +298,10 @@
       }
     },
     computed: {
+      inscriptionPaid () {
+        if (this.selectedUser) if (this.selectedUser.inscription_paid) return this.selectedUser.inscription_paid.includes(this.session)
+        return false
+      },
       ...mapGetters(['selectedUser']),
       showSelectedUser () {
         return !_.isEmpty(this.selectedUser)
@@ -311,7 +315,7 @@
     methods: {
       togglePayment (user) {
         if (user.inscription_paid) {
-          if (user.inscription_paid[this.session]) this.unpay(user)
+          if (user.inscription_paid.includes(this.session)) this.unpay(user)
           else this.pay(user)
         }
         else this.pay(user)
