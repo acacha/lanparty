@@ -57,13 +57,9 @@
     },
     computed: {
       internalUsers () {
-        console.log('internalUsers computed!')
         return this.$store.getters.users
       },
       paidInternalusers () {
-        console.log('paidInternalusers computed!')
-        console.log('session:')
-        console.log(this.session)
         return this.$store.getters.users.filter((user) => {
           return user.inscription_paid.includes(this.session)
         })

@@ -314,20 +314,12 @@
     },
     methods: {
       togglePayment (user) {
-        console.log('togglePayment')
-        console.log('user.inscription_paid:')
-        console.log(user.inscription_paid)
         if (user.inscription_paid) {
-          console.log('1')
-          console.log('this.session:')
-          console.log(this.session)
           if (user.inscription_paid.includes(this.session)) {
-            console.log('UNPAY!')
             this.unpay(user)
             return
           }
         }
-        console.log('PAY')
         this.pay(user)
       },
       pay (user) {

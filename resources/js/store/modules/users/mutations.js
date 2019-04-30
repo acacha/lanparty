@@ -8,12 +8,6 @@ export default {
     state.selected_user.numbers = numbers
   },
   [ types.SET_SELECTED_USER_PAYMENT ] (state, {payment,session}) {
-    console.log('state.selected_user.inscription_paid:')
-    console.log(state.selected_user.inscription_paid)
-    console.log('session:')
-    console.log(session)
-    console.log('payment:')
-    console.log(payment)
     if (payment) {
       if (!state.selected_user.inscription_paid.includes(session)) {
         state.selected_user.inscription_paid.push(session)
@@ -31,25 +25,9 @@ export default {
       return u.id === user.id
     })
     if (userFound) {
-      console.log('payment:')
-      console.log(payment)
-      console.log('session:')
-      console.log(session)
       if (payment) {
-        console.log('11')
-        if (!userFound.inscription_paid.includes(session)) {
-          console.log('11 pushing')
-          userFound.inscription_paid.push(session)
-        }
-      } else {
-        console.log('22')
-        if (userFound.inscription_paid.includes(session)) {
-          console.log('22 splicing')
-          userFound.inscription_paid.splice(userFound.inscription_paid.indexOf(session), 1)
-          console.log('userFound.inscription_paid:')
-          console.log(userFound.inscription_paid)
-        }
-      }
+        if (!userFound.inscription_paid.includes(session)) userFound.inscription_paid.push(session)
+      } else if (userFound.inscription_paid.includes(session)) userFound.inscription_paid.splice(userFound.inscription_paid.indexOf(session), 1)
     }
   },
   [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
