@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\NotEnoughTicketsException;
 use App\Role;
 use App\Ticket;
 use App\User;
@@ -100,6 +101,18 @@ class UserTest extends TestCase
         $this->assertCount(1, Ticket::where('user_id', $user->id)->get());
 
         $this->assertEquals(true, $user->inscription_paid['2018']);
+    }
+
+    /** @test */
+    function user_cannot_pay_if_no_more_ticket_are_available()
+    {
+        $user = factory(User::class)->create();
+        $this->assertDatabaseMissing('tickets', [
+            'user_id' => $user->id
+        ]);
+        $this->assertCount(0, $user->inscription_paid);
+        $this->expectException(NotEnoughTicketsException::class);
+        $user->pay('2018');
     }
 
     /** @test */

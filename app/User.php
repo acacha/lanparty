@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\NotEnoughTicketsException;
 use App\Http\Resources\NumberResource;
 use App\Http\Resources\UserEventResource;
 use App\Notifications\ResetPasswordNotification;
@@ -137,7 +138,9 @@ class User extends Authenticatable
      */
     public function pay($session)
     {
-        $this->ticket()->save(Ticket::firstAvailableTicket($session));
+        $ticket = Ticket::firstAvailableTicket($session);
+        if (!$ticket) throw new NotEnoughTicketsException();
+        $this->ticket()->save();
         return $this;
     }
 
