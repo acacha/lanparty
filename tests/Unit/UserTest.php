@@ -92,15 +92,14 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('tickets', [
             'user_id' => $user->id
         ]);
-        $this->assertCount(0, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
         $user->pay('2018');
         $user->fresh();
         $this->assertDatabaseHas('tickets', [
             'user_id' => $user->id
         ]);
         $this->assertCount(1, Ticket::where('user_id', $user->id)->get());
-
-        $this->assertEquals(true, $user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
     }
 
     /** @test */
@@ -121,7 +120,7 @@ class UserTest extends TestCase
         seed_database();
         $user = factory(User::class)->create();
         $user->pay('2018');
-        $this->assertEquals(true, $user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
         $user->unpay();
         $this->assertCount(0,$user->inscription_paid);
     }

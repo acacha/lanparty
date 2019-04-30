@@ -320,7 +320,7 @@
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_PAY, {user, session: this.session}).then(() => {
           this.loadingPayments = false })
-          .catch(() => {
+        .catch(() => {
             this.loadingPayments = false
         })
       },

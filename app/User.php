@@ -107,9 +107,7 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-        return $this->ticket()->get()->countBy(function ($ticket) {
-            return $ticket->session;
-        })->toArray();
+        return $this->ticket()->get()->pluck('session')->unique()->toArray();
     }
 
     /**

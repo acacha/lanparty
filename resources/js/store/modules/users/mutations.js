@@ -8,37 +8,22 @@ export default {
     state.selected_user.numbers = numbers
   },
   [ types.SET_SELECTED_USER_PAYMENT ] (state, {payment,session}) {
-    console.log('SET_SELECTED_USER_PAYMENT!!!!!!!!!!!!')
     console.log('state.selected_user.inscription_paid:')
     console.log(state.selected_user.inscription_paid)
-    console.log('rray.isArray(state.selected_user.inscription_paid):')
-    console.log(Array.isArray(state.selected_user.inscription_paid))
-    console.log('ERROR!!!!!!')
-    console.log('state.selected_user.inscription_paid[session]:')
-    console.log(state.selected_user.inscription_paid[session])
-    if (!Array.isArray(state.selected_user.inscription_paid)) {
-      console.log('setting to array!')
-      state.selected_user.inscription_paid = []
-    }
-    console.log('state.selected_user.inscription_paid 2:')
-    console.log(state.selected_user.inscription_paid)
-    state.selected_user.inscription_paid[session] = payment
-    console.log('state.selected_user.inscription_paid 3:')
-    console.log(state.selected_user.inscription_paid)
+    console.log('session:')
+    console.log(session)
+    console.log('payment:')
+    console.log(payment)
+    // https://vuejs.org/v2/guide/list.html#Caveats
+    // Utilitza 2019 com a index!!! en comptes com array associatiu
+    window.Vue.prototype.$set(state.selected_user.inscription_paid, session, payment)
   },
   [ types.SET_USER_PAYMENT_STATE ] (state, { user, payment, session }) {
-    console.log('SET_USER_PAYMENT_STATE!!')
     var userFound = state.users.find((u) => {
       return u.id === user.id
     })
-    console.log('userFound:')
-    console.log(userFound)
     if (userFound) {
-      console.log('userFound.inscription_paid:')
-      console.log(userFound.inscription_paid)
-      userFound.inscription_paid[session] = payment
-      console.log('userFound.inscription_paid 2:')
-      console.log(userFound.inscription_paid)
+      window.Vue.prototype.$set(userFound.inscription_paid, session, payment)
     }
 
   },
