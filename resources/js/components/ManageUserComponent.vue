@@ -15,9 +15,10 @@
                                     <p class="text-xs-center">
                                         <v-switch
                                                 label="Pagat"
-                                                :input-value="selectedUser.inscription_paid"
-                                                @change="tooglePayment(selectedUser)"
+                                                :input-value="inscriptionPaid"
+                                                @change="togglePayment(selectedUser)"
                                                 :loading="loadingPayments"
+                                                :disabled="loadingPayments"
                                         ></v-switch>
                                     </p>
                                 </v-flex>
@@ -25,6 +26,11 @@
                         </v-container>
                         <v-card-text class="px-0">
                             <v-form class="pl-3 pr-1 ma-0">
+                                <v-text-field readonly
+                                              label="Id"
+                                              :value="selectedUser.id"
+                                              readonly
+                                ></v-text-field>
                                 <v-text-field readonly
                                               label="Email"
                                               :value="selectedUser.email"
@@ -292,6 +298,10 @@
       }
     },
     computed: {
+      inscriptionPaid () {
+        if (this.selectedUser) if (this.selectedUser.inscription_paid) return this.selectedUser.inscription_paid.includes(this.session)
+        return false
+      },
       ...mapGetters(['selectedUser']),
       showSelectedUser () {
         return !_.isEmpty(this.selectedUser)
@@ -303,21 +313,26 @@
       }
     },
     methods: {
-      tooglePayment (user) {
-        if (user.inscription_paid) this.unpay(user)
-        else this.pay(user)
+      togglePayment (user) {
+        if (user.inscription_paid) {
+          if (user.inscription_paid.includes(this.session)) {
+            this.unpay(user)
+            return
+          }
+        }
+        this.pay(user)
       },
       pay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_PAY, user).then(() => {
+        this.$store.dispatch(actions.USER_PAY, {user, session: this.session}).then(() => {
           this.loadingPayments = false })
-          .catch(() => {
-          this.loadingPayments = false
+        .catch(() => {
+            this.loadingPayments = false
         })
       },
       unpay (user) {
         this.loadingPayments = true
-        this.$store.dispatch(actions.USER_UNPAY, user).then(() => {
+        this.$store.dispatch(actions.USER_UNPAY, { user, session: this.session } ).then(() => {
           this.loadingPayments = false
         }).catch(() => {
           this.loadingPayments = false

@@ -50,6 +50,7 @@
         "sw-precache-webpack-plugin": "^0.11.5",
         "typeface-montserrat": "0.0.54",
         "typeface-roboto": "0.0.54",
+        "vuelidate": "^0.7.4",
         "vuex": "^3.1.0"
     }
 }

@@ -11,6 +11,13 @@
                         <v-chip label color="success darken-3" text-color="white">
                             <v-icon left>group</v-icon>Pagats: {{ this.paidInternalusers.length }}
                         </v-chip>
+                        <v-chip label color="accent darken-3" text-color="white">
+                            Tickets disponibles: {{ this.availableTickets.length }}
+                        </v-chip>
+                        <span style="display: inline-flex;">
+                            <add-tickets-button :session="session"></add-tickets-button>
+                            <delete-tickets-button :session="session"></delete-tickets-button>
+                        </span>
                     </v-flex>
                     <v-flex xs12>
                         <v-users-search :users="internalUsers" @input="input" :return-object="true"></v-users-search>
@@ -26,10 +33,15 @@
   import * as mutations from '../store/mutation-types'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import VUsersSearch from './VUsersSearchComponent.vue'
-
+  import AddTicketsButton from './tickets/AddTicketsButton'
+  import DeleteTicketsButton from './tickets/DeleteTicketsButton'
   export default {
     name: 'UsersSearch',
-    components: { VUsersSearch },
+    components: {
+      VUsersSearch,
+      'add-tickets-button': AddTicketsButton,
+      'delete-tickets-button': DeleteTicketsButton
+    },
     mixins: [ interactsWithGravatar ],
     data () {
       return {
@@ -44,6 +56,9 @@
       users: {
         type: Array
       },
+      tickets: {
+        type: Array
+      },
       label: {
         type: String,
         default: 'Seleccioneu un usuari'
@@ -54,8 +69,13 @@
         return this.$store.getters.users
       },
       paidInternalusers () {
-        return this.$store.getters.users.filter(function (user) {
-          return user.inscription_paid[this.session]
+        return this.$store.getters.users.filter((user) => {
+          return user.inscription_paid.includes(this.session)
+        })
+      },
+      availableTickets () {
+        return this.$store.getters.tickets.filter((ticket) => {
+          return !ticket.user_id && ticket.session === this.session
         })
       }
     },
@@ -68,6 +88,8 @@
     mounted () {
       if (this.users) this.$store.commit(mutations.SET_USERS, this.users)
       else this.$store.dispatch(actions.FETCH_USERS)
+      if (this.tickets) this.$store.commit(mutations.SET_TICKETS, this.tickets)
+      else this.$store.dispatch(actions.FETCH_TICKETS)
     }
   }
 </script>

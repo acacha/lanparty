@@ -97,10 +97,14 @@ window.axios.interceptors.response.use((response) => {
       )
     }
     if (error.response.status === 422) {
+      let data = ''
+      if (error.response.data.errors) {
+        data = window.helpers.printObject(error.response.data.errors)
+      }
       window.Vue.prototype.$snackbar.showSnackBar(
-        'Les dades proporcionades no són vàlides',
+        error.response.data.message,
         'error',
-        window.helpers.printObject(error.response.data.errors),
+        data,
         'center'
       )
     }

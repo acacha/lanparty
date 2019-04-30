@@ -37,7 +37,6 @@ export default {
        this.loading = false
        this.$snackbar.showMessage('Invitació enviada correctament')
      }).catch(() => {
-       console.log('ERROR!!!!!!!!!1')
        this.loading = false
      })
    }

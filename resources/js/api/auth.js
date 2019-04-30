@@ -1,14 +1,12 @@
-import axios from 'axios'
-
 export default {
   login (credentials) {
-    return axios.post('/login', credentials)
+    return window.axios.post('/login', credentials)
   },
   logout () {
-    return axios.post('/logout')
+    return window.axios.post('/logout')
   },
   register (user) {
-    return axios.post('/register', {
+    return window.axios.post('/register', {
       'name': user.name,
       'email': user.email,
       'password': user.password,
@@ -19,10 +17,10 @@ export default {
     })
   },
   remember (email) {
-    return axios.post('/password/email', { 'email': email })
+    return window.axios.post('/password/email', { 'email': email })
   },
   reset (user) {
-    return axios.post('/password/reset', {
+    return window.axios.post('/password/reset', {
       'email': user.email,
       'password': user.password,
       'password_confirmation': user.password_confirmation,

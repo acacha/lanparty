@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\NotEnoughTicketsException;
 use App\Role;
 use App\Ticket;
 use App\User;
@@ -10,7 +11,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class UserTest
+ * Class UserTest.
+ *
  * @package Tests\Unit
  */
 class UserTest extends TestCase
@@ -91,16 +93,26 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('tickets', [
             'user_id' => $user->id
         ]);
-        $this->assertEquals(false, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
         $user->pay('2018');
         $user->fresh();
         $this->assertDatabaseHas('tickets', [
             'user_id' => $user->id
         ]);
         $this->assertCount(1, Ticket::where('user_id', $user->id)->get());
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
+    }
 
-        dd($user->inscription_paid);
-        $this->assertEquals(true, $user->inscription_paid['2018']);
+    /** @test */
+    function user_cannot_pay_if_no_more_ticket_are_available()
+    {
+        $user = factory(User::class)->create();
+        $this->assertDatabaseMissing('tickets', [
+            'user_id' => $user->id
+        ]);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->expectException(NotEnoughTicketsException::class);
+        $user->pay('2018');
     }
 
     /** @test */
@@ -108,9 +120,9 @@ class UserTest extends TestCase
     {
         seed_database();
         $user = factory(User::class)->create();
-        $user->pay();
-        $this->assertEquals(true, $user->inscription_paid);
+        $user->pay('2018');
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
         $user->unpay();
-        $this->assertEquals(false, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
     }
 }

@@ -748,6 +748,8 @@ if (!function_exists('manager_permissions')) {
             'archived.events.store',
             'archived.events.destroy',
             'all.events.index',
+            'tickets.store',
+            'tickets.destroy'
         ];
     }
 }

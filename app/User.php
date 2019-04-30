@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Exceptions\NotEnoughTicketsException;
+use App\Http\Resources\NumberResource;
+use App\Http\Resources\UserEventResource;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,16 +46,23 @@ class User extends Authenticatable
     public function map()
     {
         return [
-          'id' => $this->id,
-          'name' => $this->name,
-          'email' => $this->email,
-          'givenName' => $this->givenName,
-          'sn1' => $this->sn1,
-          'sn2' => $this->sn2,
-          'admin' => $this->admin,
-          'created_at' => $this->created_at,
-          'updated_at' => $this->updated_at,
-          'manager' => $this->isManager()
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'givenName' => $this->givenName,
+            'sn1' => $this->sn1,
+            'sn2' => $this->sn2,
+            'formatted_created_at_date' => $this->formatted_created_at_date,
+            'full_search' => $this->full_search,
+            'inscription_paid' => $this->inscription_paid,
+            'admin' => $this->admin,
+            'manager' => $this->isManager(),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'numbers' => NumberResource::collection($this->numbers),
+            'events' => UserEventResource::collection($this->events),
+            'ticket' => $this->ticket,
+            'roles' => $this->roles->pluck('name')
         ];
     }
 
@@ -97,10 +107,7 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-//        dump($this->ticket()->get()->map(function ($ticket) {
-//            return [$ticket->session => 1];
-//        }));
-//        return count($this->ticket()->get()) ? true : false;
+        return $this->ticket()->get()->pluck('session')->unique()->toArray();
     }
 
     /**
@@ -129,7 +136,9 @@ class User extends Authenticatable
      */
     public function pay($session)
     {
-        $this->ticket()->save(Ticket::firstAvailableTicket($session));
+        $ticket = Ticket::firstAvailableTicket($session);
+        if (!$ticket) throw new NotEnoughTicketsException();
+        $this->ticket()->save($ticket);
         return $this;
     }
 

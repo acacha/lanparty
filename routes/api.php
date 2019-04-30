@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ArchivedEventsController;
 use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\ManagersController;
 use App\Http\Controllers\Api\SendInvitationToManager;
+use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\UsersManagersController;
 use App\Http\Controllers\AssignNumberToUserController;
 use App\Http\Controllers\AvailablePrizesController;
@@ -88,7 +89,7 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     //Payments
     Route::post('/user/{user}/pay', '\\' . UserPaymentsController::class . '@store');
-    Route::delete('/user/{user}/pay', '\\' . UserPaymentsController::class . '@destroy');
+    Route::post('/user/{user}/unpay', '\\' . UserPaymentsController::class . '@destroy');
 
     //Winners
     Route::delete('/winners', '\\' . WinnersController::class . '@destroy');
@@ -125,6 +126,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     // AllEvents
     Route::get('/all_events', '\\' . AllEventsController::class . '@index');
+
+    //Tickets
+    Route::get('/tickets', '\\' . TicketsController::class . '@index');
+    Route::post('/tickets', '\\' . TicketsController::class . '@store');
+    Route::post('/tickets/remove', '\\' . TicketsController::class . '@delete');
 
 });
 

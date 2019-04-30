@@ -1,19 +1,17 @@
-import axios from 'axios'
-
 export default {
   fetch () {
-    return axios.get('/api/v1/numbers')
+    return window.axios.get('/api/v1/numbers')
   },
   assignNumberToUser (user, description) {
     description = description || ''
-    return axios.post('/api/v1/user/' + user.id + '/assign_number', {
+    return window.axios.post('/api/v1/user/' + user.id + '/assign_number', {
       'description': description
     })
   },
   unassignNumberToUser (number) {
-    return axios.delete('/api/v1/number/' + number.id + '/assign')
+    return window.axios.delete('/api/v1/number/' + number.id + '/assign')
   },
   unassignNumbersToUser (user) {
-    return axios.post('/api/v1/user/' + user.id + '/unassign_numbers')
+    return window.axios.post('/api/v1/user/' + user.id + '/unassign_numbers')
   }
 }

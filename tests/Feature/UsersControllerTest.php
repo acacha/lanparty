@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Event;
+use App\Ticket;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -26,7 +27,7 @@ class UsersControllerTest extends TestCase
         $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
         $event->addTickets(10);
         $paidUser = factory(User::class)->create();
-        $paidUser->pay();
+        $paidUser->pay('2018');
 
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
@@ -49,7 +50,7 @@ class UsersControllerTest extends TestCase
         // Check paid user
 
         $users = json_decode($response->getContent());
-        $this->assertTrue($users[5]->inscription_paid);
+        $this->assertTrue(in_array('2018',$users[5]->inscription_paid));
     }
 
     /** @test */

@@ -26,7 +26,7 @@ class UserPaymentsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'session' => 'required'
         ];
     }
 }

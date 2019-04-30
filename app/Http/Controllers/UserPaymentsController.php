@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotEnoughTicketsException;
 use App\Http\Requests\UserPaymentsRequest;
 use App\User;
-use Illuminate\Http\Request;
 
 /**
  * Class UserPaymentsController.
- * 
+ *
  * @package App\Http\Controllers
  */
 class UserPaymentsController extends Controller
@@ -19,12 +19,16 @@ class UserPaymentsController extends Controller
      *
      * @param UserPaymentsRequest $request
      * @param User $user
-     * @return $this
+     * @return User
      */
     public function store(UserPaymentsRequest $request, User $user)
     {
-        if ($user->inscription_paid) abort(422,"L'usuari ja ha pagat la inscripció");
-        return $user->pay();
+        if (in_array($request->session, $user->inscription_paid)) abort(422,"L'usuari ja ha pagat la inscripció");
+        try {
+            return $user->pay($request->session);
+        } catch (NotEnoughTicketsException $e) {
+            abort(422,'No hi ha més places/tickets disponibles');
+        }
     }
 
     /**
@@ -36,7 +40,7 @@ class UserPaymentsController extends Controller
      */
     public function destroy(UserPaymentsRequest $request, User $user)
     {
-        if (!$user->inscription_paid) abort(422,"L'usuari no ha pagat el ticket");
-        return $user->unpay();
+        if (!in_array($request->session, $user->inscription_paid)) abort(422,"L'usuari no ha pagat el ticket");
+        return $user->unpay($request->session);
     }
 }
