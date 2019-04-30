@@ -8,12 +8,17 @@ export default {
     state.selected_user.numbers = numbers
   },
   [ types.SET_SELECTED_USER_PAYMENT ] (state, {payment,session}) {
+    console.log('SET_SELECTED_USER_PAYMENT')
+    console.log('state.selected_user.inscription_paid:')
+    console.log(state.selected_user.inscription_paid)
+    if (!state.selected_user.inscription_paid) state.selected_user.inscription_paid = []
     state.selected_user.inscription_paid[session] = payment
   },
   [ types.SET_USER_PAYMENT_STATE ] (state, { user, payment, session }) {
     var userFound = state.users.find((u) => {
       return u.id === user.id
     })
+    if (!userFound.inscription_paid) userFound.inscription_paid = []
     userFound.inscription_paid[session] = payment
   },
   [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ArchivedEventsController;
 use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\ManagersController;
 use App\Http\Controllers\Api\SendInvitationToManager;
+use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\UsersManagersController;
 use App\Http\Controllers\AssignNumberToUserController;
 use App\Http\Controllers\AvailablePrizesController;
@@ -125,6 +126,9 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     // AllEvents
     Route::get('/all_events', '\\' . AllEventsController::class . '@index');
+
+    //Tickets
+    Route::get('/tickets', '\\' . TicketsController::class . '@index');
 
 });
 

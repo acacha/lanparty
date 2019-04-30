@@ -11,6 +11,9 @@
                         <v-chip label color="success darken-3" text-color="white">
                             <v-icon left>group</v-icon>Pagats: {{ this.paidInternalusers.length }}
                         </v-chip>
+                        <v-chip label color="accent darken-3" text-color="white">
+                            Tickets disponibles: {{ this.availableTickets.length }}
+                        </v-chip>
                     </v-flex>
                     <v-flex xs12>
                         <v-users-search :users="internalUsers" @input="input" :return-object="true"></v-users-search>
@@ -51,11 +54,20 @@
     },
     computed: {
       internalUsers () {
+        console.log('internalUsers computed!')
         return this.$store.getters.users
       },
       paidInternalusers () {
+        console.log('paidInternalusers computed!')
+        console.log('session:')
+        console.log(this.session)
         return this.$store.getters.users.filter((user) => {
           return user.inscription_paid[this.session]
+        })
+      },
+      availableTickets () {
+        return this.$store.getters.tickets.filter((ticket) => {
+          return !ticket.user_id && ticket.session === this.session
         })
       }
     },

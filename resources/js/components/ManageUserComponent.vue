@@ -16,8 +16,9 @@
                                         <v-switch
                                                 label="Pagat"
                                                 :input-value="selectedUser.inscription_paid"
-                                                @change="tooglePayment(selectedUser)"
+                                                @change="togglePayment(selectedUser)"
                                                 :loading="loadingPayments"
+                                                :disabled="loadingPayments"
                                         ></v-switch>
                                     </p>
                                 </v-flex>
@@ -308,22 +309,14 @@
       }
     },
     methods: {
-      tooglePayment (user) {
-        console.log('tooglePayment')
-        console.log('user:')
-        console.log(user)
-        console.log('user.inscription_paid:')
-        console.log(user.inscription_paid)
+      togglePayment (user) {
         if (user.inscription_paid) {
-          console.log('user.inscription_paid[this.session]:')
-          console.log(user.inscription_paid[this.session])
           if (user.inscription_paid[this.session]) this.unpay(user)
           else this.pay(user)
         }
         else this.pay(user)
       },
       pay (user) {
-        console.log('PAY!')
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_PAY, {user, session: this.session}).then(() => {
           this.loadingPayments = false })
@@ -333,13 +326,10 @@
         })
       },
       unpay (user) {
-        console.log('UNPAY!')
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_UNPAY, { user, session: this.session } ).then(() => {
-          console.log('OK!')
           this.loadingPayments = false
         }).catch(() => {
-          console.log('error!')
           this.loadingPayments = false
         })
       },

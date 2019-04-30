@@ -69,7 +69,6 @@ if (window.user ) store.commit(mutations.LOGGED, true)
 window.axios.interceptors.response.use((response) => {
   return response
 }, function (error) {
-  console.log('ERROR!!!!!!!!!!!!!!!!!!')
   if (window.disableInterceptor) return Promise.reject(error)
   if (error && error.response) {
     if (error.response.status === 419) {
