@@ -14,6 +14,7 @@
                         <v-chip label color="accent darken-3" text-color="white">
                             Tickets disponibles: {{ this.availableTickets.length }}
                         </v-chip>
+                        <add-tickets-button :session="session"></add-tickets-button>
                     </v-flex>
                     <v-flex xs12>
                         <v-users-search :users="internalUsers" @input="input" :return-object="true"></v-users-search>
@@ -29,10 +30,13 @@
   import * as mutations from '../store/mutation-types'
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import VUsersSearch from './VUsersSearchComponent.vue'
-
+  import AddTicketsButton from './tickets/AddTicketsButton'
   export default {
     name: 'UsersSearch',
-    components: { VUsersSearch },
+    components: {
+      VUsersSearch,
+      'add-tickets-button': AddTicketsButton
+    },
     mixins: [ interactsWithGravatar ],
     data () {
       return {

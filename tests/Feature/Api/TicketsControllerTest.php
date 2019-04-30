@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Ticket;
 use App\User;
+use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class TicketsControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, CanLogin;
 
     /** @test */
     public function logged_user_can_fetch_tickets()
@@ -51,5 +52,53 @@ class TicketsControllerTest extends TestCase
         $this->assertEquals('Tur',$tickets[0]->user_sn1);
         $this->assertEquals('Badenas',$tickets[0]->user_sn2);
         $this->assertEquals('Sergi',$tickets[0]->user_givenName);
+    }
+
+    /** @test */
+    public function manager_can_add_tickets()
+    {
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets', [
+            'session' => '2018',
+            'quantity' => 3
+        ]);
+        $response->assertSuccessful();
+        $this->assertCount(3, $tickets = Ticket::tickets());
+        $this->assertEquals('2018',$tickets[0]['session']);
+        $this->assertNull($tickets[0]['user_id']);
+        $this->assertEquals('2018',$tickets[1]['session']);
+        $this->assertNull($tickets[1]['user_id']);
+        $this->assertEquals('2018',$tickets[2]['session']);
+        $this->assertNull($tickets[2]['user_id']);
+
+    }
+
+    /** @test */
+    public function manager_can_add_tickets_validation()
+    {
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets', []);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function regular_user_cannot_add_tickets()
+    {
+        $this->login('api');
+        $response = $this->json('POST','/api/v1/tickets', [
+            'session' => '2018',
+            'quantity' => 3
+        ]);
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function guest_user_cannot_add_tickets()
+    {
+        $response = $this->json('POST','/api/v1/tickets', [
+            'session' => '2018',
+            'quantity' => 3
+        ]);
+        $response->assertStatus(401);
     }
 }

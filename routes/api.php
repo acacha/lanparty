@@ -129,6 +129,7 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     //Tickets
     Route::get('/tickets', '\\' . TicketsController::class . '@index');
+    Route::post('/tickets', '\\' . TicketsController::class . '@store');
 
 });
 

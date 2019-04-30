@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tickets\TicketsStore;
 use App\Ticket;
 
 /**
@@ -20,5 +21,10 @@ class TicketsController extends Controller
     public function index()
     {
         return Ticket::tickets();
+    }
+
+    public function store(TicketsStore $request)
+    {
+        Ticket::addTickets($request->quantity,$request->session);
     }
 }
