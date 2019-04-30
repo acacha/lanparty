@@ -40,7 +40,7 @@ class UserPaymentsController extends Controller
      */
     public function destroy(UserPaymentsRequest $request, User $user)
     {
-        if (!$user->inscription_paid) abort(422,"L'usuari no ha pagat el ticket");
+        if (!in_array($request->session, $user->inscription_paid)) abort(422,"L'usuari no ha pagat el ticket");
         return $user->unpay($request->session);
     }
 }
