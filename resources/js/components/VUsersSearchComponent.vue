@@ -33,7 +33,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                     <v-list-tile-title>{{data.item.name}} | {{ data.item.givenName }} {{ data.item.sn1 }} {{ data.item.sn2 }}</v-list-tile-title>
-                    <v-list-tile-sub-title>{{data.item.email}} | {{ data.item.formatted_created_at_date }}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{data.item.id}} | {{data.item.email}} | {{ data.item.formatted_created_at_date }}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </template>
         </template>

@@ -8,7 +8,7 @@ export default {
     })
   },
   unpay ({user, session}) {
-    return window.axios.delete('/api/v1/user/' + user.id + '/pay', {
+    return window.axios.post('/api/v1/user/' + user.id + '/unpay', {
       'session': session
     })
   },

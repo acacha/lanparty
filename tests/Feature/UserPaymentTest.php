@@ -104,7 +104,7 @@ class UserPaymentTest extends TestCase
         $this->actingAs($manager,'api');
         $user = factory(User::class)->create();
         $this->assertCount(0, $user->inscription_paid);
-        $response = $this->json('DELETE','/api/v1/user/' . $user->id . '/pay',[
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
             'session' => 2018
         ]);
         $this->assertCount( 0, $user->inscription_paid);
@@ -141,7 +141,7 @@ class UserPaymentTest extends TestCase
         $user->pay('2018');
         $this->assertEquals(true,$user->inscription_paid['2018']);
 
-        $response = $this->json('DELETE','/api/v1/user/' . $user->id . '/pay',[
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
             'session' => 2018
         ]);
 
@@ -159,7 +159,7 @@ class UserPaymentTest extends TestCase
         $user->pay('2018');
         $this->assertEquals(true,$user->inscription_paid['2018']);
 
-        $response = $this->json('DELETE','/api/v1/user/' . $user->id . '/pay',[
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
             'session' => 2018
         ]);
 
