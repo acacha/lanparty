@@ -14,18 +14,43 @@ export default {
     console.log(session)
     console.log('payment:')
     console.log(payment)
-    // https://vuejs.org/v2/guide/list.html#Caveats
-    // Utilitza 2019 com a index!!! en comptes com array associatiu
-    window.Vue.prototype.$set(state.selected_user.inscription_paid, session, payment)
+    if (payment) {
+      if (!state.selected_user.inscription_paid.includes(session)) {
+        state.selected_user.inscription_paid.push(session)
+      }
+    } else {
+      if (state.selected_user.inscription_paid.includes(session)) {
+        state.selected_user.inscription_paid.splice(session,1)
+        state.selected_user.inscription_paid.splice(state.selected_user.inscription_paid.indexOf(session), 1)
+      }
+    }
+
   },
   [ types.SET_USER_PAYMENT_STATE ] (state, { user, payment, session }) {
     var userFound = state.users.find((u) => {
       return u.id === user.id
     })
     if (userFound) {
-      window.Vue.prototype.$set(userFound.inscription_paid, session, payment)
+      console.log('payment:')
+      console.log(payment)
+      console.log('session:')
+      console.log(session)
+      if (payment) {
+        console.log('11')
+        if (!userFound.inscription_paid.includes(session)) {
+          console.log('11 pushing')
+          userFound.inscription_paid.push(session)
+        }
+      } else {
+        console.log('22')
+        if (userFound.inscription_paid.includes(session)) {
+          console.log('22 splicing')
+          userFound.inscription_paid.splice(userFound.inscription_paid.indexOf(session), 1)
+          console.log('userFound.inscription_paid:')
+          console.log(userFound.inscription_paid)
+        }
+      }
     }
-
   },
   [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
     state.selected_user.numbers.push(number)
