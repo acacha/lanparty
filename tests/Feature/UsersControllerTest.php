@@ -50,8 +50,7 @@ class UsersControllerTest extends TestCase
         // Check paid user
 
         $users = json_decode($response->getContent());
-//        dd($users[5]->inscription_paid->{'2018'});
-        $this->assertEquals(1, $users[5]->inscription_paid->{'2018'});
+        $this->assertTrue(in_array('2018',$users[5]->inscription_paid));
     }
 
     /** @test */
