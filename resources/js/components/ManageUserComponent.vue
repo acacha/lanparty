@@ -322,7 +322,6 @@
           this.loadingPayments = false })
           .catch(() => {
             this.loadingPayments = false
-            this.selectedUser.inscription_paid[this.session] = false
         })
       },
       unpay (user) {

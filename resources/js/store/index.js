@@ -15,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     users,
     numbers,
+    tickets,
     auth,
     newsletter,
     events

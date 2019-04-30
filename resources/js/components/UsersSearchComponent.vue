@@ -47,6 +47,9 @@
       users: {
         type: Array
       },
+      tickets: {
+        type: Array
+      },
       label: {
         type: String,
         default: 'Seleccioneu un usuari'
@@ -80,6 +83,8 @@
     mounted () {
       if (this.users) this.$store.commit(mutations.SET_USERS, this.users)
       else this.$store.dispatch(actions.FETCH_USERS)
+      if (this.tickets) this.$store.commit(mutations.SET_TICKETS, this.tickets)
+      else this.$store.dispatch(actions.FETCH_TICKETS)
     }
   }
 </script>

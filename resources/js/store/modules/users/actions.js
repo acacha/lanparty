@@ -21,6 +21,7 @@ export default {
       users.pay({user, session}).then(response => {
         context.commit(mutations.SET_SELECTED_USER_PAYMENT, {payment: true, session})
         context.commit(mutations.SET_USER_PAYMENT_STATE, {user, payment: true, session})
+        context.dispatch(actions.FETCH_TICKETS)
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -32,6 +33,7 @@ export default {
       users.unpay({user, session}).then(response => {
         context.commit(mutations.SET_SELECTED_USER_PAYMENT, {payment: false, session})
         context.commit(mutations.SET_USER_PAYMENT_STATE, {user, payment: false, session})
+        context.dispatch(actions.FETCH_TICKETS)
         resolve(response)
       }).catch(error => {
         reject(error)

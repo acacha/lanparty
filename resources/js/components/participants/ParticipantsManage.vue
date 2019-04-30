@@ -40,7 +40,7 @@
                         <h3>Usuaris</h3>
                     </v-card-title>
                     <v-card-text class="px-0 mb-2">
-                        <users-search :users="users" :session="session"></users-search>
+                        <users-search :users="users" :tickets="tickets" :session="session"></users-search>
                         <manage-user :events="events" :session="session"></manage-user>
                     </v-card-text>
                 </v-card>
@@ -88,6 +88,10 @@ export default {
       required: true
     },
     users: {
+      type: Array,
+      required: true
+    },
+    tickets: {
       type: Array,
       required: true
     },
