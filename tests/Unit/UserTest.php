@@ -109,7 +109,7 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('tickets', [
             'user_id' => $user->id
         ]);
-        $this->assertCount(0, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
         $this->expectException(NotEnoughTicketsException::class);
         $user->pay('2018');
     }
@@ -122,6 +122,6 @@ class UserTest extends TestCase
         $user->pay('2018');
         $this->assertTrue(in_array('2018',$user->inscription_paid));
         $user->unpay();
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
     }
 }
