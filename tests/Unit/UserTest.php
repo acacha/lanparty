@@ -11,7 +11,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class UserTest
+ * Class UserTest.
+ *
  * @package Tests\Unit
  */
 class UserTest extends TestCase

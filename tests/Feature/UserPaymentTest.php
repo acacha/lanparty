@@ -34,7 +34,7 @@ class UserPaymentTest extends TestCase
         ]);
 
         $response->assertSuccessful();
-        $this->assertEquals(true,$user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
     }
 
     /** @test */
@@ -48,7 +48,7 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
             'session' => 2018
@@ -56,7 +56,7 @@ class UserPaymentTest extends TestCase
 
         $response->assertStatus(422);
         $this->assertEquals("No hi ha més places/tickets disponibles", json_decode($response->getContent())->message);
-        $this->assertCount(0,$user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
     }
 
     /** @test */
@@ -78,7 +78,6 @@ class UserPaymentTest extends TestCase
     /** @test */
     public function cannot_pay_two_or_more_times()
     {
-//        $this->withoutExceptionHandling();
         seed_database();
 
         $manager = factory(User::class)->create();
@@ -90,7 +89,7 @@ class UserPaymentTest extends TestCase
             'session' => 2018
         ]);
         $response->assertStatus(422);
-        $this->assertEquals(true,$user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
         $this->assertEquals('L\'usuari ja ha pagat la inscripció',json_decode($response->getContent())->message);
     }
 
@@ -139,14 +138,14 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
         $user->pay('2018');
-        $this->assertEquals(true,$user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
             'session' => 2018
         ]);
 
         $response->assertSuccessful();
-        $this->assertCount(0, $user->inscription_paid);
+        $this->assertFalse(in_array('2018',$user->inscription_paid));
     }
 
     /** @test */
@@ -157,14 +156,14 @@ class UserPaymentTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
         $user->pay('2018');
-        $this->assertEquals(true,$user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
             'session' => 2018
         ]);
 
         $response->assertStatus(403);
-        $this->assertEquals(true,$user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
     }
 
     /** @test */
@@ -186,13 +185,15 @@ class UserPaymentTest extends TestCase
         ]);
 
         $response->assertSuccessful();
-        $this->assertEquals(true,$user->inscription_paid['2018']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
+
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay', [
             'session' => 2019
         ]);
 
         $response->assertSuccessful();
-        $this->assertEquals(true,$user->inscription_paid['2019']);
+        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $this->assertTrue(in_array('2019',$user->inscription_paid));
     }
 }
