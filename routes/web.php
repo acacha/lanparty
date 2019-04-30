@@ -17,6 +17,8 @@ use App\Http\Controllers\PrizesController as Premis;
 use App\Http\Controllers\Web\UsersController;
 use App\Http\Controllers\WelcomeController;
 
+use App\Http\Controllers\CaptureTheFlagController;
+
 Route::get('/condicions', function () {
     // TODO
     return redirect('http://www.google.com');
@@ -26,6 +28,10 @@ Route::get('/', '\\' . WelcomeController::class . '@index');
 
 Route::get('/premis', '\\' . Premis::class . '@index');
 Route::get('/colaboradors', '\\' . Partners::class . '@show');
+
+Route::get('/ctf', '\\' . CaptureTheFlagController::class . '@show');
+Route::get('/ctfGroup/{id}', '\\' . CaptureTheFlagController::class . '@group');
+Route::post('/ctfSubmit', '\\' . CaptureTheFlagController::class . '@submit');
 
 Auth::routes();
 

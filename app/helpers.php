@@ -453,6 +453,15 @@ if (!function_exists('create_events')) {
                 'published_at' => null,
             ],
             [
+                'name' => 'Capture The Flag',
+                'inscription_type' => 'group',
+                'image' => '/img/CaptureTheFlag.jpeg',
+                'tickets' => 20, // Número d'usuaris es poden inscriure
+                'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
+                'participants_number' => 3,
+                'published_at' => '2019-04-27 12:00:00',
+            ],
+            [
                 'name' => 'Event archivat',
                 'inscription_type' => 'individual',
                 'image' => '/img/Fifa18.jpeg',
@@ -501,6 +510,7 @@ if (!function_exists('seed_database')) {
         initialize_roles();
         initialize_partners();
         initialize_prizes();
+
     }
 }
 
@@ -781,3 +791,77 @@ if (!function_exists('initialize_gates')) {
 //        });
     }
 }
+
+
+if (!function_exists('create_flags')) {
+    function create_flags() {
+
+        DB::table('flags')->insert([
+            'name' => 'F1',
+            'longName' => 'HanEncontradoMiBackDoorBender',
+            'flag' => 'FLAG{HanEncontradoMiBackDoorBender}',
+            'points' => 10,
+        ]);
+
+
+        DB::table('flags')->insert([
+            'name' => 'F2',
+            'longName' => 'Besa mi brillante trasero metálico',
+            'flag' => 'FLAG{Besa mi brillante trasero metálico.}',
+            'points' => 10,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F3',
+            'longName' => 'Oh Dios mío, ella está atrapada en un bucle infinito de repetición... ¡Y Fry es idiota!',
+            'flag' => 'FLAG {Oh Dios mío, ella está atrapada en un bucle infinito de repetición... ¡Y Fry es idiota!}',
+            'points' => 10,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F4',
+            'longName' => 'Dale duro Fry. Dale...',
+            'flag' => 'FLAG{Dale duro Fry. Dale...}',
+            'points' => 10,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F5',
+            'longName' => '¡Maldito abrelatas!¡Mataste a mi padre y ahora has venido a por mí!',
+            'flag' => 'FLAG{¡Maldito abrelatas!¡Mataste a mi padre y ahora has venido a por mí!}',
+            'points' => 10,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F6',
+            'longName' => 'Tengo que revisar mi programa. Mmm... ¡Sí!',
+            'flag' => 'FLAG{Tengo que revisar mi programa. Mmm... ¡Sí!}',
+            'points' => 10,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F7',
+            'longName' => '131333',
+            'flag' => 'FLAG{131333}',
+            'points' => 20,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F8',
+            'longName' => 'Y allaaaaaa vamoooooooos',
+            'flag' => 'FLAG{Y allaaaaaa vamoooooooos}',
+            'points' => 20,
+        ]);
+
+        DB::table('flags')->insert([
+            'name' => 'F9',
+            'longName' => 'El espacio parece extenderse sin límites. Hasta que llegas al final y aparece un mono lanzándote barriles',
+            'flag' => 'FLAG{El espacio parece extenderse sin límites. Hasta que llegas al final y aparece un mono lanzándote barriles.}',
+            'points' => 30,
+        ]);
+
+
+    }
+}
+
+

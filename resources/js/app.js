@@ -13,6 +13,9 @@ import './bootstrap';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import Ctf from './components/CaptureTheFlagComponent.vue'
+import CtfGroup from './components/CaptureTheFlagGroupComponent.vue'
+import CtfSubmit from './components/CaptureTheFlagSubmitComponent.vue'
 import UsersSearch from './components/UsersSearchComponent.vue'
 import VUsersSearch from './components/VUsersSearchComponent.vue'
 import NumbersSearch from './components/NumbersSearchComponent.vue'
@@ -150,6 +153,9 @@ const app = new Vue({
     drawerRight: false
   }),
   components: {
+    Ctf,
+    CtfGroup,
+    CtfSubmit,
     UsersSearch,
     VUsersSearch,
     NumbersSearch,
