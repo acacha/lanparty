@@ -100,14 +100,14 @@
                                 <v-flex xs12 md3>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <img src="/img/AgeOfEmpires2.png" alt="Age of Empires2" width="200px;">
+                                            <img src="/img/Fifa18.jpeg" alt="Fifa 18" width="200px;">
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline text-xs-center">Age of Empires 2</div>
+                                            <div class="headline text-xs-center">Fifa 18</div>
                                         </v-card-title>
                                         <v-card-text>
-                                            Joc ambientat en la Edat Mitja, just després de la caiguda de l'Imperi romà i la presa de Roma pels Visigots. El jugador pot escollir entre 13 civilitzacions que van existir en aquell període històric, i ha d'encaminar-les per a formar un gran imperi i guanyar als seus enemics.
-                                            Més informació a la <a href="http://www.ensemblestudios.com/">pàgina oficial</a>
+                                            Saga de videojocs de futbol, iniciada per la companyia EA, que va portar com a novetat la llicència de la FIFA per utilitzar jugadors i lligues amb noms reals.
+                                            Més informació a la <a href="https://www.easports.com/es/fifa/">pàgina oficial</a>
                                         </v-card-text>
                                     </v-card>
                                 </v-flex>
