@@ -55,7 +55,7 @@ class UserPaymentTest extends TestCase
         ]);
 
         $response->assertStatus(422);
-        $this->assertEquals("NO hi ha més places/tickets disponibles", json_decode($response->getContent())->message);
+        $this->assertEquals("No hi ha més places/tickets disponibles", json_decode($response->getContent())->message);
         $this->assertCount(0,$user->inscription_paid);
     }
 

@@ -11,6 +11,7 @@ function Install (Vue, options) {
       EventBus.$emit('showSnackbarError', error)
     },
     showSnackBar (message, color, subtext = null, textAlign = null) {
+      console.log('showSnackBar!!!!!!!!!')
       EventBus.$emit('showSnackBar', message, color, subtext, textAlign)
     }
   }

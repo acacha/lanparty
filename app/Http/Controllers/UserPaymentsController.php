@@ -28,7 +28,7 @@ class UserPaymentsController extends Controller
         try {
             return $user->pay($request->session);
         } catch (NotEnoughTicketsException $e) {
-            abort(422,'NO hi ha més places/tickets disponibles');
+            abort(422,'No hi ha més places/tickets disponibles');
         }
     }
 

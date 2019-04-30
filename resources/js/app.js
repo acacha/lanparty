@@ -69,6 +69,7 @@ if (window.user ) store.commit(mutations.LOGGED, true)
 window.axios.interceptors.response.use((response) => {
   return response
 }, function (error) {
+  console.log('ERROR!!!!!!!!!!!!!!!!!!')
   if (window.disableInterceptor) return Promise.reject(error)
   if (error && error.response) {
     if (error.response.status === 419) {
@@ -97,10 +98,14 @@ window.axios.interceptors.response.use((response) => {
       )
     }
     if (error.response.status === 422) {
+      let data = ''
+      if (error.response.data.errors) {
+        data = window.helpers.printObject(error.response.data.errors)
+      }
       window.Vue.prototype.$snackbar.showSnackBar(
-        'Les dades proporcionades no són vàlides',
+        error.response.data.message,
         'error',
-        window.helpers.printObject(error.response.data.errors),
+        data,
         'center'
       )
     }

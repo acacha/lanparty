@@ -309,25 +309,29 @@
     },
     methods: {
       tooglePayment (user) {
+        'tooglePayment!!!!'
+        console.log('user.inscription_paid:')
+        console.log(user.inscription_paid)
         if (user.inscription_paid) {
+          console.log('user.inscription_paid[this.session]:')
+          console.log(user.inscription_paid[this.session])
           if (user.inscription_paid[this.session]) this.unpay(user)
           else this.pay(user)
         }
         else this.pay(user)
       },
       pay (user) {
-        console.log('PAYY!!!!!!!!!')
-        console.log('session:')
-        console.log(this.session)
+        console.log('PAY!')
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_PAY, {user, session: this.session}).then(() => {
           this.loadingPayments = false })
           .catch(() => {
-          this.loadingPayments = false
+            this.loadingPayments = false
+            this.selectedUser.inscription_paid[this.session] = false
         })
       },
       unpay (user) {
-        console.log('UNPAYY!!!!!!!!! asdd')
+        console.log('UNPAY')
         this.loadingPayments = true
         this.$store.dispatch(actions.USER_UNPAY, user, this.session).then(() => {
           this.loadingPayments = false

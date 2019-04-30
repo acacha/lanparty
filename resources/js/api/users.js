@@ -1,23 +1,19 @@
-import axios from 'axios'
-
 export default {
   fetch () {
-    return axios.get('/api/v1/users')
+    return window.axios.get('/api/v1/users')
   },
   pay ({user, session}) {
-    console.log('pay session:')
-    console.log(session)
-    return axios.post('/api/v1/user/' + user.id + '/pay',{
+    return window.axios.post('/api/v1/user/' + user.id + '/pay',{
       'session': session
     })
   },
   unpay ({user, session}) {
-    return axios.delete('/api/v1/user/' + user.id + '/pay', {
+    return window.axios.delete('/api/v1/user/' + user.id + '/pay', {
       'session': session
     })
   },
   update (user) {
-    return axios.put('/api/v1/user', {
+    return window.axios.put('/api/v1/user', {
       'name': user.name,
       'givenName': user.givenName,
       'sn1': user.sn1,

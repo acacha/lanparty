@@ -7,14 +7,14 @@ export default {
   [ types.SET_SELECTED_USER_NUMBERS ] (state, numbers) {
     state.selected_user.numbers = numbers
   },
-  [ types.SET_SELECTED_USER_PAYMENT ] (state, payment) {
-    state.selected_user.inscription_paid = payment
+  [ types.SET_SELECTED_USER_PAYMENT ] (state, {payment,session}) {
+    state.selected_user.inscription_paid[session] = payment
   },
-  [ types.SET_USER_PAYMENT_STATE ] (state, { user, payment }) {
+  [ types.SET_USER_PAYMENT_STATE ] (state, { user, payment, session }) {
     var userFound = state.users.find((u) => {
       return u.id === user.id
     })
-    userFound.inscription_paid = payment
+    userFound.inscription_paid[session] = payment
   },
   [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
     state.selected_user.numbers.push(number)
