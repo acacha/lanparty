@@ -8,18 +8,39 @@ export default {
     state.selected_user.numbers = numbers
   },
   [ types.SET_SELECTED_USER_PAYMENT ] (state, {payment,session}) {
-    console.log('SET_SELECTED_USER_PAYMENT')
+    console.log('SET_SELECTED_USER_PAYMENT!!!!!!!!!!!!')
     console.log('state.selected_user.inscription_paid:')
     console.log(state.selected_user.inscription_paid)
-    if (!state.selected_user.inscription_paid) state.selected_user.inscription_paid = []
+    console.log('rray.isArray(state.selected_user.inscription_paid):')
+    console.log(Array.isArray(state.selected_user.inscription_paid))
+    console.log('ERROR!!!!!!')
+    console.log('state.selected_user.inscription_paid[session]:')
+    console.log(state.selected_user.inscription_paid[session])
+    if (!Array.isArray(state.selected_user.inscription_paid)) {
+      console.log('setting to array!')
+      state.selected_user.inscription_paid = []
+    }
+    console.log('state.selected_user.inscription_paid 2:')
+    console.log(state.selected_user.inscription_paid)
     state.selected_user.inscription_paid[session] = payment
+    console.log('state.selected_user.inscription_paid 3:')
+    console.log(state.selected_user.inscription_paid)
   },
   [ types.SET_USER_PAYMENT_STATE ] (state, { user, payment, session }) {
+    console.log('SET_USER_PAYMENT_STATE!!')
     var userFound = state.users.find((u) => {
       return u.id === user.id
     })
-    if (!userFound.inscription_paid) userFound.inscription_paid = []
-    userFound.inscription_paid[session] = payment
+    console.log('userFound:')
+    console.log(userFound)
+    if (userFound) {
+      console.log('userFound.inscription_paid:')
+      console.log(userFound.inscription_paid)
+      userFound.inscription_paid[session] = payment
+      console.log('userFound.inscription_paid 2:')
+      console.log(userFound.inscription_paid)
+    }
+
   },
   [ types.ADD_NUMBER_TO_SELECTED_USER_NUMBERS ] (state, number) {
     state.selected_user.numbers.push(number)
