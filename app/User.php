@@ -140,7 +140,7 @@ class User extends Authenticatable
     {
         $ticket = Ticket::firstAvailableTicket($session);
         if (!$ticket) throw new NotEnoughTicketsException();
-        $this->ticket()->save();
+        $this->ticket()->save($ticket);
         return $this;
     }
 

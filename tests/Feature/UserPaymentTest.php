@@ -38,6 +38,28 @@ class UserPaymentTest extends TestCase
     }
 
     /** @test */
+    public function a_manager_user_cannot_mark_user_as_paid_if_no_more_tickets_available()
+    {
+        initialize_roles();
+
+        $manager = factory(User::class)->create();
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        $user = factory(User::class)->create();
+
+        $this->assertCount(0,$user->inscription_paid);
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
+            'session' => 2018
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertEquals("NO hi ha més places/tickets disponibles", json_decode($response->getContent())->message);
+        $this->assertCount(0,$user->inscription_paid);
+    }
+
+    /** @test */
     public function a_manager_user_can_mark_user_as_paid_validation()
     {
         seed_database();
