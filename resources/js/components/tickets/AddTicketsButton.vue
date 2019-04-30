@@ -52,6 +52,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, numeric } from 'vuelidate/lib/validators'
+import * as actions from '../../store/action-types'
 
 export default {
   name: 'AddTicketsButton',
@@ -82,6 +83,7 @@ export default {
         this.adding = false
         this.$snackbar.showMessage('Tickets afegits correctament')
         this.dialog = false
+        this.$store.dispatch(actions.FETCH_TICKETS)
       }).catch(() => {
         this.adding = false
       })

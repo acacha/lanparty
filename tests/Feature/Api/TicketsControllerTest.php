@@ -101,4 +101,42 @@ class TicketsControllerTest extends TestCase
         ]);
         $response->assertStatus(401);
     }
+
+    /** @test */
+    public function manager_can_remove_tickets()
+    {
+        Ticket::addTickets(4,'2018');
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets/remove', [
+            'session' => '2018',
+            'quantity' => 3
+        ]);
+        $response->assertSuccessful();
+        $this->assertCount(1, $tickets = Ticket::tickets());
+        $this->assertEquals('2018',$tickets[0]['session']);
+        $this->assertNull($tickets[0]['user_id']);
+    }
+
+    /** @test */
+    function manager_cannot_remove_more_tickets_than_available()
+    {
+        Ticket::addTickets(3,'2018');
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets/remove', [
+            'session' => '2018',
+            'quantity' => 4
+        ]);
+        $response->assertStatus(422);
+        $result = json_decode($response->getContent());
+        $this->assertEquals('S\'han eliminat tots els tickets disponibles', $result->message);
+        $this->assertCount(0, $tickets = Ticket::tickets());
+    }
+
+    /** @test */
+    public function manager_can_remove_tickets_validation()
+    {
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets/remove', []);
+        $response->assertStatus(422);
+    }
 }

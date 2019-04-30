@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\NotEnoughTicketsException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tickets\TicketsDestroy;
 use App\Http\Requests\Tickets\TicketsStore;
 use App\Ticket;
 
@@ -26,5 +28,14 @@ class TicketsController extends Controller
     public function store(TicketsStore $request)
     {
         Ticket::addTickets($request->quantity,$request->session);
+    }
+
+    public function delete(TicketsDestroy $request)
+    {
+        try {
+            Ticket::removeTickets($request->quantity,$request->session);
+        } catch (NotEnoughTicketsException $e) {
+            abort('422',"S'han eliminat tots els tickets disponibles");
+        }
     }
 }

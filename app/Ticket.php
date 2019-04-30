@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\NotEnoughTicketsException;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +24,19 @@ class Ticket extends Model
             Ticket::create([
                 'session' => $session
             ]);
+        }
+    }
+
+    /**
+     * Add numbers.
+     *
+     * @param $quantity
+     */
+    public static function removeTickets($quantity, $session) {
+        foreach (range(1, $quantity ) as $value) {
+            $ticket = Ticket::firstAvailableTicket($session);
+            if (!$ticket) throw new NotEnoughTicketsException();
+            $ticket->delete();
         }
     }
 
