@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: 'Futurama Title Font';
   font-style: normal;
@@ -11,18 +10,6 @@
   font-style: normal;
   font-weight: normal;
   src: local('Futurama Bold Font'), url('/fonts/fr-bold.woff') format('woff');
-}
-
-.theme--light.v-sheet{
-  background-color: transparent !important;
-}
-
-.container.fluid {
-  max-width: 1680px !important;
-}
-
-.form-control{
-  width: 60%
 }
 
 .msg{
@@ -47,6 +34,18 @@
   width: 100%;
   min-height: 550px !important;
 }
+
+.ctf .theme--light.v-sheet{
+  background-color: transparent !important;
+}
+
+.ctf .container.fluid {
+  max-width: 1680px !important;
+}
+.ctf .form-control{
+  width: 60%
+}
+
 
 .ctfBack {
   font-family: "Futurama Bold Font", Monaco, monospace;
