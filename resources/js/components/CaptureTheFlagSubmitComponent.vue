@@ -10,7 +10,7 @@
         		<form  @submit.prevent="submit">
                 <div class="form-group">
                     <label for="flag">Flags:</label>
-                    <input type="text" class="form-control" name="flag" id="flag" v-model="fields.flag" />
+                    <input type="text" class="form-control ctfInput" name="flag" id="flag" v-model="fields.flag" />
                     <div v-if="errors && errors.name" class="text-danger">{{ errors.name[0] }}</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Envia</button>
@@ -20,7 +20,7 @@
       </v-card>
 </template>
 
-<style>@import 'ctf.css';</style>
+<style scoped>@import 'ctf.scss';</style>
 
 <script>
   export default {

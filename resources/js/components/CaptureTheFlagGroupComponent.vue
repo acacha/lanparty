@@ -36,7 +36,7 @@
     </v-card>
 </template>
 
-<style>@import 'ctf.css';</style>
+<style scoped>@import 'ctf.scss';</style>
 
 <script>
   export default {
