@@ -46,6 +46,7 @@
         "mocha": "^6.1.4",
         "mocha-webpack": "^1.1.0",
         "moment": "^2.24.0",
+        "node-sass": "^4.12.0",
         "socket.io-client": "^2.2.0",
         "sw-precache-webpack-plugin": "^0.11.5",
         "typeface-montserrat": "0.0.54",
