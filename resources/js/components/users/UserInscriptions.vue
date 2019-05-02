@@ -2,7 +2,7 @@
     <v-card>
         <v-card-title class="primary darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
         <v-data-table
-                :items="selectedUser.events"
+                :items="currentEvents"
                 hide-actions
                 hide-headers
                 class="elevation-1 mx-1 my-1"
@@ -109,6 +109,10 @@ export default {
     events: {
       type: Array,
       required: true
+    },
+    session: {
+      type: String,
+      required: true
     }
   },
   computed: {
@@ -117,6 +121,10 @@ export default {
       return this.events.filter((event) => {
         return event.inscription_type_id === '2'
       })
+    },
+    currentEvents () {
+      if (this.selectedUser.events) return this.selectedUser.events.filter(event => event.session === this.session)
+      return this.selectedUser.events
     }
   },
   methods: {
