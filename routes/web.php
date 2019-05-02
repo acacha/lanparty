@@ -20,7 +20,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CaptureTheFlagController;
 
 Route::get('/condicions', function () {
-    return redirect('https://docs.google.com/document/d/1gQko2U_orGoViJyIqL9jW9mxe68-8fbuNee9E3B68f8/edit');
+    return redirect('https://docs.google.com/document/d/1gQko2U_orGoViJyIqL9jW9mxe68-8fbuNee9E3B68f8');
 });
 
 Route::get('/programa', function () {
