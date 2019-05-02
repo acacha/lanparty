@@ -81,7 +81,8 @@
                                 required
                         >
                             <span slot="label">
-                                <a href="/condicions">Accepteu els termes i condicións d'ús del lloc web</a>
+                                <a href="/condicions" target="_blank"
+                                >Accepteu els termes i condicións d'ús del lloc web</a>
                             </span>
                         </v-checkbox>
                     </v-form>
