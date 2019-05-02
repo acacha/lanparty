@@ -13,13 +13,7 @@
                                 <v-flex xs12 md8 >
                                     <h3>{{ selectedUser.name }}</h3>
                                     <p class="text-xs-center">
-                                        <v-switch
-                                                label="Pagat"
-                                                :input-value="inscriptionPaid"
-                                                @change="togglePayment(selectedUser)"
-                                                :loading="loadingPayments"
-                                                :disabled="loadingPayments"
-                                        ></v-switch>
+                                        <payments-switch :session="session"></payments-switch>
                                     </p>
                                 </v-flex>
                             </v-layout>
@@ -63,10 +57,11 @@
                                 ></v-text-field>
                             </v-form>
                         </v-card-text>
-                        <v-card-actions>
-                            <v-btn flat color="orange">Modificar</v-btn>
-                            <v-btn flat color="orange">Esborrar</v-btn>
-                        </v-card-actions>
+<!--                        TODO-->
+<!--                        <v-card-actions>-->
+<!--                            <v-btn flat color="orange">Modificar</v-btn>-->
+<!--                            <v-btn flat color="orange">Esborrar</v-btn>-->
+<!--                        </v-card-actions>-->
                     </v-card>
                 </v-flex>
                 <v-flex xs12 md8>
@@ -154,7 +149,7 @@
                         >
                             <template slot="items" slot-scope="props">
                                 <td>
-                                    <img width="40px;" :src="'/' + props.item.image">
+                                    <img width="40px;" :src="props.item.image">
                                 </td>
                                 <td>{{ props.item.name }}</td>
                                 <td>{{ props.item.inscription_date }}</td>
@@ -249,11 +244,14 @@
   import * as mutations from '../store/mutation-types'
   import sleep from '../utils/sleep'
   import randomColor from './mixins/randomColor'
-
+  import PaymentsSwitch from './payments/PaymentsSwitch'
   export default {
     name: 'ManageUser',
     mixins: [ interactsWithGravatar, randomColor ],
-    components: { Gravatar },
+    components: {
+      Gravatar,
+      'payments-switch': PaymentsSwitch
+    },
     data () {
       return {
         description: '',
@@ -267,7 +265,6 @@
         ],
         assigningNumber: false,
         numberAssigned: false,
-        payed: 'false',
         assignNumberDialog: false,
         unassignNumbersDialog: false,
         confirmingUnassigningNumber: null,
@@ -276,7 +273,6 @@
         unassigningNumber: false,
         numberUnassigned: false,
         unassignNumberDialog: false,
-        loadingPayments: false,
         confirmingUnregisterEvent: null,
         unregisteringEvent: false,
         registeringEvent: false,
@@ -313,31 +309,6 @@
       }
     },
     methods: {
-      togglePayment (user) {
-        if (user.inscription_paid) {
-          if (user.inscription_paid.includes(this.session)) {
-            this.unpay(user)
-            return
-          }
-        }
-        this.pay(user)
-      },
-      pay (user) {
-        this.loadingPayments = true
-        this.$store.dispatch(actions.USER_PAY, {user, session: this.session}).then(() => {
-          this.loadingPayments = false })
-        .catch(() => {
-            this.loadingPayments = false
-        })
-      },
-      unpay (user) {
-        this.loadingPayments = true
-        this.$store.dispatch(actions.USER_UNPAY, { user, session: this.session } ).then(() => {
-          this.loadingPayments = false
-        }).catch(() => {
-          this.loadingPayments = false
-        })
-      },
       unassignAllNumbers () {
         this.unassigningNumbers = true
         this.$store.dispatch(actions.UNASSIGN_NUMBERS_TO_USER, this.selectedUser).then(result => {

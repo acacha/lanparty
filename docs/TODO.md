@@ -1,3 +1,9 @@
+# PETITS DETALLS
+
+- [ ] modificar/esborrar d'usauris a l'apartat participants no fa res
+  - [ ] és error? -> arreglar
+  - [ ] no està fet? -> comentar botons per que no apareguin 
+
 # SESSIONS
 
 - [ ] Apartat de generació de sessions
