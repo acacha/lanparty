@@ -41,8 +41,8 @@
                                 label="Paraula de pas"
                                 v-model="password"
                                 :rules="passwordRules"
-                                hint="Com a mínim 6 caràcters"
-                                min="6"
+                                hint="Com a mínim 8 caràcters"
+                                min="8"
                                 type="password"
                                 required
                         ></v-text-field>
@@ -51,8 +51,8 @@
                                 label="Confirmació paraula de pas"
                                 v-model="passwordConfirmation"
                                 :rules="passwordConfirmationRules"
-                                hint="Com a mínim 6 caràcters"
-                                min="6"
+                                hint="Com a mínim 8 caràcters"
+                                min="8"
                                 type="password"
                                 required
                                 :error="errors['password']"
@@ -132,12 +132,12 @@ export default {
       password: '',
       passwordRules: [
         (v) => !!v || 'La paraula de pas és obligatòria',
-        (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
+        (v) => v.length >= 8 || 'La paraula de pas ha de tenir com a mínim 8 caràcters'
       ],
       passwordConfirmation: '',
       passwordConfirmationRules: [
         (v) => !!v || 'La paraula de pas és obligatòria',
-        (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
+        (v) => v.length >= 8 || 'La paraula de pas ha de tenir com a mínim 8 caràcters'
       ],
       givenName: '',
       givenNameRules: [

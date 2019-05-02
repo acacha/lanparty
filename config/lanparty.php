@@ -23,5 +23,27 @@ return [
     | Start date participants could register to app.
     |
     */
-    'registration_start_date' => env('REGISTRATION_START_DATE', '2018-03-15 12:00:00')
+    'registration_start_date' => env('REGISTRATION_START_DATE', '2018-03-15 12:00:00'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | SESSIONS
+    |--------------------------------------------------------------------------
+    | Anys/sessions de la lanparty
+    |
+    */
+    'sessions' => env('LANPARTY_SESSIONS', [
+        '2018',
+        '2019'
+    ]),
+
+    /*
+    |--------------------------------------------------------------------------
+    | SESSIONS
+    |--------------------------------------------------------------------------
+    | Anys/sessions de la lanparty
+    |
+    */
+    'current_session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2019')
+    
 ];
