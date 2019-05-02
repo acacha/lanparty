@@ -139,7 +139,7 @@
                             </v-dialog>
                         </v-card-actions>
                     </v-card>
-                    <user-inscriptions :events="events"></user-inscriptions>
+                    <user-inscriptions :events="events" :session="session"></user-inscriptions>
                 </v-flex>
             </v-layout>
 
