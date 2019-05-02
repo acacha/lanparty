@@ -13,7 +13,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" flat @click.native="dialog = false">Cancel·lar</v-btn>
-                    <v-btn v-if="!done" :loading="loading" color="error" @click.stop="unregisterAllEvents">Desapuntar</v-btn>
+                    <v-btn v-if="!done" :loading="loading" :disabled="loading" color="error" @click.stop="unregisterAllEvents">Desapuntar</v-btn>
                     <v-btn v-else color="success" flat><v-icon>done</v-icon> Fet</v-btn>
                 </v-card-actions>
             </v-card>
