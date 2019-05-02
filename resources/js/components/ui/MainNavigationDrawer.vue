@@ -72,14 +72,18 @@ export default {
       items: [
         { icon: 'home', text: 'Benvinguda', href: '/' },
         { icon: 'event', text: 'Esdeveniments', href: '/home' },
-        { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', new: true  },
-        { icon: 'favorite_border', text: 'Premis', href: '/premis', new: true },
-        { icon: 'flag', text: 'Capture The Flag', href: '/ctf', new: true },
+        { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', target: '_blank'  },
+        { icon: 'favorite_border', text: 'Premis', href: '/premis', target: '_blank' },
+        { icon: 'flag', text: 'Capture The Flag', href: '/ctf', target: '_blank' },
         { heading: 'Links'},
-        { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', new: true },
-        { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
-        { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , new: true },
-        { icon: 'link', text: 'Streaming (Twitch)', href: 'https://www.twitch.tv/iesebrelanparty' , new: true },
+        { icon: 'link', text: 'Programa', href: '/programa', target: '_blank' },
+        { icon: 'link', text: 'Normativa', href: '/condicions', target: '_blank' },
+        { icon: 'link', text: 'Autorització menors edat', href: 'https://drive.google.com/file/d/1odQ_3nToS9UXeUr-X5LzdnCuSmFg-J4U/view', target: '_blank' },
+        { icon: 'link', text: 'Drets imatge', href: 'https://docs.google.com/document/d/1PwJXWlF1ypO6_jbs61WOsBk_9mWJtVeh3A-cbO_FEFc/edit#heading=h.gjdgxs', target: '_blank' },
+        { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', target: '_blank' },
+        { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , target: '_blank' },
+        { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , target: '_blank' },
+        { icon: 'link', text: 'Streaming (Twitch)', href: 'https://www.twitch.tv/iesebrelanparty' , target: '_blank' },
         { heading: 'Administració', role: 'Manager'},
         { icon: 'face', text: 'Participants', href: '/manage/participants', role: 'Manager' },
         { icon: 'face', text: 'Managers', href: '/manage/managers', role: 'Manager' },
@@ -87,7 +91,7 @@ export default {
         { icon: 'event', text: 'Events', href: '/manage/events', role: 'Manager' },
         { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true },
         { icon: 'group', text: 'Col·laboradors', href: '/manage/partners', role: 'Manager', new : true },
-        {icon:'card_giftcard',text:'Premis',href:'/manage/prizes',role:'Manager', new: true}
+        {icon:'card_giftcard',text:'Premis',href:'/manage/prizes',role:'Manager', target: '_blank'}
       ]
     }
   },

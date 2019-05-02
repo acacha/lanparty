@@ -4,6 +4,9 @@
         <v-toolbar class="white">
             <v-toolbar-title class="hidden-xs-only">Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-btn href="/programa" target="_blank" flat>
+                Programa
+            </v-btn>
             <v-btn class="hidden-xs-only" @click="$vuetify.goTo('#competicions')" flat>
                 Competicions
             </v-btn>
@@ -63,7 +66,12 @@
                             <h2 class="display-1">Competicions</h2>
                             <span class="subheading">
                               Posa a prova les teves habilitats!
-                            </span>
+                            </span><br>
+                            <v-btn
+                                    href="/programa"
+                                    target="_blank"
+                                    color="accent"
+                            >Programació de tots els esdeveniments</v-btn>
                         </div>
                     </v-flex>
                     <v-flex xs12>
@@ -169,7 +177,7 @@
                                         </v-list-tile-avatar>
                                         <v-list-tile-title>CORREU</v-list-tile-title>
                                         <v-list-tile-sub-title>
-                                            LANPARTY@IESEBRE.COM
+                                            INFORMATICA@IESEBRE.COM
                                         </v-list-tile-sub-title>
                                     </v-list-tile>
                                     <v-list-tile>

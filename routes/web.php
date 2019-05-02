@@ -20,8 +20,11 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CaptureTheFlagController;
 
 Route::get('/condicions', function () {
-    // TODO
-    return redirect('http://www.google.com');
+    return redirect('https://docs.google.com/document/d/1gQko2U_orGoViJyIqL9jW9mxe68-8fbuNee9E3B68f8');
+});
+
+Route::get('/programa', function () {
+    return redirect('https://docs.google.com/document/d/1GxdZIBS1mg_ANeOVt7tW0AJxPVyM__5uFNdSglE2NoA/edit');
 });
 
 Route::get('/', '\\' . WelcomeController::class . '@index');
