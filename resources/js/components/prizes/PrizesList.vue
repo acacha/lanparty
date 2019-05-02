@@ -2,7 +2,7 @@
     <span>
         <v-flex xs12 justify-center>
                 <v-card>
-                    <v-toolbar  dark color="green light">
+                    <v-toolbar  dark color="success light">
                         <v-icon style="margin-right: 1%">card_giftcard</v-icon>
                         <v-icon>sentiment_satisfied_alt</v-icon>
                         <v-toolbar-title>Premis</v-toolbar-title>
@@ -48,7 +48,7 @@
                                 <td class="text-xs-center">
                                         <!--<v-btn icon flat title="Mostrar la tag"-->
                                         <!--&gt;-->
-                                            <!--<v-icon color="green">visibility</v-icon>-->
+                                            <!--<v-icon color="success">visibility</v-icon>-->
                                         <!--</v-btn>-->
                                     <!---->
                                         <!--<v-btn  icon flat title="Editar la tag"-->

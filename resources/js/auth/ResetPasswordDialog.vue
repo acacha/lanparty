@@ -43,7 +43,7 @@
                 <v-btn color="primary darken-1" flat @click.native="show = false">Tancar</v-btn>
                 <v-btn
                         :loading="loading"
-                        :color="loadingDone ? 'green' : 'primary'"
+                        :color="loadingDone ? 'success' : 'primary'"
                         @click.native="reset"
                 >
                     <v-icon v-if="loadingDone">done</v-icon>

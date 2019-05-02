@@ -15,7 +15,9 @@
                             label="Correu electrònic"
                             v-model="email"
                             :error="errors['email']"
-                            :error-messages="errors['email']"
+                            :error-messages="emailErrors"
+                            @input="$v.email.$touch()"
+                            @blur="$v.email.$touch()"
                             required
                     ></v-text-field>
                 </v-form>
@@ -32,7 +34,7 @@
                 <v-btn
                         :loading="loading"
                         :disabled="loading || $v.$invalid"
-                        :color="loadingDone ? 'green' : 'primary'"
+                        :color="loadingDone ? 'success' : 'primary'"
                         @click.native="rememberPassword"
                 >
                     <v-icon v-if="!loadingDone">mail_outline</v-icon>
@@ -84,6 +86,13 @@ export default {
         if (value) this.internalAction = 'request_new_password'
         else this.internalAction = null
       }
+    },
+    emailErrors () {
+      const emailErrors = []
+      if (!this.$v.email.$dirty) return emailErrors
+      !this.$v.email.email && emailErrors.push("Heu d'utilitzar un format correcte de correu electrònic.")
+      !this.$v.email.required && emailErrors.push('La paraula de pas és obligatòria.')
+      return emailErrors
     }
   },
   methods: {
