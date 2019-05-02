@@ -305,10 +305,6 @@
     </div>
 </template>
 
-<style>
-
-</style>
-
 <script>
   import InteractsWithGravatar from './mixins/interactsWithGravatar'
   import Group from './GroupComponent.vue'

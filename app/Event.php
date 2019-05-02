@@ -320,6 +320,7 @@ class Event extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'session' => $this->session,
             'inscription_type_id' => $this->inscription_type_id,
             'image' => $this->image,
             'regulation' => $this->regulation,

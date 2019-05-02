@@ -45,6 +45,9 @@
               {{event.name}}
             </td>
             <td>
+              {{event.session}}
+            </td>
+            <td>
               {{ event.inscription_type_id }}
             </td>
             <td>
@@ -104,6 +107,7 @@ export default {
       headers: [
         { text: 'Id', value: 'id' },
         { text: 'Nom', value: 'name' },
+        { text: 'Sessió', value: 'Sessió' },
         { text: 'Tipus de inscripció', value: 'inscription_type_id' },
         { text: 'Imatge', value: 'image' },
         { text: 'Reglament', value: 'regulation' },

@@ -22,6 +22,7 @@ class UserEventResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'session' => $this->session,
             'image' => $this->image,
             'inscription_date' => $this->pivot->updated_at->toDateTimeString()
         ];
