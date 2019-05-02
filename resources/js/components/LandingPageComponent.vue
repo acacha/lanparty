@@ -69,6 +69,7 @@
                             </span><br>
                             <v-btn
                                     href="/programa"
+                                    target="_blank"
                                     color="accent"
                             >Programació de tots els esdeveniments</v-btn>
                         </div>
