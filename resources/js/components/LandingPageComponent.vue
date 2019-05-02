@@ -30,10 +30,10 @@
         </v-toolbar>
         <v-content>
             <section>
-                <v-parallax src="/img/LanpartyLanding.jpg" height="600">
+                <v-parallax src="/img/LanpartyLanding2019.jpg" height="600">
                     <v-layout
                             column
-                            align-center
+                            align-start
                             justify-center
                             class="white--text"
                     >
