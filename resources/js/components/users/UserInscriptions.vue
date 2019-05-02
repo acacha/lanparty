@@ -1,6 +1,13 @@
 <template>
     <v-card>
         <v-card-title class="primary darken-3 white--text"><h4>Inscripcions</h4></v-card-title>
+        <v-alert
+                dismissible
+                :value="true"
+                type="warning"
+        >
+            Atenció: Només es mostren les inscripcions de l'usuari a esdeveniments individuals!.
+        </v-alert>
         <v-data-table
                 :items="currentEvents"
                 hide-actions
