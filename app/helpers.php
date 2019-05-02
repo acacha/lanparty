@@ -474,7 +474,24 @@ if (!function_exists('create_events')) {
             ]
         ];
 
+        foreach ($events as $event) {
+            $createdEvent = Event::firstOrCreate([
+                'name' => $event['name'],
+                'session' => in_array('session', $event) ? $event['session'] : '',
+                'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
+                'image' => $event['image'],
+                'regulation' => $event['regulation'],
+                'published_at' => $event['published_at'] ? Carbon::parse($event['published_at']) : null,
+                'participants_number' => $event['participants_number']
+            ]);
+            $createdEvent->addTickets($event['tickets']);
+        }
+    }
+}
 
+
+if (!function_exists('create_events_2019')) {
+    function create_events_2019() {
         $events2019 = [
             [
               'name' => 'League Of Legends',
@@ -553,6 +570,8 @@ if (!function_exists('create_events')) {
         }
     }
 }
+
+
 
 if (!function_exists('create_numbers')) {
     function create_numbers()
@@ -860,8 +879,8 @@ if (!function_exists('initialize_gates')) {
 }
 
 
-if (!function_exists('create_flags')) {
-    function create_flags() {
+if (!function_exists('create_flags_2019')) {
+    function create_flags_2019() {
 
         DB::table('flags')->insert([
             'name' => 'F1',
