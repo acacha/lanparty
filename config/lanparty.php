@@ -44,6 +44,6 @@ return [
     | Anys/sessions de la lanparty
     |
     */
-    'current_session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2019')
-    
+    'session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2019')
+
 ];

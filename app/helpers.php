@@ -812,6 +812,16 @@ if (!function_exists('formatted_logged_user')) {
     }
 }
 
+if (!function_exists('lanparty_config_to_json')) {
+    function lanparty_config_to_json()
+    {
+        return json_encode([
+            'session' => config('lanparty.session'),
+            'sessions' => config('lanparty.sessions')
+        ]);
+    }
+}
+
 if (!function_exists('initialize_manager_role')) {
     function initialize_manager_role()
     {
