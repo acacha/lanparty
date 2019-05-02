@@ -23,38 +23,30 @@
                             </v-chip>
                         </template>
                         <template slot="item" slot-scope="data">
-                            <v-list-tile avatar>
-                                <v-list-tile-avatar>
-                                    <img :src="data.item.image">
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                     ( Places: {{ data.item.available_tickets }})
-                                </v-list-tile-content>
-                            </v-list-tile>
+                            <v-list-tile-avatar>
+                                <img :src="data.item.image">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                {{ data.item.name }} {{ data.item.session }}  ( Places: {{ data.item.available_tickets }})
+                            </v-list-tile-content>
                         </template>
-
-
-
-
-
-                        <template slot="item" slot-scope="data">
-                            <template v-if="typeof data.item !== 'object'">
-                                <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                            </template>
-                            <template v-else>
-                                <v-list-tile-avatar>
-                                    <img v-bind:src="gravatarURL(data.item.email)"/>
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{data.item.name}} | {{ data.item.givenName }} {{ data.item.sn1 }} {{ data.item.sn2 }}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{data.item.id}} | {{data.item.email}} | {{ data.item.formatted_created_at_date }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </template>
-                        </template>
-
-
-
                     </v-select>
+
+                    <!--                        <template slot="item" slot-scope="data">-->
+                    <!--                            <template v-if="typeof data.item !== 'object'">-->
+                    <!--                                <v-list-tile-content v-text="data.item"></v-list-tile-content>-->
+                    <!--                            </template>-->
+                    <!--                            <template v-else>-->
+                    <!--                                <v-list-tile-avatar>-->
+                    <!--                                    <img v-bind:src="gravatarURL(data.item.email)"/>-->
+                    <!--                                </v-list-tile-avatar>-->
+                    <!--                                <v-list-tile-content>-->
+                    <!--                                    <v-list-tile-title>{{data.item.name}} | {{ data.item.givenName }} {{ data.item.sn1 }} {{ data.item.sn2 }}</v-list-tile-title>-->
+                    <!--                                    <v-list-tile-sub-title>{{data.item.id}} | {{data.item.email}} | {{ data.item.formatted_created_at_date }}</v-list-tile-sub-title>-->
+                    <!--                                </v-list-tile-content>-->
+                    <!--                            </template>-->
+                    <!--                        </template>-->
+
                 </v-card-text>
                 <v-card-actions>
                     <v-btn color="primary" flat @click.stop="dialog = false">Tancar</v-btn>
@@ -88,9 +80,14 @@ export default {
   },
   computed: {
     individualInscriptionEvents () {
-      return this.events.filter((event) => {
-        return event.inscription_type_id === '2'
-      })
+      if (this.events) {
+        return this.events.filter((event) => {
+          return event.inscription_type_id === '2'
+        }).filter((event) => {
+          return event.inscription_type_id === '2'
+        })
+      }
+      return []
     }
   },
   methods: {

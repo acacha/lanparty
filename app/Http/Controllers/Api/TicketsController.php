@@ -27,6 +27,7 @@ class TicketsController extends Controller
 
     public function store(TicketsStore $request)
     {
+        if ($request->quantity == 0) abort ('422', 'Com a mínim cal afegir un ticket!');
         Ticket::addTickets($request->quantity,$request->session);
     }
 

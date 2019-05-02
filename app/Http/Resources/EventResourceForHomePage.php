@@ -22,6 +22,7 @@ class EventResourceForHomePage extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'session' => $this->session,
             'image' => $this->image,
             'inscription_type_id' => $this->inscription_type_id,
             'participants_number' => $this->participants_number,

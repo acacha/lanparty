@@ -10,13 +10,14 @@
                     <h3>{{errorMessage}}</h3>
                     <p v-for="(error, errorKey) in errors">{{errorKey}} : {{ error[0] }}</p>
                 </v-alert>
-                <v-form v-model="valid" class="mb-2">
+                <v-form class="mb-2">
                     <v-text-field
                             label="Correu electrònic"
                             v-model="email"
-                            :rules="emailRules"
                             :error="errors['email']"
-                            :error-messages="errors['email']"
+                            :error-messages="emailErrors"
+                            @input="$v.email.$touch()"
+                            @blur="$v.email.$touch()"
                             required
                     ></v-text-field>
                 </v-form>
@@ -32,8 +33,8 @@
                 <v-btn color="primary darken-1" flat @click.native="show = false">Tancar</v-btn>
                 <v-btn
                         :loading="loading"
-                        :disabled="!valid"
-                        :color="loadingDone ? 'green' : 'primary'"
+                        :disabled="loading || $v.$invalid"
+                        :color="loadingDone ? 'success' : 'primary'"
                         @click.native="rememberPassword"
                 >
                     <v-icon v-if="!loadingDone">mail_outline</v-icon>
@@ -50,9 +51,15 @@
 <script>
 import * as actions from '../store/action-types'
 import sleep from '../utils/sleep'
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'RememberPasswordDialog',
+  mixins: [validationMixin],
+  validations: {
+    email: { required, email }
+  },
   data () {
     return {
       internalAction: this.action,
@@ -61,11 +68,6 @@ export default {
       loading: false,
       loadingDone: false,
       email: '',
-      emailRules: [
-        (v) => !!v || 'El email és obligatori',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'S\'ha d\'indicar un email vàlid'
-      ],
-      valid: false
     }
   },
   props: {
@@ -84,6 +86,13 @@ export default {
         if (value) this.internalAction = 'request_new_password'
         else this.internalAction = null
       }
+    },
+    emailErrors () {
+      const emailErrors = []
+      if (!this.$v.email.$dirty) return emailErrors
+      !this.$v.email.email && emailErrors.push("Heu d'utilitzar un format correcte de correu electrònic.")
+      !this.$v.email.required && emailErrors.push('La paraula de pas és obligatòria.')
+      return emailErrors
     }
   },
   methods: {

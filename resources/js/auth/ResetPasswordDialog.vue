@@ -13,16 +13,20 @@
                     <v-text-field
                             label="Correu electrònic"
                             v-model="internalEmail"
-                            :rules="emailRules"
+                            :error-messages="internalEmailErrors"
+                            @input="$v.internalEmail.$touch()"
+                            @blur="$v.internalEmail.$touch()"
                             required
                     ></v-text-field>
                     <v-text-field
                             name="password"
                             label="Paraula de pas"
                             v-model="password"
-                            :rules="passwordRules"
-                            hint="Com a mínim 6 caràcters"
-                            min="6"
+                            :error-messages="passwordErrors"
+                            @input="$v.password.$touch()"
+                            @blur="$v.password.$touch()"
+                            hint="Com a mínim 8 caràcters"
+                            min="8"
                             type="password"
                             required
                     ></v-text-field>
@@ -30,9 +34,11 @@
                             name="password_confirmation"
                             label="Confirmació paraula de pas"
                             v-model="passwordConfirmation"
-                            :rules="passwordRules"
-                            hint="Com a mínim 6 caràcters"
-                            min="6"
+                            :error-messages="passwordConfirmationErrors"
+                            @input="$v.passwordConfirmation.$touch()"
+                            @blur="$v.passwordConfirmation.$touch()"
+                            hint="Com a mínim 8 caràcters"
+                            min="8"
                             type="password"
                             required
                     ></v-text-field>
@@ -43,8 +49,8 @@
                 <v-btn color="primary darken-1" flat @click.native="show = false">Tancar</v-btn>
                 <v-btn
                         :loading="loading"
-                        flat
-                        :color="loadingDone ? 'green' : 'blue'"
+                        :disabled="loading || $v.$invalid"
+                        :color="loadingDone ? 'success' : 'primary'"
                         @click.native="reset"
                 >
                     <v-icon v-if="loadingDone">done</v-icon>
@@ -60,9 +66,17 @@
 <script>
 import * as actions from '../store/action-types'
 import sleep from '../utils/sleep'
+import { validationMixin } from 'vuelidate'
+import { required, sameAs, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'ResetPasswordDialog',
+  mixins: [validationMixin],
+  validations: {
+    internalEmail: { required, email },
+    password: { required, minLength: minLength(8) },
+    passwordConfirmation: { sameAsPassword: sameAs('password') }
+  },
   data() {
     return {
       internalAction: this.action,
@@ -70,17 +84,9 @@ export default {
       errors: [],
       loading: false,
       loadingDone: false,
-      emailRules: [
-        (v) => !!v || 'El email és obligatori',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'S\'ha d\'indicar un email vàlid'
-      ],
       valid: false,
       internalEmail: this.email,
       password: '',
-      passwordRules: [
-        (v) => !!v || 'La paraula de pas és obligatòria',
-        (v) => v.length >= 6 || 'La paraula de pas ha de tenir com a mínim 6 caràcters'
-      ],
       passwordConfirmation: '',
     }
   },
@@ -109,11 +115,32 @@ export default {
         else this.internalAction = null
       }
     },
+    passwordErrors () {
+      const passwordErrors = []
+      if (!this.$v.password.$dirty) return passwordErrors
+      !this.$v.password.minLength && passwordErrors.push('El password ha de tenir com a mínim 8 caràcters.')
+      !this.$v.password.required && passwordErrors.push('La paraula de pas és obligatòria.')
+      return passwordErrors
+    },
+    passwordConfirmationErrors () {
+      const passwordConfirmationErrors = []
+      if (!this.$v.passwordConfirmation.$dirty) return passwordConfirmationErrors
+      !this.$v.passwordConfirmation.sameAsPassword && passwordConfirmationErrors.push('Les paraules de pas han de coincidir')
+      return passwordConfirmationErrors
+    },
+    internalEmailErrors () {
+      const internalEmailErrors = []
+      if (!this.$v.internalEmail.$dirty) return internalEmailErrors
+      !this.$v.internalEmail.email && internalEmailErrors.push('El correu electrònic ha de ser vàlid')
+      !this.$v.internalEmail.required && internalEmailErrors.push('El correu electrònic és obligatori.')
+      this.errors['email'] && internalEmailErrors.push(this.errors['email'])
+      return internalEmailErrors
+    }
   },
   methods: {
     reset () {
       const user = {
-        'email': this.internalResetPasswordEmail,
+        'email': this.internalEmail,
         'password': this.password,
         'password_confirmation': this.passwordConfirmation,
         'token': this.resetPasswordToken

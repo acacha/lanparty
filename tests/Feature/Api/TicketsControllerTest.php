@@ -74,6 +74,17 @@ class TicketsControllerTest extends TestCase
     }
 
     /** @test */
+    public function cannot_add_zero_tickets()
+    {
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets', [
+            'session' => '2018',
+            'quantity' => 0
+        ]);
+        $response->assertStatus(422);
+    }
+
+    /** @test */
     public function manager_can_add_tickets_validation()
     {
         $this->loginAsManager('api');

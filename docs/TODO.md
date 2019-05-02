@@ -1,8 +1,16 @@
+# BUGS
+
+- [ ] el link de canviar paraula de pas des de email porta a la home si l'usuari ja està registrat
+  - [ ] Es mostra formulari ok si l'usuari esta log off
+  - [ ] Diu que falta el email (error 422) quan el email està ja posat
+
 # PETITS DETALLS
 
 - [ ] modificar/esborrar d'usauris a l'apartat participants no fa res
   - [ ] és error? -> arreglar
   - [ ] no està fet? -> comentar botons per que no apareguin 
+
+- [ ] Al apuntar-se a un event de grup el switch es queda marcat si no acabes el registre (tancas). Només problema forntend al fer f5 està tot ok. 
 
 # SESSIONS
 
@@ -45,6 +53,8 @@ Apartat /manage/participants:
     - [X] Actualitzar a explotació els numbers diponibles a sessió 2018   
 
 - [ ] Mostrar els números per sessió
+  - [ ] A la vista participants es mostren tots els números assignats, mostrar només sessió actual
+    -  [ ] POder consultar números assignats anys anteriors
   - [ ] assignació i eliminació de números tingui en compte la sessió actual
   - [ ] La llista d'esdeveniments als quals l'usuari s'ha inscrit:
     - [ ] Mostrar només events actius

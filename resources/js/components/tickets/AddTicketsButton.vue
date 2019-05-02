@@ -21,6 +21,9 @@
                     <v-text-field
                             label="Quantitat"
                             v-model="quantity"
+                            :error-messages="quantityErrors"
+                            @input="$v.quantity.$touch()"
+                            @blur="$v.quantity.$touch()"
                     ></v-text-field>
                 </v-card-text>
 
@@ -71,6 +74,15 @@ export default {
     session: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    quantityErrors() {
+      const quantityErrors = []
+      if (!this.$v.quantity.$dirty) return quantityErrors
+      !this.$v.quantity.numeric && quantityErrors.push("Heu d'utilitzar un número enter positiu com a quantitat.")
+      !this.$v.quantity.required && quantityErrors.push('És obligatori indicar una quantitat.')
+      return quantityErrors
     }
   },
   methods: {
