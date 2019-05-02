@@ -70,7 +70,8 @@ export default {
     return {
       dataDrawer: this.drawer,
       items: [
-        { icon: 'home', text: 'Home', href: '/home' },
+        { icon: 'home', text: 'Benvinguda', href: '/' },
+        { icon: 'event', text: 'Esdeveniments', href: '/home' },
         { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', new: true  },
         { icon: 'favorite_border', text: 'Premis', href: '/premis', new: true },
         { icon: 'flag', text: 'Capture The Flag', href: '/ctf', new: true },
