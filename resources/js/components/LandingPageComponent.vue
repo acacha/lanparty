@@ -4,7 +4,7 @@
         <v-toolbar class="white">
             <v-toolbar-title class="hidden-xs-only">Institut de l'Ebre LAN PARTY</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn href="/programa" flat>
+            <v-btn href="/programa" target="_blank" flat>
                 Programa
             </v-btn>
             <v-btn class="hidden-xs-only" @click="$vuetify.goTo('#competicions')" flat>
