@@ -140,7 +140,7 @@ export default {
   methods: {
     reset () {
       const user = {
-        'email': this.internalResetPasswordEmail,
+        'email': this.internalEmail,
         'password': this.password,
         'password_confirmation': this.passwordConfirmation,
         'token': this.resetPasswordToken
