@@ -75,11 +75,8 @@ export default {
     return {
       show: true,
       minimized: false,
-      session: '2019',
-      sessions: [
-        '2018',
-        '2019'
-      ]
+      session: window.lanparty.session,
+      sessions: window.lanparty.sessions
     }
   },
   props: {
