@@ -76,20 +76,8 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-            <v-btn icon slot="activator" @click="unregisterEventsDialog = true" :disabled="selectedUser.events && selectedUser.events.length === 0">
-                <v-icon color="red darken-2">remove_circle</v-icon>
-            </v-btn>
-            <v-dialog v-model="unregisterEventsDialog" persistent max-width="290">
-                <v-card>
-                    <v-card-text>Esteu segurs que voleu desapuntar de tots els esdeveniments al usuari?</v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" flat @click.native="unregisterEventsDialog = false">Cancel·lar</v-btn>
-                        <v-btn v-if="!unregisterEventsDone" :loading="unregisteringEvents" color="error" @click.stop="unregisterAllEvents">Desapuntar</v-btn>
-                        <v-btn v-else color="success" flat><v-icon>done</v-icon> Fet</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+
+            <unregister-user-from-all-events></unregister-user-from-all-events>
         </v-card-actions>
     </v-card>
 </template>
@@ -97,18 +85,19 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as actions from '../../store/action-types'
+import UnregisterUserFromAllEvents from '../users/UnregisterUserFromAllEvents'
 export default {
   name: 'UserInscriptions',
+  components: {
+    'unregister-user-from-all-events': UnregisterUserFromAllEvents
+  },
   data () {
     return {
       confirmingUnregisterEvent: null,
       eventToRegister: null,
       unregisteringEvent: false,
-      unregisteringEvents: false,
-      unregisterEventsDone: false,
       registerUserToEvent: false,
       eventRegistered: false,
-      unregisterEventsDialog: false,
       registeringEvent: false
     }
   },
@@ -149,16 +138,6 @@ export default {
       }).catch(() => {
         this.unregisteringEvent = false
         this.confirmingUnregisterEvent = null
-      })
-    },
-    unregisterAllEvents () {
-      this.unregisteringEvents = true
-      this.$store.dispatch(actions.UNREGISTER_ALL_EVENTS, this.selectedUser).then(result => {
-        this.unregisterEventsDone = true
-        this.unregisteringEvents = false
-        sleep(1000).then(() => { this.unregisterEventsDialog = false; this.unregisterEventsDone = false })
-      }).catch(() => {
-        this.unregisteringEvents = false
       })
     },
     registerEvent () {
