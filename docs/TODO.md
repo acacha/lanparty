@@ -1,3 +1,11 @@
+# SESSIONS
+
+- [ ] Apartat de generació de sessions
+  - [ ] No cal creat taula sessions, simplement un fitxer config?
+- [ ] Desplegable de sessions a participants agafi les sessions de config
+- [ ] Crear middleware per protegir certes operacions relacionades amb la sessió:
+  - [ ] Impedeixi executar canvis en sessions archivades (anys anteriors)   
+
 # ERRORS
 
 - [X] 404 Al registrar un grup amb usuaris: URL:  https://lanparty.test/api/v1/events/3/register_group
