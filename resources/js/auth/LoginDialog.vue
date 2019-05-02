@@ -27,7 +27,7 @@
                             label="Paraula de pas"
                             v-model="password"
                             :rules="passwordRules"
-                            hint="At least 6 characters"
+                            hint="Com a mínim 6 caràcters"
                             min="6"
                             type="password"
                             required
