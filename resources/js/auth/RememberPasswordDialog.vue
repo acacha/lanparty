@@ -10,11 +10,10 @@
                     <h3>{{errorMessage}}</h3>
                     <p v-for="(error, errorKey) in errors">{{errorKey}} : {{ error[0] }}</p>
                 </v-alert>
-                <v-form v-model="valid" class="mb-2">
+                <v-form class="mb-2">
                     <v-text-field
                             label="Correu electrònic"
                             v-model="email"
-                            :rules="emailRules"
                             :error="errors['email']"
                             :error-messages="errors['email']"
                             required
@@ -32,7 +31,7 @@
                 <v-btn color="primary darken-1" flat @click.native="show = false">Tancar</v-btn>
                 <v-btn
                         :loading="loading"
-                        :disabled="!valid"
+                        :disabled="loading || $v.$invalid"
                         :color="loadingDone ? 'green' : 'primary'"
                         @click.native="rememberPassword"
                 >
@@ -50,9 +49,15 @@
 <script>
 import * as actions from '../store/action-types'
 import sleep from '../utils/sleep'
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'RememberPasswordDialog',
+  mixins: [validationMixin],
+  validations: {
+    email: { required, email }
+  },
   data () {
     return {
       internalAction: this.action,
@@ -61,11 +66,6 @@ export default {
       loading: false,
       loadingDone: false,
       email: '',
-      emailRules: [
-        (v) => !!v || 'El email és obligatori',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'S\'ha d\'indicar un email vàlid'
-      ],
-      valid: false
     }
   },
   props: {
