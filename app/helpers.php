@@ -396,6 +396,7 @@ if (!function_exists('create_inscription_types')) {
 
 if (!function_exists('create_events')) {
     function create_events() {
+
         $events = [
             [
               'name' => 'League Of Legends',
@@ -473,9 +474,75 @@ if (!function_exists('create_events')) {
             ]
         ];
 
-        foreach ($events as $event) {
+
+        $events2019 = [
+            [
+              'name' => 'League Of Legends',
+              'session' => '2019',
+              'inscription_type' => 'group',
+              'image' => '/img/LoL.jpeg',
+              'tickets' => 25, // Número de grups,
+              'participants_number' => 5,
+              'regulation' => 'https://drive.google.com/open?id=1ngi-LN20BYe6tkvIOQfWeEq7UJSfY_oZ',
+              'published_at' => '2019-05-01 12:00:00'
+            ],
+            [
+              'name' => 'Overwatch',
+              'session' => '2019',
+              'inscription_type' => 'group',
+              'image' => '/img/Overwatch.jpeg',
+              'tickets' => 15, // Número de grups
+              'participants_number' => 6,
+              'regulation' => 'https://drive.google.com/open?id=19p7BYETZjk_lFf7WS1ruITVrTF8RsKT6',
+              'published_at' => '2019-05-01 12:00:00'
+            ],
+            [
+              'name' => 'Counter Strike GO',
+              'session' => '2019',
+              'inscription_type' => 'group',
+              'image' => '/img/CounterStrike.jpeg',
+              'tickets' => 25, // Número de grups
+              'participants_number' => 3,
+              'regulation' => 'https://drive.google.com/open?id=1w_IZlY_udxGlIIm-KsY2KfnBC96EmfsD',
+              'published_at' => '2019-05-01 12:00:00'
+
+            ],
+            [
+              'name' => 'Capture The Flag',
+              'session' => '2019',
+              'inscription_type' => 'group',
+              'image' => '/img/CaptureTheFlag.jpeg',
+              'tickets' => 8, // Número de grups
+              'participants_number' => 3,
+              'regulation' => 'https://drive.google.com/open?id=18G315NKo6bPSJredIt_A7LJMdfpOHa4j',
+              'published_at' => '2019-05-01 12:00:00'
+            ],
+            [
+              'name' => 'FIFA 19',
+              'session' => '2019',
+              'inscription_type' => 'individual',
+              'image' => '/img/Fifa18.jpeg',
+              'tickets' => 32, // Número d'usuaris es poden inscriure
+              'regulation' => 'https://drive.google.com/open?id=1ED-Ui5zMLEU7KvYwUuf5umFvVAP8OupP',
+              'participants_number' => null,
+              'published_at' => '2019-05-01 12:00:00'
+            ],
+            [
+              'name' => 'Programació Python-JavaScript',
+              'session' => '2019',
+              'inscription_type' => 'individual',
+              'image' => '/img/code.jpeg',
+              'tickets' => 20, // Número d'usuaris es poden inscriure
+              'regulation' => 'https://drive.google.com/open?id=1V8kBbF-Jg-gBH6mdevjzbp5ljL6QhH42',
+              'participants_number' => null,
+              'published_at' => '2019-05-01 12:00:00'
+            ]
+        ];
+
+        foreach ($events2019 as $event) {
             $createdEvent = Event::firstOrCreate([
                 'name' => $event['name'],
+                'session' => $event['session'],
                 'inscription_type_id' => InscriptionType::where('value',$event['inscription_type'])->first()->id,
                 'image' => $event['image'],
                 'regulation' => $event['regulation'],
@@ -863,5 +930,3 @@ if (!function_exists('create_flags')) {
 
     }
 }
-
-
