@@ -76,6 +76,7 @@ export default {
         { icon: 'favorite_border', text: 'Premis', href: '/premis', new: true },
         { icon: 'flag', text: 'Capture The Flag', href: '/ctf', new: true },
         { heading: 'Links'},
+        { icon: 'link', text: 'Programa', href: '/programa', new: true },
         { icon: 'link', text: 'Institut de l\'Ebre', href: 'https://www.iesebre.com', new: true },
         { icon: 'link', text: 'Web Lan Party', href: 'http://lanparty.iesebre.com' , new: true },
         { icon: 'link', text: 'Facebook Lan Party', href: 'https://www.facebook.com/LanPartyIesEbre' , new: true },

@@ -24,6 +24,10 @@ Route::get('/condicions', function () {
     return redirect('http://www.google.com');
 });
 
+Route::get('/programa', function () {
+    return redirect('https://docs.google.com/document/d/1GxdZIBS1mg_ANeOVt7tW0AJxPVyM__5uFNdSglE2NoA/edit');
+});
+
 Route::get('/', '\\' . WelcomeController::class . '@index');
 
 Route::get('/premis', '\\' . Premis::class . '@index');
