@@ -14,6 +14,11 @@ import EventsCreate from './EventsCreate'
 
 export default {
   name: 'EventsManage',
+  data () {
+    return {
+      dataEvents: this.events,
+    }
+  },
   components: {
     'events-list': EventsList,
     'events-create': EventsCreate
@@ -22,6 +27,11 @@ export default {
     events: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    add (event) {
+      this.dataEvents.push(event)
     }
   }
 }
