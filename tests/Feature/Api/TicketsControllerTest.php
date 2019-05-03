@@ -159,7 +159,7 @@ class TicketsControllerTest extends TestCase
             'session' => '2018',
             'quantity' => 3
         ]);
-        $response->assertStatus(403);
+        $response->assertStatus(422);
         $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
 
         $this->loginAsSuperAdmin('api');
@@ -167,7 +167,7 @@ class TicketsControllerTest extends TestCase
             'session' => '2018',
             'quantity' => 3
         ]);
-        $response->assertStatus(403);
+        $response->assertStatus(422);
         $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
 
         $this->loginAsManager('api');
@@ -175,7 +175,7 @@ class TicketsControllerTest extends TestCase
             'session' => $session = '2018',
             'quantity' => 3
         ]);
-        $response->assertStatus(403);
+        $response->assertStatus(422);
         $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
 
         $this->loginAsSuperAdmin('api');
@@ -183,7 +183,7 @@ class TicketsControllerTest extends TestCase
             'session' => $session = '2018',
             'quantity' => 3
         ]);
-        $response->assertStatus(403);
+        $response->assertStatus(422);
         $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
 
     }
