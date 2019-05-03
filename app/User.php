@@ -83,8 +83,15 @@ class User extends Authenticatable
      */
     public function numbers()
     {
-        return $this->hasMany(Number::class);
+        return $this->hasMany(Number::class)->wherePivot('session',config('lanparty.session'));
+    }
 
+    /**
+     * Get the numbers assigned to the user.
+     */
+    public function allNumbers()
+    {
+        return $this->hasMany(Number::class);
     }
 
     /**

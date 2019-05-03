@@ -11,6 +11,9 @@
                         <v-chip label color="success darken-3" text-color="white">
                             <v-icon left>group</v-icon>Assignats: {{ this.assignedNumbers.length }}
                         </v-chip>
+                        <v-chip label color="accent darken-3" text-color="white">
+                            Números disponibles: {{ this.availableNumbers.length }}
+                        </v-chip>
                         <span style="display: inline-flex;">
                             <add-numbers-button :session="session"></add-numbers-button>
                             <delete-numbers-button :session="session"></delete-numbers-button>
@@ -42,7 +45,7 @@
                                     <v-avatar>
                                         <img :src="gravatarURL(data.item)">
                                     </v-avatar>
-                                    {{ data.item.value }} | {{ userInfoFormNumber(data.item) }}
+                                    {{ data.item.value }} | {{ data.item.session }} | {{ userInfoFormNumber(data.item) }}
                                 </v-chip>
                             </template>
                             <template slot="item" slot-scope="data">
@@ -58,7 +61,7 @@
                                     </v-list-tile-avatar>
                                     <v-list-tile-content>
                                         <v-list-tile-title>
-                                            {{ userInfoFormNumber(data.item) }}
+                                            {{ userInfoFormNumber(data.item) }} | Sessió: {{ data.item.session }}
                                         </v-list-tile-title>
                                     </v-list-tile-content>
                                 </template>
@@ -116,11 +119,18 @@
           return number.session === this.session
         })
       },
+      availableNumbers () {
+        let availableNumbers = this.$store.getters.numbers.filter((number) => {
+          return !number.user_id && number.session === this.session
+        })
+        if (availableNumbers) return availableNumbers
+        return []
+      },
       filteredNumbers: function () {
         if (this.assigned) {
           return filters['assigned'](this.internalNumbers)
         }
-        return this.numbers
+        return this.internalNumbers
       },
       assignedNumbers: function () {
         return filters['assigned'](this.internalNumbers)
