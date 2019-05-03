@@ -95,11 +95,17 @@
     props: {
       numbers: {
         type: Array
+      },
+      session: {
+        type: String,
+        required: true
       }
     },
     computed: {
       internalNumbers () {
-        return this.$store.getters.numbers
+        return this.$store.getters.numbers.filter((number) => {
+          return number.session == this.session
+        })
       },
       filteredNumbers: function () {
         if (this.assigned) {
