@@ -21,7 +21,7 @@ class AssignNumberToUserTest extends TestCase
     {
 //        $this->withoutExceptionHandling();
         initialize_roles();
-        Number::addNumbers(5);
+        Number::addNumbers(5,config('lanparty.session'));
         $user = factory(User::class)->create();
         $manager = factory(User::class)->create();
 
@@ -59,7 +59,7 @@ class AssignNumberToUserTest extends TestCase
     public function can_unassign_number_to_user()
     {
         initialize_roles();
-        Number::addNumbers(5);
+        Number::addNumbers(5,config('lanparty.session'));
         $number = Number::first();
         $user = factory(User::class)->create();
         $number->assignUser($user);
@@ -78,7 +78,7 @@ class AssignNumberToUserTest extends TestCase
     public function cannnot_unassign_number_to_user_if_not_manager()
     {
         initialize_roles();
-        Number::addNumbers(5);
+        Number::addNumbers(5, config('lanparty.session'));
         $number = Number::first();
         $user = factory(User::class)->create();
         $number->assignUser($user);
@@ -94,7 +94,7 @@ class AssignNumberToUserTest extends TestCase
     public function cannot_assign_number_to_user_if_not_manager()
     {
         initialize_roles();
-        Number::addNumbers(5);
+        Number::addNumbers(5,config('lanparty.session'));
         $user = factory(User::class)->create();
         $manager = factory(User::class)->create();
         $this->actingAs($manager,'api');
