@@ -46,11 +46,13 @@ class NumberTest extends TestCase
     /** @test */
     public function numbers_can_be_added()
     {
-        Number::addNumbers(100);
-        $this->assertCount(100,Number::all());
-        Number::addNumbers(100);
+        Number::addNumbers(10, config('lanparty.session'));
+        $this->assertCount(10,Number::all());
+        Number::addNumbers(10, config('lanparty.session'));
 
-        $this->assertCount(200,Number::all());
+        $this->assertCount(20,$numbers=Number::all());
+        $this->assertEquals(config('lanparty.session'),$numbers[0]->session);
+
     }
 
     /** @test */

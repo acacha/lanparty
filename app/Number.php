@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\Exceptions\NotEnoughNumbersException;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Number.
- * 
+ *
  * @package App
  */
 class Number extends Model
@@ -18,13 +19,22 @@ class Number extends Model
      *
      * @param $quantity
      */
-    public static function addNumbers($quantity) {
+    public static function addNumbers($quantity,$session) {
         $initial = Number::last() ? Number::last() + 1 : 1;
         foreach (range($initial, $initial + $quantity -1 ) as $value) {
             Number::create([
-                'value' => $value
+                'value' => $value,
+                'session' => $session
             ]);
         }
+    }
+
+    /**
+     * Numbers.
+     *
+     */
+    public static function numbers() {
+        return map_collection(Number::with('user')->get());
     }
 
     /**
@@ -106,5 +116,50 @@ class Number extends Model
                 $this->user->sn2 . ' ' . $this->user->name;
         }
         return "$this->value $this->description";
+    }
+
+    /**
+     * Map.
+     *
+     * @return array
+     */
+    public function map()
+    {
+        $number = [
+            'id' => $this->id,
+            'value' => $this->value,
+            'session' => $this->session,
+            'description' => $this->description,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'user_id' => $this->user_id,
+            'full_search' => $this->full_search
+        ];
+        if ( $this->user) {
+            $number = array_merge($number, [
+                'user' => [
+                    'id' => $this->user->id,
+                    'name' => $this->user->name,
+                    'sn1' => $this->user->sn1,
+                    'sn2' => $this->user->sn2,
+                    'givenName' => $this->user->givenName,
+                    'email' => $this->user->email,
+                ]
+            ]);
+        }
+        return $number;
+    }
+
+    /**
+     * Add numbers.
+     *
+     * @param $quantity
+     */
+    public static function removeNumbers($quantity, $session) {
+        foreach (range(1, $quantity ) as $value) {
+            $number = Number::firstAvailableNumber($session);
+            if (!$number) throw new NotEnoughNumbersException();
+            $number->delete();
+        }
     }
 }

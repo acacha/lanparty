@@ -27,7 +27,10 @@ class ManageParticipantsController extends Controller
     {
         $events = collect(EventResourceForHomePage::collection(Event::published()->get())->resolve());
         $users = map_collection(User::with(['ticket','events','roles','numbers'])->withCount('ticket')->get());
-        $numbers = collect(NumberWithUserResource::collection(Number::with(['user'])->get())->resolve());
+
+//        $numbers = collect(NumberWithUserResource::collection(Number::with(['user'])->get())->resolve());
+        $numbers = map_collection(Number::with(['user'])->get());
+
         $tickets = Ticket::tickets();
         return view('manage.participants', [
             'user' => Auth::user(),
