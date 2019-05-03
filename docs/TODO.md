@@ -1,22 +1,21 @@
 # BUGS
 
-- [ ] el link de canviar paraula de pas des de email porta a la home si l'usuari ja està registrat
-  - [ ] Es mostra formulari ok si l'usuari esta log off
-  - [ ] Diu que falta el email (error 422) quan el email està ja posat
+- [X] el link de canviar paraula de pas des de email porta a la home si l'usuari ja està registrat
+  - [X] Es mostra formulari ok si l'usuari esta log off: tret middleware guest
+  - [X] Diu que falta el email (error 422) quan el email està ja posat
 
 # PETITS DETALLS
 
-- [ ] modificar/esborrar d'usauris a l'apartat participants no fa res
-  - [ ] és error? -> arreglar
-  - [ ] no està fet? -> comentar botons per que no apareguin 
-
+- [X] modificar/esborrar d'usauris a l'apartat participants no fa res
+  - [X] no està fet -> comentar botons per que no apareguin 
 - [ ] Al apuntar-se a un event de grup el switch es queda marcat si no acabes el registre (tancas). Només problema forntend al fer f5 està tot ok. 
 
 # SESSIONS
 
-- [ ] Apartat de generació de sessions
-  - [ ] No cal creat taula sessions, simplement un fitxer config?
-- [ ] Desplegable de sessions a participants agafi les sessions de config
+- [X] Apartat de generació de sessions
+  - [X] No cal creat taula sessions, simplement un fitxer config.
+  - [X] Passar a javascript info de config
+- [X] Desplegable de sessions a participants agafi les sessions de config
 - [ ] Crear middleware per protegir certes operacions relacionades amb la sessió:
   - [ ] Impedeixi executar canvis en sessions archivades (anys anteriors)   
 
