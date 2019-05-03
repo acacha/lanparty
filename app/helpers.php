@@ -958,4 +958,115 @@ if (!function_exists('create_flags_2019')) {
 
 
     }
+
+
+    if (!function_exists('create_partners_2019')) {
+        function create_partners_2019() {
+
+            DB::table('partners')->insert([
+                'name' => 'Ajuntament de Tortosa',
+                'session' => '2019',
+                'category' => null,
+                'avatar' => '/img/logos/Ajuntament.jpg'
+            ]);
+
+            DB::table('partners')->insert([
+                  'name' => 'Fusteria Almendros',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/Almendros.jpg'
+            ]);
+
+            DB::table('partners')->insert([
+                  'name' => 'Alonso',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/Alonso.jpg'
+            ]);
+
+          DB::table('partners')->insert([
+                'name' => 'Altercom',
+                'session' => '2019',
+                'category' => null,
+                'avatar' => '/img/logos/Altercom.jpg'
+          ]);
+
+          DB::table('partners')->insert([
+                'name' => 'Beep',
+                'session' => '2019',
+                'category' => null,
+                'avatar' => '/img/logos/Beep.jpg'
+          ]);
+          DB::table('partners')->insert([
+                'name' => 'Disi',
+                'session' => '2019',
+                'category' => null,
+                'avatar' => '/img/logos/Disi.jpg'
+          ]);
+            DB::table('partners')->insert([
+                  'name' => 'ePorts',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/ePorts.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Ferretería Garcia',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/FerreteriaGarcia.png'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Globals',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/Globals.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Informàtica Guerra',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/Jabil.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Oficlick',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/Oficlick.webp'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'PC Serveis',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/PcServeis.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Querol',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/Querol.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Recycling Systems',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/RecyclingSystem.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'Security Pla',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/SecurityPla.jpg'
+            ]);
+            DB::table('partners')->insert([
+                  'name' => 'The Work Shop',
+                  'session' => '2019',
+                  'category' => null,
+                  'avatar' => '/img/logos/TheWorkShop.jpg'
+            ]);
+
+
+
+
+        }
+      }
 }

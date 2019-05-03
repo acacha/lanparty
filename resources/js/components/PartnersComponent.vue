@@ -1,5 +1,10 @@
 <template>
     <div>
+        <v-toolbar  dark color="green light">
+            <v-icon style="margin-right: 1%">card_giftcard</v-icon>
+            <v-icon>contacts</v-icon>
+            <v-toolbar-title>Col·laboradors</v-toolbar-title>
+        </v-toolbar>
         <v-data-table
                 :headers="headers"
                 :items="internalPartners"
@@ -7,16 +12,19 @@
                 class="elevation-1"
         >
             <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td>{{ props.item.category }}</td>
-                <td>{{ showPrizes(props.item.prizes) }}</td>
+                <td>
+                    <v-img :src="props.item.avatar" :alt="props.item.name" contain="true" min-width="500px" max-height="120px"></v-img>
+                </td>
+                <td min-width="100px">{{ showPrizes(props.item.prizes) }}</td>
             </template>
         </v-data-table>
     </div>
 </template>
 
 <style>
-
+.partner-name {
+  min-width: 100px;
+}
 </style>
 
 <script>
@@ -25,8 +33,7 @@
       return {
         internalPartners: this.partners,
         headers: [
-          { text: 'Col·laborador', value: 'name' },
-          { text: 'Categoria', value: 'category' },
+          { text: 'Col·laborador', class: 'partner-logo' },
           { text: 'Premis', value: 'prizes' }
         ]
       }

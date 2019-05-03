@@ -1,5 +1,10 @@
 <template>
     <div>
+        <v-toolbar  dark color="green light">
+            <v-icon style="margin-right: 1%">card_giftcard</v-icon>
+            <v-icon>favorite_border</v-icon>
+            <v-toolbar-title>Premis</v-toolbar-title>
+        </v-toolbar>
         <v-data-table
                 :headers="headers"
                 :items="internalPrizes"
@@ -9,9 +14,7 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.name }}</td>
                 <td class="text-xs">{{ props.item.partner.name }}</td>
-                <td class="text-xs">{{ props.item.partner.category }}</td>
                 <td class="text-xs">{{ priceInEuros(props.item.value) }}</td>
-                <td class="text-xs">{{ props.item.number && props.item.number.value }}</td>
                 <td class="text-xs">{{ winner(props.item) }}</td>
             </template>
         </v-data-table>
@@ -34,9 +37,7 @@
             value: 'name'
           },
           { text: 'Col·laborador', value: 'partner.name' },
-          { text: 'Categoria', value: 'partner.category' },
           { text: 'Valorat', value: 'value' },
-          { text: 'Número sorteig', value: 'number.value' },
           { text: 'Guanyador', value: 'winner' }
         ]
       }
