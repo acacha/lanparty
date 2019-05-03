@@ -576,7 +576,7 @@ if (!function_exists('create_events_2019')) {
 if (!function_exists('create_numbers')) {
     function create_numbers()
     {
-        Number::addNumbers(1000);
+        Number::addNumbers(10,config('lanparty.session'));
     }
 }
 

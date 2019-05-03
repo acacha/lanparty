@@ -56,7 +56,6 @@ class EventsControllerTest extends TestCase
     /** @test */
     public function can_fetch_events()
     {
-        $this->withoutExceptionHandling();
         seed_database();
         $response = $this->json('GET','/api/v1/events');
         $response->assertSuccessful();
