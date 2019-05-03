@@ -19,7 +19,6 @@ class AssignNumberToUserTest extends TestCase
     /** @test */
     public function can_assign_number_to_user()
     {
-//        $this->withoutExceptionHandling();
         initialize_roles();
         Number::addNumbers(5,config('lanparty.session'));
         $user = factory(User::class)->create();
@@ -29,7 +28,8 @@ class AssignNumberToUserTest extends TestCase
         $this->actingAs($manager,'api');
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/assign_number', [
-            'description' => 'Assistència matí divendres'
+            'description' => 'Assistència matí divendres',
+            'session' => config('lanparty.session')
         ]);
         $response->assertSuccessful();
         $number = json_decode($response->getContent());
