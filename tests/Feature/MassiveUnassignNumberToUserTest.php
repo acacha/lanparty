@@ -20,13 +20,13 @@ class MassiveUnassignNumberToUserTest extends TestCase
     public function a_manager_can_unassign_all_numbers_assigned_to_an_user()
     {
         initialize_roles();
-        Number::addNumbers(5);
+        Number::addNumbers(5,config('lanparty.session'));
         $user = factory(User::class)->create();
 
-        Number::firstAvailableNumber()->assignUser($user);
-        Number::firstAvailableNumber()->assignUser($user);
-        Number::firstAvailableNumber()->assignUser($user);
-        Number::firstAvailableNumber()->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
 
         $manager = factory(User::class)->create();
         $manager->assignRole('Manager');
@@ -42,15 +42,14 @@ class MassiveUnassignNumberToUserTest extends TestCase
     /** @test */
     public function a_not_manager_cannot_unassign_all_numbers_assigned_to_an_user()
     {
-//        $this->withoutExceptionHandling();
         initialize_roles();
-        Number::addNumbers(5);
+        Number::addNumbers(5, config('lanparty.session'));
         $user = factory(User::class)->create();
 
-        Number::firstAvailableNumber()->assignUser($user);
-        Number::firstAvailableNumber()->assignUser($user);
-        Number::firstAvailableNumber()->assignUser($user);
-        Number::firstAvailableNumber()->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
 
         $manager = factory(User::class)->create();
         $this->actingAs($manager,'api');

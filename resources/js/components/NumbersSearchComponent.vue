@@ -11,6 +11,10 @@
                         <v-chip label color="success darken-3" text-color="white">
                             <v-icon left>group</v-icon>Assignats: {{ this.assignedNumbers.length }}
                         </v-chip>
+                        <span style="display: inline-flex;">
+                            <add-numbers-button :session="session"></add-numbers-button>
+                            <delete-numbers-button :session="session"></delete-numbers-button>
+                        </span>
                     </v-flex>
                     <v-flex xs12>
                         <v-checkbox
@@ -73,6 +77,8 @@
   import randomColor from './mixins/randomColor'
   import * as mutations from '../store/mutation-types'
   import * as actions from '../store/action-types'
+  import AddNumbersButton from '../numbers/AddNumbersButton'
+  import DeleteNumbersButton from '../numbers/DeleteNumbersButton'
 
   // Numbers filters
   const filters = {
@@ -86,6 +92,10 @@
   export default {
     name: 'NumbersSearch',
     mixins: [ randomColor ],
+    components: {
+      'add-numbers-button': AddNumbersButton,
+      'delete-numbers-button': DeleteNumbersButton,
+    },
     data () {
       return {
         selected_number_id: null,
@@ -95,11 +105,17 @@
     props: {
       numbers: {
         type: Array
+      },
+      session: {
+        type: String,
+        required: true
       }
     },
     computed: {
       internalNumbers () {
-        return this.$store.getters.numbers
+        return this.$store.getters.numbers.filter((number) => {
+          return number.session === this.session
+        })
       },
       filteredNumbers: function () {
         if (this.assigned) {

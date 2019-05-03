@@ -4,7 +4,7 @@
             <v-btn icon color="primary" flat slot="activator" @click="dialog=true">
                 <v-icon>remove</v-icon>
             </v-btn>
-            <span>Eliminar tickets</span>
+            <span>Eliminar tiquets</span>
         </v-tooltip>
         <v-dialog
                 v-model="dialog"
@@ -14,7 +14,7 @@
                 <v-card-title
                         class="title primary darken-3 white--text"
                 >
-                  Eliminar tickets de la sessió: {{ session}}
+                  Eliminar tiquets de la sessió: {{ session}}
                 </v-card-title>
 
                 <v-card-text>
@@ -81,7 +81,7 @@
           quantity: this.quantity
         }).then(() => {
           this.removing = false
-          this.$snackbar.showMessage('Tickets eliminats correctament')
+          this.$snackbar.showMessage('Tiquets eliminats correctament')
           this.dialog = false
           this.$store.dispatch(actions.FETCH_TICKETS)
         }).catch((error) => {
@@ -90,7 +90,7 @@
               this.$snackbar.showError(error.response.data.message)
               this.dialog = false
             } else {
-              this.$snackbar.showMessage('Tickets restants eliminats correctament')
+              this.$snackbar.showMessage('Tiquets restants eliminats correctament')
               this.dialog = false
               this.$store.dispatch(actions.FETCH_TICKETS)
             }

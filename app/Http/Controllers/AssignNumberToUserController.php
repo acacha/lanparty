@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AssignNumberToUser;
+use App\Http\Requests\AssignNumberToUserDestroy;
+use App\Http\Requests\AssignNumberToUserStore;
 use App\Number;
 use App\User;
-use Illuminate\Http\Request;
 
 /**
  * Class AssignNumberToUserController.
@@ -18,10 +18,11 @@ class AssignNumberToUserController extends Controller
      * Assign first available number to user.
      *
      * @param User $user
+     * @return
      */
-    public function store(AssignNumberToUser $request, User $user)
+    public function store(AssignNumberToUserStore $request, User $user)
     {
-        $number = Number::firstAvailableNumber()->assignUser($user);
+        $number = Number::firstAvailableNumber($request->session)->assignUser($user);
         $number->description = $request->description;
         $number->save();
         return $number;
@@ -31,11 +32,11 @@ class AssignNumberToUserController extends Controller
     /**
      * Unassign number to user
      *
-     * @param AssignNumberToUser $request
+     * @param AssignNumberToUserDestroy $request
      * @param Number $number
      * @return Number
      */
-    public function destroy(AssignNumberToUser $request, Number $number)
+    public function destroy(AssignNumberToUserDestroy $request, Number $number)
     {
         $number->user_id = null;
         $number->save();

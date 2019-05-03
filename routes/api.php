@@ -67,6 +67,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Numbers
     Route::get('/numbers', '\\' . NumbersController::class . '@index');
 
+    Route::group(['middleware' => 'checkSession'], function() {
+        Route::post('/numbers', '\\' . NumbersController::class . '@store');
+        Route::post('/numbers/remove', '\\' . NumbersController::class . '@destroy');
+    });
+
     //Register Auth user to events
     Route::post('/events/{event}/register', '\\' . RegisterToEventController::class . '@store');
     Route::delete('/events/{event}/register', '\\' . RegisterToEventController::class . '@destroy');

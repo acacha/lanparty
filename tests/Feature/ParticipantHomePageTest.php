@@ -31,7 +31,7 @@ class ParticipantHomePageTest extends TestCase
         $events = Event::published();
 
         foreach ( range (1,3) as $i) {
-            Number::firstAvailableNumber()->assignUser($user);
+            Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
         }
 
         $this->actingAs($user);

@@ -4,7 +4,7 @@
             <v-btn icon color="primary" flat slot="activator" @click="dialog=true">
                 <v-icon>add</v-icon>
             </v-btn>
-            <span>Afegir més tickets</span>
+            <span>Afegir més tiquets</span>
         </v-tooltip>
         <v-dialog
                 v-model="dialog"
@@ -14,7 +14,7 @@
                 <v-card-title
                         class="title primary darken-3 white--text"
                 >
-                  Afegir tickets a la sessió: {{ session}}
+                  Afegir tiquets a la sessió: {{ session}}
                 </v-card-title>
 
                 <v-card-text>
@@ -93,7 +93,7 @@ export default {
         quantity: this.quantity
       }).then(() => {
         this.adding = false
-        this.$snackbar.showMessage('Tickets afegits correctament')
+        this.$snackbar.showMessage('Tiquets afegits correctament')
         this.dialog = false
         this.$store.dispatch(actions.FETCH_TICKETS)
       }).catch(() => {

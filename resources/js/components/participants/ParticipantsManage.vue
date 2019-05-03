@@ -51,7 +51,7 @@
                         <h3>Números del sorteig</h3>
                     </v-card-title>
                     <v-card-text class="px-0 mb-2">
-                        <numbers-search :numbers="numbers"></numbers-search>
+                        <numbers-search :numbers="numbers" :session="session"></numbers-search>
                     </v-card-text>
                 </v-card>
             </v-flex>
