@@ -6,6 +6,7 @@ use App\Exceptions\NotEnoughTicketsException;
 use App\Http\Resources\NumberResource;
 use App\Http\Resources\UserEventResource;
 use App\Notifications\ResetPasswordNotification;
+use App\Traits\FormattedDates;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -18,7 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens,Notifiable, HasRoles;
+    use HasApiTokens,Notifiable, HasRoles, FormattedDates;
 
     /**
      * The attributes that are mass assignable.
@@ -58,7 +59,13 @@ class User extends Authenticatable
             'admin' => $this->admin,
             'manager' => $this->isManager(),
             'created_at' => $this->created_at,
+            'created_at_timestamp' => $this->created_at_timestamp,
+            'formatted_created_at' => $this->formatted_created_at,
+            'formatted_created_at_diff' => $this->formatted_created_at_diff,
             'updated_at' => $this->updated_at,
+            'formatted_updated_at' => $this->formatted_updated_at,
+            'updated_at_timestamp' => $this->updated_at_timestamp,
+            'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'numbers' => NumberResource::collection($this->numbers),
             'events' => UserEventResource::collection($this->events),
             'ticket' => $this->ticket,
