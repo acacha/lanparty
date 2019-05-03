@@ -83,7 +83,7 @@ class User extends Authenticatable
      */
     public function numbers()
     {
-        return $this->hasMany(Number::class)->wherePivot('session',config('lanparty.session'));
+        return $this->hasMany(Number::class)->where('session',config('lanparty.session'));
     }
 
     /**
