@@ -93,14 +93,14 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('tickets', [
             'user_id' => $user->id
         ]);
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
-        $user->pay('2018');
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
+        $user->pay(config('lanparty.session'));
         $user->fresh();
         $this->assertDatabaseHas('tickets', [
             'user_id' => $user->id
         ]);
         $this->assertCount(1, Ticket::where('user_id', $user->id)->get());
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
     /** @test */
@@ -110,9 +110,9 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('tickets', [
             'user_id' => $user->id
         ]);
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
         $this->expectException(NotEnoughTicketsException::class);
-        $user->pay('2018');
+        $user->pay(config('lanparty.session'));
     }
 
     /** @test */
@@ -120,9 +120,9 @@ class UserTest extends TestCase
     {
         seed_database();
         $user = factory(User::class)->create();
-        $user->pay('2018');
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $user->pay(config('lanparty.session'));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
         $user->unpay();
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 }
