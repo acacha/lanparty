@@ -52,7 +52,6 @@ export default {
       this.showMessage(message)
     })
     EventBus.$on('showSnackBar', (message, color, subtext, textAlign) => {
-      console.log('HEY!!!!!!!!!!!!!!')
       this.showSnackBar(message, color, subtext, textAlign)
     })
   }

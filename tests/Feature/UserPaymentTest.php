@@ -165,4 +165,25 @@ class UserPaymentTest extends TestCase
         $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
+    /** @test */
+    public function no_body_can_perform_actions_on_archived_sessions()
+    {
+        seed_database();
+
+        $manager = factory(User::class)->create();
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        $user = factory(User::class)->create();
+
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
+            'session' => '2018'
+        ]);
+        $response->assertStatus(422);
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
+
+
+    }
 }

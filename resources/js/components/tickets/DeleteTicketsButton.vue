@@ -86,9 +86,14 @@
           this.$store.dispatch(actions.FETCH_TICKETS)
         }).catch((error) => {
           if (error.response.status === 422) {
-            this.$snackbar.showMessage('Tickets restants eliminats correctament')
-            this.dialog = false
-            this.$store.dispatch(actions.FETCH_TICKETS)
+            if (error.response.data.message === 'NO és possible realitzar accions en sessions arxivades.') {
+              this.$snackbar.showError(error.response.data.message)
+              this.dialog = false
+            } else {
+              this.$snackbar.showMessage('Tickets restants eliminats correctament')
+              this.dialog = false
+              this.$store.dispatch(actions.FETCH_TICKETS)
+            }
           }
           this.removing = false
         })
