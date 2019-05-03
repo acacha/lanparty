@@ -1,24 +1,28 @@
 <template>
-    <div>
-        <v-toolbar  dark color="green light">
-            <v-icon style="margin-right: 1%">card_giftcard</v-icon>
-            <v-icon>favorite_border</v-icon>
-            <v-toolbar-title>Premis</v-toolbar-title>
-        </v-toolbar>
-        <v-data-table
-                :headers="headers"
-                :items="internalPrizes"
-                hide-actions
-                class="elevation-1"
-        >
-            <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs">{{ props.item.partner.name }}</td>
-                <td class="text-xs">{{ priceInEuros(props.item.value) }}</td>
-                <td class="text-xs">{{ winner(props.item) }}</td>
-            </template>
-        </v-data-table>
-    </div>
+    <v-container grid-list-md text-xs-center fluid>
+        <v-layout row wrap>
+            <v-flex xs12>
+                <v-toolbar  dark color="green light">
+                    <v-icon style="margin-right: 1%">card_giftcard</v-icon>
+                    <v-icon>favorite_border</v-icon>
+                    <v-toolbar-title>Premis</v-toolbar-title>
+                </v-toolbar>
+                <v-data-table
+                        :headers="headers"
+                        :items="internalPrizes"
+                        hide-actions
+                        class="elevation-1"
+                >
+                    <template slot="items" slot-scope="props">
+                        <td>{{ props.item.name }}</td>
+                        <td class="text-xs">{{ props.item.partner.name }}</td>
+                        <td class="text-xs">{{ priceInEuros(props.item.value) }}</td>
+                        <td class="text-xs">{{ winner(props.item) }}</td>
+                    </template>
+                </v-data-table>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <style>
