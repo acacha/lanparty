@@ -21,7 +21,7 @@ class TicketsControllerTest extends TestCase
     public function logged_user_can_fetch_tickets()
     {
         $tickets = factory(Ticket::class, 5)->create(
-            ['session' => '2018']
+            ['session' => config('lanparty.session')]
         );
 
         $user = factory(User::class)->create([
@@ -57,18 +57,19 @@ class TicketsControllerTest extends TestCase
     /** @test */
     public function manager_can_add_tickets()
     {
+        $this->withoutExceptionHandling();
         $this->loginAsManager('api');
         $response = $this->json('POST','/api/v1/tickets', [
-            'session' => '2018',
+            'session' => $session = config('lanparty.session'),
             'quantity' => 3
         ]);
         $response->assertSuccessful();
         $this->assertCount(3, $tickets = Ticket::tickets());
-        $this->assertEquals('2018',$tickets[0]['session']);
+        $this->assertEquals($session,$tickets[0]['session']);
         $this->assertNull($tickets[0]['user_id']);
-        $this->assertEquals('2018',$tickets[1]['session']);
+        $this->assertEquals($session,$tickets[1]['session']);
         $this->assertNull($tickets[1]['user_id']);
-        $this->assertEquals('2018',$tickets[2]['session']);
+        $this->assertEquals($session,$tickets[2]['session']);
         $this->assertNull($tickets[2]['user_id']);
 
     }
@@ -78,7 +79,7 @@ class TicketsControllerTest extends TestCase
     {
         $this->loginAsManager('api');
         $response = $this->json('POST','/api/v1/tickets', [
-            'session' => '2018',
+            'session' => config('lanparty.session'),
             'quantity' => 0
         ]);
         $response->assertStatus(422);
@@ -97,7 +98,7 @@ class TicketsControllerTest extends TestCase
     {
         $this->login('api');
         $response = $this->json('POST','/api/v1/tickets', [
-            'session' => '2018',
+            'session' => config('lanparty.session'),
             'quantity' => 3
         ]);
         $response->assertStatus(403);
@@ -107,7 +108,7 @@ class TicketsControllerTest extends TestCase
     public function guest_user_cannot_add_tickets()
     {
         $response = $this->json('POST','/api/v1/tickets', [
-            'session' => '2018',
+            'session' => config('lanparty.session'),
             'quantity' => 3
         ]);
         $response->assertStatus(401);
@@ -116,25 +117,25 @@ class TicketsControllerTest extends TestCase
     /** @test */
     public function manager_can_remove_tickets()
     {
-        Ticket::addTickets(4,'2018');
+        Ticket::addTickets(4,config('lanparty.session'));
         $this->loginAsManager('api');
         $response = $this->json('POST','/api/v1/tickets/remove', [
-            'session' => '2018',
+            'session' => config('lanparty.session'),
             'quantity' => 3
         ]);
         $response->assertSuccessful();
         $this->assertCount(1, $tickets = Ticket::tickets());
-        $this->assertEquals('2018',$tickets[0]['session']);
+        $this->assertEquals(config('lanparty.session'),$tickets[0]['session']);
         $this->assertNull($tickets[0]['user_id']);
     }
 
     /** @test */
     function manager_cannot_remove_more_tickets_than_available()
     {
-        Ticket::addTickets(3,'2018');
+        Ticket::addTickets(3,config('lanparty.session'));
         $this->loginAsManager('api');
         $response = $this->json('POST','/api/v1/tickets/remove', [
-            'session' => '2018',
+            'session' => config('lanparty.session'),
             'quantity' => 4
         ]);
         $response->assertStatus(422);

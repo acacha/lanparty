@@ -31,7 +31,7 @@ class TicketsController extends Controller
         Ticket::addTickets($request->quantity,$request->session);
     }
 
-    public function delete(TicketsDestroy $request)
+    public function destroy(TicketsDestroy $request)
     {
         try {
             Ticket::removeTickets($request->quantity,$request->session);

@@ -129,9 +129,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     //Tickets
     Route::get('/tickets', '\\' . TicketsController::class . '@index');
-    Route::post('/tickets', '\\' . TicketsController::class . '@store');
-    Route::post('/tickets/remove', '\\' . TicketsController::class . '@delete');
 
+    Route::group(['middleware' => 'checkSession'], function() {
+        Route::post('/tickets', '\\' . TicketsController::class . '@store');
+        Route::post('/tickets/remove', '\\' . TicketsController::class . '@destroy');
+    });
 });
 
 Route::bind('allevent', function($id)
