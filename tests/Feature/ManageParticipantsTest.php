@@ -30,7 +30,7 @@ class ManageParticipantsTest extends TestCase
         $users = factory(User::class,5)->create();
 
         foreach ( range(1,10) as $i) {
-            Number::firstAvailableNumber()->assignUser($users->random());
+            Number::firstAvailableNumber(config('lanparty.session'))->assignUser($users->random());
         }
 
         $manager = factory(User::class)->create();

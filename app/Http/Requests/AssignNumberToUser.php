@@ -31,7 +31,7 @@ class AssignNumberToUser extends FormRequest
     public function rules()
     {
         return [
-            //
+            'session' => 'required|string'
         ];
     }
 }

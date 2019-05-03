@@ -659,15 +659,15 @@ if (!function_exists('seed_example_database')) {
         }
 
         foreach ( range(1,3) as $i) {
-            Number::firstAvailableNumber()->assignUser($user);
+            Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user);
         }
         //One extra number with description:
-        Number::firstAvailableNumber()->assignUser($user,'Por que tú lo vales!');
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser($user,'Por que tú lo vales!');
 
         $users = factory(User::class,100)->create();
 
         foreach (  range(1,20) as $i) {
-            Number::firstAvailableNumber()->assignUser($users->random());
+            Number::firstAvailableNumber(config('lanparty.session'))->assignUser($users->random());
         }
 
         $events = Event::published()->get();

@@ -18,10 +18,11 @@ class AssignNumberToUserController extends Controller
      * Assign first available number to user.
      *
      * @param User $user
+     * @return
      */
     public function store(AssignNumberToUser $request, User $user)
     {
-        $number = Number::firstAvailableNumber()->assignUser($user);
+        $number = Number::firstAvailableNumber($request->session)->assignUser($user);
         $number->description = $request->description;
         $number->save();
         return $number;

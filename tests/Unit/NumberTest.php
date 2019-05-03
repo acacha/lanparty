@@ -58,17 +58,17 @@ class NumberTest extends TestCase
     /** @test */
     public function can_get_first_available_number()
     {
-        $this->assertSame(Number::firstAvailableNumber(), null);
+        $this->assertSame(Number::firstAvailableNumber(config('lanparty.session')), null);
         Number::addNumbers(5,config('lanparty.session'));
-        $this->assertEquals(1,Number::firstAvailableNumber()->value);
-        Number::firstAvailableNumber()->assignUser(Factory(User::class)->create());
-        $this->assertEquals(2, Number::firstAvailableNumber()->value);
-        $number = Number::firstAvailableNumber();
+        $this->assertEquals(1,Number::firstAvailableNumber(config('lanparty.session'))->value);
+        Number::firstAvailableNumber(config('lanparty.session'))->assignUser(Factory(User::class)->create());
+        $this->assertEquals(2, Number::firstAvailableNumber(config('lanparty.session'))->value);
+        $number = Number::firstAvailableNumber(config('lanparty.session'));
         $number->assignUser(Factory(User::class)->create());
-        $this->assertEquals(3, Number::firstAvailableNumber()->value);
+        $this->assertEquals(3, Number::firstAvailableNumber(config('lanparty.session'))->value);
         $number->update(['user_id' => null]);
         $number->save();
-        $this->assertEquals(2, Number::firstAvailableNumber()->value);
+        $this->assertEquals(2, Number::firstAvailableNumber(config('lanparty.session'))->value);
     }
 
     /** @test */
