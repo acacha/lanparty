@@ -27,14 +27,13 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
-            'session' => 2018
+            'session' => config('lanparty.session')
         ]);
-
         $response->assertSuccessful();
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
     /** @test */
@@ -48,15 +47,15 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
-            'session' => 2018
+            'session' => config('lanparty.session')
         ]);
 
         $response->assertStatus(422);
         $this->assertEquals("No hi ha més places/tickets disponibles", json_decode($response->getContent())->message);
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
     /** @test */
@@ -84,12 +83,12 @@ class UserPaymentTest extends TestCase
         $manager->assignRole('Manager');
         $this->actingAs($manager,'api');
         $user = factory(User::class)->create();
-        $user->pay('2018');
+        $user->pay(config('lanparty.session'));
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
-            'session' => 2018
+            'session' => config('lanparty.session')
         ]);
         $response->assertStatus(422);
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
         $this->assertEquals('L\'usuari ja ha pagat la inscripció',json_decode($response->getContent())->message);
     }
 
@@ -102,11 +101,11 @@ class UserPaymentTest extends TestCase
         $manager->assignRole('Manager');
         $this->actingAs($manager,'api');
         $user = factory(User::class)->create();
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
-            'session' => 2018
+            'session' => config('lanparty.session')
         ]);
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
         $response->assertStatus(422);
         $this->assertEquals('L\'usuari no ha pagat el ticket',json_decode($response->getContent())->message);
     }
@@ -119,12 +118,12 @@ class UserPaymentTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
 
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay');
 
         $response->assertStatus(403);
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
     /** @test */
@@ -137,15 +136,15 @@ class UserPaymentTest extends TestCase
         $this->actingAs($manager,'api');
 
         $user = factory(User::class)->create();
-        $user->pay('2018');
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $user->pay(config('lanparty.session'));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
-            'session' => 2018
+            'session' => config('lanparty.session')
         ]);
 
         $response->assertSuccessful();
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
     /** @test */
@@ -155,22 +154,21 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
-        $user->pay('2018');
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $user->pay(config('lanparty.session'));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/unpay',[
-            'session' => 2018
+            'session' => config('lanparty.session')
         ]);
 
         $response->assertStatus(403);
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
+        $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
     /** @test */
-    public function a_manager_user_can_mark_user_as_paid_in_2_sessions()
+    public function no_body_can_perform_actions_on_archived_sessions()
     {
         seed_database();
-        Ticket::addTickets(1,'2019');
 
         $manager = factory(User::class)->create();
         $manager->assignRole('Manager');
@@ -178,22 +176,14 @@ class UserPaymentTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->assertFalse(in_array('2018',$user->inscription_paid));
+        $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
 
         $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay',[
-            'session' => 2018
+            'session' => '2018'
         ]);
+        $response->assertStatus(422);
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
 
-        $response->assertSuccessful();
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
 
-
-        $response = $this->json('POST','/api/v1/user/' . $user->id . '/pay', [
-            'session' => 2019
-        ]);
-
-        $response->assertSuccessful();
-        $this->assertTrue(in_array('2018',$user->inscription_paid));
-        $this->assertTrue(in_array('2019',$user->inscription_paid));
     }
 }

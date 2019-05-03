@@ -27,7 +27,7 @@ class UsersControllerTest extends TestCase
         $event = Event::published()->inRandomOrder()->where('inscription_type_id',1)->first();
         $event->addTickets(10);
         $paidUser = factory(User::class)->create();
-        $paidUser->pay('2018');
+        $paidUser->pay(config('lanparty.session'));
 
         $this->actingAs($users->first(),'api');
         $response = $this->json('GET','api/v1/users');
@@ -50,7 +50,7 @@ class UsersControllerTest extends TestCase
         // Check paid user
 
         $users = json_decode($response->getContent());
-        $this->assertTrue(in_array('2018',$users[5]->inscription_paid));
+        $this->assertTrue(in_array(config('lanparty.session'),$users[5]->inscription_paid));
     }
 
     /** @test */
