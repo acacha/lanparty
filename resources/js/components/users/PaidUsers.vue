@@ -32,7 +32,7 @@
                 </v-layout>
 
                 <v-data-table
-                        :items="users"
+                        :items="paidInternalusers"
                         :headers="headers"
                         :search="search"
                         no-results-text="No s'ha trobat cap registre coincident"
@@ -66,11 +66,17 @@
                         <td>
                           {{ user.email }}
                         </td>
-                        <td>
-                          {{ user.created_at }}
+                        <td class="text-xs-left cell" :title="user.formatted_created_at">
+                            <v-tooltip bottom>
+                                <span slot="activator">{{ user.formatted_created_at_diff }}</span>
+                                <span>{{ user.formatted_created_at }}</span>
+                            </v-tooltip>
                         </td>
-                        <td>
-                          {{ user.updated_at }}
+                        <td class="text-xs-left cell" :title="user.formatted_updated_at">
+                            <v-tooltip bottom>
+                                <span slot="activator">{{ user.formatted_updated_at_diff }}</span>
+                                <span>{{ user.formatted_updated_at }}</span>
+                            </v-tooltip>
                         </td>
                       </tr>
                     </template>
@@ -127,16 +133,9 @@ export default {
     session: {
       type: String,
       required: true
-    },
-    users: {
-      type: String,
-      required: true
     }
   },
   computed: {
-    internalUsers() {
-      return this.$store.getters.users
-    },
     paidInternalusers() {
       return this.$store.getters.users.filter((user) => {
         return user.inscription_paid.includes(this.session)
