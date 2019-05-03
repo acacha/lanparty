@@ -34,7 +34,6 @@
                         >
                             <template slot="selection" slot-scope="data">
                                 <v-chip
-                                        close
                                         @input="data.parent.selectItem(data.item)"
                                         :selected="data.selected"
                                         class="chip--select"

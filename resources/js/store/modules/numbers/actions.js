@@ -3,9 +3,9 @@ import * as actions from '../../action-types'
 import numbers from '../../../api/numbers'
 
 export default {
-  [ actions.ASSIGN_NUMBER_TO_USER ] (context, { user, description }) {
+  [ actions.ASSIGN_NUMBER_TO_USER ] (context, { user, description, session }) {
     return new Promise((resolve, reject) => {
-      numbers.assignNumberToUser(user, description).then(response => {
+      numbers.assignNumberToUser(user, description, session).then(response => {
         context.commit(mutations.LAST_ASSIGNED_NUMBER, response.data)
         context.commit(mutations.ASSIGN_USER_TO_NUMBER, { user, number: response.data })
         resolve(response)

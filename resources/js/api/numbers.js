@@ -2,10 +2,11 @@ export default {
   fetch () {
     return window.axios.get('/api/v1/numbers')
   },
-  assignNumberToUser (user, description) {
+  assignNumberToUser (user, description, session) {
     description = description || ''
     return window.axios.post('/api/v1/user/' + user.id + '/assign_number', {
-      'description': description
+      'description': description,
+      'session': session,
     })
   },
   unassignNumberToUser (number) {
