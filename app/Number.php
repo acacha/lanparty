@@ -42,8 +42,8 @@ class Number extends Model
      *
      * @return mixed
      */
-    public static function firstAvailableNumber() {
-        return Number::available()->orderBy('value', 'asc')->first();
+    public static function firstAvailableNumber($session) {
+        return Number::available()->where('session',$session)->orderBy('value', 'asc')->first();
     }
 
     /**
