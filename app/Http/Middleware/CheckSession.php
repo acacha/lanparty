@@ -16,7 +16,7 @@ class CheckSession
      */
     public function handle($request, Closure $next)
     {
-        if (!$this->sessionIsActive($request)) abort(403, 'NO és possible realitzar accions en sessions arxicades.');
+        if (!$this->sessionIsActive($request)) abort(403, 'NO és possible realitzar accions en sessions arxivades.');
 
         return $next($request);
     }

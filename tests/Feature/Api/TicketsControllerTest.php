@@ -57,7 +57,6 @@ class TicketsControllerTest extends TestCase
     /** @test */
     public function manager_can_add_tickets()
     {
-        $this->withoutExceptionHandling();
         $this->loginAsManager('api');
         $response = $this->json('POST','/api/v1/tickets', [
             'session' => $session = config('lanparty.session'),
@@ -150,5 +149,42 @@ class TicketsControllerTest extends TestCase
         $this->loginAsManager('api');
         $response = $this->json('POST','/api/v1/tickets/remove', []);
         $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function nobody_can_perform_actions_on_deleted_sessions() {
+        Ticket::addTickets(4,'2018');
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets/remove', [
+            'session' => '2018',
+            'quantity' => 3
+        ]);
+        $response->assertStatus(403);
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
+
+        $this->loginAsSuperAdmin('api');
+        $response = $this->json('POST','/api/v1/tickets/remove', [
+            'session' => '2018',
+            'quantity' => 3
+        ]);
+        $response->assertStatus(403);
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
+
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/tickets', [
+            'session' => $session = '2018',
+            'quantity' => 3
+        ]);
+        $response->assertStatus(403);
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
+
+        $this->loginAsSuperAdmin('api');
+        $response = $this->json('POST','/api/v1/tickets', [
+            'session' => $session = '2018',
+            'quantity' => 3
+        ]);
+        $response->assertStatus(403);
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.',json_decode($response->getContent())->message);
+
     }
 }
