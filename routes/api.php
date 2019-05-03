@@ -87,9 +87,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     // Unassign all numbers assigned to an user
     Route::post('/user/{user}/unassign_numbers', '\\' . UnassignNumbersToUserController::class . '@store');
 
-    //Payments
-    Route::post('/user/{user}/pay', '\\' . UserPaymentsController::class . '@store');
-    Route::post('/user/{user}/unpay', '\\' . UserPaymentsController::class . '@destroy');
+    Route::group(['middleware' => 'checkSession'], function() {
+        //Payments
+        Route::post('/user/{user}/pay', '\\' . UserPaymentsController::class . '@store');
+        Route::post('/user/{user}/unpay', '\\' . UserPaymentsController::class . '@destroy');
+    });
 
     //Winners
     Route::delete('/winners', '\\' . WinnersController::class . '@destroy');
