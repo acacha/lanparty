@@ -59,7 +59,7 @@ class NumberTest extends TestCase
     public function can_get_first_available_number()
     {
         $this->assertSame(Number::firstAvailableNumber(), null);
-        Number::addNumbers(5);
+        Number::addNumbers(5,config('lanparty.session'));
         $this->assertEquals(1,Number::firstAvailableNumber()->value);
         Number::firstAvailableNumber()->assignUser(Factory(User::class)->create());
         $this->assertEquals(2, Number::firstAvailableNumber()->value);
