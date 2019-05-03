@@ -76,7 +76,7 @@ export default {
       show: true,
       minimized: false,
       session: window.lanparty.session,
-      sessions: window.lanparty.sessions
+      sessions: []
     }
   },
   props: {
@@ -100,6 +100,9 @@ export default {
       type: String,
       default:null
     }
+  },
+  created () {
+    this.sessions = window.lanparty.sessions.map(session => session.name)
   }
 }
 </script>

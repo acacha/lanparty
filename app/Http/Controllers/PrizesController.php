@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Prize;
-
 
 /**
  * Class PrizesController
@@ -19,7 +17,9 @@ class PrizesController extends Controller
    */
   public function index()
   {
-    return Prize::all();
+    $prizes = Prize::with(['partner'])->where('session', config('lanparty.session') )->get();
+    //return compact('prizes');
+    return view('prizes',compact('prizes'));
   }
   /**
    * Show.
@@ -28,7 +28,7 @@ class PrizesController extends Controller
    */
   public function show()
   {
-    $prizes = Prize::with(['partner','user','number','number.user'])->get();
+    $prizes = Prize::with(['partner','user','number','number.user', 'partner'])->get();
     return view('prizes',compact('prizes'));
   }
 }

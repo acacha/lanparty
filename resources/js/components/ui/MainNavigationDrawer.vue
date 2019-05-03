@@ -72,9 +72,9 @@ export default {
       items: [
         { icon: 'home', text: 'Benvinguda', href: '/' },
         { icon: 'event', text: 'Esdeveniments', href: '/home' },
-        { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors', target: '_blank'  },
-        { icon: 'favorite_border', text: 'Premis', href: '/premis', target: '_blank' },
-        { icon: 'flag', text: 'Capture The Flag', href: '/ctf', target: '_blank' },
+        { icon: 'contacts', text: 'Col·laboradors', href: '/colaboradors'  },
+        { icon: 'favorite_border', text: 'Premis', href: '/premis' },
+        { icon: 'flag', text: 'Capture The Flag', href: '/ctf' },
         { heading: 'Links'},
         { icon: 'link', text: 'Programa', href: '/programa', target: '_blank' },
         { icon: 'link', text: 'Normativa', href: '/condicions', target: '_blank' },
@@ -91,7 +91,7 @@ export default {
         { icon: 'event', text: 'Events', href: '/manage/events', role: 'Manager' },
         { icon: 'favorite', text: 'Sorteig', href: '/manage/sorteig', role: 'Manager', new : true },
         { icon: 'group', text: 'Col·laboradors', href: '/manage/partners', role: 'Manager', new : true },
-        {icon:'card_giftcard',text:'Premis',href:'/manage/prizes',role:'Manager', target: '_blank'}
+        {icon:'card_giftcard',text:'Premis',href:'/manage/prizes',role:'Manager'}
       ]
     }
   },

@@ -1,6 +1,8 @@
 <?php
 
 
+use Carbon\Carbon;
+
 return [
 
     /*
@@ -33,8 +35,14 @@ return [
     |
     */
     'sessions' => env('LANPARTY_SESSIONS', [
-        '2018',
-        '2019'
+        [
+            'name' => '2018',
+            'deleted_at' => Carbon::createFromDate(2018, 6, 1)
+        ],
+        [
+            'name' => '2019',
+            'deleted_at' => null
+        ]
     ]),
 
     /*

@@ -19,7 +19,7 @@ class PartnersController extends Controller
      */
     public function show()
     {
-        $partners = Partner::with('prizes')->get();
+        $partners = Partner::with('prizes')->where('session', config('lanparty.session') )->get();
         return view('partners',compact('partners'));
     }
 }
