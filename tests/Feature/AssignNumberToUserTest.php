@@ -56,6 +56,24 @@ class AssignNumberToUserTest extends TestCase
     }
 
     /** @test */
+    public function cannot_assign_number_to_user_if_no_more_numbers_available()
+    {
+        initialize_roles();
+        $user = factory(User::class)->create();
+        $manager = factory(User::class)->create();
+
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        $response = $this->json('POST','/api/v1/user/' . $user->id . '/assign_number', [
+            'description' => 'Assistència matí divendres',
+            'session' => config('lanparty.session')
+        ]);
+        $response->assertStatus(422);
+        $this->assertEquals('No queden prou números!',json_decode($response->getContent())->message);
+    }
+
+    /** @test */
     public function can_unassign_number_to_user()
     {
         initialize_roles();

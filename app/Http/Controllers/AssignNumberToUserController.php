@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotEnoughNumbersException;
 use App\Http\Requests\AssignNumberToUserDestroy;
 use App\Http\Requests\AssignNumberToUserStore;
 use App\Number;
@@ -22,7 +23,9 @@ class AssignNumberToUserController extends Controller
      */
     public function store(AssignNumberToUserStore $request, User $user)
     {
-        $number = Number::firstAvailableNumber($request->session)->assignUser($user);
+        $first = Number::firstAvailableNumber($request->session);
+        if ($first) $number = $first->assignUser($user);
+        else abort(422,'No queden prou números!');
         $number->description = $request->description;
         $number->save();
         return $number;

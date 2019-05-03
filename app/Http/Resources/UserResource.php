@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'numbers' => NumberResource::collection($this->numbers),
+            'all_numbers' => NumberResource::collection($this->allNumbers),
             'events' => UserEventResource::collection($this->events),
             'ticket' => $this->ticket,
             'roles' => $this->roles->pluck('name')
