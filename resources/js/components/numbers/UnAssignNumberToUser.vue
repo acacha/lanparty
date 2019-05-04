@@ -36,7 +36,7 @@ export default {
         this.done = true
         this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, this.number)
         this.loading = false
-        sleep(10000).then(() => { this.loading = false; this.done = false, this.confirming = null })
+        sleep(1000).then(() => { this.loading = false; this.done = false, this.confirming = null })
       }).catch(() => {
         this.loading = false
         this.confirming = null
