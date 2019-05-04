@@ -18,12 +18,7 @@
                 <td>{{ props.item.description }}</td>
                 <td>{{ props.item.created_at }}</td>
                 <td>
-                    <template v-if="confirmingUnassigningNumber == props.item.id">
-                        <v-icon right v-if="!unassigningNumber" @click="cancelUnassignNumber()" class="red--text darken-4--text">clear</v-icon>
-                        <v-progress-circular v-if="unassigningNumber" indeterminate color="primary"></v-progress-circular>
-                        <v-icon right v-else @click="unassignNumber(props.item)" class="green--text">done</v-icon>
-                    </template>
-                    <v-icon v-else right @click="confirmUnassignNumber(props.item)" color="pink">delete</v-icon>
+                    <unassign-number-to-user :session="session" :number="props.item"></unassign-number-to-user>
                 </td>
             </template>
             <template slot="no-data">
@@ -56,11 +51,13 @@
 import { mapGetters } from 'vuex'
 import randomColor from '../mixins/randomColor'
 import AssignNumberToUser from './AssignNumberToUser'
+import UnAssignNumberToUser from './UnAssignNumberToUser'
 
 export default {
   name: 'NumbersManage',
   components: {
-    'assign-number-to-user': AssignNumberToUser
+    'assign-number-to-user': AssignNumberToUser,
+    'unassign-number-to-user': UnAssignNumberToUser
   },
   data () {
     return {
@@ -72,7 +69,6 @@ export default {
       unassigningNumbers: false,
       unassignNumbersDone: false,
       unassigningNumber: false,
-      numberUnassigned: false,
       unassignNumberDialog: false
     }
   },
@@ -97,24 +93,6 @@ export default {
       }).catch(() => {
         this.unassigningNumbers = false
       })
-    },
-    unassignNumber (number) {
-      this.unassigningNumber = true
-      this.$store.dispatch(actions.UNASSIGN_NUMBER_TO_USER, number).then(result => {
-        this.numberUnassigned = true
-        this.$store.commit(mutations.REMOVE_NUMBER_TO_SELECTED_USER_NUMBERS, number)
-        this.unassigningNumber = false
-        sleep(1000).then(() => { this.unassignNumberDialog = false; this.numberUnassigned = true })
-      }).catch(() => {
-        this.unassigningNumber = false
-        this.confirmingUnassigningNumber = null
-      })
-    },
-    cancelUnassignNumber () {
-      this.confirmingUnassigningNumber = null
-    },
-    confirmUnassignNumber (number) {
-      this.confirmingUnassigningNumber = number.id
     }
   }
 }
