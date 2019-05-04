@@ -58,10 +58,62 @@ class NumbersControllerTest extends TestCase
         $response->assertSuccessful();
         $this->assertCount(3, $numbers = Number::numbers());
         $this->assertEquals($session,$numbers[0]['session']);
+        $this->assertEquals(1,$numbers[0]['value']);
         $this->assertNull($numbers[0]['user_id']);
         $this->assertEquals($session,$numbers[1]['session']);
+        $this->assertEquals(2,$numbers[1]['value']);
         $this->assertNull($numbers[1]['user_id']);
         $this->assertEquals($session,$numbers[2]['session']);
+        $this->assertEquals(3,$numbers[2]['value']);
+        $this->assertNull($numbers[2]['user_id']);
+    }
+
+    /** @test */
+    public function manager_can_add_numbers_to_new_session_with_already_existing_session()
+    {
+        $this->withoutExceptionHandling();
+        Number::addNumbers(10,'2018');
+
+        $this->loginAsManager('api');
+        $response = $this->json('POST','/api/v1/numbers', [
+            'session' => $session = config('lanparty.session'),
+            'quantity' => 3
+        ]);
+        $response->assertSuccessful();
+        $this->assertCount(13, $allNumbers = Number::numbers());
+        $this->assertCount(3, $numbers = Number::currentNumbers());
+
+        // NUMBERS 2018
+        $this->assertEquals('2018',$allNumbers[0]['session']);
+        $this->assertEquals(1,$allNumbers[0]['value']);
+        $this->assertNull($allNumbers[0]['user_id']);
+        $this->assertEquals('2018',$allNumbers[1]['session']);
+        $this->assertEquals(2,$allNumbers[1]['value']);
+        $this->assertNull($allNumbers[1]['user_id']);
+        $this->assertEquals('2018',$allNumbers[2]['session']);
+        $this->assertEquals(3,$allNumbers[2]['value']);
+        $this->assertNull($allNumbers[2]['user_id']);
+
+
+        // NUMBERS 2019
+        $this->assertEquals(config('lanparty.session'),$allNumbers[10]['session']);
+        $this->assertEquals(1,$allNumbers[10]['value']);
+        $this->assertNull($allNumbers[10]['user_id']);
+        $this->assertEquals(config('lanparty.session'),$allNumbers[11]['session']);
+        $this->assertEquals(2,$allNumbers[11]['value']);
+        $this->assertNull($allNumbers[11]['user_id']);
+        $this->assertEquals(config('lanparty.session'),$allNumbers[12]['session']);
+        $this->assertEquals(3,$allNumbers[12]['value']);
+        $this->assertNull($allNumbers[12]['user_id']);
+
+        $this->assertEquals(config('lanparty.session'),$numbers[0]['session']);
+        $this->assertEquals(1,$numbers[0]['value']);
+        $this->assertNull($numbers[0]['user_id']);
+        $this->assertEquals(config('lanparty.session'),$numbers[1]['session']);
+        $this->assertEquals(2,$numbers[1]['value']);
+        $this->assertNull($numbers[1]['user_id']);
+        $this->assertEquals(config('lanparty.session'),$numbers[2]['session']);
+        $this->assertEquals(3,$numbers[2]['value']);
         $this->assertNull($numbers[2]['user_id']);
 
     }

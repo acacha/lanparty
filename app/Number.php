@@ -20,7 +20,7 @@ class Number extends Model
      * @param $quantity
      */
     public static function addNumbers($quantity,$session) {
-        $initial = Number::last() ? Number::last() + 1 : 1;
+        $initial = Number::last($session) ? Number::last() + 1 : 1;
         foreach (range($initial, $initial + $quantity -1 ) as $value) {
             Number::create([
                 'value' => $value,
@@ -35,6 +35,14 @@ class Number extends Model
      */
     public static function numbers() {
         return map_collection(Number::with('user')->get());
+    }
+
+    /**
+     * currentNumbers.
+     *
+     */
+    public static function currentNumbers() {
+        return map_collection(Number::with('user')->where('session', config('lanparty.session'))->get());
     }
 
     /**
@@ -68,14 +76,13 @@ class Number extends Model
         return $query->whereNotNull('user_id');
     }
 
-
     /**
      * Obtain last number
      *
      * @return mixed
      */
-    public static function last() {
-        $lastNumber = Number::orderBy('value', 'desc')->first();
+    public static function last($session) {
+        $lastNumber = Number::where('session', $session)->orderBy('value', 'desc')->first();
         return $lastNumber ? (int) $lastNumber->value : null;
     }
 
