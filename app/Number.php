@@ -20,7 +20,7 @@ class Number extends Model
      * @param $quantity
      */
     public static function addNumbers($quantity,$session) {
-        $initial = Number::last($session) ? Number::last() + 1 : 1;
+        $initial = Number::last($session) ? Number::last($session) + 1 : 1;
         foreach (range($initial, $initial + $quantity -1 ) as $value) {
             Number::create([
                 'value' => $value,

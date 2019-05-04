@@ -28,19 +28,19 @@ class NumberTest extends TestCase
     /** @test */
     public function can_get_last_number_value()
     {
-        $this->assertSame(null, Number::last());
+        $this->assertSame(null, Number::last(config('lanparty.test')));
         foreach (range(1, 100) as $value) {
             Number::create([
                 'value' => $value
             ]);
         }
-        $this->assertEquals(100, Number::last());
+        $this->assertEquals(100, Number::last(config('lanparty.test')));
         foreach (range(101, 150) as $value) {
             Number::create([
                 'value' => $value
             ]);
         }
-        $this->assertEquals(150, Number::last());
+        $this->assertEquals(150, Number::last(config('lanparty.test')));
     }
 
     /** @test */
