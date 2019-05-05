@@ -4,15 +4,17 @@
             Especifiqueu el regal a sortejar!
         </v-alert>
         <v-layout row wrap>
-            <v-flex xs8>
-                <v-select
+            <v-flex xs1>
+                <session-select></session-select>
+            </v-flex>
+            <v-flex xs6>
+                <v-autocomplete
                         v-model="prize"
                         :items="internalPrizes"
                         label="Seleccioneu un regal o indiqueu un de nou"
                         item-value="name"
                         item-text="name"
                         combobox
-                        autocomplete
                         chips
                         clearable
                 >
@@ -30,7 +32,7 @@
                             <v-list-tile-sub-title v-html="data.item.partner && data.item.partner.name"></v-list-tile-sub-title>
                         </v-list-tile-content>
                     </template>
-                </v-select>
+                </v-autocomplete>
             </v-flex>
             <v-flex xs4>
                 Regals: {{ internalPrizes.length }}
@@ -154,9 +156,12 @@
   import interactsWithGravatar from './mixins/interactsWithGravatar'
   import axios from 'axios'
   import randomColor from './mixins/randomColor'
-
+  import SessionSelect from './SessionSelect'
   export default {
     mixins: [interactsWithGravatar, randomColor],
+    components: {
+      'session-select': SessionSelect
+    },
     data () {
       return {
         refreshing: false,

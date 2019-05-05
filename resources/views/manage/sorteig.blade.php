@@ -20,6 +20,7 @@
     <meta name="twitter:creator" content="@Institut_Ebre" />
 
     <title>LAN PARTY Institut de l'Ebre. Sorteig</title>
+    <meta name="lanparty" content="{{ lanparty_config_to_json() }}">
     <link rel="manifest" href="/manifest.json">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <link href="https://unpkg.com/vuetify@1.0.0-beta.6/dist/vuetify.min.css" rel="stylesheet">
