@@ -15,15 +15,15 @@
                 <v-btn @click="roll" :loading="rolling" :disabled="rolling || session === null || prize === null">Sortejar</v-btn>
             </v-flex>
             <v-flex xs2>
-                <and-the-winer-is></and-the-winer-is>
-                <winers :winers="internalWiners" @removedAll="removedAll"></winers>
+                <and-the-winner-is></and-the-winner-is>
+                <winners :winners="internalWinners" @removedAll="removedAll"></winners>
             </v-flex>
             <v-flex xs10>
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
             </v-flex>
             <v-flex xs12 v-if="prize">
                 <h1 class="display-3" v-html="prize"></h1>
-                <h3 class="display-3" v-if="winer">{{ winer.name}}</h3>
+                <h3 class="display-3" v-if="winner">{{ winner.name}}</h3>
             </v-flex>
         </v-layout>
     </v-container>
@@ -49,16 +49,16 @@
   import interactsWithGravatar from '../mixins/interactsWithGravatar'
   import randomColor from '../mixins/randomColor'
   import SessionSelect from '../SessionSelect'
-  import Winers from './Winers'
+  import Winners from './Winners'
   import Prizes from '../prizes/Prizes'
-  import AndTheWinerIs from './AndTheWinerIs'
+  import AndTheWinnerIs from './AndTheWinnerIs'
   export default {
     mixins: [interactsWithGravatar, randomColor],
     components: {
       'session-select': SessionSelect,
-      'winers': Winers,
+      'winners': Winners,
       'prizes': Prizes,
-      'and-the-winer-is': AndTheWinerIs
+      'and-the-winner-is': AndTheWinnerIs
     },
     data () {
       return {
@@ -66,8 +66,8 @@
         refreshing: false,
         error: false,
         prize: null,
-        winer: null,
-        internalWiners: this.winers,
+        winner: null,
+        internalWinners: this.winners,
         result: null,
         value: 999,
         timing: 1,
@@ -93,28 +93,28 @@
         type: Array,
         required: true
       },
-      winers: {
+      winners: {
         type: Array,
         required: true
       }
     },
     methods: {
-      finishAddWiner (multiple, selectedPrize) {
-        this.internalWiners.unshift({
+      finishAddWinner (multiple, selectedPrize) {
+        this.internalWinners.unshift({
           id: selectedPrize.id,
           name: this.prize,
           number: {
             value: this.result,
             user: {
-              name: this.winer.name,
-              givenName: this.winer.givenName,
-              sn1: this.winer.sn1,
-              sn2: this.winer.sn2,
-              email: this.winer.email
+              name: this.winner.name,
+              givenName: this.winner.givenName,
+              sn1: this.winner.sn1,
+              sn2: this.winner.sn2,
+              email: this.winner.email
             }
           }
         })
-        EventBus.$emit('noWiner')
+        EventBus.$emit('noWinner')
         EventBus.$emit('refreshPrizes')
         // TODO -> REFRESH PRIZES!
         // if (multiple !== 1) {
@@ -123,16 +123,16 @@
         this.prize = null
       },
       // TODO ELIMINAR!
-      // name (winer) {
+      // name (winner) {
       //   let name = ''
-      //   if (!winer) return name
-      //   if (winer.sn1) name = name + winer.sn1
-      //   if (winer.sn2) name = name + ' ' + winer.sn2
-      //   if (winer.name) {
+      //   if (!winner) return name
+      //   if (winner.sn1) name = name + winner.sn1
+      //   if (winner.sn2) name = name + ' ' + winner.sn2
+      //   if (winner.name) {
       //     if (name) {
-      //       name = name + ', ' + winer.givenName
+      //       name = name + ', ' + winner.givenName
       //     } else {
-      //       name = name + winer.givenName
+      //       name = name + winner.givenName
       //     }
       //   }
       //   return name
@@ -156,17 +156,17 @@
           window.setTimeout(() => {
             EventBus.$emit('tachan', true)
           }, 4500)
-          window.setTimeout(this.setWiner, 8500)
+          window.setTimeout(this.setWinner, 8500)
           return
         }
         window.odometer.innerHTML = Math.floor(100 + Math.random() * 899) // returns a number between 100 and 999
         window.setTimeout(this.loop, this.timing)
       },
-      setWiner () {
+      setWinner () {
         this.rolling = false
         let number = this.findNumberByValue(this.result)
-        // this.winer = number.user TODO ELIMINAR
-        EventBus.$emit('winer',number.user)
+        // this.winner = number.user TODO ELIMINAR
+        EventBus.$emit('winner',number.user)
       },
       findNumberByValue (value) {
         return this.numbers.find((number) => {
@@ -191,7 +191,7 @@
         }
         if (this.rolling) return
         this.rolling = true
-        this.winer = null
+        this.winner = null
         this.duration = Math.floor(3000 + Math.random() * 9000)
         console.log('Rolling during ' + this.duration + ' ms...')
         this.loop()
@@ -212,12 +212,12 @@
         source.start()
       },
       removedAll () {
-        this.internalWiners = null
+        this.internalWinners = null
         this.prize = null
         this.refreshPrizes()
       },
       removed () {
-        this.internalWiners.splice(this.internalWiners.indexOf(winer), 1)
+        this.internalWinners.splice(this.internalWinners.indexOf(winner), 1)
         this.refreshPrizes()
       },
       refreshPrizes () {

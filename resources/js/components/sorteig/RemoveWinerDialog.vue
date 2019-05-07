@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'RemoveWinerDialog',
+  name: 'RemoveWinnerDialog',
   data () {
     return {
       dialog: false,
@@ -28,7 +28,7 @@ export default {
     }
   },
   props: {
-    winer: {
+    winner: {
       type: Object,
       required: true
     }
@@ -36,7 +36,7 @@ export default {
   methods: {
     remove () {
       this.removing = true
-      window.axios.delete('/api/v1/winner/' + this.winer.id).then(response => {
+      window.axios.delete('/api/v1/winner/' + this.winner.id).then(response => {
         this.$emit('removed')
         this.removing = false
         this.dialog = false

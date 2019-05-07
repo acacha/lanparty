@@ -14,7 +14,7 @@
                 <v-btn color="error darken-1" flat
                        :disabled="loading"
                        :loading="loading"
-                       @click.native="removeAllWiners">Eliminar tots</v-btn>
+                       @click.native="removeAllWinners">Eliminar tots</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    removeAllWiners () {
+    removeAllWinners () {
       this.loading = true
       window.axios.delete('/api/v1/winners').then(() => {
         this.loading = false

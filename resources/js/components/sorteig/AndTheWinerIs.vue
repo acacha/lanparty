@@ -16,7 +16,7 @@
                            color="success"
                            :disabled="assigning"
                            :loading="assigning"
-                           @click="assignWiner">Assignar regal</v-btn>
+                           @click="assignWinner">Assignar regal</v-btn>
                 </v-card-actions>
             </v-card>
             <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
@@ -30,7 +30,7 @@ import interactsWithGravatar from '../mixins/interactsWithGravatar'
 import EventBus from '../event-bus';
 
 export default {
-  name: 'AndTheWinerIs',
+  name: 'AndTheWinnerIs',
   mixins: [interactsWithGravatar],
   data () {
     return {
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    assignWiner () {
+    assignWinner () {
       this.assigning = true
       let selectedPrize = this.internalPrizes.find((prize) => {
         return prize.name === this.prize
@@ -62,8 +62,8 @@ export default {
     }
   },
   created () {
-    EventBus.$on('winer', (winer) => {
-      this.winer = winer
+    EventBus.$on('winner', (winner) => {
+      this.winner = winner
     })
     EventBus.$on('tachan', (tachan) => {
       this.tachan = tachan
