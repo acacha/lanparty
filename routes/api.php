@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AllEventsController;
 use App\Http\Controllers\Api\ArchivedEventsController;
 use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\ManagersController;
+use App\Http\Controllers\Api\PartnersController;
 use App\Http\Controllers\Api\SendInvitationToManager;
 use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\UsersManagersController;
@@ -21,7 +22,7 @@ use App\Http\Controllers\UnassignNumbersToUserController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Api\PrizesController;
-use App\Http\Controllers\Web\PartnersController;
+
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
@@ -47,6 +48,7 @@ Route::group(['prefix'=>'v1'], function() {
 
     //Prizes
     Route::get('/prizes','\\' . PrizesController::class . '@index');
+    //Partners
     Route::get('/partners','\\' . PartnersController::class . '@index');
 
     Route::get('/available_prizes','\\' . AvailablePrizesController::class . '@index');
@@ -108,8 +110,15 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     Route::post('/manage/managers/send_invitation', '\\' . SendInvitationToManager::class . '@send');
 
+    //Partner 07/05/19 M
+    Route::get('/partners','\\'.PartnersController::class.'@index');
+    Route::get('/partners/{partner}','\\'.PartnersController::class.'@show');
+    Route::delete('/partners/{partner}','\\'.PartnersController::class.'@destroy');
+    Route::post('/partners','\\'.PartnersController::class.'@store');
+    Route::put('/partners/{partner}','\\'.PartnersController::class.'@update');
 
-    Route::get('/prizes', '\\' . PrizesController::class . '@index');
+
+
     Route::post('/prizes', '\\' . PrizesController::class . '@store');
     Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');
     Route::put('/prizes/{prize}', '\\' . PrizesController::class . '@update');
