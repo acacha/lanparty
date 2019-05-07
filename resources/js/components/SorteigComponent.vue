@@ -371,17 +371,6 @@
     },
     created () {
       this.session = window.lanparty.session
-      // this.context = new AudioContext()
-      // this.sound1 = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3'
-      /* window.fetch(this.sound1)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => this.context.decodeAudioData(arrayBuffer))
-        .then(audioBuffer => {
-          // TODO disable button
-          // playButton.disabled = false
-          this.sound1Buffer = audioBuffer
-        })
-      */
     }
   }
 </script>
