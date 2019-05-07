@@ -64,66 +64,7 @@
                         <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
                     </v-card-title>
                 </v-card>
-                <v-card>
-                    <v-toolbar style="background-color: #40764e;" class="white--text">
-                        <v-toolbar-title>Guanyadors</v-toolbar-title>
-                        <v-dialog v-model="removeAllWinnersDialog" persistent max-width="290">
-                            <v-btn icon slot="activator">
-                                <v-icon class="white--text">delete</v-icon>
-                            </v-btn>
-                            <v-card>
-                                <v-card-title class="headline">Si us plau confirmeu</v-card-title>
-                                <v-card-text>
-                                    Segur que voleu esborrar tots els premis assignats?
-                                </v-card-text>
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn color="success darken-1" flat @click.native="removeAllWinnersDialog = false">Cancel·lar</v-btn>
-                                    <v-btn color="error darken-1" flat
-                                           :disabled="removingAllWinners"
-                                           :loading="removingAllWinners"
-                                           @click.native="removeAllWinners">Eliminar tots</v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-dialog>
-                    </v-toolbar>
-                    <v-list three-line>
-                        <v-list-tile v-for="winner in internalWinners" :key="winner.id" avatar>
-                            <v-list-tile-action>
-                                <v-chip :color="randomColor()" text-color="white" slot="activator">
-                                    {{ winner.number.value }}
-                                </v-chip>
-                            </v-list-tile-action>
-                            <v-list-tile-content>
-                                <v-list-tile-title>
-                                    <v-dialog v-model="removeWinnerDialog" persistent max-width="290">
-                                        <v-icon slot="activator" color="red" >delete</v-icon>
-                                        <v-card>
-                                            <v-card-title class="headline">Si us plau confirmeu</v-card-title>
-                                            <v-card-text>
-                                                Segur que voleu esborrar l'assignació del premi?
-                                            </v-card-text>
-                                            <v-card-actions>
-                                                <v-spacer></v-spacer>
-                                                <v-btn color="success darken-1" flat @click.native="removeWinnerDialog = false">Cancel·lar</v-btn>
-                                                <v-btn color="error darken-1" flat
-                                                       :disabled="removingWinner"
-                                                       :loading="removingWinner"
-                                                       @click.native="removeWinner(winner)">Eliminar</v-btn>
-                                            </v-card-actions>
-                                        </v-card>
-                                    </v-dialog>
-                                    {{ winner.number && winner.number.user && winner.number.user.name}}
-                                </v-list-tile-title>
-                                <v-list-tile-sub-title v-html="name(winner.number && winner.number.user && winner.number.user)"></v-list-tile-sub-title>
-                                <v-list-tile-sub-title v-html="winner.name"></v-list-tile-sub-title>
-                            </v-list-tile-content>
-                            <v-list-tile-avatar>
-                                <img :src="gravatarURL (winner.number && winner.number.user && winner.number.user.email)">
-                            </v-list-tile-avatar>
-                        </v-list-tile>
-                    </v-list>
-                </v-card>
+                <winers :winers="internalWiners" @removedAll="removedAll"></winers>
             </v-flex>
             <v-flex xs10>
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
@@ -157,10 +98,12 @@
   import axios from 'axios'
   import randomColor from './mixins/randomColor'
   import SessionSelect from './SessionSelect'
+  import Winers from './Winers'
   export default {
     mixins: [interactsWithGravatar, randomColor],
     components: {
-      'session-select': SessionSelect
+      'session-select': SessionSelect,
+      'winers': Winers
     },
     data () {
       return {
@@ -169,14 +112,12 @@
         assigningWinning: false,
         removingWinner: false,
         removeWinnerDialog: false,
-        removingAllWinners: false,
-        removeAllWinnersDialog: false,
         error: false,
         tachan: false,
         internalPrizes: this.prizes,
         prize: null,
         winner: null,
-        internalWinners: this.winners,
+        internalWiners: this.winners,
         result: null,
         value: 999,
         timing: 1,
@@ -220,7 +161,7 @@
         return name
       },
       finishAddWinner (multiple, selectedPrize) {
-        this.internalWinners.unshift({
+        this.internalWiners.unshift({
           id: selectedPrize.id,
           name: this.prize,
           number: {
@@ -336,16 +277,14 @@
         source.connect(this.context.destination)
         source.start()
       },
-      removeWinner (winner) {
-        this.removingWinner = true
-        axios.delete('/api/v1/winner/' + winner.id).then(response => {
-          this.internalWinners.splice(this.internalWinners.indexOf(winner), 1)
-          this.refreshPrizes()
-          this.removingWinner = false
-          this.removeWinnerDialog = false
-        }).catch(() => {
-          this.removingWinner = false
-        })
+      removedAll () {
+        this.internalWiners = null
+        this.prize = null
+        this.refreshPrizes()
+      },
+      removed () {
+        this.internalWiners.splice(this.internalWiners.indexOf(winner), 1)
+        this.refreshPrizes()
       },
       refreshPrizes () {
         this.refreshing = true
@@ -354,18 +293,6 @@
           this.refreshing = false
         }).catch(() => {
           this.refreshing = false
-        })
-      },
-      removeAllWinners () {
-        this.removingAllWinners = true
-        axios.delete('/api/v1/winners').then(response => {
-          this.internalWinners = null
-          this.removingAllWinners = false
-          this.removeAllWinnersDialog = false
-          this.refreshPrizes()
-          this.prize = null
-        }).catch(() => {
-          this.removingAllWinners = false
         })
       }
     },
