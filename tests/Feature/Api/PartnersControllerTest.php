@@ -216,9 +216,4 @@ class PartnersControllerTest extends TestCase
     $response->assertStatus(403);
   }
 
-
-
-  }
-  //*****************************EDIT********************************//
-
 }

@@ -97,15 +97,17 @@ if (!function_exists('initialize_partners')) {
 }
 
 if (!function_exists('initialize_prizes')) {
-    function initialize_prizes()
+    function initialize_prizes($session = null)
     {
+        if (is_null($session)) $session = config('lanparty.session');
         Prize::firstOrCreate([
             'name' => 'Samarreta LAN Party',
             'description' => '',
             'notes' => '',
             'value' => 0,
             'partner_id' => Partner::findByName('Ajuntament de Tortosa')->id,
-            'multiple' => true
+            'multiple' => true,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -113,7 +115,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -121,7 +124,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -129,7 +133,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -137,7 +142,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 7400,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -146,7 +152,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Counter Strike',
             'value' => 5999,
             'partner_id' => Partner::findByName('Beep')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -155,7 +162,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat concurs Hardware',
             'value' => 14620,
             'partner_id' => Partner::findByName('Beep')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -163,7 +171,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 24775,
-            'partner_id' => Partner::findByName('The Workshop')->id
+            'partner_id' => Partner::findByName('The Workshop')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -172,7 +181,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat concurs de programació',
             'value' => 23000,
             'partner_id' => Partner::findByName('DISI')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -181,7 +191,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat de programació',
             'value' => 12550,
             'partner_id' => Partner::findByName('DISI')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -190,7 +201,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '3r classificat de programació',
             'value' => 12550,
             'partner_id' => Partner::findByName('DISI')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -198,7 +210,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 18700,
-            'partner_id' => Partner::findByName('AGI')->id
+            'partner_id' => Partner::findByName('AGI')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -207,7 +220,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Ae of Empires 2 HD',
             'value' => 12900,
             'partner_id' => Partner::findByName('PC Serveis')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -215,7 +229,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificat concurs programació',
             'value' => 3999,
-            'partner_id' => Partner::findByName('EPorts')->id
+            'partner_id' => Partner::findByName('EPorts')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -223,7 +238,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('EPorts')->id
+            'partner_id' => Partner::findByName('EPorts')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -232,7 +248,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats League of Legends',
             'value' => 7500,
             'partner_id' => Partner::findByName('SecurityPla')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -241,7 +258,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats Counter Strike',
             'value' => 7500,
             'partner_id' => Partner::findByName('SecurityPla')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -250,7 +268,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => 'Guanyador concurs cartell LAN Party',
             'value' => 7500,
             'partner_id' => Partner::findByName('Altercom 21')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -258,7 +277,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 14900,
-            'partner_id' => Partner::findByName('Globals')->id
+            'partner_id' => Partner::findByName('Globals')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -266,7 +286,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2999,
-            'partner_id' => Partner::findByName('Ferreteria Garcia')->id
+            'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -274,7 +295,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2695,
-            'partner_id' => Partner::findByName('Ferreteria Garcia')->id
+            'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -283,7 +305,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat Age Of Empires 2',
             'value' => 1575,
             'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -292,7 +315,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Counter Strike',
             'value' => 8999,
             'partner_id' => Partner::findByName('Jabil')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -300,7 +324,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2095,
-            'partner_id' => Partner::findByName('Querol')->id
+            'partner_id' => Partner::findByName('Querol')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -308,7 +333,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2490,
-            'partner_id' => Partner::findByName('Querol')->id
+            'partner_id' => Partner::findByName('Querol')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -316,7 +342,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2300,
-            'partner_id' => Partner::findByName('Querol')->id
+            'partner_id' => Partner::findByName('Querol')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -325,7 +352,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat Concurs de hardware',
             'value' => 6000,
             'partner_id' => Partner::findByName('Electrotic')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -333,7 +361,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 1000,
-            'partner_id' => Partner::findByName('Electrotic')->id
+            'partner_id' => Partner::findByName('Electrotic')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -341,7 +370,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 1000,
-            'partner_id' => Partner::findByName('Electrotic')->id
+            'partner_id' => Partner::findByName('Electrotic')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -350,7 +380,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats League of Legends',
             'value' => 6500,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -359,7 +390,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
             'value' => 3000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -368,7 +400,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -377,7 +410,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
     }
 }

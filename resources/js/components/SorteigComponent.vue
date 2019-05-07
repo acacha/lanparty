@@ -8,31 +8,7 @@
                 <session-select v-model="session"></session-select>
             </v-flex>
             <v-flex xs6>
-                <v-autocomplete
-                        v-model="prize"
-                        :items="internalPrizes"
-                        label="Seleccioneu un regal o indiqueu un de nou"
-                        item-value="name"
-                        item-text="name"
-                        combobox
-                        chips
-                        clearable
-                >
-                    <template slot="selection" slot-scope="data">
-                        <v-chip
-                                :key="JSON.stringify(data.item)"
-                                class="chip--select-multi"
-                        >
-                            {{ data.item }}
-                        </v-chip>
-                    </template>
-                    <template slot="item" slot-scope="data">
-                        <v-list-tile-content>
-                            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                            <v-list-tile-sub-title v-html="data.item.partner && data.item.partner.name"></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </template>
-                </v-autocomplete>
+                <prizes-select v-model="prize" :prizes="internalPrizes"></prizes-select>
             </v-flex>
             <v-flex xs4>
                 Regals: {{ internalPrizes.length }}
@@ -99,11 +75,13 @@
   import randomColor from './mixins/randomColor'
   import SessionSelect from './SessionSelect'
   import Winers from './Winers'
+  import PrizesSelect from './PrizesSelect'
   export default {
     mixins: [interactsWithGravatar, randomColor],
     components: {
       'session-select': SessionSelect,
-      'winers': Winers
+      'winers': Winers,
+      'prizes-select': PrizesSelect
     },
     data () {
       return {
