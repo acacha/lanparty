@@ -57,12 +57,12 @@ class Prize extends Model
     }
 
     /**
-     * Winers scope.
+     * Winners scope.
      *
      * @param $query
      * @return mixed
      */
-    public function scopeWiners($query)
+    public function scopeWinners($query)
     {
         return $query->where('number_id','!=', null);
     }
