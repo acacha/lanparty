@@ -5,7 +5,7 @@
         </v-alert>
         <v-layout row wrap>
             <v-flex xs1>
-                <session-select></session-select>
+                <session-select v-model="session"></session-select>
             </v-flex>
             <v-flex xs6>
                 <v-autocomplete
@@ -164,6 +164,7 @@
     },
     data () {
       return {
+        session: '',
         refreshing: false,
         assigningWinning: false,
         removingWinner: false,
@@ -369,6 +370,7 @@
       }
     },
     created () {
+      this.session = window.lanparty.session
       // this.context = new AudioContext()
       // this.sound1 = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/Yodel_Sound_Effect.mp3'
       /* window.fetch(this.sound1)
