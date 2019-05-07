@@ -8,11 +8,11 @@
                 <session-select v-model="session"></session-select>
             </v-flex>
             <v-flex xs6>
-                <prizes :prize="prize" :prizes="prizes" :session="session"></prizes>
+                <prizes :prizes="prizes" :session="session" v-model="prize"></prizes>
             </v-flex>
             <v-flex xs4>
                 Números sorteig: {{ total }}
-                <v-btn @click="roll" :loading="rolling" :disabled="rolling || session === null || prize === null">Sortejar</v-btn>
+                <v-btn @click="roll" :loading="rolling" :disabled="rolling || session === null || !prize">Sortejar</v-btn>
             </v-flex>
             <v-flex xs2>
                 <and-the-winner-is></and-the-winner-is>
@@ -52,6 +52,8 @@
   import Winners from './Winners'
   import Prizes from '../prizes/Prizes'
   import AndTheWinnerIs from './AndTheWinnerIs'
+  import EventBus from '../../eventBus'
+
   export default {
     mixins: [interactsWithGravatar, randomColor],
     components: {
@@ -63,7 +65,6 @@
     data () {
       return {
         session: '',
-        refreshing: false,
         error: false,
         prize: null,
         winner: null,
@@ -79,9 +80,6 @@
     computed: {
       total () {
         return this.numbers.length
-      },
-      internalPrizesBySession () {
-        return this.internalPrizes.filter(prize => prize.session === this.session)
       }
     },
     props: {
@@ -122,21 +120,6 @@
         // }
         this.prize = null
       },
-      // TODO ELIMINAR!
-      // name (winner) {
-      //   let name = ''
-      //   if (!winner) return name
-      //   if (winner.sn1) name = name + winner.sn1
-      //   if (winner.sn2) name = name + ' ' + winner.sn2
-      //   if (winner.name) {
-      //     if (name) {
-      //       name = name + ', ' + winner.givenName
-      //     } else {
-      //       name = name + winner.givenName
-      //     }
-      //   }
-      //   return name
-      // },
       userName (user) {
         let name = ''
         if (user.sn1) name = user.sn1
@@ -220,15 +203,21 @@
         this.internalWinners.splice(this.internalWinners.indexOf(winner), 1)
         this.refreshPrizes()
       },
-      refreshPrizes () {
-        this.refreshing = true
-        window.axios.get('/api/v1/prizes').then(response => {
-          this.internalPrizes = response.data
-          this.refreshing = false
-        }).catch(() => {
-          this.refreshing = false
-        })
-      }
+      // TODO ELIMINAR!
+      // name (winner) {
+      //   let name = ''
+      //   if (!winner) return name
+      //   if (winner.sn1) name = name + winner.sn1
+      //   if (winner.sn2) name = name + ' ' + winner.sn2
+      //   if (winner.name) {
+      //     if (name) {
+      //       name = name + ', ' + winner.givenName
+      //     } else {
+      //       name = name + winner.givenName
+      //     }
+      //   }
+      //   return name
+      // },
     },
     created () {
       this.session = window.lanparty.session

@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap>
         <v-flex xs10>
-            <prizes-select v-model="prize" ></prizes-select>
+            <prizes-select v-model="internalPrize" :prizes="internalPrizesBySession" ></prizes-select>
         </v-flex>
         <v-flex xs2>
             <v-icon @click="refreshPrizes">refresh</v-icon>
@@ -19,7 +19,9 @@ export default {
   },
   data () {
     return {
-      internalPrizes: this.prizes
+      internalPrizes: this.prizes,
+      internalPrize: this.prize,
+      refreshing: false
     }
   },
   model: {
@@ -38,8 +40,14 @@ export default {
     prize: {}
   },
   watch: {
+    session() {
+      this.internalPrize = null
+    },
+    internalPrize(internalPrize) {
+      this.$emit('input', internalPrize)
+    },
     prize(prize) {
-      this.$emit('input', prize)
+      this.internalPrize = prize
     },
     prizes (prizes) {
       this.internalPrizes = prizes
@@ -48,6 +56,17 @@ export default {
   computed: {
     internalPrizesBySession () {
       return this.internalPrizes.filter(prize => prize.session === this.session)
+    }
+  },
+  methods: {
+    refreshPrizes () {
+      this.refreshing = true
+      window.axios.get('/api/v1/prizes').then(response => {
+        this.internalPrizes = response.data
+        this.refreshing = false
+      }).catch(() => {
+        this.refreshing = false
+      })
     }
   }
 }
