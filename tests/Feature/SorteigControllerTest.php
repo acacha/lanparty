@@ -29,7 +29,7 @@ class SorteigControllerTest extends TestCase
         $response->assertViewIs('manage.sorteig');
         $response->assertViewHas('numbers');
         $response->assertViewHas('prizes');
-        $response->assertViewHas('winners');
+        $response->assertViewHas('winers');
     }
 
     /**  @test */

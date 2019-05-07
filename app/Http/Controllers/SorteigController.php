@@ -23,7 +23,7 @@ class SorteigController extends Controller
     {
         $numbers = Number::assigned()->with('user')->get();
         $prizes = Prize::available()->with('partner')->get();
-        $winners = Prize::winners()->with(['partner','number.user'])->orderBy('updated_at','DESC')->get();
-        return view('manage.sorteig',compact('numbers','prizes','winners'));
+        $winers = Prize::winers()->with(['partner','number.user'])->orderBy('updated_at','DESC')->get();
+        return view('manage.sorteig',compact('numbers','prizes','winers'));
     }
 }

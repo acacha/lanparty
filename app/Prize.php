@@ -53,16 +53,16 @@ class Prize extends Model
      */
     public function scopeAvailable($query)
     {
-        return $query->where('session', config('lanparty.session',2019))->where('user_id', null)->where('number_id', null);
+        return $query->where('user_id', null)->where('number_id', null);
     }
 
     /**
-     * Winners scope.
+     * Winers scope.
      *
      * @param $query
      * @return mixed
      */
-    public function scopeWinners($query)
+    public function scopeWiners($query)
     {
         return $query->where('number_id','!=', null);
     }

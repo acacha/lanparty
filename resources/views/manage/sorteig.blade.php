@@ -32,7 +32,7 @@
         <sorteig
                 :numbers="{{ $numbers }}"
                 :prizes="{{ $prizes }}"
-                :winners="{{ $winners }}">
+                :winers="{{ $winers }}">
         </sorteig>
     </v-app>
 </div>
