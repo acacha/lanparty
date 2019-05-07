@@ -5,12 +5,7 @@ namespace App\Http\Requests\Partners;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class ManagersIndex.
- *
- * @package App\Http\Requests
- */
-class PartnersIndex extends FormRequest
+class PartnerUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +14,7 @@ class PartnersIndex extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('partners.index');
+      return Auth::user()->can('partners.update');
     }
 
     /**
@@ -30,7 +25,7 @@ class PartnersIndex extends FormRequest
     public function rules()
     {
         return [
-            //
+          'name'=>'required'
         ];
     }
 }
