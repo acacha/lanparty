@@ -18,7 +18,6 @@ class PrizesController extends Controller
   public function index()
   {
     $prizes = Prize::with(['partner'])->where('session', config('lanparty.session') )->get();
-    //return compact('prizes');
     return view('prizes',compact('prizes'));
   }
   /**
