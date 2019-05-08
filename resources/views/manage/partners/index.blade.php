@@ -4,7 +4,7 @@
   <v-container fluid>
     <v-layout>
       <v-flex>
-        <partners-manage :partners="{{ $partners }}"></partners-manage>
+        <partners-manage :partners="{{ $partners }}" uri="{{ $uri }}"></partners-manage>
       </v-flex>
     </v-layout>
   </v-container>

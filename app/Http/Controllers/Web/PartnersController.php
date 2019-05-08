@@ -21,6 +21,7 @@ class PartnersController extends Controller
     {
         //$partners = collect(Role::findByName('Manager')->users);
       $partners = Partner::partners();
-        return view('manage.partners.index', compact('partners'));
+     $uri = '/api/v1/partners/';
+        return view('manage.partners.index', compact('partners','uri'));
     }
 }
