@@ -29,6 +29,7 @@
 </head>
 <div id="app">
     <v-app light>
+        <snackbar></snackbar>
         <sorteig
                 :numbers="{{ $numbers }}"
                 :prizes="{{ $prizes }}"

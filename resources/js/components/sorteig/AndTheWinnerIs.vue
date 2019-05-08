@@ -27,7 +27,7 @@
 
 <script>
 import interactsWithGravatar from '../mixins/interactsWithGravatar'
-import EventBus from '../event-bus';
+import EventBus from '../../eventBus'
 
 export default {
   name: 'AndTheWinnerIs',
@@ -39,23 +39,46 @@ export default {
       assigning: false
     }
   },
+  props: {
+    prizes: {
+      type: Array,
+      required: true
+    },
+    prize: {},
+    result: {}
+  },
   methods: {
+    userName (user) {
+      let name = ''
+      if (user.sn1) name = user.sn1
+      if (user.sn2) {
+        if (name !== '') name = name + ' '
+        name = name + user.sn2
+      }
+      if (name !== '') name = name + ', ' + user.givenName
+      return name
+    },
     assignWinner () {
       this.assigning = true
-      let selectedPrize = this.internalPrizes.find((prize) => {
-        return prize.name === this.prize
-      })
-      let multiple = parseInt(selectedPrize.multiple)
-      if (!selectedPrize || (multiple === 1)) {
-        this.finishAddWinner(multiple, selectedPrize)
+      console.log('this.prize:')
+      console.log(this.prize)
+      let multiple = parseInt(this.prize.multiple)
+      console.log('multiple:')
+      console.log(multiple)
+      if (!this.prize || (multiple === 1)) {
+        console.log('UMMMMMMMMMMMMMM!')
+        this.$emit('assigned',multiple, this.prize)
         this.assigning = false
         return
       }
-      window.axios.post('/api/v1/winner/' + selectedPrize.id, {
-        number: this.result
+      console.log('this.result:')
+      console.log(this.result)
+      window.axios.post('/api/v1/winner/' + this.prize.id, {
+        number: this.result.id
       }).then(() => {
         this.assigning = false
-        this.finishAddWinner(multiple, selectedPrize)
+        this.$snackbar.showMessage('Regal assignat correctament')
+        this.$emit('assigned',multiple, this.prize)
       }).catch(() => {
         this.assigning = false
       })
@@ -63,9 +86,13 @@ export default {
   },
   created () {
     EventBus.$on('winner', (winner) => {
+      console.log('WINNER RECEIVED: ')
+      console.log(winner)
       this.winner = winner
     })
     EventBus.$on('tachan', (tachan) => {
+      console.log('TACHAN RECEIVED: ')
+      console.log(tachan)
       this.tachan = tachan
     })
   }

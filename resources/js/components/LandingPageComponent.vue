@@ -226,6 +226,26 @@
                 </v-container>
             </section>
 
+            <section id="premis">
+                <v-container>
+                    <v-card>
+                        <prizes :prizes="internalPrizes"></prizes>
+                    </v-card>
+                </v-container>
+            </section>
+
+
+            <section id="colaboradors">
+                <v-container>
+                    <v-container>
+                        <v-card>
+                            <partners :partners="internalPartners"></partners>
+                        </v-card>
+                    </v-container>
+                </v-container>
+            </section>
+
+
             <v-footer class="primary darken-3">
                 <v-layout row wrap align-center>
                     <v-flex xs12>
@@ -257,15 +277,25 @@ import RegisterDialog from '../auth/RegisterDialog'
 import RememberPasswordDialog from '../auth/RememberPasswordDialog'
 import ResetPasswordDialog from '../auth/ResetPasswordDialog'
 import MailingListCard from '../mailing/MailingListCard'
+import prizes from './PrizesComponent'
+import partners from './PartnersComponent'
 
 export default {
+  data () {
+    return {
+      internalPrizes: this.prizes.prizes,
+      internalPartners: this.partners.partners
+    }
+  },
   name: 'LandingPage',
   components: {
     'login-dialog': LoginDialog,
     'register-dialog': RegisterDialog,
     'remember-password-dialog': RememberPasswordDialog,
     'reset-password-dialog': ResetPasswordDialog,
-    'mailing-list-card': MailingListCard
+    'mailing-list-card': MailingListCard,
+    'prizes': prizes,
+    'partners': partners
   },
   props: {
       action: {
@@ -282,6 +312,14 @@ export default {
       },
       resetPasswordEmail: {
         type: String,
+        default: null
+      },
+      prizes: {
+        type: Array,
+        default: null
+      },
+      partners: {
+        type: Array,
         default: null
       }
     },

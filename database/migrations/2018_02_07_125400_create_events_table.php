@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('inscription_type_id');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('regulation');
             $table->integer('participants_number')->nullable();
             $table->datetime('published_at')->nullable();
