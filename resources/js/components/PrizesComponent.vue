@@ -14,8 +14,8 @@
                         class="elevation-1"
                 >
                     <template slot="items" slot-scope="props">
-                        <td>{{ props.item.name }}</td>
-                        <td class="text-xs">{{ props.item.partner.name }}</td>
+                        <td class="text-xs" align="left">{{ props.item.name }}</td>
+                        <td class="text-xs" align="left">{{ props.item.partner.name }}</td>
                         <td class="text-xs">{{ priceInEuros(props.item.value) }}</td>
                         <td class="text-xs">{{ winner(props.item) }}</td>
                     </template>
