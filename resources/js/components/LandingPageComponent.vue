@@ -108,10 +108,10 @@
                                 <v-flex xs12 md3>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <img src="/img/Fifa18.jpeg" alt="Fifa 18" width="200px;">
+                                            <img src="/img/Fifa19a.webp" alt="Fifa 19" width="200px;">
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline text-xs-center">Fifa 18</div>
+                                            <div class="headline text-xs-center">Fifa 19</div>
                                         </v-card-title>
                                         <v-card-text>
                                             Saga de videojocs de futbol, iniciada per la companyia EA, que va portar com a novetat la llicència de la FIFA per utilitzar jugadors i lligues amb noms reals.

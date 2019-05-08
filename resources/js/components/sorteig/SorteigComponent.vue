@@ -1,19 +1,22 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
-        <v-alert v-model="error" type="error" dismissible>
-            Especifiqueu el regal a sortejar!
+        <v-alert :value="numbers.length === 0" type="error" dismissible>
+            <span class="title">No hi ha números per sortejar! Primer cal assignar
+                <a href="/manage/participants" target="_blank">números als usuaris</a></span>
         </v-alert>
-        <v-layout row wrap>
+        <v-layout row wrap align-baseline>
             <v-flex xs1>
                 <session-select v-model="session" :chips="true"></session-select>
             </v-flex>
-            <v-flex xs6>
+            <v-flex xs9>
                 <prizes :prizes="prizes" :session="session" v-model="prize"></prizes>
             </v-flex>
-            <v-flex xs4>
-                Números sorteig: {{ total }}
-                <v-btn @click="roll" :loading="rolling" :disabled="rolling || session === null || !prize">Sortejar</v-btn>
+            <v-flex xs2>
+                Total números a sortejar: {{ total }}
+                <v-btn @click="roll" :loading="rolling" :disabled="rolling || session === null || !prize || numbers.length === 0">Sortejar</v-btn>
             </v-flex>
+        </v-layout>
+        <v-layout row wrap>
             <v-flex xs2>
                 <and-the-winner-is></and-the-winner-is>
                 <winners :winners="internalWinners" @removedAll="removedAll"></winners>
@@ -112,9 +115,9 @@
             }
           }
         })
-        EventBus.$emit('noWinner')
-        EventBus.$emit('refreshPrizes')
-        // TODO -> REFRESH PRIZES!
+        EventBus.$emit('winner',null)
+        this.refreshPrizes()
+        // TODO -> REFRESH PRIZES no cal seguents linies ESBORRAR:
         // if (multiple !== 1) {
         //   this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
         // }
@@ -148,7 +151,10 @@
       setWinner () {
         this.rolling = false
         let number = this.findNumberByValue(this.result)
-        // this.winner = number.user TODO ELIMINAR
+        console.log('NUMBER:')
+        console.log(number)
+        console.log('USER:')
+        console.log(number.user)
         EventBus.$emit('winner',number.user)
       },
       findNumberByValue (value) {
@@ -166,12 +172,6 @@
       },
       roll () {
         EventBus.$emit('tachan', false)
-        if (!this.prize) {
-          this.error = true
-          return
-        } else {
-          this.error = false
-        }
         if (this.rolling) return
         this.rolling = true
         this.winner = null
@@ -187,12 +187,6 @@
           console.log('Stopping timing!')
           this.stopTiming = true
         }, this.duration - 10)
-      },
-      play (audioBuffer) {
-        const source = this.context.createBufferSource()
-        source.buffer = audioBuffer
-        source.connect(this.context.destination)
-        source.start()
       },
       removedAll () {
         this.internalWinners = null

@@ -27,7 +27,7 @@
 
 <script>
 import interactsWithGravatar from '../mixins/interactsWithGravatar'
-import EventBus from '../event-bus';
+import EventBus from '../../eventBus'
 
 export default {
   name: 'AndTheWinnerIs',
@@ -63,9 +63,13 @@ export default {
   },
   created () {
     EventBus.$on('winner', (winner) => {
+      console.log('WINNER RECEIVED: ')
+      console.log(winner)
       this.winner = winner
     })
     EventBus.$on('tachan', (tachan) => {
+      console.log('TACHAN RECEIVED: ')
+      console.log(tachan)
       this.tachan = tachan
     })
   }
