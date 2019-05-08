@@ -5,7 +5,8 @@
       <v-spacer></v-spacer>
 
       <v-tooltip bottom>
-          <v-btn slot="activator" id="events_refresh_button" icon class="white--text" @click="refresh" :loading="loading" :disabled="loading">
+          <v-btn slot="activator" id="events_refresh_button" icon class="white--text" @click="refresh"
+                 :loading="loading" :disabled="loading">
               <v-icon>refresh</v-icon>
           </v-btn>
           <span>Actualitzar</span>
@@ -34,7 +35,11 @@
           </v-flex>
         </v-layout>
       </v-card-title>
-      <v-data-table :items="this.dataEvents" :headers="headers" :search="search" no-results-text="No s'ha trobat cap registre coincident" no-data-text="No hi han dades disponibles" rows-per-page-text="Events per pàgina" :rows-per-page-items="[5,10,25,50,100,{'text':'Tots','value':-1}]" :loading="loading" :pagination.sync="pagination">
+      <v-data-table :items="this.dataEvents" :headers="headers" :search="search"
+                    no-results-text="No s'ha trobat cap registre coincident" no-data-text="No hi han dades disponibles"
+                    rows-per-page-text="Events per pàgina"
+                    :rows-per-page-items="[5,10,25,50,100,{'text':'Tots','value':-1}]" :loading="loading"
+                    :pagination.sync="pagination">
         <v-progress-linear slot="progress" color="primary" indeterminate></v-progress-linear>
         <template slot="items" slot-scope="{item:event}">
           <tr>
@@ -51,7 +56,11 @@
               {{ event.inscription_type_id }}
             </td>
             <td>
-              <v-img :src="event.image"></v-img>
+              <!--TODO: Configurar que funcioni muntar imatge al fer click-->
+              <v-btn fab dark color="primary">
+                <v-img v-if="event.image" :src="event.image"></v-img>
+                <v-icon v-else>add</v-icon>
+              </v-btn>
             </td>
             <td>
               <a :href="event.regulation" target="_blank">{{ event.name }}</a>
@@ -74,7 +83,7 @@
             <td>
                 <event-publish :event="event"></event-publish>
                 <event-unarchive :event="event" @unarchived="refresh"></event-unarchive>
-                <event-archive :event="event"  @archived="refresh"></event-archive>
+                <event-archive :event="event" @archived="refresh"></event-archive>
                 <event-delete :event="event"></event-delete>
             </td>
           </tr>
@@ -88,6 +97,7 @@ import EventPublish from './EventPublish'
 import EventArchive from './EventArchive'
 import EventUnArchive from './EventUnArchive'
 import EventDelete from './EventDelete'
+
 export default {
   name: 'EventsList',
   components: {
