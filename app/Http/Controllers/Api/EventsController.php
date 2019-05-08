@@ -33,6 +33,7 @@ class EventsController extends Controller
         $event->inscription_type_id=$request->inscription_type_id;
         $event->image=$request->image;
         $event->regulation=$request->regulation;
+        $event->session=$request->session;
         $event->save();
 //        dd("request ".$request);
         return $event->map();
@@ -41,7 +42,7 @@ class EventsController extends Controller
 
     public function destroy(EventsDestroy $request,Event $event)
     {
-        $event->delete();
+        $event->forceDelete();
         return $event;
 
     }
