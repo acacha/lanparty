@@ -19,6 +19,7 @@ class EventsStore extends FormRequest
      */
     public function authorize()
     {
+//        dd("hola");
         return Auth::user()->can('events.store');
     }
 
@@ -30,8 +31,8 @@ class EventsStore extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required'
-            //
+            'name'=>'required',
+            'regulation' => 'url'
         ];
     }
 }

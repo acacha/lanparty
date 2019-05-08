@@ -122,7 +122,9 @@
                                                     <img :src="gravatarURL(user.email)">
                                                 </v-list-tile-avatar>
                                                 <v-list-tile-content>
-                                                    <v-list-tile-title>{{user.sn1}} {{user.sn2}} , {{user.givenName}} <span class="hidden-sm-and-down">({{user.name}})</span></v-list-tile-title>
+                                                    <v-list-tile-title>
+                                                      <span v-if="user.givenName && (user.sn1 || user.sn2)">{{user.sn1}} {{user.sn2}} , {{user.givenName}}</span>
+                                                     <span class="hidden-sm-and-down">({{user.name}})</span></v-list-tile-title>
                                                     <v-list-tile-sub-title v-html="user.email"></v-list-tile-sub-title>
                                                 </v-list-tile-content>
                                                 <v-list-tile-action v-if="canDeleteUser(user)">

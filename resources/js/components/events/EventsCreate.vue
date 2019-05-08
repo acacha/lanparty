@@ -13,9 +13,6 @@
                                   <v-text-field v-model="name" label="Nom"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="image" label="Descripcio"></v-text-field>
-                              </v-flex>
-                              <v-flex xs12>
                                   <v-text-field v-model="inscription_type_id" label="Tipo Instripció"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
@@ -53,6 +50,7 @@
 import EventForm from './EventForm.vue'
 import SessionSelect from '../SessionSelect.vue'
 export default {
+
   name: 'EventsCreate',
   components: {
     'EventForm': EventForm,
@@ -63,7 +61,6 @@ export default {
       dialog: false,
       createDialog: false,
       name: '',
-      image: '',
       inscription_type_id: '',
       participants_number: '',
       regulation: '',
@@ -89,7 +86,6 @@ export default {
       this.loading = true
       window.axios.post('/api/v1/events/', {
         'name': this.name,
-        'image': this.image,
         'inscription_type_id': this.inscription_type_id,
         'participants_number': this.participants_number,
         'regulation': this.regulation,
