@@ -19,7 +19,7 @@
         <v-layout row wrap>
             <v-flex xs2>
                 <and-the-winner-is :prizes="prizes" :prize="prize" :result="result" @assigned="finishAddWinner"></and-the-winner-is>
-                <winners :winners="internalWinners" @removedAll="removedAll"></winners>
+                <winners :winners="internalWinners" @removedAll="removedAll" :session="session"></winners>
             </v-flex>
             <v-flex xs10>
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
