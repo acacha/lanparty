@@ -48,6 +48,9 @@ Route::group(['prefix'=>'v1'], function() {
 
     //Prizes
     Route::get('/prizes','\\' . PrizesController::class . '@index');
+
+    Route::get('/available_prizes','\\' . AvailablePrizesController::class . '@index');
+
     //Partners
     Route::get('/partners','\\' . PartnersController::class . '@index');
 

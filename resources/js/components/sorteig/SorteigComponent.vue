@@ -5,7 +5,7 @@
         </v-alert>
         <v-layout row wrap>
             <v-flex xs1>
-                <session-select v-model="session"></session-select>
+                <session-select v-model="session" :chips="true"></session-select>
             </v-flex>
             <v-flex xs6>
                 <prizes :prizes="prizes" :session="session" v-model="prize"></prizes>

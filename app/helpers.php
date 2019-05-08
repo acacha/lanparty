@@ -880,7 +880,6 @@ if (!function_exists('manager_permissions')) {
             'events.show',
             'events.update',
             'managers.index',
-            'prizes.index',
             'managers.invitation.send',
             'partners.index',
             'partners.show',

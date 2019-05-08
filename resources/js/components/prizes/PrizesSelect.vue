@@ -9,6 +9,7 @@
             chips
             clearable
             no-data-text="No hi ha cap premi disponible"
+            :loading="loading"
     >
         <template slot="selection" slot-scope="data">
             <v-chip
@@ -45,7 +46,11 @@ export default {
       type: Array,
       required: true
     },
-    prize: {}
+    prize: {},
+    loading: {
+      type: Boolean,
+      default:false
+    }
   },
   watch: {
     prize(prize) {

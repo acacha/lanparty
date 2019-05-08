@@ -1,11 +1,11 @@
 <template>
-    <v-layout row wrap>
+    <v-layout row wrap align-baseline>
         <v-flex xs10>
-            <prizes-select v-model="internalPrize" :prizes="internalPrizesBySession" ></prizes-select>
+            <prizes-select :loading="refreshing" v-model="internalPrize" :prizes="internalPrizesBySession" ></prizes-select>
         </v-flex>
         <v-flex xs2>
             <v-icon @click="refreshPrizes">refresh</v-icon>
-            Regals: {{ internalPrizesBySession.length }}
+            Número de regals: {{ total }}
         </v-flex>
     </v-layout>
 </template>
@@ -54,6 +54,9 @@ export default {
     }
   },
   computed: {
+    total() {
+      return this.internalPrizesBySession.length
+    },
     internalPrizesBySession () {
       return this.internalPrizes.filter(prize => prize.session === this.session)
     }
@@ -61,7 +64,8 @@ export default {
   methods: {
     refreshPrizes () {
       this.refreshing = true
-      window.axios.get('/api/v1/prizes').then(response => {
+      window.axios.get('/api/v1/available_prizes').then(response => {
+        this.$snackbar.showMessage('Premis actualitzats correctament')
         this.internalPrizes = response.data
         this.refreshing = false
       }).catch(() => {

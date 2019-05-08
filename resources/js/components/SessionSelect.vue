@@ -3,6 +3,7 @@
             v-model="dataSession"
             :items="sessions"
             label="Escolliu una sessió"
+            :chips="chips"
     ></v-select>
 </template>
 
@@ -19,9 +20,10 @@ export default {
     event: 'input'
   },
   props: {
-    session: {
-      Type: String,
-      required: true
+    session: {},
+    chips: {
+      type: Boolean,
+      default: false
     }
   },
   watch: {
