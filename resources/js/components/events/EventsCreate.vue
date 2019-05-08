@@ -52,6 +52,7 @@
 <script>
 import EventForm from './EventForm.vue'
 export default {
+
   name: 'EventsCreate',
   components: {
     'EventForm': EventForm
@@ -97,6 +98,9 @@ export default {
       }
       window.axios.post('/api/v1/events/', event).then((response) => {
         this.$snackbar.showMessage("S'ha creat l'esdeveniment")
+        console.log('event '+event.name);
+        // console.log('event '+event.name);
+
         this.reset()
       }).catch((error) => {
         this.loading = false

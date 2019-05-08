@@ -19,6 +19,7 @@ class EventsStore extends FormRequest
      */
     public function authorize()
     {
+//        dd("hola");
         return Auth::user()->can('events.store');
     }
 
