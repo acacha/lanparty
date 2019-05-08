@@ -13,9 +13,6 @@
                                   <v-text-field v-model="name" label="Nom"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="image" label="Imatge"></v-text-field>
-                              </v-flex>
-                              <v-flex xs12>
                                   <v-text-field v-model="inscription_type_id" label="Tipo Instripció"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
@@ -64,7 +61,6 @@ export default {
       dialog: false,
       createDialog: false,
       name: '',
-      image: '',
       inscription_type_id: '',
       participants_number: '',
       regulation: '',
@@ -90,16 +86,12 @@ export default {
       this.loading = true
       window.axios.post('/api/v1/events/', {
         'name': this.name,
-        'image': this.image,
         'inscription_type_id': this.inscription_type_id,
         'participants_number': this.participants_number,
         'regulation': this.regulation,
         'session': this.session
       }).then((response) => {
         this.$snackbar.showMessage("S'ha creat l'esdeveniment")
-        console.log('event '+event.name);
-        // console.log('event '+event.name);
-
         this.reset()
       }).catch((error) => {
         this.loading = false
