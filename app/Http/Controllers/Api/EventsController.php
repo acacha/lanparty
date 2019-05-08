@@ -53,6 +53,7 @@ class EventsController extends Controller
         $event->inscription_type_id=$request->inscription_type_id;
         $event->image=$request->image;
         $event->regulation=$request->regulation;
+        $event->session=$request->session;
         $event->save();
         return $event->map();
 
