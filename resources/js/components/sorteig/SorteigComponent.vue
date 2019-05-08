@@ -80,7 +80,10 @@
     },
     computed: {
       total () {
-        return this.numbers.length
+        return this.numbersForCurrentSession.length
+      },
+      numbersForCurrentSession() {
+        return this.numbers.filter(number => number.session === this.session)
       }
     },
     props: {
