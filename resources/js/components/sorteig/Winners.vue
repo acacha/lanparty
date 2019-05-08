@@ -5,7 +5,7 @@
             <remove-all-winners @removedAll="removedAll"></remove-all-winners>
         </v-toolbar>
         <v-list three-line>
-            <v-list-tile v-for="winner in internalWinners" :key="winner.id" avatar>
+            <v-list-tile v-for="winner in internalWinnersBySession" :key="winner.id" avatar>
                 <v-list-tile-action>
                     <v-chip :color="randomColor()" text-color="white" slot="activator">
                         {{ winner.number.value }}
@@ -53,6 +53,15 @@ export default {
   props: {
     winners: {
       required: true
+    },
+    session: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    internalWinnersBySession() {
+      return this.internalWinners.filter(winner => winner.session === this.session)
     }
   },
   watch: {

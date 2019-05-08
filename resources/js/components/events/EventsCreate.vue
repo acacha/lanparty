@@ -10,22 +10,22 @@
                       <v-container grid-list-md>
                           <v-layout wrap>
                               <v-flex xs12>
-                                  <v-text-field v-model="selectedEvent.name" label="Nom"></v-text-field>
+                                  <v-text-field v-model="name" label="Nom"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="selectedEvent.image" label="Descripcio"></v-text-field>
+                                  <v-text-field v-model="image" label="Descripcio"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="selectedEvent.inscription_type_id" label="Tipo Instripció"></v-text-field>
+                                  <v-text-field v-model="inscription_type_id" label="Tipo Instripció"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="selectedEvent.participants_number" label="Participants"></v-text-field>
+                                  <v-text-field v-model="participants_number" label="Participants"></v-text-field>
                               </v-flex>
                                <v-flex xs12>
-                                  <v-text-field v-model="selectedEvent.regulation" label="Regulació"></v-text-field>
+                                  <v-text-field v-model="regulation" label="Regulació"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="selectedEvent.session" label="Sessió"></v-text-field>
+                                  <session-select v-model="session"></session-select>
                               </v-flex>
                           </v-layout>
                       </v-container>
@@ -51,23 +51,23 @@
 
 <script>
 import EventForm from './EventForm.vue'
+import SessionSelect from '../SessionSelect.vue'
 export default {
   name: 'EventsCreate',
   components: {
-    'EventForm': EventForm
+    'EventForm': EventForm,
+    'SessionSelect': SessionSelect
   },
   data () {
     return {
       dialog: false,
       createDialog: false,
-      selectedEvent: {
-        name: '',
-        image: '',
-        inscription_type_id: '',
-        participants_number:'',
-        regulation:'',
-        session:''
-      }
+      name: '',
+      image: '',
+      inscription_type_id: '',
+      participants_number: '',
+      regulation: '',
+      session: ''
     }
   },
   methods: {
@@ -87,15 +87,14 @@ export default {
     },
     add () {
       this.loading = true
-      const event = {
+      window.axios.post('/api/v1/events/', {
         'name': this.name,
         'image': this.image,
         'inscription_type_id': this.inscription_type_id,
         'participants_number': this.participants_number,
         'regulation': this.regulation,
         'session': this.session
-      }
-      window.axios.post('/api/v1/events/', event).then((response) => {
+      }).then((response) => {
         this.$snackbar.showMessage("S'ha creat l'esdeveniment")
         this.reset()
       }).catch((error) => {

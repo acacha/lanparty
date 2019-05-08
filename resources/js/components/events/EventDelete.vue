@@ -30,7 +30,7 @@ export default {
     },
     removeEvent () {
       this.deleting = true
-      window.axios.delete('/api/v1/event/' + this.event.id).then(() => {
+      window.axios.delete('/api/v1/events/' + this.event.id).then(() => {
         this.deleting = false
         this.$snackbar.showMessage('Event eliminat correctament')
       }).catch(() => {
