@@ -96,7 +96,7 @@ export default {
     'event-unarchive': EventUnArchive,
     'event-delete': EventDelete
   },
-  data() {
+  data () {
     return {
       search: '',
       dataEvents: this.events,
