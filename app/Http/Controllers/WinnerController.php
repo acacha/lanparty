@@ -50,7 +50,9 @@ class WinnerController extends Controller
      */
     public function store(StoreWinner $request, Prize $prize)
     {
+        dd(Number::assigned()->get());
         $number = Number::assigned()->findOrFail($request->number);
+        dd($number);
         $prize->number()->associate($number);
         $prize->save();
         $prize->load('number');

@@ -31,10 +31,11 @@
 import RemoveAllWinners from './RemoveAllWinners'
 import RemoveWinnerDialog from './RemoveWinnerDialog'
 import interactsWithGravatar from '../mixins/interactsWithGravatar'
+import randomColor from '../mixins/randomColor'
 
 export default {
-  name: 'Winners.vue',
-  mixins: [interactsWithGravatar],
+  name: 'Winners',
+  mixins: [interactsWithGravatar, randomColor],
   components: {
     'remove-all-winners': RemoveAllWinners,
     'remove-winner-dialog': RemoveWinnerDialog
@@ -61,6 +62,20 @@ export default {
     },
     removed () {
       this.$emit('removed')
+    },
+    name (winner) {
+      let name = ''
+      if (!winner) return name
+      if (winner.sn1) name = name + winner.sn1
+      if (winner.sn2) name = name + ' ' + winner.sn2
+      if (winner.name) {
+        if (name) {
+          name = name + ', ' + winner.givenName
+        } else {
+          name = name + winner.givenName
+        }
+      }
+      return name
     }
   },
 }

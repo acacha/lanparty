@@ -10,6 +10,7 @@
             clearable
             no-data-text="No hi ha cap premi disponible"
             :loading="loading"
+            :return-object="returnObject"
     >
         <template slot="selection" slot-scope="data">
             <v-chip
@@ -50,6 +51,10 @@ export default {
     loading: {
       type: Boolean,
       default:false
+    },
+    returnObject: {
+      type: Boolean,
+      default:true
     }
   },
   watch: {

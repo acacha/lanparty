@@ -18,14 +18,14 @@
         </v-layout>
         <v-layout row wrap>
             <v-flex xs2>
-                <and-the-winner-is></and-the-winner-is>
+                <and-the-winner-is :prizes="prizes" :prize="prize" :result="result" @assigned="finishAddWinner"></and-the-winner-is>
                 <winners :winners="internalWinners" @removedAll="removedAll"></winners>
             </v-flex>
             <v-flex xs10>
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
             </v-flex>
             <v-flex xs12 v-if="prize">
-                <h1 class="display-3" v-html="prize"></h1>
+                <h1 class="display-3">{{ prize.name }} | {{ prize.id }}</h1>
                 <h3 class="display-3" v-if="winner">{{ winner.name}}</h3>
             </v-flex>
         </v-layout>
@@ -49,8 +49,6 @@
 </style>
 
 <script>
-  import interactsWithGravatar from '../mixins/interactsWithGravatar'
-  import randomColor from '../mixins/randomColor'
   import SessionSelect from '../SessionSelect'
   import Winners from './Winners'
   import Prizes from '../prizes/Prizes'
@@ -58,7 +56,6 @@
   import EventBus from '../../eventBus'
 
   export default {
-    mixins: [interactsWithGravatar, randomColor],
     components: {
       'session-select': SessionSelect,
       'winners': Winners,
@@ -100,45 +97,13 @@
       }
     },
     methods: {
-      finishAddWinner (multiple, selectedPrize) {
-        this.internalWinners.unshift({
-          id: selectedPrize.id,
-          name: this.prize,
-          number: {
-            value: this.result,
-            user: {
-              name: this.winner.name,
-              givenName: this.winner.givenName,
-              sn1: this.winner.sn1,
-              sn2: this.winner.sn2,
-              email: this.winner.email
-            }
-          }
-        })
-        EventBus.$emit('winner',null)
-        this.refreshPrizes()
-        // TODO -> REFRESH PRIZES no cal seguents linies ESBORRAR:
-        // if (multiple !== 1) {
-        //   this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
-        // }
-        this.prize = null
-      },
-      userName (user) {
-        let name = ''
-        if (user.sn1) name = user.sn1
-        if (user.sn2) {
-          if (name !== '') name = name + ' '
-          name = name + user.sn2
-        }
-        if (name !== '') name = name + ', ' + user.givenName
-        return name
-      },
       loop () {
         if (this.stop) {
           this.timing = 1
           this.stop = false
-          this.result = Math.floor(1 + Math.random() * this.total)
-          window.odometer.innerHTML = this.result
+          let resultNumber = Math.floor(1 + Math.random() * this.total)
+          this.result = this.findNumberByValue(resultNumber)
+          window.odometer.innerHTML = this.result.value
           window.setTimeout(() => {
             EventBus.$emit('tachan', true)
           }, 4500)
@@ -150,12 +115,12 @@
       },
       setWinner () {
         this.rolling = false
-        let number = this.findNumberByValue(this.result)
         console.log('NUMBER:')
-        console.log(number)
+        console.log(this.result)
         console.log('USER:')
-        console.log(number.user)
-        EventBus.$emit('winner',number.user)
+        console.log(this.result.user)
+        this.winner = this.result.user
+        EventBus.$emit('winner', this.result.user)
       },
       findNumberByValue (value) {
         return this.numbers.find((number) => {
@@ -191,27 +156,44 @@
       removedAll () {
         this.internalWinners = null
         this.prize = null
-        this.refreshPrizes()
+        EventBus.$emit('refreshPrizes',false)
       },
       removed () {
-        this.internalWinners.splice(this.internalWinners.indexOf(winner), 1)
-        this.refreshPrizes()
+        this.internalWinners.splice(this.internalWinners.indexOf(this.winner), 1)
+        EventBus.$emit('refreshPrizes',false)
       },
-      // TODO ELIMINAR!
-      // name (winner) {
-      //   let name = ''
-      //   if (!winner) return name
-      //   if (winner.sn1) name = name + winner.sn1
-      //   if (winner.sn2) name = name + ' ' + winner.sn2
-      //   if (winner.name) {
-      //     if (name) {
-      //       name = name + ', ' + winner.givenName
-      //     } else {
-      //       name = name + winner.givenName
-      //     }
-      //   }
-      //   return name
-      // },
+      finishAddWinner (multiple, selectedPrize) {
+        console.log('finishAddWinner!')
+        console.log('multiple:')
+        console.log(multiple)
+        console.log('selectedPrize:')
+        console.log(selectedPrize)
+        console.log('this.prize:')
+        console.log(this.prize)
+        EventBus.$emit('winner',null)
+        EventBus.$emit('tachan',false)
+        console.log('PROVA!!!!!!!!!!')
+        this.internalWinners.unshift({
+          id: selectedPrize.id,
+          name: this.prize,
+          number: {
+            value: this.result.value,
+            user: {
+              name: this.winner.name,
+              givenName: this.winner.givenName,
+              sn1: this.winner.sn1,
+              sn2: this.winner.sn2,
+              email: this.winner.email
+            }
+          }
+        })
+        EventBus.$emit('refreshPrizes',false)
+        // TODO -> REFRESH PRIZES no cal seguents linies ESBORRAR:
+        // if (multiple !== 1) {
+        //   this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
+        // }
+        this.prize = null
+      }
     },
     created () {
       this.session = window.lanparty.session

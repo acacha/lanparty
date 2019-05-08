@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import EventBus from '../../eventBus'
 import PrizesSelect from '../prizes/PrizesSelect'
 export default {
   name: 'Prizes',
@@ -62,16 +63,21 @@ export default {
     }
   },
   methods: {
-    refreshPrizes () {
+    refreshPrizes (message = true) {
       this.refreshing = true
       window.axios.get('/api/v1/available_prizes').then(response => {
-        this.$snackbar.showMessage('Premis actualitzats correctament')
+        if (message) this.$snackbar.showMessage('Premis actualitzats correctament')
         this.internalPrizes = response.data
         this.refreshing = false
       }).catch(() => {
         this.refreshing = false
       })
     }
+  },
+  created () {
+    EventBus.$on('refreshPrizes', (message = true) => {
+      this.refreshPrizes(message)
+    })
   }
 }
 </script>
