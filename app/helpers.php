@@ -1097,6 +1097,12 @@ if (!function_exists('create_flags_2019')) {
                       'category' => null,
                       'avatar' => '/img/logos/SecurityPla.jpg'
                 ]);
+                Partner::firstOrCreate([
+                      'name' => 'Bar de Tomàs',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Tomas.jpg'
+                ]);
             }
           }
 
@@ -1306,6 +1312,16 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => '',
                                 'value' => 6500,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Bar de Tomàs',
+                          'items' => [
+                              [ 'name' => '10 esmorzars',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 6000,
                               ]
                           ]
                         ]
