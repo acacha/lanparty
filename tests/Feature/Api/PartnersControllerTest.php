@@ -141,6 +141,7 @@ class PartnersControllerTest extends TestCase
     $response = $this->json('POST','/api/v1/partners/',[
       'name' => 'Ajuntament',
       'category' => 'Bronze'
+
     ]);
 
     $result = json_decode($response->getContent());
@@ -216,4 +217,148 @@ class PartnersControllerTest extends TestCase
     $response->assertStatus(403);
   }
 
+  /** @test */
+  public function superadmin_can_index_partners()
+  {
+    $this->loginAsSuperAdmin('api');
+
+    create_partners_2019();
+
+    $response = $this->json('GET','/api/v1/partners');
+    $response->assertSuccessful();
+
+    $result = json_decode($response->getContent());
+
+    $this->assertCount(16,$result);
+
+    $this->assertEquals('Ajuntament de Tortosa',$result[0]->name);
+    $this->assertEquals('2019',$result[0]->session);
+    $this->assertEquals(null,$result[0]->category);
+    $this->assertEquals('/img/logos/Ajuntament.jpg',$result[0]->avatar);
+
+    $this->assertEquals('Dep. Informatica Institut de l\'Ebre',$result[1]->name);
+    $this->assertEquals('2019',$result[1]->session);
+    $this->assertEquals(null,$result[1]->category);
+    $this->assertEquals('/img/logos/iesEbre.jpg',$result[1]->avatar);
+
+  }
+
+  /** @test */
+  public function manager_can_index_partners()
+  {
+    $this->loginAsManager('api');
+
+    create_partners_2019();
+
+    $response = $this->json('GET','/api/v1/partners');
+    $response->assertSuccessful();
+
+    $result = json_decode($response->getContent());
+
+    $this->assertCount(16,$result);
+
+    $this->assertEquals('Ajuntament de Tortosa',$result[0]->name);
+    $this->assertEquals('2019',$result[0]->session);
+    $this->assertEquals(null,$result[0]->category);
+    $this->assertEquals('/img/logos/Ajuntament.jpg',$result[0]->avatar);
+
+    $this->assertEquals('Dep. Informatica Institut de l\'Ebre',$result[1]->name);
+    $this->assertEquals('2019',$result[1]->session);
+    $this->assertEquals(null,$result[1]->category);
+    $this->assertEquals('/img/logos/iesEbre.jpg',$result[1]->avatar);
+
+
+
+  }
+
+  //*****************************EDIT********************************/
+
+  /** @test */
+  public function regular_user_cannot_edit_partner()
+  {
+    $this->login('api');
+
+    $oldPartner =factory(Partner::class)->create([
+            'name' => 'Bar Thomas'
+    ]);
+
+    $response = $this->json('PUT','/api/v1/partners/'.$oldPartner->id,[
+      'name' => 'Bar Paco'
+    ]);
+
+    json_decode($response->getContent());
+    $response->assertStatus(403);
+
+  }
+
+  /** @test */
+  public function guest_user_cannot_edit_partner()
+  {
+    $oldPartner =factory(Partner::class)->create([
+      'name' => 'Bar Thomas'
+    ]);
+
+    $response = $this->json('PUT','/api/v1/partners/'.$oldPartner->id,[
+      'name' => 'Bar Paco'
+    ]);
+
+    json_decode($response->getContent());
+    $response->assertStatus(401);
+  }
+
+  /** @test */
+  public function superadmin_can_edit_partner()
+  {
+    $this->loginAsSuperAdmin('api');
+
+    $oldPartner =factory(Partner::class)->create([
+      'name' => 'Bar Thomas'
+    ]);
+
+    $response = $this->json('PUT','/api/v1/partners/'.$oldPartner->id,[
+      'name' => 'Bar Paco'
+    ]);
+
+    $result =json_decode($response->getContent());
+    $response->assertSuccessful();
+
+    $newPartner =  $oldPartner->refresh();
+    $this->assertNotNull($newPartner);
+    $this->assertEquals('Bar Paco', $result->name);
+  }
+
+  /** @test */
+  public function manager_can_edit_partner()
+  {
+    $this->loginAsManager('api');
+
+    $oldPartner =factory(Partner::class)->create([
+      'name' => 'Bar Thomas'
+    ]);
+
+    $response = $this->json('PUT','/api/v1/partners/'.$oldPartner->id,[
+      'name' => 'Bar Paco'
+    ]);
+
+    $result =json_decode($response->getContent());
+    $response->assertSuccessful();
+
+    $newPartner =  $oldPartner->refresh();
+    $this->assertNotNull($newPartner);
+    $this->assertEquals('Bar Paco', $result->name);
+  }
+
+  /** @test */
+  public function cannot_edit_partner_without_name()
+  {
+    $this->loginAsManager('api');
+
+    $oldPartner = factory(Partner::class)->create();
+    $response = $this->json('PUT','/api/v1/partners/'.$oldPartner->id,[
+      'name' => ''
+    ]);
+
+    $response->assertStatus(422);
+  }
 }
+

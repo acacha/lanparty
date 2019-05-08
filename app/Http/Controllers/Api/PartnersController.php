@@ -50,7 +50,7 @@ class PartnersController extends Controller
     return $partner;
   }
 
-  public function update(PartnerUpdate $requestm, Partner $partner)
+  public function update(PartnerUpdate $request, Partner $partner)
   {
     $partner->name = $request->name;
     $partner->category = $request->category;
