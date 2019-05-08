@@ -13,7 +13,7 @@
                                   <v-text-field v-model="name" label="Nom"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="image" label="Descripcio"></v-text-field>
+                                  <v-text-field v-model="image" label="Imatge"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
                                   <v-text-field v-model="inscription_type_id" label="Tipo Instripció"></v-text-field>
