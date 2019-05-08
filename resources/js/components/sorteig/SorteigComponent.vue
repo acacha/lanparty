@@ -1,6 +1,6 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
-        <v-alert :value="numbers.length === 0" type="error" dismissible>
+        <v-alert :value="numbersForCurrentSession.length === 0" type="error" dismissible>
             <span class="title">No hi ha números per sortejar! Primer cal assignar
                 <a href="/manage/participants" target="_blank">números als usuaris</a></span>
         </v-alert>
