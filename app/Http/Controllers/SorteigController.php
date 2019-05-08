@@ -14,7 +14,7 @@ use App\Prize;
 class SorteigController extends Controller
 {
     /**
-     * See sorteig.
+     * Index
      *
      * @param SeeSorteig $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

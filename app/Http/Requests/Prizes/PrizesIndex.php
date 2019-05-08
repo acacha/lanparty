@@ -14,7 +14,7 @@ class PrizesIndex extends FormRequest
      */
     public function authorize()
     {
-      return Auth::user()->can('prizes.index');
+      return true;
     }
 
     /**

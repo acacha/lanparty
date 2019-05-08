@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab7d8f64acf1bdd191a1536d2d8d5532",
+    "content-hash": "3868f3e5ff969146c6f2774e5342fa99",
     "packages": [
         {
             "name": "acacha/filesystem",

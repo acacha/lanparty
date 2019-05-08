@@ -97,15 +97,17 @@ if (!function_exists('initialize_partners')) {
 }
 
 if (!function_exists('initialize_prizes')) {
-    function initialize_prizes()
+    function initialize_prizes($session = null)
     {
+        if (is_null($session)) $session = config('lanparty.session');
         Prize::firstOrCreate([
             'name' => 'Samarreta LAN Party',
             'description' => '',
             'notes' => '',
             'value' => 0,
             'partner_id' => Partner::findByName('Ajuntament de Tortosa')->id,
-            'multiple' => true
+            'multiple' => true,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -113,7 +115,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -121,7 +124,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -129,7 +133,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -137,7 +142,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 7400,
-            'partner_id' => Partner::findByName('Beep')->id
+            'partner_id' => Partner::findByName('Beep')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -146,7 +152,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Counter Strike',
             'value' => 5999,
             'partner_id' => Partner::findByName('Beep')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -155,7 +162,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat concurs Hardware',
             'value' => 14620,
             'partner_id' => Partner::findByName('Beep')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -163,7 +171,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 24775,
-            'partner_id' => Partner::findByName('The Workshop')->id
+            'partner_id' => Partner::findByName('The Workshop')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -172,7 +181,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat concurs de programació',
             'value' => 23000,
             'partner_id' => Partner::findByName('DISI')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -181,7 +191,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat de programació',
             'value' => 12550,
             'partner_id' => Partner::findByName('DISI')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -190,7 +201,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '3r classificat de programació',
             'value' => 12550,
             'partner_id' => Partner::findByName('DISI')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -198,7 +210,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 18700,
-            'partner_id' => Partner::findByName('AGI')->id
+            'partner_id' => Partner::findByName('AGI')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -207,7 +220,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Ae of Empires 2 HD',
             'value' => 12900,
             'partner_id' => Partner::findByName('PC Serveis')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -215,7 +229,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => '2n classificat concurs programació',
             'value' => 3999,
-            'partner_id' => Partner::findByName('EPorts')->id
+            'partner_id' => Partner::findByName('EPorts')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -223,7 +238,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 3999,
-            'partner_id' => Partner::findByName('EPorts')->id
+            'partner_id' => Partner::findByName('EPorts')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -232,7 +248,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats League of Legends',
             'value' => 7500,
             'partner_id' => Partner::findByName('SecurityPla')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -241,7 +258,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats Counter Strike',
             'value' => 7500,
             'partner_id' => Partner::findByName('SecurityPla')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -250,7 +268,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => 'Guanyador concurs cartell LAN Party',
             'value' => 7500,
             'partner_id' => Partner::findByName('Altercom 21')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -258,7 +277,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 14900,
-            'partner_id' => Partner::findByName('Globals')->id
+            'partner_id' => Partner::findByName('Globals')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -266,7 +286,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2999,
-            'partner_id' => Partner::findByName('Ferreteria Garcia')->id
+            'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -274,7 +295,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2695,
-            'partner_id' => Partner::findByName('Ferreteria Garcia')->id
+            'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -283,7 +305,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat Age Of Empires 2',
             'value' => 1575,
             'partner_id' => Partner::findByName('Ferreteria Garcia')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -292,7 +315,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Counter Strike',
             'value' => 8999,
             'partner_id' => Partner::findByName('Jabil')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -300,7 +324,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2095,
-            'partner_id' => Partner::findByName('Querol')->id
+            'partner_id' => Partner::findByName('Querol')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -308,7 +333,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2490,
-            'partner_id' => Partner::findByName('Querol')->id
+            'partner_id' => Partner::findByName('Querol')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -316,7 +342,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 2300,
-            'partner_id' => Partner::findByName('Querol')->id
+            'partner_id' => Partner::findByName('Querol')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -325,7 +352,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat Concurs de hardware',
             'value' => 6000,
             'partner_id' => Partner::findByName('Electrotic')->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -333,7 +361,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 1000,
-            'partner_id' => Partner::findByName('Electrotic')->id
+            'partner_id' => Partner::findByName('Electrotic')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -341,7 +370,8 @@ if (!function_exists('initialize_prizes')) {
             'description' => '',
             'notes' => 'Sorteig dissabte',
             'value' => 1000,
-            'partner_id' => Partner::findByName('Electrotic')->id
+            'partner_id' => Partner::findByName('Electrotic')->id,
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -350,7 +380,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats League of Legends',
             'value' => 6500,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -359,7 +390,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
             'value' => 3000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -368,7 +400,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
 
         Prize::firstOrCreate([
@@ -377,7 +410,8 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999 // Ja assignat
+            'user_id' => 999999, // Ja assignat
+            'session' => $session
         ]);
     }
 }
@@ -846,9 +880,12 @@ if (!function_exists('manager_permissions')) {
             'events.show',
             'events.update',
             'managers.index',
-            'prizes.index',
             'managers.invitation.send',
             'partners.index',
+            'partners.show',
+            'partners.store',
+            'partners.destroy',
+            'partners.update',
             'users.index',
             'user.manager.destroy',
             'archived.events.store',
@@ -961,114 +998,337 @@ if (!function_exists('create_flags_2019')) {
 
     }
 
-
-    if (!function_exists('create_partners_2019')) {
-        function create_partners_2019() {
-
-            DB::table('partners')->insert([
-                'name' => 'Ajuntament de Tortosa',
-                'session' => '2019',
-                'category' => null,
-                'avatar' => '/img/logos/Ajuntament.jpg'
-            ]);
-
-            DB::table('partners')->insert([
-                  'name' => 'Fusteria Almendros',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/Almendros.jpg'
-            ]);
-
-            DB::table('partners')->insert([
-                  'name' => 'Alonso',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/Alonso.jpg'
-            ]);
-
-          DB::table('partners')->insert([
-                'name' => 'Altercom',
-                'session' => '2019',
-                'category' => null,
-                'avatar' => '/img/logos/Altercom.jpg'
-          ]);
-
-          DB::table('partners')->insert([
-                'name' => 'Beep',
-                'session' => '2019',
-                'category' => null,
-                'avatar' => '/img/logos/Beep.jpg'
-          ]);
-          DB::table('partners')->insert([
-                'name' => 'Disi',
-                'session' => '2019',
-                'category' => null,
-                'avatar' => '/img/logos/Disi.jpg'
-          ]);
-            DB::table('partners')->insert([
-                  'name' => 'ePorts',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/ePorts.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Ferretería Garcia',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/FerreteriaGarcia.png'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Globals',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/Globals.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Informàtica Guerra',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/Jabil.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Oficlick',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/Oficlick.webp'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'PC Serveis',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/PcServeis.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Querol',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/Querol.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Recycling Systems',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/RecyclingSystem.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'Security Pla',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/SecurityPla.jpg'
-            ]);
-            DB::table('partners')->insert([
-                  'name' => 'The Work Shop',
-                  'session' => '2019',
-                  'category' => null,
-                  'avatar' => '/img/logos/TheWorkShop.jpg'
-            ]);
+        if (!function_exists('create_partners_2019')) {
+            function create_partners_2019() {
+                DB::table('partners')->where('session', '2019')->delete();
+                Partner::firstOrCreate([
+                    'name' => 'Ajuntament de Tortosa',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/Ajuntament.jpg'
+                ]);
+                Partner::firstOrCreate([
+                    'name' => 'Dep. Informatica Institut de l\'Ebre',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/iesEbre.jpg'
+                ]);
+                Partner::firstOrCreate([
+                    'name' => 'AGI(EbreSoft Consulting)',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/AGI.jpg'
+                ]);
+                Partner::firstOrCreate([
+                    'name' => 'Altercom21',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/Altercom.jpg'
+                ]);
+                Partner::firstOrCreate([
+                    'name' => 'BEEP',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/BEEP.jpg'
+                ]);
+                Partner::firstOrCreate([
+                    'name' => 'Alonso - Delta Stocks',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/Alonso.jpg'
+                ]);
+                Partner::firstOrCreate([
+                    'name' => 'Disi',
+                    'session' => '2019',
+                    'category' => null,
+                    'avatar' => '/img/logos/Disi.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'ePorts',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/ePorts.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Fusteria Almendros',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Almendros.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Globals',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Globals.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Guerra Informàtica',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Guerra.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Jabil',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Jabil.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'PC Serveis',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/PcServeis.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Querol',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Querol.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Recycling Systems',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/RecyclingSystem.jpg'
+                ]);
+                Partner::firstOrCreate([
+                      'name' => 'Security Pla',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/SecurityPla.jpg'
+                ]);
+            }
+          }
 
 
+          if (!function_exists('create_prizes_2019')) {
+              function create_prizes_2019() {
+                    $prizes2019 = [
+                        [
+                          'partner' => 'Ajuntament de Tortosa',
+                          'items' => [
+                              [ 'name' => 'Samarretes Lan Party',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 79860,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Dep. Informatica Institut de l\'Ebre',
+                          'items' => [
+                              [ 'name' => '6x Disc dur extern 1TB',
+                                'description' => '',
+                                'notes' => 'Guanyador Overwatch',
+                                'value' => 5500,
+                              ],
+                              [ 'name' => '5x Teclat gaming',
+                                'description' => '',
+                                'notes' => 'Guanyador LOL',
+                                'value' => 7000,
+                              ],
+                              [ 'name' => '6x Disc dur extern 1TB',
+                                'description' => '',
+                                'notes' => 'Guanyador Overwatch',
+                                'value' => 5500,
+                              ],
+                              [ 'name' => '5x Webcams',
+                                'description' => '',
+                                'notes' => '2n Classificat LOL',
+                                'value' => 1300,
+                              ],
+                              [ 'name' => '3x Auriculars Sport',
+                                'description' => '',
+                                'notes' => '2n Classificat FIFA i CounterStrike',
+                                'value' => 1100,
+                              ],
+                              [ 'name' => '6x Alfombretes Gaming',
+                                'description' => '',
+                                'notes' => '2n Classificat OverWatch i Ciberseguretat',
+                                'value' => 1100,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'AGI(EbreSoft Consulting)',
+                          'items' => [
+                              [ 'name' => '3 Discs durs SSD Kingston 480 GB',
+                                'description' => '',
+                                'notes' => 'Guanyador Campionat Ciberseguretat',
+                                'value' => 21900,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Altercom21',
+                          'items' => [
+                              [ 'name' => 'Telèfon Mòbil Xiaomi RediMi Go',
+                                'description' => '',
+                                'notes' => 'Guanyador Campionat Programació',
+                                'value' => 7500
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'BEEP',
+                          'items' => [
+                              [ 'name' => 'Cadira Mars Gaming MGC0BR i 6 funkos Star Wars',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 16000,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Alonso - Delta Stocks',
+                          'items' => [
+                              [ 'name' => 'Monitor Gaming',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 16000,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Disi',
+                          'items' => [
+                              [ 'name' => '1 Disc dur SSD 500GB',
+                                'description' => '',
+                                'notes' => 'Guanyador Cartell LanParty',
+                                'value' => 7300,
+                              ],
+                              [ 'name' => '1 Disc dur SSD 500GB',
+                                'description' => '',
+                                'notes' => 'Guanyador Sorteig FaceBook',
+                                'value' => 7300,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'ePorts',
+                          'items' => [
+                              [ 'name' => '3 Discs durs SSD Western Digital 500GB',
+                                'description' => '',
+                                'notes' => 'Guanyadors CounterStrike',
+                                'value' => 20000,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Fusteria Almendros',
+                          'items' => [
+                              [ 'name' => 'Teclat Gaming Mecànic Titan Rodex',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 4999,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Globals',
+                          'items' => [
+                              [ 'name' => 'Auriculars Gaming Logitech G430 Gaming Surround Sound 7.1',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 5000,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Guerra Informàtica',
+                          'items' => [
+                              [ 'name' => 'Impresora laser wifi Kyocera',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 60000,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Jabil',
+                          'items' => [
+                              [ 'name' => 'Teclat Gaming Newskill Hanshi Spectrum Mecànic RGB Kailh ',
+                                'description' => '',
+                                'notes' => 'Guanyador FIFA',
+                                'value' => 8000,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'PC Serveis',
+                          'items' => [
+                              [ 'name' => 'Monitor 27" Acer KA Series',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 17700,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Querol',
+                          'items' => [
+                              [ 'name' => 'Impressora Canon TS3150',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 4100,
+                              ],
+                              [ 'name' => 'Auriculars Pioneer SE-MJ503T-K',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 1500,
+                              ],
+                              [ 'name' => 'Mars Gaming MRCP1 Combo 4x1 Tec+Rat+Alf+Auric',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 2200,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Recycling Systems',
+                          'items' => [
+                              [ 'name' => 'Regals diversos',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 9000,
+                              ],
+                              [ 'name' => 'Auriculars Enery Running',
+                                'description' => '',
+                                'notes' => '2n Classsificat Campionat Programació',
+                                'value' => 1200,
+                              ]
+                          ]
+                        ],
+                        [
+                          'partner' => 'Security Pla',
+                          'items' => [
+                              [ 'name' => 'Disc dur WD SSD 500GB ',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 6500,
+                              ]
+                          ]
+                        ]
+                    ];
+
+                    DB::table('prizes')->where('session', '2019')->delete();
+                    foreach ($prizes2019 as $prize) {
+                      $partnerId = Partner::where('name', $prize['partner'])->where('session','2019' )->first()->id;
+                      foreach ($prize['items'] as $item) {
+                        Prize::firstOrCreate([
+                            'name' => $item['name'],
+                            'description' => $item['description'],
+                            'notes' => $item['notes'],
+                            'value' => $item['value'],
+                            'partner_id' => $partnerId,
+                            'session' => '2019',
+                            'user_id' => '9999'
+                        ]);
+                      }
+                    }
+
+              }
+          }
 
 
-        }
-      }
 }

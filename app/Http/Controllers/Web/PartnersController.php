@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Partners\PartnersIndex;
+use App\Http\Requests\Partners\PartnerIndex;
 use App\Partner;
 use App\Role;
 
@@ -17,7 +17,7 @@ class PartnersController extends Controller
     /**
      * @return mixed
      */
-    public function index(PartnersIndex $request)
+    public function index(PartnerIndex $request)
     {
         //$partners = collect(Role::findByName('Manager')->users);
       $partners = Partner::partners();

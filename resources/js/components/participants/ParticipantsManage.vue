@@ -1,32 +1,7 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
-            <v-flex xs8 offset-xs2 v-if="show">
-                <v-toolbar color="primary darken-3 white--text" dense>
-                    <v-toolbar-title>Escolliu una sessió</v-toolbar-title>
-                    <v-spacer></v-spacer>
-                    <v-toolbar-items>
-                        <v-btn icon class="white--text" @click="minimized = false" v-if="minimized">
-                            <v-icon>add</v-icon>
-                        </v-btn>
-                        <v-btn v-else icon class="white--text" @click="minimized = true">
-                            <v-icon>minimize</v-icon>
-                        </v-btn>
-                        <v-btn icon dark @click.native="show = false">
-                            <v-icon>close</v-icon>
-                        </v-btn>
-                    </v-toolbar-items>
-                </v-toolbar>
-                <v-card v-if="!minimized">
-                    <v-card-text>
-                        <v-select
-                                v-model="session"
-                                :items="sessions"
-                                label="Escolliu una sessió"
-                        ></v-select>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
+            <session-chooser v-model="session"></session-chooser>
         </v-layout>
         <v-layout row wrap v-if="session">
             <v-flex xs12 v-if="status">
@@ -63,20 +38,20 @@
 import UsersSearch from '../UsersSearchComponent.vue'
 import NumbersSearch from '../NumbersSearchComponent.vue'
 import ManageUser from '../ManageUserComponent.vue'
+import SessionChooser from '../SessionChooser.vue'
 
 export default {
   name: 'ParticipantsManage',
   components: {
     'users-search': UsersSearch,
     'numbers-search': NumbersSearch,
-    'manage-user': ManageUser
+    'manage-user': ManageUser,
+    'session-chooser': SessionChooser
   },
   data () {
     return {
       show: true,
-      minimized: false,
-      session: window.lanparty.session,
-      sessions: []
+      session: ''
     }
   },
   props: {
@@ -102,7 +77,7 @@ export default {
     }
   },
   created () {
-    this.sessions = window.lanparty.sessions.map(session => session.name)
+    this.session = window.lanparty.session
   }
 }
 </script>

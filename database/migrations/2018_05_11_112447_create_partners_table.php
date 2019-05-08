@@ -19,7 +19,7 @@ class CreatePartnersTable extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->enum('category',['Or', 'Plata','Bronze']);
+            $table->enum('category',['Or', 'Plata','Bronze'])->nullable();
             $table->timestamps();
         });
     }
