@@ -35,7 +35,8 @@ export default {
       window.axios.delete('/api/v1/winners').then(() => {
         this.loading = false
         this.dialog = false
-        this.$emit('removed')
+        this.$snackbar.showMessage('Tots els guanyadors eliminats correctament')
+        this.$emit('removedAll')
       }).catch(() => {
         this.loading = false
       })

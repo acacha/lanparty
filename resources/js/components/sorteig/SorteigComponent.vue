@@ -106,6 +106,7 @@
           window.odometer.innerHTML = this.result.value
           window.setTimeout(() => {
             EventBus.$emit('tachan', true)
+            EventBus.$emit('winner', null)
           }, 4500)
           window.setTimeout(this.setWinner, 8500)
           return
@@ -173,20 +174,22 @@
         EventBus.$emit('winner',null)
         EventBus.$emit('tachan',false)
         console.log('PROVA!!!!!!!!!!')
-        this.internalWinners.unshift({
-          id: selectedPrize.id,
-          name: this.prize,
-          number: {
-            value: this.result.value,
-            user: {
-              name: this.winner.name,
-              givenName: this.winner.givenName,
-              sn1: this.winner.sn1,
-              sn2: this.winner.sn2,
-              email: this.winner.email
+        if (this.internalWinners) {
+          this.internalWinners.unshift({
+            id: selectedPrize.id,
+            name: this.prize.name,
+            number: {
+              value: this.result.value,
+              user: {
+                name: this.winner.name,
+                givenName: this.winner.givenName,
+                sn1: this.winner.sn1,
+                sn2: this.winner.sn2,
+                email: this.winner.email
+              }
             }
-          }
-        })
+          })
+        }
         EventBus.$emit('refreshPrizes',false)
         // TODO -> REFRESH PRIZES no cal seguents linies ESBORRAR:
         // if (multiple !== 1) {

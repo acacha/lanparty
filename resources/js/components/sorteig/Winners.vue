@@ -16,8 +16,13 @@
                         <remove-winner-dialog @removed="removed" :winner="winner"></remove-winner-dialog>
                         {{ winner.number && winner.number.user && winner.number.user.name}}
                     </v-list-tile-title>
-                    <v-list-tile-sub-title v-html="name(winner.number && winner.number.user && winner.number.user)"></v-list-tile-sub-title>
-                    <v-list-tile-sub-title v-html="winner.name"></v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-html="name(winner.number && winner.number.user)"></v-list-tile-sub-title>
+                    <v-list-tile-sub-title>
+                        <v-tooltip bottom>
+                            <span slot="activator">{{ winner.name }}</span>
+                            <span>{{ winner }}</span>
+                        </v-tooltip>
+                    </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-avatar>
                     <img :src="gravatarURL (winner.number && winner.number.user && winner.number.user.email)">
@@ -47,7 +52,6 @@ export default {
   },
   props: {
     winners: {
-      type: Array,
       required: true
     }
   },
