@@ -129,7 +129,7 @@
       },
       findNumberByValue (value) {
         return this.numbers.find((number) => {
-          return parseInt(number.value) === value
+          return parseInt(number.value) === value && number.session === this.session
         })
       },
       updateTiming () {
