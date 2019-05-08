@@ -22,5 +22,6 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'inscription_type_id' => $faker->unique()->randomNumber($nbDigits = 8),
         'image' => $faker->firstName,
         'regulation' => $faker->text,
+        'session'=>$faker->text
     ];
 });

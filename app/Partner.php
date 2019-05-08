@@ -42,7 +42,9 @@ class Partner extends Model
     return [
       'id' => $this->id,
       'name' => $this->name,
+      'session' => $this->session,
       'category' => $this->category,
+      'avatar' => $this->avatar,
       'created_at' => $this->created_at,
       'created_at_formatted' => $this->created_at_formatted,
       'created_at_human' => $this->created_at_human,

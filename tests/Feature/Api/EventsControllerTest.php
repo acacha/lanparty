@@ -94,6 +94,7 @@ class EventsControllerTest extends TestCase
         $this->assertNotNull($event = Event::find($result->id));
         $this->assertEquals($event->name,$result->name);
         $this->assertEquals($event->id,$result->id);
+        $this->assertEquals($event->session,$result->session);
 
 
 
@@ -115,6 +116,8 @@ class EventsControllerTest extends TestCase
         $this->assertNotNull($event = Event::find($result->id));
         $this->assertEquals($event->name,$result->name);
         $this->assertEquals($event->id,$result->id);
+        $this->assertEquals($event->session,$result->session);
+
     }
     /**
      * @test
@@ -165,6 +168,8 @@ class EventsControllerTest extends TestCase
         $response->assertSuccessful();
         $this->assertEquals($event->name, $result->name);
         $this->assertEquals($event->image,  $result->image);
+        $this->assertEquals($event->session,$result->session);
+
 //        $response->assertViewIs('manage.events.index');
     }
 
@@ -240,7 +245,8 @@ class EventsControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $this->loginAsManager('api');
         $oldEvent = factory(Event::class)->create([
-            'name' => 'Comprar llet'
+            'name' => 'Comprar llet',
+            'session'=>'2018'
         ]);
         $event = factory(Event::class)->create();
         $eventArr = json_decode(json_encode($event), true);
@@ -253,6 +259,7 @@ class EventsControllerTest extends TestCase
         $newTask = $oldEvent->refresh();
         $this->assertNotNull($newTask);
         $this->assertEquals($eventArr['name'],$result->name);
+        $this->assertEquals($eventArr['session'],$result->session);
 //        dump($newTask->name);
 //        $result = json_decode($response->getContent());
 //        $response->assertSuccessful();
@@ -279,6 +286,8 @@ class EventsControllerTest extends TestCase
         $newTask = $oldEvent->refresh();
         $this->assertNotNull($newTask);
         $this->assertEquals($eventArr['name'],$result->name);
+        $this->assertEquals($eventArr['session'],$result->session);
+
 //        $response->assertViewIs('manage.events.index');
     }
 

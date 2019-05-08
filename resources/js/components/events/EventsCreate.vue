@@ -53,6 +53,7 @@
 import EventForm from './EventForm.vue'
 import SessionSelect from '../SessionSelect.vue'
 export default {
+
   name: 'EventsCreate',
   components: {
     'EventForm': EventForm,
@@ -96,6 +97,9 @@ export default {
         'session': this.session
       }).then((response) => {
         this.$snackbar.showMessage("S'ha creat l'esdeveniment")
+        console.log('event '+event.name);
+        // console.log('event '+event.name);
+
         this.reset()
       }).catch((error) => {
         this.loading = false

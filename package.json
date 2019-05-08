@@ -12,9 +12,9 @@
         "test": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require tests/Javascript/setup.js tests/Javascript/**/*.spec.js"
     },
     "devDependencies": {
+        "@mdi/font": "^3.6.95",
         "@vue/cli-plugin-eslint": "^3.4.1",
         "@vue/eslint-config-standard": "^3.0.5",
-        "@mdi/font": "^3.6.95",
         "@vue/test-utils": "^1.0.0-beta.29",
         "axios": "^0.18",
         "cross-env": "^5.2.0",
@@ -28,20 +28,20 @@
         "laravel-mix": "^4.0.15",
         "material-design-icons-iconfont": "^4.0.5",
         "resolve-url-loader": "2.3.1",
-        "sass": "^1.17.3",
+        "sass": "^1.20.1",
         "sass-loader": "7.*",
         "vue": "^2.6.10",
         "vue-template-compiler": "^2.6.10",
         "vue-test-utils": "^1.0.0-beta.11",
-        "vuetify": "^1.5.7"
+        "vuetify": "^1.5.14"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.8.0",
+        "@fortawesome/fontawesome-free": "^5.8.1",
         "babel-eslint": "^10.0.1",
-        "expect": "^24.5.0",
+        "expect": "^24.8.0",
         "font-awesome": "^4.7.0",
         "gravatar": "^1.8.0",
-        "jsdom": "^14.0.0",
+        "jsdom": "^14.1.0",
         "jsdom-global": "^3.0.2",
         "mocha": "^6.1.4",
         "mocha-webpack": "^1.1.0",
