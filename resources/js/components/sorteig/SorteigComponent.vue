@@ -25,7 +25,8 @@
                 <div id="odometer" style="border: 15px solid #40764e;" class="odometer">666</div>
             </v-flex>
             <v-flex xs12 v-if="prize">
-                <h1 class="display-3">{{ prize.name }} | {{ prize.id }}</h1>
+                <h1 class="display-3">{{ prize.name }}</h1>
+                <h3 class="display-3" v-if="prize.value">{{ priceInEuros(prize.value) }}</h3>
                 <h3 class="display-3" v-if="winner">{{ winner.name}}</h3>
             </v-flex>
         </v-layout>
@@ -79,7 +80,10 @@
     },
     computed: {
       total () {
-        return this.numbers.length
+        return this.numbersForCurrentSession.length
+      },
+      numbersForCurrentSession() {
+        return this.numbers.filter(number => number.session === this.session)
       }
     },
     props: {
@@ -196,6 +200,12 @@
         //   this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
         // }
         this.prize = null
+      },
+      priceInEuros (price) {
+        if (price) {
+          const value = parseInt(price) / 100
+          return value + '€'
+        }
       }
     },
     created () {

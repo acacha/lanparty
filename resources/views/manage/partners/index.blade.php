@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <partners-manage :partners="{{ $partners }}"></partners-manage>
+  <v-container fluid>
+    <v-layout>
+      <v-flex>
+        <partners-manage :partners="{{ $partners }}"></partners-manage>
+      </v-flex>
+    </v-layout>
+  </v-container>
 @endsection

@@ -13,7 +13,7 @@
                                   <v-text-field v-model="name" label="Nom"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
-                                  <v-text-field v-model="image" label="Descripcio"></v-text-field>
+                                  <v-text-field v-model="image" label="Imatge"></v-text-field>
                               </v-flex>
                               <v-flex xs12>
                                   <v-text-field v-model="inscription_type_id" label="Tipo Instripció"></v-text-field>
@@ -53,6 +53,7 @@
 import EventForm from './EventForm.vue'
 import SessionSelect from '../SessionSelect.vue'
 export default {
+
   name: 'EventsCreate',
   components: {
     'EventForm': EventForm,
@@ -96,6 +97,9 @@ export default {
         'session': this.session
       }).then((response) => {
         this.$snackbar.showMessage("S'ha creat l'esdeveniment")
+        console.log('event '+event.name);
+        // console.log('event '+event.name);
+
         this.reset()
       }).catch((error) => {
         this.loading = false
