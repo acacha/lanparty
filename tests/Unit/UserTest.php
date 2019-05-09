@@ -2,7 +2,12 @@
 
 namespace Tests\Unit;
 
+use App\Event;
+use App\Exceptions\InscriptionException;
 use App\Exceptions\NotEnoughTicketsException;
+use App\Exceptions\UserAlreadyInscribedException;
+use App\Group;
+use App\InscriptionType;
 use App\Role;
 use App\Ticket;
 use App\User;
@@ -129,9 +134,51 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    function totalToPay() {
+    function totalToPay()
+    {
         $user = factory(User::class)->create();
 
-        $this->assertEquals(0,$user->total_to_pay);
+        $this->assertEquals(config('lanparty.inscription_price'), $user->total_to_pay);
+        create_inscription_types();
+
+        $event = Event::firstOrCreate([
+            'name' => 'FIFA 18',
+            'session' => config('lanparty.session'),
+            'inscription_type_id' => InscriptionType::where('value', 'individual')->first()->id,
+            'image' => '/img/Fifa18.jpeg',
+            'regulation' => 'https://docs.google.com/document/d/1YDxnnqIt_Wixy5itQoHWT5-n37G5-I2TY0oHzdPscWM/edit',
+            'published_at' => Carbon::now(),
+            'participants_number' => 15
+        ]);
+        $event->addTickets(1);
+        $event->registerUser($user);
+        $user = $user->fresh();
+        $this->assertEquals(config('lanparty.inscription_price') + config('lanparty.event_inscription_price'), $user->total_to_pay);
+
+        $event2 = Event::firstOrCreate([
+            'name' => 'Counter Strike',
+            'inscription_type_id' => InscriptionType::where('value', 'group')->first()->id,
+            'image' => '/img/CounterStrike.jpeg',
+            'participants_number' => 3,
+            'regulation' => 'https://docs.google.com/document/d/1ZMUBSAYHz79JSWkbv9Ra0HLfO2WGJHkLW6xDYHa4Pks/edit',
+            'published_at' => '2018-01-15 12:00:00',
+        ]);
+        $event2->addTickets(1);
+        $group = Group::create([
+            'name' => 'Panchos'
+        ]);
+        $group->add($user);
+        $event2->registerGroup($group);
+
+        $user = $user->fresh();
+        $this->assertEquals(config('lanparty.inscription_price') + 2*config('lanparty.event_inscription_price'), $user->total_to_pay);
+        $event2->unregisterGroup($group);
+        $user = $user->fresh();
+        $this->assertEquals(config('lanparty.inscription_price') + config('lanparty.event_inscription_price'), $user->total_to_pay);
+
+        $event->unregisterUser($user);
+        $user = $user->fresh();
+        $this->assertEquals(config('lanparty.inscription_price'), $user->total_to_pay);
     }
+
 }

@@ -1,6 +1,6 @@
 <template>
     <span>
-        Total a Pagar: {{ totalToPay }}€
+        Total a Pagar: {{ totalToPay }}
         <v-switch
                 label="Pagat"
                 :input-value="inscriptionPaid"

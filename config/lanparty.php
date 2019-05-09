@@ -61,6 +61,6 @@ return [
     | Preus (en centims d'euro)
     |
     */
-    'inscription_price' => env('LANPARTY_INSCRIPTION_PRICE', 3000),
-    'event_inscription_price' => env('LANPARTY_EVENT_INSCRIPTION_PRICE', 1000)
+    'inscription_price' => env('LANPARTY_INSCRIPTION_PRICE', 300),
+    'event_inscription_price' => env('LANPARTY_EVENT_INSCRIPTION_PRICE', 100)
 ];

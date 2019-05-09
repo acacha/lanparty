@@ -137,7 +137,14 @@ class User extends Authenticatable
      */
     public function getTotalToPayAttribute()
     {
-        return config('lanparty.inscription_price');
+        $total = config('lanparty.inscription_price');
+        foreach ($this->events as $event) {
+            $total = $total + config('lanparty.event_inscription_price');
+        }
+        foreach ($this->groupEvents as $event) {
+            $total = $total + config('lanparty.event_inscription_price');
+        }
+        return $total;
 //        return config('lanparty.inscription_price') + config('lanparty.event_inscription_price');
     }
 
