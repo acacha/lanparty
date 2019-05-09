@@ -79,6 +79,7 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     });
 
     //Register Auth user to events
+
     Route::post('/events/{event}/register', '\\' . RegisterToEventController::class . '@store');
     Route::delete('/events/{event}/register', '\\' . RegisterToEventController::class . '@destroy');
 
@@ -107,9 +108,11 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     //Winners
     Route::delete('/winners', '\\' . WinnersController::class . '@destroy');
 
-    Route::delete('/{session}/winners', '\\' . SessionWinnersController::class . '@destroy');
-
     //Winner
+    Route::group(['middleware' => 'checkSession'], function() {
+        Route::delete('/{session}/winners', '\\' . SessionWinnersController::class . '@destroy');
+    });
+
     Route::get('/winner', '\\' . WinnerController::class . '@index');
     Route::delete('/winner/{prize}', '\\' . WinnerController::class . '@destroy');
     Route::post('/winner/{prize}', '\\' . WinnerController::class . '@store');
@@ -122,8 +125,6 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::delete('/partners/{partner}','\\'.PartnersController::class.'@destroy');
     Route::post('/partners','\\'.PartnersController::class.'@store');
     Route::put('/partners/{partner}','\\'.PartnersController::class.'@update');
-
-
 
     Route::post('/prizes', '\\' . PrizesController::class . '@store');
     Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');

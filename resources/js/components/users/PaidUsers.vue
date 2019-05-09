@@ -15,7 +15,7 @@
                     class="title primary darken-3 white--text"
                     primary-title
             >
-              Llista d'usuaris pagats
+              Llista d'usuaris pagats. Sessió: {{ session }}
             </v-card-title>
 
             <v-card-text>
@@ -66,6 +66,9 @@
                         <td>
                           {{ user.email }}
                         </td>
+                        <td>
+                          {{ priceInEuros(user.total_to_pay) }}
+                        </td>
                         <td class="text-xs-left cell" :title="user.formatted_created_at">
                             <v-tooltip bottom>
                                 <span slot="activator">{{ user.formatted_created_at_diff }}</span>
@@ -106,6 +109,7 @@
 
 <script>
 import interactsWithGravatar from '../mixins/interactsWithGravatar'
+import helpers from '../../utils/helpers'
 export default {
   name: 'PaidUsers',
   mixins: [ interactsWithGravatar ],
@@ -124,6 +128,7 @@ export default {
         { text: 'Cognom 1', value: 'sn1' },
         { text: 'Cognom 2', value: 'sn2' },
         { text: 'Correu electrònic', value: 'email' },
+        { text: 'Total a pagar', value: 'total_to_pay' },
         { text: 'Creat', value: 'created_at' },
         { text: 'Modificat', value: 'updated_at' }
       ]
@@ -140,6 +145,11 @@ export default {
       return this.$store.getters.users.filter((user) => {
         return user.inscription_paid.includes(this.session)
       })
+    }
+  },
+  methods: {
+    priceInEuros(price) {
+      return helpers.priceInEuros(price)
     }
   }
 }
