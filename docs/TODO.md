@@ -1,3 +1,28 @@
+# CONTROL PAGAMENT
+
+- [ ] Mostrar el total a pagar per l'usuari al costat del checkbox pagar
+- [ ] Un cop un usuari ha pagat no es pot inscriure a més competicions?
+  - [ ] hauria de passar per recepció pagar competicions extres, se li marca com no pagat i es pot apuntar?
+  - [ ] De fet hi ha algun límit per competicions
+  - [ ] Mostrar una llista usuaris incoherents -> no quadra el que han pagat amb el que estan apuntats 
+
+# SORTEIG
+
+- [ ] En explotació els winners no s'actualizen sino fem un F5
+- [ ] El nom usuari es massa grana a la llista de winners i surt una mica tallat per sota
+- [ ] Utilitzar ellipsis i si cal vue-tooltip per mostrar noms de regals que no caben a la llista
+- [ ] Impedir es pugui sortejar regals 2018 amb middleware
+
+# PREMIS
+
+- [ ] camp user_id passar a relació polimorfica? -> Un regal pot ser assignat a un usuari però també a un grup persones
+- [ ] Al assignar un premi s'assigna u número al premi i a partir d'aquí s'agafa el usuari -> Cal user_id?
+- [ ] Crec que es pot pensar millor la solució ara relació persones/grups/premis no em barrufa
+
+# EVENTS
+
+- [ ] Afegir preu de l'esdeveniment -> Ara totes les competicions 1€
+
 # BUGS
 
 - [X] el link de canviar paraula de pas des de email porta a la home si l'usuari ja està registrat
@@ -16,8 +41,8 @@
   - [X] No cal creat taula sessions, simplement un fitxer config.
   - [X] Passar a javascript info de config
 - [X] Desplegable de sessions a participants agafi les sessions de config
-- [ ] Crear middleware per protegir certes operacions relacionades amb la sessió:
-  - [ ] Impedeixi executar canvis en sessions archivades (anys anteriors)   
+- [X] Crear middleware per protegir certes operacions relacionades amb la sessió:
+  - [X] Impedeixi executar canvis en sessions archivades (anys anteriors)   
 
 # ERRORS
 
@@ -51,12 +76,12 @@ Apartat /manage/participants:
     - [X] String lliure -> nosaltres farem sessió per any -> 2018 2019
     - [X] Actualitzar a explotació els numbers diponibles a sessió 2018   
 
-- [ ] Mostrar els números per sessió
-  - [ ] A la vista participants es mostren tots els números assignats, mostrar només sessió actual
-    -  [ ] POder consultar números assignats anys anteriors
-  - [ ] assignació i eliminació de números tingui en compte la sessió actual
-  - [ ] La llista d'esdeveniments als quals l'usuari s'ha inscrit:
-    - [ ] Mostrar només events actius
+- [X] Mostrar els números per sessió
+  - [X] A la vista participants es mostren tots els números assignats, mostrar només sessió actual
+    -  [X] POder consultar números assignats anys anteriors
+  - [X] assignació i eliminació de números tingui en compte la sessió actual
+  - [X] La llista d'esdeveniments als quals l'usuari s'ha inscrit:
+    - [X] Mostrar només events actius
 
 # Gestió Events
 
@@ -69,11 +94,12 @@ Apartat /manage/participants:
   
 ## CREAR TICKETS PER ALS ESDEVIMENTS
 
-- [ ] A Events Manager crear botó/acció afegir tickets  
+- [X] A Events Manager crear botó/acció afegir tickets  
+- [X] El mateix perls números
   
 ## Afegir nou event
 
-- [ ] TODO
+- [ ] TODO -> alumnes crèdit sintesi
 
 ## EDITAR EVENTS
 - [ ] TODO   
@@ -82,10 +108,11 @@ Apartat /manage/participants:
 
 - [X] Link a la web facebook: https://www.facebook.com/LanPartyIesEbre/
 - [ ] Cartell: posar a la Landing Page -> link fixe /cartell
-- [ ] Programa: link al programa: /programa
-- [ ] Preu de la inscripció? 3€
-- [ ] Llista de premis
-- [ ] Col·laboradors
+- [X] Programa: link al programa: /programa
+- [X] Preu de la inscripció? 3€
+- [ ] Preus de les competicions
+- [X] Llista de premis
+- [X] Col·laboradors
 - [X] Apartat de contacte
 - [X] Apartat de com arribar: Google Maps
 
@@ -98,7 +125,7 @@ League of Legends (grups de 5 components): Limitat a 25 grups
 - Competició Individual
 FIFA19: Limitat a 32 places
 
-- [ ] Canviar la Landing Page el Age of empires per un FIFA 19
+- [X] Canviar la Landing Page el Age of empires per un FIFA 19
 
 # Registre usuaris
 
@@ -112,10 +139,12 @@ FIFA19: Limitat a 32 places
 
 # Managers Management
 
-- [ ] Mostrar la llista de Managers
-- [ ] Enviar invitació a un manager
+- [X] Mostrar la llista de Managers
+- [X] Enviar invitació a un manager
 
 # Canvi periode acadèmic
+
+- [ ] Fitxer de config és configuren les sessions i la sessió actual
 
 Procediment inici nou periode Lanparty
 
@@ -181,13 +210,13 @@ Camps:
 
 # Bugs
 
-- [ ] Error 500 (Server Error sense més dades) Pàgina de login
-  - [ ] Crear regression test
+- [X] Error 500 (Server Error sense més dades) Pàgina de login
+  - [X] Crear regression test
   
 # Crear branca de producció
 
-- [ ] Crear la branca
-- [ ] Utilitzar en producció
+- [X] Crear la branca
+- [X] Utilitzar en producció
 
 # Favicons i touchsicons 
 

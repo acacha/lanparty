@@ -18,6 +18,7 @@ use App\Http\Controllers\RegisterGroupToEventController;
 use App\Http\Controllers\RegisterToEventController;
 use App\Http\Controllers\RegisterUserToAllEventsController;
 use App\Http\Controllers\RegisterUserToEventController;
+use App\Http\Controllers\SessionWinnersController;
 use App\Http\Controllers\UnassignNumbersToUserController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
@@ -105,6 +106,8 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
 
     //Winners
     Route::delete('/winners', '\\' . WinnersController::class . '@destroy');
+
+    Route::delete('/{session}/winners', '\\' . SessionWinnersController::class . '@destroy');
 
     //Winner
     Route::get('/winner', '\\' . WinnerController::class . '@index');
