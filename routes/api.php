@@ -88,9 +88,12 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     Route::post('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@store');
     Route::delete('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@destroy');
     Route::delete('/events/register/user/{user}', '\\' . RegisterUserToAllEventsController::class . '@destroy');
+
     //Register group to event
-    Route::post('/events/{event}/register_group', '\\' . RegisterGroupToEventController::class . '@store');
-    Route::delete('/events/{event}/register_group/{group}', '\\' . RegisterGroupToEventController::class . '@destroy');
+    Route::group(['middleware' => 'checkNotPayed'], function() {
+        Route::post('/events/{event}/register_group', '\\' . RegisterGroupToEventController::class . '@store');
+        Route::delete('/events/{event}/register_group/{group}', '\\' . RegisterGroupToEventController::class . '@destroy');
+    });
 
     // ASSIGN NUMBERS
     // Assign first available number to user

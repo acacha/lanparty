@@ -60,19 +60,12 @@ export default {
     },
     assignWinner () {
       this.assigning = true
-      console.log('this.prize:')
-      console.log(this.prize)
       let multiple = parseInt(this.prize.multiple)
-      console.log('multiple:')
-      console.log(multiple)
       if (!this.prize || (multiple === 1)) {
-        console.log('UMMMMMMMMMMMMMM!')
         this.$emit('assigned',multiple, this.prize)
         this.assigning = false
         return
       }
-      console.log('this.result:')
-      console.log(this.result)
       window.axios.post('/api/v1/winner/' + this.prize.id, {
         number: this.result.id
       }).then(() => {
@@ -86,13 +79,9 @@ export default {
   },
   created () {
     EventBus.$on('winner', (winner) => {
-      console.log('WINNER RECEIVED: ')
-      console.log(winner)
       this.winner = winner
     })
     EventBus.$on('tachan', (tachan) => {
-      console.log('TACHAN RECEIVED: ')
-      console.log(tachan)
       this.tachan = tachan
     })
   }

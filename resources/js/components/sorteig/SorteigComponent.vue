@@ -124,10 +124,6 @@
       },
       setWinner () {
         this.rolling = false
-        console.log('NUMBER:')
-        console.log(this.result)
-        console.log('USER:')
-        console.log(this.result.user)
         this.winner = this.result.user
         EventBus.$emit('winner', this.result.user)
       },
@@ -150,15 +146,12 @@
         this.rolling = true
         this.winner = null
         this.duration = Math.floor(3000 + Math.random() * 9000)
-        console.log('Rolling during ' + this.duration + ' ms...')
         this.loop()
         this.updateTiming()
         window.setTimeout(() => {
-          console.log('Stopping rolling!')
           this.stop = true
         }, this.duration)
         window.setTimeout(() => {
-          console.log('Stopping timing!')
           this.stopTiming = true
         }, this.duration - 10)
       },
@@ -172,16 +165,8 @@
         EventBus.$emit('refreshPrizes',false)
       },
       finishAddWinner (multiple, selectedPrize) {
-        console.log('finishAddWinner!')
-        console.log('multiple:')
-        console.log(multiple)
-        console.log('selectedPrize:')
-        console.log(selectedPrize)
-        console.log('this.prize:')
-        console.log(this.prize)
         EventBus.$emit('winner',null)
         EventBus.$emit('tachan',false)
-        console.log('PROVA!!!!!!!!!!')
         if (this.internalWinners) {
           this.internalWinners.unshift({
             id: selectedPrize.id,
