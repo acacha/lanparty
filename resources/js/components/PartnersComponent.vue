@@ -15,7 +15,7 @@
                 >
                     <template slot="items" slot-scope="props">
                         <td>
-                            <v-img :src="props.item.avatar" :alt="props.item.name" contain="true" min-width="500px" max-height="120px"></v-img>
+                            <v-img :src="props.item.avatar" :alt="props.item.name" :contain="true" min-width="500px" max-height="120px"></v-img>
                         </td>
                         <td min-width="100px">{{ showPrizes(props.item.prizes) }}</td>
                     </template>
@@ -33,11 +33,12 @@
 
 <script>
   export default {
+    name: 'Partners',
     data () {
       return {
         internalPartners: this.partners,
         headers: [
-          { text: 'Col·laborador', class: 'partner-logo' },
+          { text: 'Col·laborador', value: 'avatar', class: 'partner-logo' },
           { text: 'Premis', value: 'prizes' }
         ]
       }

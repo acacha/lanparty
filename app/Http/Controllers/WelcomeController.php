@@ -22,13 +22,11 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        //return view('welcome')->with('registrations_enabled', $this->registrationsAreEnabled());
-
         $prizes = Prize::with(['partner'])->where('session', config('lanparty.session') )->get();
         $partners = Partner::with('prizes')->where('session', config('lanparty.session') )->get();
         return view('welcome',[
-           'prizes' => compact('prizes'),
-           'partners' => compact('partners'),
+           'prizes' => $prizes,
+           'partners' => $partners,
            'registrations_enabled' => $this->registrationsAreEnabled()
        ]);
     }

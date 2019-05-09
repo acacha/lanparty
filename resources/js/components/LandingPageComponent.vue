@@ -283,8 +283,8 @@ import partners from './PartnersComponent'
 export default {
   data () {
     return {
-      internalPrizes: this.prizes.prizes,
-      internalPartners: this.partners.partners
+      internalPrizes: this.prizes,
+      internalPartners: this.partners
     }
   },
   name: 'LandingPage',

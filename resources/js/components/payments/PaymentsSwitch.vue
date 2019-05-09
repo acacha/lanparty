@@ -1,6 +1,6 @@
 <template>
     <span>
-        Total a Pagar: {{selectedUser.total_to_pay}}€
+        Total a Pagar: {{ totalToPay }}€
         <v-switch
                 label="Pagat"
                 :input-value="inscriptionPaid"
@@ -14,6 +14,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as actions from '../../store/action-types'
+import helpers from '../../utils/helpers'
 
 export default {
   name: 'PaymentsSwitch',
@@ -33,7 +34,10 @@ export default {
       if (this.selectedUser) if (this.selectedUser.inscription_paid) return this.selectedUser.inscription_paid.includes(this.session)
       return false
     },
-    ...mapGetters(['selectedUser'])
+    ...mapGetters(['selectedUser']),
+    totalToPay() {
+      return helpers.priceInEuros(this.selectedUser.total_to_pay)
+    }
   },
   methods: {
     togglePayment(user) {
