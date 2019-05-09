@@ -1362,6 +1362,38 @@ if (!function_exists('create_flags_2019')) {
 
               }
           }
-
-
 }
+
+
+// PREMIS 2018:
+//INSERT INTO `prizes` VALUES
+//(1,'2018','Samarreta LAN Party','','',0,1,NULL,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',1),
+//(2,'2018','ARCADE STICK NETWAY GAMING ARCADE FIGHTER PS3/PC','','Sorteig dissabte',3999,2,NULL,222,'2018-05-11 12:06:12','2018-05-12 17:57:55',0),
+//(3,'2018','1  GAMEPAD NETWAY GAMING EVO PS3/PC/ANDROID WIRELESS','','Sorteig dissabte',3999,2,NULL,208,'2018-05-11 12:06:12','2018-05-12 17:52:28',0),
+//(4,'2018','TECLAT KROSS KROM','','Sorteig dissabte',7400,2,NULL,64,'2018-05-11 12:06:12','2018-05-12 17:53:36',0),
+//(5,'2018','Volant i pedals','','1r classificat Counter Strike',5999,2,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(6,'2018','Hoverboard Airstream All Road','','Sorteig dissabte',14620,2,NULL,209,'2018-05-11 12:06:12','2018-05-12 18:05:33',0),
+//(7,'2018','DOC Hoverboard Off Road','','1r classificat concurs Hardware',24775,3,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(8,'2018','Samsung 860 EVO Basic SSD 500GB SATA3 + Curs Visual Basic','','1r classificat concurs de programació',23000,5,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(9,'2018','Curs Visual Bàsic','','2n classificat de programació',12550,5,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(10,'2018','Curs Visual Bàsic','','3r classificat de programació',12550,5,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(11,'2018','Tablet GT10W3 Tablet 3Go, RAM 2GB 10\" W10 IPS 1280x800 32GB\" (Windows 8.1)','','Sorteig dissabte',18700,6,NULL,269,'2018-05-11 12:06:12','2018-05-12 18:03:37',0),
+//(12,'2018','Monitor de 23 polzades','','1r classificat Ae of Empires 2 HD',12900,4,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(13,'2018','1 router domèstic TP-Link Archer C2','','2n classificat concurs programació',3999,7,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(14,'2018','1 router domèstic TP-Link Archer C2','','Sorteig dissabte',3999,7,NULL,203,'2018-05-11 12:06:12','2018-05-12 17:54:34',0),
+//(15,'2018','Discs dur SSD Toshiba OCZ TR2000 de 240 GB','','1rs classificats League of Legends',7500,8,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(16,'2018','Discs dur SSD Toshiba OCZ TR2000 de 240 GB','','1rs classificats Counter Strike',7500,8,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(17,'2018','Torre de música amb bluetooth PROSTIMA SAM','','Guanyador concurs cartell LAN Party',7500,9,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(18,'2018','Dron Parrot Ardrone2.0 Elite Edition','','Sorteig dissabte',14900,10,NULL,7,'2018-05-11 12:06:12','2018-05-12 18:02:56',0),
+//(19,'2018','Teclat Trust AVONN Gaming','','Sorteig dissabte',2999,11,NULL,37,'2018-05-11 12:06:12','2018-05-12 17:56:01',0),
+//(20,'2018','Ratolí ORNA 3200dpi OPTICAL','','Sorteig dissabte',2695,11,NULL,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(21,'2018','Auriculars MARS GAMING MH2','','2n classificat Age Of Empires 2',1575,11,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(22,'2018','Teclat Gaming  Razer Ornata Chroma','','1r classificat Counter Strike',8999,12,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(23,'2018','Kit Tacens Mars Gaming MACP1(teclat, auriculars, ratolí i alfombreta)','','Sorteig dissabte',2095,13,NULL,115,'2018-05-11 12:06:12','2018-05-12 17:56:48',0),
+//(24,'2018','Auricular Energy System energy audio headphones bluetooth','','Sorteig dissabte',2490,13,NULL,95,'2018-05-11 12:06:12','2018-05-12 17:55:22',0),
+//(25,'2018','MiniDrone 3GO Maverick 2','','Sorteig dissabte',2300,13,NULL,72,'2018-05-11 12:06:12','2018-05-12 17:58:35',0),
+//(26,'2018','Xassis ATX','','2n classificat Concurs de hardware',6000,14,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(27,'2018','1 funda consola, 1 ratolí i alfombreta','','Sorteig dissabte',1000,14,NULL,296,'2018-05-11 12:06:12','2018-05-12 17:50:10',0),
+//(28,'2018','Disc dur SSD Toshiba OCZ TR2000 de 240 GB','','1rs classificats League of Legends',6500,15,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(29,'2018','SMARTWATCH NETWAY TEMPUS PLUS','','1r classificats Overwatch (6)+ 2 sorteig dissabte',3000,15,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0),
+//(30,'2018','MEMORIA 16 GB REMOVIBLE KINGSTON USB 3.0 DT G4','','2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',1000,15,9999,NULL,'2018-05-11 12:06:12','2018-05-11 12:06:12',0);
