@@ -19,7 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return map_collection(User::with(['numbers','events'])->withCount('ticket')->get());
+        return map_collection(User::with(['numbers','events'])->withCount('tickets')->get());
     }
 
     /**

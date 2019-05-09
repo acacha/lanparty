@@ -20,6 +20,7 @@ class UsersControllerTest extends TestCase
     /** @test */
     public function can_retrieve_all_users()
     {
+        $this->withoutExceptionHandling();
         seed_database();
 
         $users = factory(User::class,5)->create();

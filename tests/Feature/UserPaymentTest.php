@@ -129,6 +129,7 @@ class UserPaymentTest extends TestCase
     /** @test */
     public function a_manager_user_can_mark_user_as_unpaid()
     {
+        $this->withoutExceptionHandling();
         seed_database();
 
         $manager = factory(User::class)->create();

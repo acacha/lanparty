@@ -122,7 +122,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
         $user->pay(config('lanparty.session'));
         $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
-        $user->unpay();
+        $user->unpay(config('lanparty.session'));
         $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 }

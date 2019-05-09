@@ -69,7 +69,7 @@ class User extends Authenticatable
             'numbers' => NumberResource::collection($this->numbers),
             'events' => UserEventResource::collection($this->events),
 //            'group_events' => map_collection($this->group_events),
-            'ticket' => $this->ticket,
+            'tickets' => $this->tickets,
             'roles' => $this->roles->pluck('name')
         ];
     }
@@ -122,8 +122,8 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-//        dd($this->ticket);
-        return $this->ticket()->get()->pluck('session')->unique()->toArray();
+//        dd($this->tickets);
+        return $this->tickets()->get()->pluck('session')->unique()->toArray();
     }
 
     /**
@@ -181,7 +181,7 @@ class User extends Authenticatable
     {
         $ticket = Ticket::firstAvailableTicket($session);
         if (!$ticket) throw new NotEnoughTicketsException();
-        $this->ticket()->save($ticket);
+        $this->tickets()->save($ticket);
         return $this;
     }
 
@@ -190,19 +190,20 @@ class User extends Authenticatable
      *
      * @return $this
      */
-    public function unpay()
+    public function unpay($session)
     {
-        $this->ticket->user_id = null;
-        $this->ticket->save();
+        $ticket = $this->tickets()->where(['user_id' => $this->id,'session' => $session])->first();
+        $ticket->user_id = null;
+        $ticket->save();
         return $this;
     }
 
     /**
      * Get the ticket associated with the user.
      */
-    public function ticket()
+    public function tickets()
     {
-        return $this->hasOne(Ticket::class);
+        return $this->hasMany(Ticket::class);
     }
 
     /**
