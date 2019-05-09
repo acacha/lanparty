@@ -100,6 +100,7 @@ class UserTest extends TestCase
             'user_id' => $user->id
         ]);
         $this->assertCount(1, Ticket::where('user_id', $user->id)->get());
+        $user = $user->fresh();
         $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
@@ -123,6 +124,7 @@ class UserTest extends TestCase
         $user->pay(config('lanparty.session'));
         $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
         $user->unpay(config('lanparty.session'));
+        $user = $user->fresh();
         $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 }

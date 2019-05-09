@@ -33,6 +33,7 @@ class UserPaymentTest extends TestCase
             'session' => config('lanparty.session')
         ]);
         $response->assertSuccessful();
+        $user = $user->fresh();
         $this->assertTrue(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 
@@ -145,6 +146,7 @@ class UserPaymentTest extends TestCase
         ]);
 
         $response->assertSuccessful();
+        $user = $user->fresh();
         $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
 

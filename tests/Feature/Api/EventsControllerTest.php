@@ -8,7 +8,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * Class AcceptInvitationTest.
+ * Class EventsControllerTest.
  *
  * @package Tests\Feature
  */

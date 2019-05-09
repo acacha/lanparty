@@ -122,8 +122,10 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
-//        dd($this->tickets);
-        return $this->tickets()->get()->pluck('session')->unique()->toArray();
+        if ($this->tickets) {
+            return $this->tickets->pluck('session')->unique()->toArray();
+        }
+        return [];
     }
 
     /**
