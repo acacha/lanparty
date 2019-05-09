@@ -1,11 +1,14 @@
 <template>
-    <v-switch
-            label="Pagat"
-            :input-value="inscriptionPaid"
-            @change="togglePayment(selectedUser)"
-            :loading="loading"
-            :disabled="loading"
-    ></v-switch>
+    <span>
+        Total a Pagar: {{selectedUser.total_to_pay}}€
+        <v-switch
+                label="Pagat"
+                :input-value="inscriptionPaid"
+                @change="togglePayment(selectedUser)"
+                :loading="loading"
+                :disabled="loading"
+        ></v-switch>
+    </span>
 </template>
 
 <script>

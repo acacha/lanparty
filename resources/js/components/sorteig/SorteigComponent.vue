@@ -26,7 +26,7 @@
             </v-flex>
             <v-flex xs12 v-if="prize">
                 <h1 class="display-3">{{ prize.name }}</h1>
-                <h3 class="display-3" v-if="prize.value">{{ priceInEuros(prize.value) }}</h3>
+                <h3 class="display-3" v-if="prize.value">{{ price }}</h3>
                 <h3 class="display-3" v-if="winner">{{ winner.name}}</h3>
             </v-flex>
         </v-layout>
@@ -55,6 +55,7 @@
   import Prizes from '../prizes/Prizes'
   import AndTheWinnerIs from './AndTheWinnerIs'
   import EventBus from '../../eventBus'
+  import helpers from '../../utils/helpers'
 
   export default {
     components: {
@@ -79,6 +80,9 @@
       }
     },
     computed: {
+      price() {
+        return helpers.priceInEuros(this.prize.value)
+      },
       total () {
         return this.numbersForCurrentSession.length
       },
@@ -200,12 +204,6 @@
         //   this.internalPrizes.splice(this.internalPrizes.indexOf(selectedPrize), 1)
         // }
         this.prize = null
-      },
-      priceInEuros (price) {
-        if (price) {
-          const value = parseInt(price) / 100
-          return value + '€'
-        }
       }
     },
     created () {

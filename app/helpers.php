@@ -851,7 +851,9 @@ if (!function_exists('lanparty_config_to_json')) {
     {
         return json_encode([
             'session' => config('lanparty.session'),
-            'sessions' => config('lanparty.sessions')
+            'sessions' => config('lanparty.sessions'),
+            'inscription_price' => config('lanparty.inscription_price'),
+            'event_inscription_price' => config('lanparty.event_inscription_price')
         ]);
     }
 }

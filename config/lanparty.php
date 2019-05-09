@@ -52,6 +52,15 @@ return [
     | Anys/sessions de la lanparty
     |
     */
-    'session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2019')
+    'session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2019'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | PRICES
+    |--------------------------------------------------------------------------
+    | Preus (en centims d'euro)
+    |
+    */
+    'inscription_price' => env('LANPARTY_INSCRIPTION_PRICE', 3000),
+    'event_inscription_price' => env('LANPARTY_EVENT_INSCRIPTION_PRICE', 1000)
 ];

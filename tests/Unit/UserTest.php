@@ -127,4 +127,11 @@ class UserTest extends TestCase
         $user = $user->fresh();
         $this->assertFalse(in_array(config('lanparty.session'),$user->inscription_paid));
     }
+
+    /** @test */
+    function totalToPay() {
+        $user = factory(User::class)->create();
+
+        $this->assertEquals(0,$user->total_to_pay);
+    }
 }

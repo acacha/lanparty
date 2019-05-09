@@ -7,6 +7,7 @@ use App\Http\Resources\NumberResource;
 use App\Http\Resources\UserEventResource;
 use App\Notifications\ResetPasswordNotification;
 use App\Traits\FormattedDates;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -68,9 +69,10 @@ class User extends Authenticatable
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'numbers' => NumberResource::collection($this->numbers),
             'events' => UserEventResource::collection($this->events),
-//            'group_events' => map_collection($this->group_events),
+            'group_events' => $this->group_events,
             'tickets' => $this->tickets,
-            'roles' => $this->roles->pluck('name')
+            'roles' => $this->roles->pluck('name'),
+            'total_to_pay' => $this->totalToPay
         ];
     }
 
@@ -129,6 +131,17 @@ class User extends Authenticatable
     }
 
     /**
+     * inscription_paid attribute.
+     *
+     * @return mixed
+     */
+    public function getTotalToPayAttribute()
+    {
+        return config('lanparty.inscription_price');
+//        return config('lanparty.inscription_price') + config('lanparty.event_inscription_price');
+    }
+
+    /**
      * Get events the user has been registered
      */
     public function events()
@@ -147,13 +160,18 @@ class User extends Authenticatable
     }
 
     public function getGroupEventsAttribute() {
-        return Event::find(Registration::groups($this->groups->pluck('id'))->get()->pluck('event_id'));
+        $groupEvents = collect([]);
+        optional($this->groups)->each(function ($group) use ($groupEvents) {
+            optional($group->events)->each(function ($event) use ($groupEvents) {
+                $groupEvents->push($event);
+            });
+        });
+        return $groupEvents->unique('id');
     }
 
     public function getAllGroupEventsAttribute() {
         return Event::withTrashed()->find(Registration::groups($this->groups->pluck('id'))->get()->pluck('event_id'));
     }
-
 
     /**
      * Get all of the events the user has been registered
@@ -217,12 +235,10 @@ class User extends Authenticatable
     }
 
     /**
-     * groups.
-     *
-     * @return mixed
+     * The roles that belong to the user.
      */
-    public function getGroupsAttribute()
+    public function groups()
     {
-        return Group::find(Member::where('user_id', $this->id)->get()->pluck('group_id'));
+        return $this->belongsToMany(Group::class,'members');
     }
 }

@@ -109,7 +109,8 @@ class Group extends Model
      */
     public function flags()
     {
-        return $this->belongsToMany('App\Flag')->withPivot('captured')->orderBy('name','asc');
+        return $this->belongsToMany(Flag::class)->withPivot('captured')->orderBy('name','asc');
         //return $this->belongsToMany(Flag::class, 'flags')->orderBy('name','asc');
     }
+
 }

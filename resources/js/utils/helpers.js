@@ -1,5 +1,11 @@
 import moment from 'moment'
 export default {
+  priceInEuros (price) {
+    if (price) {
+      const value = parseInt(price) / 100
+      return value + '€'
+    }
+  },
   printObject (object) {
     let result = ''
     Object.keys(object).forEach(function (item) {

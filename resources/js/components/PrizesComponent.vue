@@ -30,6 +30,8 @@
 </style>
 
 <script>
+  import helpers from '../utils/helpers'
+
   export default {
     data () {
       return {
@@ -54,10 +56,7 @@
     },
     methods: {
       priceInEuros (price) {
-        if (price) {
-          const value = parseInt(price) / 100
-          return value + '€'
-        }
+        return helpers.priceInEuros(price)
       },
       name (winner) {
         let name = ''
