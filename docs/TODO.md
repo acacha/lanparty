@@ -1,5 +1,12 @@
+# PARTICIPANTS
+
+- [ ] No es mostren correctament la llista esdeveniments a les que s'ha apuntat un usuari en anys anteriors 
+
 # CONTROL PAGAMENT
 
+- [ ] Mostrar totes les competicions a les que està inscrit
+ - [ ] Treure alert
+ - [ ] A les competicions de grup no hi ha operacions només lectura 
 - [ ] Mostrar el total a pagar per l'usuari al costat del checkbox pagar
 - [ ] Un cop un usuari ha pagat no es pot inscriure a més competicions?
   - [ ] hauria de passar per recepció pagar competicions extres, se li marca com no pagat i es pot apuntar?

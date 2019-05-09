@@ -68,6 +68,7 @@ class User extends Authenticatable
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'numbers' => NumberResource::collection($this->numbers),
             'events' => UserEventResource::collection($this->events),
+            'all_events' => map_collection($this->all_events),
             'ticket' => $this->ticket,
             'roles' => $this->roles->pluck('name')
         ];
@@ -125,11 +126,38 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all of the events the user has been registered
+     * Get events the user has been registered
      */
     public function events()
     {
         return $this->morphToMany(Event::class, 'registration')->withTimestamps();
+    }
+
+//App\Event::find(Registration::groups($user->groups->pluck('id'))->get()->pluck('event_id'));
+
+    public function getIndividualEventsAttribute() {
+        return Event::find(Registration::user($this)->pluck('event_id'));
+    }
+
+    public function getAllIndividualEventsAttribute() {
+        return Event::withTrashed()->find(Registration::user($this)->pluck('event_id'));
+    }
+
+    public function getGroupEventsAttribute() {
+        return Event::find(Registration::groups($this->groups->pluck('id'))->get()->pluck('event_id'));
+    }
+
+    public function getAllGroupEventsAttribute() {
+        return Event::withTrashed()->find(Registration::groups($this->groups->pluck('id'))->get()->pluck('event_id'));
+    }
+
+
+    /**
+     * Get all of the events the user has been registered
+     */
+    public function getAllEventsAttribute()
+    {
+        return $this->all_individual_events->merge($this->all_group_events);
     }
 
     /**
@@ -182,5 +210,15 @@ class User extends Authenticatable
     public function isSuperAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * groups.
+     *
+     * @return mixed
+     */
+    public function getGroupsAttribute()
+    {
+        return Group::find(Member::where('user_id', $this->id)->get()->pluck('group_id'));
     }
 }

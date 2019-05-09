@@ -18,5 +18,6 @@ class Member extends Model
         'sort_when_creating' => true,
     ];
 
-    //Create AND OBSERVER TO CAPTURE CREATING 
+    //Create AND OBSERVER TO CAPTURE CREATING
+
 }

@@ -94,7 +94,7 @@
                                                 <v-list-tile v-for="(member, index) in group.members" :key="member.id">
                                                     <v-list-tile-content>
                                                         <v-list-tile-title>
-                                                            {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} <span class="hidden-sm-and-down">({{member.name}})</span>
+                                                            {{index +1}}) {{member.sn1}} {{member.sn2}}, {{member.givenName}} <span class="hidden-sm-and-down">({{member.name}} - {{member.email}} )</span>
                                                         </v-list-tile-title>
                                                     </v-list-tile-content>
                                                 </v-list-tile>

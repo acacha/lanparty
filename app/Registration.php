@@ -60,6 +60,18 @@ class Registration extends Model
     }
 
     /**
+     * Group.
+     *
+     * @param $query
+     * @param array $groups
+     * @return mixed
+     */
+    public function scopeGroups($query, $groups)
+    {
+        return $query->where('registration_type',Group::class)->whereIn('registration_id', $groups);
+    }
+
+    /**
      * User.
      *
      * @param $query
