@@ -68,7 +68,7 @@ class User extends Authenticatable
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'numbers' => NumberResource::collection($this->numbers),
             'events' => UserEventResource::collection($this->events),
-            'all_events' => map_collection($this->all_events),
+//            'group_events' => map_collection($this->group_events),
             'ticket' => $this->ticket,
             'roles' => $this->roles->pluck('name')
         ];
@@ -122,6 +122,7 @@ class User extends Authenticatable
      */
     public function getInscriptionPaidAttribute()
     {
+//        dd($this->ticket);
         return $this->ticket()->get()->pluck('session')->unique()->toArray();
     }
 

@@ -31,6 +31,7 @@ class ManageParticipantsController extends Controller
         $numbers = map_collection(Number::with(['user'])->get());
 
         $tickets = Ticket::tickets();
+
         return view('manage.participants', [
             'user' => Auth::user(),
             'users' => $users,
