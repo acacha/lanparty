@@ -94,6 +94,36 @@ class WinnerControllerTest extends TestCase
     }
 
     /** @test */
+    public function cannot_remove_a_winner_in_old_sessions()
+    {
+        create_inscription_types();
+        create_events();
+        create_numbers();
+        create_tickets();
+        initialize_roles();
+        initialize_partners();
+        $manager = factory(User::class)->create();
+        $manager->assignRole('Manager');
+        $this->actingAs($manager,'api');
+
+        //Create some winners
+        initialize_prizes('2018');
+        $this->assertTrue($count = Prize::all()->count() > 0);
+
+        foreach ($prizes = Prize::available()->get()->take(5) as $availablePrize) {
+            $availablePrize->number()->associate(factory(User::class)->create());
+            $availablePrize->save();
+        }
+        $price = $prizes[0];
+        $this->assertEquals(5,Prize::winners()->get()->count());
+
+        $response = $this->json('DELETE','api/v1/winner/' . $price->id);
+        $response->assertStatus(422);
+        $result = json_decode($response->getContent());
+        $this->assertEquals('NO és possible realitzar accions en sessions arxivades.', $result->message);
+    }
+
+    /** @test */
     public function user_cannot_remove_a_winner()
     {
         seed_database();
