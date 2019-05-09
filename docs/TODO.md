@@ -1,3 +1,18 @@
+# CONTROL PAGAMENT
+
+- [ ] Mostrar el total a pagar per l'usuari al costat del checkbox pagar
+- [ ] Un cop un usuari ha pagat no es pot inscriure a més competicions?
+  - [ ] hauria de passar per recepció pagar competicions extres, se li marca com no pagat i es pot apuntar?
+  - [ ] De fet hi ha algun límit per competicions
+  - [ ] Mostrar una llista usuaris incoherents -> no quadra el que han pagat amb el que estan apuntats 
+
+# SORTEIG
+
+- [ ] En explotació els winners no s'actualizen sino fem un F5
+- [ ] El nom usuari es massa grana a la llista de winners i surt una mica tallat per sota
+- [ ] Utilitzar ellipsis i si cal vue-tooltip per mostrar noms de regals que no caben a la llista
+- [ ] Impedir es pugui sortejar regals 2018 amb middleware
+
 # PREMIS
 
 - [ ] camp user_id passar a relació polimorfica? -> Un regal pot ser assignat a un usuari però també a un grup persones
