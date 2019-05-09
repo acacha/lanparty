@@ -15,9 +15,6 @@
                 Les inscripcions a una competició les ha de realitzar només el líder del grup inscrivint a tots els components del grup.
             </v-alert>
 
-            <v-alert type="success" class="mb-3" v-model="result">
-                Inscripció del grup realitzada correctament
-            </v-alert>
             <v-chip>
                 <v-avatar>
                     <img :src="gravatarURL(user.email)">
@@ -94,7 +91,6 @@
     data () {
       return {
         alert: true,
-        result: false,
         valid: false,
         registering: false,
         name: '',
@@ -216,7 +212,7 @@
             user_ids: JSON.stringify(userIds)
           }
           this.$store.dispatch(actions.REGISTER_GROUP_TO_EVENT, {event: this.event, group: group}).then((response) => {
-            this.result = true
+            this.$snackbar.showMessage('Inscripció del grup realitzada correctament!')
             this.registering = false
             sleep(3000).then(() => { this.close() })
           }).catch(() => {

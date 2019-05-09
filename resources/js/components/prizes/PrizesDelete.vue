@@ -37,7 +37,6 @@ export default {
     },
     removePrizes () {
       this.deleting = true
-      console.log(this.prize.id)
       window.axios.delete('/api/v1/prizes/' + prize.id).then(() => {
         this.$emit('deleted', task)
         this.deleting = false
