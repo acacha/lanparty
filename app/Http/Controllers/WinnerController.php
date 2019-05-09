@@ -36,6 +36,7 @@ class WinnerController extends Controller
      */
     public function destroy(DeleteWinner $request, Prize $prize)
     {
+        if ($prize->session !== config('lanparty.session')) abort(422,'NO és possible realitzar accions en sessions arxivades.') ;
         $prize->number()->dissociate();
         $prize->save();
         return $prize;
