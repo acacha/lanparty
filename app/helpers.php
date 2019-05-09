@@ -1097,6 +1097,12 @@ if (!function_exists('create_flags_2019')) {
                       'category' => null,
                       'avatar' => '/img/logos/SecurityPla.jpg'
                 ]);
+                Partner::firstOrCreate([
+                      'name' => 'Bar de Tomàs',
+                      'session' => '2019',
+                      'category' => null,
+                      'avatar' => '/img/logos/Tomas.jpg'
+                ]);
             }
           }
 
@@ -1121,31 +1127,37 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => 'Guanyador Overwatch',
                                 'value' => 5500,
+                                'user_id' => 9999
                               ],
                               [ 'name' => '5x Teclat gaming',
                                 'description' => '',
                                 'notes' => 'Guanyador LOL',
                                 'value' => 7000,
+                                'user_id' => 9999
                               ],
                               [ 'name' => '6x Disc dur extern 1TB',
                                 'description' => '',
                                 'notes' => 'Guanyador Overwatch',
                                 'value' => 5500,
+                                'user_id' => 9999
                               ],
                               [ 'name' => '5x Webcams',
                                 'description' => '',
                                 'notes' => '2n Classificat LOL',
                                 'value' => 1300,
+                                'user_id' => 9999
                               ],
                               [ 'name' => '3x Auriculars Sport',
                                 'description' => '',
                                 'notes' => '2n Classificat FIFA i CounterStrike',
                                 'value' => 1100,
+                                'user_id' => 9999
                               ],
                               [ 'name' => '6x Alfombretes Gaming',
                                 'description' => '',
                                 'notes' => '2n Classificat OverWatch i Ciberseguretat',
                                 'value' => 1100,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1156,6 +1168,7 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => 'Guanyador Campionat Ciberseguretat',
                                 'value' => 21900,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1165,7 +1178,8 @@ if (!function_exists('create_flags_2019')) {
                               [ 'name' => 'Telèfon Mòbil Xiaomi RediMi Go',
                                 'description' => '',
                                 'notes' => 'Guanyador Campionat Programació',
-                                'value' => 7500
+                                'value' => 7500,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1185,7 +1199,7 @@ if (!function_exists('create_flags_2019')) {
                               [ 'name' => 'Monitor Gaming',
                                 'description' => '',
                                 'notes' => '',
-                                'value' => 16000,
+                                'value' => 16000
                               ]
                           ]
                         ],
@@ -1196,11 +1210,13 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => 'Guanyador Cartell LanParty',
                                 'value' => 7300,
+                                'user_id' => 9999
                               ],
                               [ 'name' => '1 Disc dur SSD 500GB',
                                 'description' => '',
                                 'notes' => 'Guanyador Sorteig FaceBook',
                                 'value' => 7300,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1211,6 +1227,7 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => 'Guanyadors CounterStrike',
                                 'value' => 20000,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1251,6 +1268,7 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => 'Guanyador FIFA',
                                 'value' => 8000,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1296,6 +1314,7 @@ if (!function_exists('create_flags_2019')) {
                                 'description' => '',
                                 'notes' => '2n Classsificat Campionat Programació',
                                 'value' => 1200,
+                                'user_id' => 9999
                               ]
                           ]
                         ],
@@ -1308,6 +1327,16 @@ if (!function_exists('create_flags_2019')) {
                                 'value' => 6500,
                               ]
                           ]
+                        ],
+                        [
+                          'partner' => 'Bar de Tomàs',
+                          'items' => [
+                              [ 'name' => '10 esmorzars',
+                                'description' => '',
+                                'notes' => '',
+                                'value' => 6000,
+                              ]
+                          ]
                         ]
                     ];
 
@@ -1315,15 +1344,18 @@ if (!function_exists('create_flags_2019')) {
                     foreach ($prizes2019 as $prize) {
                       $partnerId = Partner::where('name', $prize['partner'])->where('session','2019' )->first()->id;
                       foreach ($prize['items'] as $item) {
-                        Prize::firstOrCreate([
-                            'name' => $item['name'],
-                            'description' => $item['description'],
-                            'notes' => $item['notes'],
-                            'value' => $item['value'],
-                            'partner_id' => $partnerId,
-                            'session' => '2019',
-                            'user_id' => '9999'
-                        ]);
+                          $data = [
+                              'name' => $item['name'],
+                              'description' => $item['description'],
+                              'notes' => $item['notes'],
+                              'value' => $item['value'],
+                              'partner_id' => $partnerId,
+                              'session' => '2019'
+                          ];
+                          if (array_key_exists('user_id',$item)) {
+                              $data['user_id'] = $item['user_id'];
+                          }
+                        Prize::firstOrCreate($data);
                       }
                     }
 

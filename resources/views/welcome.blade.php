@@ -49,6 +49,8 @@
     <landing-page
             action="{{ $action ?? null }}"
             :registrations-enabled="{{ json_encode($registrations_enabled) }}"
+            :prizes="{{ json_encode($prizes) }}"
+            :partners="{{ json_encode($partners) }}"
             reset-password-token="{{ $token ?? null }}"
             reset-password-email="{{ $email ?? null }}">
     </landing-page>
