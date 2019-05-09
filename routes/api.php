@@ -79,9 +79,10 @@ Route::group(['prefix'=>'v1','middleware' => 'auth:api'], function() {
     });
 
     //Register Auth user to events
-
-    Route::post('/events/{event}/register', '\\' . RegisterToEventController::class . '@store');
-    Route::delete('/events/{event}/register', '\\' . RegisterToEventController::class . '@destroy');
+    Route::group(['middleware' => 'checkNotPayed'], function() {
+        Route::post('/events/{event}/register', '\\' . RegisterToEventController::class . '@store');
+        Route::delete('/events/{event}/register', '\\' . RegisterToEventController::class . '@destroy');
+    });
 
     //Register users to events
     Route::post('/events/{event}/register/user/{user}', '\\' . RegisterUserToEventController::class . '@store');
