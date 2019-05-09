@@ -229,7 +229,7 @@ class PartnersControllerTest extends TestCase
 
     $result = json_decode($response->getContent());
 
-    $this->assertCount(16,$result);
+    $this->assertCount(17,$result);
 
     $this->assertEquals('Ajuntament de Tortosa',$result[0]->name);
     $this->assertEquals('2019',$result[0]->session);
@@ -255,7 +255,7 @@ class PartnersControllerTest extends TestCase
 
     $result = json_decode($response->getContent());
 
-    $this->assertCount(16,$result);
+    $this->assertCount(17,$result);
 
     $this->assertEquals('Ajuntament de Tortosa',$result[0]->name);
     $this->assertEquals('2019',$result[0]->session);
