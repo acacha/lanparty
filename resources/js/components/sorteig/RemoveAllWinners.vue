@@ -29,10 +29,16 @@ export default {
       dialog: false
     }
   },
+  props: {
+    session: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
     removeAllWinners () {
       this.loading = true
-      window.axios.delete('/api/v1/winners').then(() => {
+      window.axios.delete('/api/v1/' + this.session + '/winners').then(() => {
         this.loading = false
         this.dialog = false
         this.$snackbar.showMessage('Tots els guanyadors eliminats correctament')

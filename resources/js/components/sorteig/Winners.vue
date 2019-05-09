@@ -2,7 +2,7 @@
     <v-card>
         <v-toolbar style="background-color: #40764e;" class="white--text">
             <v-toolbar-title>Guanyadors</v-toolbar-title>
-            <remove-all-winners @removedAll="removedAll"></remove-all-winners>
+            <remove-all-winners @removedAll="removedAll" :session="session"></remove-all-winners>
         </v-toolbar>
         <v-list three-line>
             <v-list-tile v-for="winner in internalWinnersBySession" :key="winner.id" avatar>
