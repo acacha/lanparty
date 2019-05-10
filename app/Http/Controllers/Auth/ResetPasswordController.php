@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RegistrationsAreEnabled;
+use App\Partner;
+use App\Prize;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 
@@ -47,7 +49,11 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
+        $prizes = Prize::with(['partner'])->where('session', config('lanparty.session') )->get();
+        $partners = Partner::with('prizes')->where('session', config('lanparty.session') )->get();
         return view('welcome')->with([
+            'prizes' => $prizes,
+            'partners' => $partners,
             'token' => $token,
             'email' => $request->email,
             'action' => 'reset_password',

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RegistrationsAreEnabled;
+use App\Partner;
+use App\Prize;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 /**
@@ -35,7 +37,11 @@ class ForgotPasswordController extends Controller
      */
     public function showLinkRequestForm()
     {
+        $prizes = Prize::with(['partner'])->where('session', config('lanparty.session') )->get();
+        $partners = Partner::with('prizes')->where('session', config('lanparty.session') )->get();
         return view('welcome', [
+            'prizes' => $prizes,
+            'partners' => $partners,
             'action' => 'request_new_password',
             'registrations_enabled' => $this->registrationsAreEnabled()
         ]);
