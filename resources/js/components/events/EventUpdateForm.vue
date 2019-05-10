@@ -1,6 +1,5 @@
 <template>
   <v-form>
-<!--    TODO: Mirar que fer en el camp imatge-->
     <v-text-field autofocus v-model="name" label="Nom" hint="Nom de l'event"
                   placeholder="Nom de la Event"></v-text-field>
 
@@ -65,7 +64,7 @@ export default {
       window.axios.put('/api/v1/events/' + this.event.id,
         {
           name: this.name,
-          image: '',
+          image: this.image,
           inscription_type_id: this.inscription_type_id,
           participants_number: this.participants_number,
           regulation: this.regulation,
