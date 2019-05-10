@@ -80,7 +80,9 @@
             <td>
               {{ event.updated_at }}
             </td>
-            <td>
+            <td class="d-flex">
+                <event-show :event="event"></event-show>
+                <event-update :event="event" @updated="updateEvent"></event-update>
                 <event-publish :event="event"></event-publish>
                 <event-unarchive :event="event" @unarchived="refresh"></event-unarchive>
                 <event-archive :event="event" @archived="refresh"></event-archive>
@@ -97,6 +99,8 @@ import EventPublish from './EventPublish'
 import EventArchive from './EventArchive'
 import EventUnArchive from './EventUnArchive'
 import EventDelete from './EventDelete'
+import EventUpdate from './EventUpdate'
+import EventShow from './EventShow'
 
 export default {
   name: 'EventsList',
@@ -104,7 +108,9 @@ export default {
     'event-publish': EventPublish,
     'event-archive': EventArchive,
     'event-unarchive': EventUnArchive,
-    'event-delete': EventDelete
+    'event-delete': EventDelete,
+    'event-update': EventUpdate,
+    'event-show': EventShow
   },
   data () {
     return {
@@ -146,6 +152,9 @@ export default {
       }).catch(() => {
         this.loading = false
       })
+    },
+    updateEvent () {
+      this.refresh()
     }
   }
 }
