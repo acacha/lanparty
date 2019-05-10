@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Traits\RegistrationsAreEnabled;
+use App\Partner;
+use App\Prize;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -71,7 +73,11 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        $prizes = Prize::with(['partner'])->where('session', config('lanparty.session') )->get();
+        $partners = Partner::with('prizes')->where('session', config('lanparty.session') )->get();
         return view('welcome', [
+            'prizes' => $prizes,
+            'partners' => $partners,
             'action' => 'register',
             'registrations_enabled' => $this->registrationsAreEnabled()
         ]);
