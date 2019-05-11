@@ -82,7 +82,7 @@ class EventsControllerTest extends TestCase
      */
     public function manager_can_create_event()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 //        dd('hola');
         $event = factory(Event::class)->create();
         $eventArr = json_decode(json_encode($event), true);

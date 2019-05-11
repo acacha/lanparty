@@ -6,6 +6,7 @@ use App\Http\Controllers\ManageParticipantsController;
 use App\Http\Controllers\ParticipantMessagesController;
 use App\Http\Controllers\ParticipantsHomePageController;
 use App\Http\Controllers\PartnersController as Partners;
+use App\Http\Controllers\Web\ImageEventController;
 use App\Http\Controllers\Web\PartnersController;
 use App\Http\Controllers\Web\PrizesController;
 use App\Http\Controllers\SorteigController;
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('manage.participants');
 
     Route::get('/manage/events', '\\' . EventsController::class . '@index');
+    Route::post('/image/event', '\\' . ImageEventController::class . '@store');
 
     Route::get('/manage/prizes/','\\'. PrizesController::class.'@index');
 

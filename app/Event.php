@@ -22,6 +22,9 @@ class Event extends Model
     use ApiURI, FormattedDates, SoftDeletes;
 
     protected $guarded = [];
+    const DEFAULT_PHOTO = 'default.png';
+//    const PHOTOS_PATH = 'user_photos';
+    const DEFAULT_PHOTO_PATH = 'app/public/event_images/' . self::DEFAULT_PHOTO;
 
     public static function events()
     {
