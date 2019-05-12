@@ -48,4 +48,39 @@ class ImageEventControllerTest extends TestCase
         $this->assertEquals($photoUrl, $event->image);
 //        dd($event->photo->url);
     }
+    /**
+     * @test
+     */
+    public function show_event_default_photo()
+    {
+        $event = factory(Event::class)->create();
+        $user=$this->loginAsManager('web');
+        $this->withoutExceptionHandling();
+//        $this->login();
+        $response = $this->get('/image/event/'.$event->id);
+        $response->assertSuccessful();
+        $this->assertEquals(storage_path('app/'.Event::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
+        $response->assertSuccessful();
+    }
+    /** @test */
+    public function show_even_photo()
+    {
+        $this->withoutExceptionHandling();
+        $event = factory(Event::class)->create();
+        $user=$this->loginAsManager('web');
+        $response = $this->post('/image/event',[
+            'image' => UploadedFile::fake()->image('photo.jpg'),
+            'event_id'=>$event->id
+        ]);
+        $response->assertRedirect();
+        $event = $event->fresh();
+        $response = $this->get('/image/event/'.$event->id);
+        $response->assertSuccessful();
+        Storage::disk('local')->assertExists($event->image);
+
+//        dd($event->image);
+        $this->assertEquals(storage_path('app/'.$event->image), $response->baseResponse->getFile()->getPathName());
+        $this->assertFileEquals(storage_path('app/'.$event->image), $response->baseResponse->getFile()->getPathName());
+        $response->assertSuccessful();
+    }
 }

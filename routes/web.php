@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/events', '\\' . EventsController::class . '@index');
     Route::post('/image/event', '\\' . ImageEventController::class . '@store');
+    Route::get('/image/event/{id}', '\\' . ImageEventController::class . '@show');
 
     Route::get('/manage/prizes/','\\'. PrizesController::class.'@index');
 
