@@ -66,12 +66,15 @@ class ImageEventControllerTest extends TestCase
     public function show_even_photo()
     {
         $this->withoutExceptionHandling();
+        //getting the event
         $event = factory(Event::class)->create();
+        //login
         $user=$this->loginAsManager('web');
         $response = $this->post('/image/event',[
             'image' => UploadedFile::fake()->image('photo.jpg'),
             'event_id'=>$event->id
         ]);
+        //
         $response->assertRedirect();
         $event = $event->fresh();
         $response = $this->get('/image/event/'.$event->id);
