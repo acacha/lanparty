@@ -43,6 +43,11 @@
                 <td>{{partner.category}}</td>
                 <td>{{partner.avatar}}</td>
                 <td>{{partner.session}}</td>
+                <td>
+                  <partner-show :partner="partner"></partner-show>
+                  <partner-update :partner="partner" @updated="updatePartner" :uri="uri"></partner-update>
+                  <partner-destroy :partner="partner" @removed="removePartner" :uri="uri"></partner-destroy>
+                </td>
               </tr>
             </template>
           </v-data-table>
@@ -52,8 +57,17 @@
 </template>
 
 <script>
+import PartnerShow from './PartnerShow'
+import PartnerDestroy from './PartnerDestroy'
+import PartnerUpdate from './PartnerUpdate'
+
 export default {
   name: 'PartnersList',
+  components: {
+    'partner-show': PartnerShow,
+    'partner-update': PartnerUpdate,
+    'partner-destroy': PartnerDestroy
+  },
   data () {
     return {
       loading: false,

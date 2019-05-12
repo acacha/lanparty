@@ -17,7 +17,6 @@ class PartnersControllerTest extends TestCase
     /** @test */
     public function partners_could_be_publicly_seen()
     {
-        $this->withoutExceptionHandling();
 
         $response = $this->get('partners');
         $response->assertSuccessful();
@@ -29,7 +28,7 @@ class PartnersControllerTest extends TestCase
     public function can_list_partners()
     {
         $this->withoutExceptionHandling();
-        $response = $this->json('GET','/api/v1/partners');
+        $response = $this->json('GET','/api/v1/partners/');
         $response->assertSuccessful();
     }
 }

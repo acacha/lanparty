@@ -28,11 +28,11 @@ export default {
     uri: {
       type: String,
       required: true
-    },
-    methods: {
-      add (partner) {
-        this.dataPartners.push(partner)
-      }
+    }
+  },
+  methods: {
+    add (partner) {
+      this.dataPartners.push(partner)
     }
   }
 
