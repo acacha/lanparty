@@ -18,7 +18,13 @@
           <v-flex xs10 style="align-self: flex-end;">
               <v-layout>
                   <v-flex xs4 class="text-sm-left" style="align-self: center;">
-                      TODO FILTERS
+                      <v-select
+                        label="Filtres"
+                        :items="filters"
+                        v-model="filter"
+                        item-text="name"
+                        :return-object="true"
+                      ></v-select>
                   </v-flex>
                   <v-flex xs7>
                   </v-flex>
@@ -35,7 +41,7 @@
           </v-flex>
         </v-layout>
       </v-card-title>
-      <v-data-table :items="this.dataEvents" :headers="headers" :search="search"
+      <v-data-table :items="getFilteredEvents" :headers="headers" :search="search"
                     no-results-text="No s'ha trobat cap registre coincident" no-data-text="No hi han dades disponibles"
                     rows-per-page-text="Events per pàgina"
                     :rows-per-page-items="[5,10,25,50,100,{'text':'Tots','value':-1}]" :loading="loading"
@@ -120,6 +126,12 @@ export default {
       pagination: {
         rowsPerPage: -1
       },
+      filter: { name: 'Totes', value: null },
+      filters: [
+        { name: 'Tots', value: 'tots' },
+        { name: 'Archivats', value: '!arxivat' },
+        { name: 'Actius', value: null }
+      ],
       headers: [
         { text: 'Id', value: 'id' },
         { text: 'Nom', value: 'name' },
@@ -140,6 +152,19 @@ export default {
     events: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    getFilteredEvents () {
+      return this.dataEvents.filter((event) => {
+        if (this.filter.value === '!arxivat' && event.deleted_at !== null) {
+          return true
+        } else if (this.filter.value === null && event.deleted_at === null) {
+          return true
+        } else if (this.filter.value === 'tots') {
+          return true
+        } else return false
+      })
     }
   },
   methods: {
