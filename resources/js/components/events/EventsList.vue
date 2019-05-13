@@ -32,11 +32,11 @@
           </v-flex>
           <v-flex xs3>
               <v-text-field
-                      append-icon="search"
-                      label="Buscar"
-                      single-line
-                      hide-details
-                      v-model="search"
+                append-icon="search"
+                label="Buscar"
+                single-line
+                hide-details
+                v-model="search"
               ></v-text-field>
           </v-flex>
         </v-layout>
@@ -53,7 +53,23 @@
               {{event.id}}
             </td>
             <td>
-              {{event.name}}
+              <v-edit-dialog
+                :return-value.sync="event.name"
+                lazy
+                @save="save(event)"
+                @cancel="cancel"
+                @close="close"
+              >{{event.name}}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="event.name"
+                    :rules="[max25chars]"
+                    label="Edit"
+                    single-line
+                    counter
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
             </td>
             <td>
               {{event.session}}
@@ -123,10 +139,11 @@ export default {
       search: '',
       dataEvents: this.events,
       loading: false,
+      max25chars: v => v.length <= 25 || 'Nom de la tasca massa llarg!',
       pagination: {
         rowsPerPage: -1
       },
-      filter: { name: 'Totes', value: null },
+      filter: { name: 'Totes', value: 'tots' },
       filters: [
         { name: 'Tots', value: 'tots' },
         { name: 'Archivats', value: '!arxivat' },
@@ -180,6 +197,26 @@ export default {
     },
     updateEvent () {
       this.refresh()
+    },
+    save (event) {
+      this.loading = true
+      window.axios.put('/api/v1/events/inline/' + event.id,
+        {
+          name: event.name
+        }
+      ).then(() => {
+        this.refresh()
+        this.loading = false
+        this.$snackbar.showMessage("S'ha actualitzat correctament")
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    close () {
+      this.$snackbar.showSnackBar('Dialeg tancat!', 'primary')
+    },
+    cancel () {
+      this.$snackbar.showError('Cancelat!')
     }
   }
 }
