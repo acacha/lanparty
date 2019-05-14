@@ -18,7 +18,13 @@
           <v-flex xs10 style="align-self: flex-end;">
               <v-layout>
                   <v-flex xs4 class="text-sm-left" style="align-self: center;">
-                      TODO FILTERS
+                      <v-select
+                        label="Filtres"
+                        :items="filters"
+                        v-model="filter"
+                        item-text="name"
+                        :return-object="true"
+                      ></v-select>
                   </v-flex>
                   <v-flex xs7>
                   </v-flex>
@@ -26,16 +32,16 @@
           </v-flex>
           <v-flex xs3>
               <v-text-field
-                      append-icon="search"
-                      label="Buscar"
-                      single-line
-                      hide-details
-                      v-model="search"
+                append-icon="search"
+                label="Buscar"
+                single-line
+                hide-details
+                v-model="search"
               ></v-text-field>
           </v-flex>
         </v-layout>
       </v-card-title>
-      <v-data-table :items="this.dataEvents" :headers="headers" :search="search"
+      <v-data-table :items="getFilteredEvents" :headers="headers" :search="search"
                     no-results-text="No s'ha trobat cap registre coincident" no-data-text="No hi han dades disponibles"
                     rows-per-page-text="Events per pàgina"
                     :rows-per-page-items="[5,10,25,50,100,{'text':'Tots','value':-1}]" :loading="loading"
@@ -47,7 +53,23 @@
               {{event.id}}
             </td>
             <td>
-              {{event.name}}
+              <v-edit-dialog
+                :return-value.sync="event.name"
+                lazy
+                @save="save(event)"
+                @cancel="cancel"
+                @close="close"
+              >{{event.name}}
+                <template v-slot:input>
+                  <v-text-field
+                    v-model="event.name"
+                    :rules="[max25chars]"
+                    label="Edit"
+                    single-line
+                    counter
+                  ></v-text-field>
+                </template>
+              </v-edit-dialog>
             </td>
             <td>
               {{event.session}}
@@ -117,9 +139,16 @@ export default {
       search: '',
       dataEvents: this.events,
       loading: false,
+      max25chars: v => v.length <= 25 || 'Nom de la tasca massa llarg!',
       pagination: {
         rowsPerPage: -1
       },
+      filter: { name: 'Totes', value: 'tots' },
+      filters: [
+        { name: 'Tots', value: 'tots' },
+        { name: 'Archivats', value: '!arxivat' },
+        { name: 'Actius', value: null }
+      ],
       headers: [
         { text: 'Id', value: 'id' },
         { text: 'Nom', value: 'name' },
@@ -142,6 +171,19 @@ export default {
       required: true
     }
   },
+  computed: {
+    getFilteredEvents () {
+      return this.dataEvents.filter((event) => {
+        if (this.filter.value === '!arxivat' && event.deleted_at !== null) {
+          return true
+        } else if (this.filter.value === null && event.deleted_at === null) {
+          return true
+        } else if (this.filter.value === 'tots') {
+          return true
+        } else return false
+      })
+    }
+  },
   methods: {
     refresh () {
       this.loading = true
@@ -155,6 +197,26 @@ export default {
     },
     updateEvent () {
       this.refresh()
+    },
+    save (event) {
+      this.loading = true
+      window.axios.put('/api/v1/events/inline/' + event.id,
+        {
+          name: event.name
+        }
+      ).then(() => {
+        this.refresh()
+        this.loading = false
+        this.$snackbar.showMessage("S'ha actualitzat correctament")
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    close () {
+      this.$snackbar.showSnackBar('Dialeg tancat!', 'primary')
+    },
+    cancel () {
+      this.$snackbar.showError('Cancelat!')
     }
   }
 }
