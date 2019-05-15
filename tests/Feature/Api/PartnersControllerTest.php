@@ -206,16 +206,6 @@ class PartnersControllerTest extends TestCase
 
   }
 
-  //*****************************INDEX********************************//
-  /** @test */
-  public function regular_user_cannot_index_partners()
-  {
-    $this->login('api');
-
-    $response = $this->json('GET','/api/v1/partners');
-    $response->assertStatus(403);
-  }
-
   /** @test */
   public function superadmin_can_index_partners()
   {
