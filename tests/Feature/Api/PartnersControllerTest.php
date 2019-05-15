@@ -21,7 +21,7 @@ class PartnersControllerTest extends TestCase
     /** @test */
   public function partner_manager_can_show()
   {
-    $this->withoutExceptionHandling();
+    //$this->withoutExceptionHandling();
     $this->loginAsManager('api');
     $partner  = factory(Partner::class)->create();
 
@@ -312,7 +312,9 @@ class PartnersControllerTest extends TestCase
     $this->loginAsSuperAdmin('api');
 
     $oldPartner =factory(Partner::class)->create([
-      'name' => 'Bar Thomas'
+      'name' => 'Bar Thomas',
+      'session' => 2019,
+      'category' => 'Or'
     ]);
 
     $response = $this->json('PUT','/api/v1/partners/'.$oldPartner->id,[
@@ -359,6 +361,29 @@ class PartnersControllerTest extends TestCase
     ]);
 
     $response->assertStatus(422);
+  }
+
+  //**************************EDIT IN LINE NAME PARTNER *************************************//
+
+  /** @test */
+  public function superadmin_can_edit_name_partner()
+  {
+    $this->loginAsSuperAdmin('api');
+
+    $oldPartner =factory(Partner::class)->create([
+      'name' => 'Bar Thomas'
+    ]);
+
+    $response = $this->json('PUT','/api/v1/partners/inline/'.$oldPartner->id,[
+      'name' => 'Bar Paco'
+    ]);
+
+    $result =json_decode($response->getContent());
+    $response->assertSuccessful();
+
+    $newPartner =  $oldPartner->refresh();
+    $this->assertNotNull($newPartner);
+    $this->assertEquals('Bar Paco', $result->name);
   }
 }
 

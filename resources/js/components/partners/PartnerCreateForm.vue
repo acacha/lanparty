@@ -1,5 +1,18 @@
 <template>
   <v-form>
+    <v-container
+      fill-height
+      fluid
+      grid-list-xl
+    >
+      <v-layout
+        justify-center
+        wrap
+      >
+        <v-flex
+          xs12
+          md8
+        >
     <v-text-field
       autofocus
       v-model="name"
@@ -16,13 +29,31 @@
       :items="itemsCategory"
       label="Categoria"
       hint="Tria una categoria"
-      :error-messages="categoryErrors"
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
     ></v-combobox>
 
-    <session-select v-model="session"></session-select>
-
+    <session-select
+      v-model="session"
+      :error-messages="sessionErrors"
+      @input="$v.name.$touch()"
+      @blur="$v.name.$touch()"
+    ></session-select>
+        </v-flex>
+        <v-flex
+          xs12
+          md4
+        >
+          <v-avatar
+            slot="offset"
+            class="mx-auto d-block"
+            size="150"
+          >
+            <img ref="partner_avatar"
+                 src="https://3.bp.blogspot.com/-pxQONzCoagM/W_nddYu2U9I/AAAAAAAAJ3w/UD5KKwtzwnQwQy8a2DdFh2wFebsFOq5SACEwYBhgL/s1600/caa5a87b-16aa-4712-9d50-479919cb94.png"
+            >
+          </v-avatar>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <div class="text-xs-center">
       <v-btn @click="$emit('close')">
         <v-icon class="mr-1">exit_to_app</v-icon>
@@ -46,7 +77,7 @@ export default {
   mixins: [validationMixin],
   validations: {
     name: { required },
-    category: { required }
+    session: { required }
   },
   name: 'PartnerCreateForm',
   components: {
@@ -80,11 +111,11 @@ export default {
       } else { !this.$v.name.required && errors.push('El nom es obligatori.') }
       return errors
     },
-    categoryErrors () {
+    sessionErrors () {
       const errors = []
-      if (!this.$v.category.$dirty) {
+      if (!this.$v.session.$dirty) {
         return errors
-      } else { !this.$v.category.required && errors.push('La categoria es obligatoria.') }
+      } else { !this.$v.session.required && errors.push('La sessió es obligatori.') }
       return errors
     }
   },
@@ -104,7 +135,7 @@ export default {
       window.axios.post(this.uri, partner).then(response => {
         this.$snackbar.showMessage('Col·laborador creat correctament')
         this.reset()
-        console.log(partner.session);
+        console.log(partner.session)
         this.$emit('created', response.data)
         this.loading = false
         this.$emit('close')

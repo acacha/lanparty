@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <span>
       <v-flex xs12 justify-center>
           <v-toolbar color="primary ligthen-2">
@@ -61,14 +61,12 @@
                 </td>
                 <td>{{partner.category}}</td>
                 <td>
-                  <v-btn fab dark color="primary">
-                    <v-img v-if="partner.avatar" :src="partner.avatar"></v-img>
-                    <v-icon>add</v-icon>
-                  </v-btn>
+                    <partner-avatar :partner="partner"></partner-avatar>
                 </td>
                 <td>{{partner.session}}</td>
-                <td><span :title="partner.created_at_formatted">{{ partner.created_at_human}}</span></td>
-                <td><span :title="partner.updated_at_formatted">{{ partner.updated_at_human }}</span></td>
+                <!--<td>{{partner.prizes}}</td>-->
+                <td><span :title="partner.formatted_created_at">{{ partner.formatted_created_at_diff}}</span></td>
+                <td><span :title="partner.formatted_updated_at">{{ partner.formatted_updated_at_diff }}</span></td>
                 <td>
                   <partner-show :partner="partner"></partner-show>
                   <partner-update :partner="partner" @updated="updatePartner" :uri="uri"></partner-update>
@@ -86,13 +84,15 @@
 import PartnerShow from './PartnerShow'
 import PartnerDestroy from './PartnerDestroy'
 import PartnerUpdate from './PartnerUpdate'
+import PartnerAvatar from "./PartnerAvatar";
 
 export default {
   name: 'PartnersList',
   components: {
     'partner-show': PartnerShow,
     'partner-update': PartnerUpdate,
-    'partner-destroy': PartnerDestroy
+    'partner-destroy': PartnerDestroy,
+    'partner-avatar':PartnerAvatar
   },
   data () {
     return {
@@ -106,6 +106,7 @@ export default {
         { text: 'CATEGORIA', value: 'category' },
         { text: 'AVATAR', value: 'avatar' },
         { text: 'SESSION', value: 'session' },
+        // { text: 'PREMIS', value: 'prizes' },
         { text: 'CREAT', value: 'created_at_timestamp' },
         { text: 'MODIFICAT', value: 'updated_at_timestamp' },
         { text: 'ACCIONS', sortable: false, value: 'ful1l_search' }
@@ -167,10 +168,10 @@ export default {
       })
     },
     cancel () {
-      this.$snackbar.showError('Canceled')
+      this.$snackbar.showError('Cancel·lat')
     },
     open (partner) {
-      this.$snackbar.showSnackBar('open dialog', 'info')
+      this.$snackbar.showSnackBar('Editant nom', 'info')
       console.log(partner.id)
       console.log(partner.name)
       console.log(partner.category)

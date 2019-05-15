@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog"
               :fullscreen="$vuetify.breakpoint.smAndDown"
               @keydown.esc="dialog=false">
-      <v-toolbar color="primary darken-3" class="white--text">
+      <v-toolbar color="primary" class="white--text">
         <v-btn flat icon class="white--text" @click="dialog=false">
           <v-icon class="mr-1">close</v-icon>
         </v-btn>

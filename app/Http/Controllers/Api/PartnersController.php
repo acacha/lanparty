@@ -38,7 +38,7 @@ class PartnersController extends Controller
   {
     $partner = new Partner();
     $partner->name = $request->name;
-    //$partner->session = $request->session;
+    $partner->session = $request->session;
     $partner->category = $request->category;
     $partner->avatar = $request->avatar;
     $partner->save();
@@ -55,13 +55,21 @@ class PartnersController extends Controller
   public function update(PartnerUpdate $request, Partner $partner)
   {
     $partner->name = $request->name;
-    //$partner->session = $request->session;
+    $partner->session = $request->session;
     $partner->category = $request->category;
     $partner->avatar = $request->avatar;
     $partner->save();
 
     return $partner->map();
 
+  }
+
+  public function editName(PartnerUpdate $request,Partner $partner)
+  {
+   $partner->name = $request->name;
+   $partner->save();
+
+   return $partner->map();
   }
 }
 
