@@ -3,7 +3,7 @@
         <v-btn slot="activator" icon class="mx-0" @click="remove" :loading="deleting" :disabled="deleting">
             <v-icon color="error">delete</v-icon>
         </v-btn>
-        <span>Eliminar permanentment l'event</span>
+        <span>Eliminar permanentment l'esdeveniment</span>
     </v-tooltip>
 </template>
 
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     async remove () {
-      let res = await this.$confirm('Esteu segurs que voleu eliminar aquest event?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
+      let res = await this.$confirm('Esteu segurs que voleu eliminar aquest esdeveniment?', { title: 'Esteu segurs?', buttonTrueText: 'Eliminar' })
       if (res) {
         this.removeEvent()
       }
@@ -32,7 +32,7 @@ export default {
       this.deleting = true
       window.axios.delete('/api/v1/events/' + this.event.id).then(() => {
         this.deleting = false
-        this.$snackbar.showMessage('Event eliminat correctament')
+        this.$snackbar.showMessage('Esdeveniment eliminat correctament')
       }).catch(() => {
         this.deleting = false
       })

@@ -1,7 +1,7 @@
 <template>
   <span>
     <v-toolbar color="primary" dense>
-      <v-toolbar-title class="white--text">Events</v-toolbar-title>
+      <v-toolbar-title class="white--text">Esdeveniments</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-tooltip bottom>
@@ -190,7 +190,7 @@ export default {
       window.axios.get('/api/v1/all_events').then((response) => {
         this.dataEvents = response.data
         this.loading = false
-        this.$snackbar.showMessage('Events actualitzats correctament')
+        this.$snackbar.showMessage('Esdeveniment actualitzats correctament')
       }).catch(() => {
         this.loading = false
       })

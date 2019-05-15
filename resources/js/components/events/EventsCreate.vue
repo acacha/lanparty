@@ -3,7 +3,7 @@
         <v-dialog v-model="createDialog" max-width="600px">
             <v-toolbar color="primary" class="white--text">
                 <v-icon>card_giftcard</v-icon>
-                <v-card-title class="headline">Crear event</v-card-title>
+                <v-card-title class="headline">Crear esdeveniment</v-card-title>
             </v-toolbar>
             <v-card>
                   <v-card-text>

@@ -1,7 +1,7 @@
 <template>
   <v-form>
-    <v-text-field autofocus v-model="name" label="Nom" hint="Nom de l'event"
-                  placeholder="Nom de la Event"></v-text-field>
+    <v-text-field autofocus v-model="name" label="Nom" hint="Nom de l'esdeveniment"
+                  placeholder="Nom de l'esdeveniment"></v-text-field>
 
     <v-text-field v-model="inscription_type_id" label="Tipus de inscripció" hint="Tipus de inscripció"
                   placeholder="Tipus de inscripció"></v-text-field>
