@@ -32,7 +32,7 @@
                       <v-btn color="primary" flat @click="createDialog=false">
                           <v-icon class="mr-2">exit_to_app</v-icon>
                           Close</v-btn>
-                      <v-btn @click="add" dark color="success dark" flat >
+                      <v-btn @click="add" dark color="success dark" >
                           <v-icon class="mr-2">save</v-icon>
                           Save</v-btn>
                   </v-card-actions>
@@ -47,13 +47,11 @@
 </template>
 
 <script>
-import EventForm from './EventForm.vue'
 import SessionSelect from '../SessionSelect.vue'
 export default {
 
   name: 'EventsCreate',
   components: {
-    'EventForm': EventForm,
     'SessionSelect': SessionSelect
   },
   data () {

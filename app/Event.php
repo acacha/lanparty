@@ -26,6 +26,15 @@ class Event extends Model
 //    const PHOTOS_PATH = 'user_photos';
     const DEFAULT_PHOTO_PATH = 'public/event_images/' . self::DEFAULT_PHOTO;
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+      'published_at'
+    ];
+
     public static function events()
     {
         return map_collection(Event::all());
@@ -338,7 +347,13 @@ class Event extends Model
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
             'published_at' => $this->published_at,
+            'published_at_timestamp' => $this->published_at_timestamp,
+            'formatted_published_at' => $this->formatted_published_at,
+            'formatted_published_at_diff' => $this->formatted_published_at_diff,
             'deleted_at' => $this->deleted_at,
+            'deleted_at_timestamp' => $this->deleted_at_timestamp,
+            'formatted_deleted_at' => $this->formatted_deleted_at,
+            'formatted_deleted_at_diff' => $this->formatted_deleted_at_diff,
             'inscribed' => $this->inscribed,
             'tickets' => $this->tickets,
             'available_tickets' => $this->available_tickets,
@@ -365,6 +380,14 @@ class Event extends Model
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'formatted_updated_at' => $this->formatted_updated_at,
             'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+            'published_at' => $this->published_at,
+            'published_at_timestamp' => $this->published_at_timestamp,
+            'formatted_published_at' => $this->formatted_published_at,
+            'formatted_published_at_diff' => $this->formatted_published_at_diff,
+            'deleted_at' => $this->deleted_at,
+            'deleted_at_timestamp' => $this->deleted_at_timestamp,
+            'formatted_deleted_at' => $this->formatted_deleted_at,
+            'formatted_deleted_at_diff' => $this->formatted_deleted_at_diff,
             'inscribed' => $this->inscribed,
             'tickets' => $this->tickets,
             'available_tickets' => $this->available_tickets,
