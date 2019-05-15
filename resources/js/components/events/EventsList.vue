@@ -15,9 +15,9 @@
     <v-card>
       <v-card-title>
          <v-layout>
-          <v-flex xs10 style="align-self: flex-end;">
+          <v-flex xs6 style="align-self: flex-end;">
               <v-layout>
-                  <v-flex xs4 class="text-sm-left" style="align-self: center;">
+                  <v-flex xs7 class="text-sm-left" style="align-self: center;">
                       <v-select
                         label="Filtres"
                         :items="filters"
@@ -26,11 +26,16 @@
                         :return-object="true"
                       ></v-select>
                   </v-flex>
-                  <v-flex xs7>
-                  </v-flex>
               </v-layout>
           </v-flex>
-          <v-flex xs3>
+          <v-flex xs7 style="align-self: flex-end;">
+            <v-layout>
+              <v-flex xs6 class="text-sm-left" style="align-self: center;">
+                <session-select v-model="session"></session-select>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs6>
               <v-text-field
                 append-icon="search"
                 label="Buscar"
@@ -123,6 +128,7 @@ import EventUnArchive from './EventUnArchive'
 import EventDelete from './EventDelete'
 import EventUpdate from './EventUpdate'
 import EventShow from './EventShow'
+import SessionSelect from '../SessionSelect.vue'
 
 export default {
   name: 'EventsList',
@@ -132,7 +138,8 @@ export default {
     'event-unarchive': EventUnArchive,
     'event-delete': EventDelete,
     'event-update': EventUpdate,
-    'event-show': EventShow
+    'event-show': EventShow,
+    'SessionSelect': SessionSelect
   },
   data () {
     return {
@@ -162,7 +169,8 @@ export default {
         { text: 'Creat', value: 'created_at_timestamp' },
         { text: 'Modificat', value: 'updated_at_timestamp' },
         { text: 'Accions', sortable: false, value: 'full_search' }
-      ]
+      ],
+      session: undefined
     }
   },
   props: {
@@ -174,13 +182,25 @@ export default {
   computed: {
     getFilteredEvents () {
       return this.dataEvents.filter((event) => {
+        let filterArxivat = true
         if (this.filter.value === '!arxivat' && event.deleted_at !== null) {
-          return true
+          filterArxivat = true
         } else if (this.filter.value === null && event.deleted_at === null) {
-          return true
+          filterArxivat = true
         } else if (this.filter.value === 'tots') {
-          return true
-        } else return false
+          filterArxivat = true
+        } else filterArxivat = false
+
+        let filterSession = true
+        if (this.session === undefined) {
+          filterSession = true
+        } else if (this.session === event.session) {
+          filterSession = true
+        } else {
+          filterSession = false
+        }
+
+        return filterSession && filterArxivat
       })
     }
   },
