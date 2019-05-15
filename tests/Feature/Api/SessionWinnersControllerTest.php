@@ -23,6 +23,7 @@ class SessionWinnersControllerTest extends TestCase
      */
     public function can_remove_all_winners()
     {
+        $this->withoutExceptionHandling();
         seed_database();
         $manager = factory(User::class)->create();
         $manager->assignRole('Manager');
@@ -50,7 +51,7 @@ class SessionWinnersControllerTest extends TestCase
         }
         $this->assertEquals(6,Prize::winners()->get()->count());
 
-        $response = $this->json('DELETE','api/v1/2019/winners');
+        $response = $this->json('DELETE','api/v1/' . config('lanparty.session') . '/winners');
         $response->assertSuccessful();
 
 
@@ -66,7 +67,7 @@ class SessionWinnersControllerTest extends TestCase
     {
         $user = factory(User::class)->create();
         $this->actingAs($user,'api');
-        $response = $this->json('DELETE','api/v1/2019/winners');
+        $response = $this->json('DELETE','api/v1/' . config('lanparty.session') . '/winners');
 
         $response->assertStatus(403);
     }

@@ -883,7 +883,6 @@ if (!function_exists('manager_permissions')) {
             'events.update',
             'managers.index',
             'managers.invitation.send',
-            'partners.index',
             'partners.show',
             'partners.store',
             'partners.destroy',
