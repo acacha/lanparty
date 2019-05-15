@@ -2,8 +2,8 @@
     <v-container grid-list-md text-xs-center fluid>
         <v-layout row wrap>
             <v-flex xs12>
-                <prizes-list :prizes="prizes"></prizes-list>
-                <prizes-create @created="add"></prizes-create>
+                <prizes-list :uri="uri" :prizes="prizes"></prizes-list>
+                <prizes-create :uri="uri" @created="add"></prizes-create>
             </v-flex>
         </v-layout>
     </v-container>
@@ -25,6 +25,10 @@
     props: {
       prizes: {
         type: Array,
+        required: true
+      },
+      uri: {
+        type: String,
         required: true
       }
     },

@@ -4,7 +4,7 @@
                   @keydown.esc="dialog=false" max-width="600px">
             <v-toolbar color="primary" class="white--text">
                 <v-icon>visibility</v-icon>
-                <v-card-title class="headline">Mostrar Event</v-card-title>
+                <v-card-title class="headline">Mostrar esdeveniment</v-card-title>
             </v-toolbar>
             <v-card>
                 <v-card-text>
@@ -12,7 +12,7 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
-        <v-btn icon color="success" flat title="Mostrar l'event" @click="dialog=true">
+        <v-btn icon color="success" flat title="Mostrar l'esdeveniment" @click="dialog=true">
             <v-icon>visibility</v-icon>
         </v-btn>
     </span>

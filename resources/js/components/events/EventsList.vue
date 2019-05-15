@@ -1,7 +1,7 @@
 <template>
   <span>
     <v-toolbar color="primary" dense>
-      <v-toolbar-title class="white--text">Events</v-toolbar-title>
+      <v-toolbar-title class="white--text">Esdeveniments</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-tooltip bottom>
@@ -90,17 +90,17 @@
             <td>
               {{ event.participants_number }}
             </td>
-            <td>
-              {{ event.published_at }}
+            <td :title="event.formatted_published_at">
+              {{ event.formatted_published_at_diff }}
             </td>
-            <td>
-              {{ event.deleted_at }}
+            <td :title="event.formatted_deleted_at">
+              {{ event.formatted_deleted_at_diff }}
             </td>
-            <td>
-              {{ event.created_at }}
+            <td :title="event.formatted_created_at">
+              {{ event.formatted_created_at_diff }}
             </td>
-            <td>
-              {{ event.updated_at }}
+            <td :title="event.formatted_updated_at">
+              {{ event.formatted_updated_at_diff }}
             </td>
             <td class="d-flex">
                 <event-show :event="event"></event-show>
@@ -157,10 +157,10 @@ export default {
         { text: 'Imatge', value: 'image' },
         { text: 'Reglament', value: 'regulation' },
         { text: 'Número de participants', value: 'participants_number' },
-        { text: 'Publicat', value: 'published_at' },
-        { text: 'Esborrat', value: 'deleted_at' },
-        { text: 'Creat', value: 'created_at' },
-        { text: 'Modificat', value: 'updated_at' },
+        { text: 'Publicat', value: 'published_at_timestamp' },
+        { text: 'Esborrat', value: 'deleted_at_timestamp' },
+        { text: 'Creat', value: 'created_at_timestamp' },
+        { text: 'Modificat', value: 'updated_at_timestamp' },
         { text: 'Accions', sortable: false, value: 'full_search' }
       ]
     }
@@ -190,7 +190,7 @@ export default {
       window.axios.get('/api/v1/all_events').then((response) => {
         this.dataEvents = response.data
         this.loading = false
-        this.$snackbar.showMessage('Events actualitzats correctament')
+        this.$snackbar.showMessage('Esdeveniment actualitzats correctament')
       }).catch(() => {
         this.loading = false
       })

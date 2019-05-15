@@ -23,7 +23,8 @@ class PrizesController extends Controller
     {
       //$prizes = Prize::with(['partner','user','number','number.user'])->get();
       $prizes = Prize::prizes();
-      return view('manage.prizes.index',compact('prizes'));
+      $uri = '/api/v1/prizes/';
+      return view('manage.prizes.index',compact('prizes','uri'));
 
     }
 }

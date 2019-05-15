@@ -23,7 +23,7 @@
     },
     methods: {
       async archive () {
-        let res = await this.$confirm('Esteu segurs que voleu activar aquest event?', { title: 'Esteu segurs?', buttonTrueText: 'Activar' })
+        let res = await this.$confirm('Esteu segurs que voleu activar aquest esdeveniment?', { title: 'Esteu segurs?', buttonTrueText: 'Activar' })
         if (res) {
           this.archiveEvent()
         }
@@ -32,7 +32,7 @@
         this.unarchiving = true
         window.axios.delete('/api/v1/archived_events/' + this.event.id).then(() => {
           this.unarchiving = false
-          this.$snackbar.showMessage('Event activat correctament')
+          this.$snackbar.showMessage('Esdeveniment activat correctament')
           this.$emit('unarchived')
         }).catch(() => {
           this.unarchiving = false

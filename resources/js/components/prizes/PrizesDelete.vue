@@ -19,31 +19,31 @@ export default {
     prize: {
       type: Object,
       required: true
+    },
+    uri: {
+      type: String,
+      required: true
     }
   },
   methods: {
-    async remove () {
-      let res = await this.$confirm('Els premis esborrats no es poden recuperar',
+    async remove (prize) {
+      let result = await this.$confirm('Els premis esborrats no es poden recuperar',
         {
           title: 'Elimnar premi ?',
           buttonTruetext: 'Eliminar',
           buttonFalsetext: 'Cancel·lar',
           color: 'error darken-1'
-        }
-        )
-      if (res) {
-        this.removePrizes()
+        })
+      if (result) {
+        this.deleting = true
+        window.axios.delete(this.uri + prize.id).then(() => {
+          this.$emit('deleted', prize)
+          this.deleting = false
+          this.$snackbar.showMessage('Premi eliminat correctament')
+        }).catch(() => {
+          this.deleting = false
+        })
       }
-    },
-    removePrizes () {
-      this.deleting = true
-      window.axios.delete('/api/v1/prizes/' + prize.id).then(() => {
-        this.$emit('deleted', task)
-        this.deleting = false
-        this.$snackbar.showMessage('Premi eliminat correctament')
-      }).catch(() => {
-        this.deleting = false
-      })
     }
   }
 }

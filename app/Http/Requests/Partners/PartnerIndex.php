@@ -19,7 +19,7 @@ class PartnerIndex extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('partners.index');
+        return true;
     }
 
     /**

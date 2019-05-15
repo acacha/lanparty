@@ -883,7 +883,6 @@ if (!function_exists('manager_permissions')) {
             'events.update',
             'managers.index',
             'managers.invitation.send',
-            'partners.index',
             'partners.show',
             'partners.store',
             'partners.destroy',
@@ -897,7 +896,11 @@ if (!function_exists('manager_permissions')) {
             'tickets.destroy',
             'numbers.store',
             'numbers.destroy',
-            'session.winners.destroy'
+            'session.winners.destroy',
+            'prize.show',
+            'prize.store',
+            'prize.destroy',
+            'prize.update',
         ];
     }
 }
@@ -1374,6 +1377,20 @@ if (!function_exists('create_flags_2019')) {
               }
           }
 }
+
+if (!function_exists('initialize_event_default_image')) {
+    function initialize_event_default_image()
+    {
+        if (!Storage::disk('local')->exists('public/event_images/default.png') && File::exists(base_path('tests/__fixtures__/avatar.png')) ){
+            Storage::disk('local')->put(
+                'public/event_images/default.png',
+                File::get(base_path('tests/__fixtures__/avatar.png'))
+            );
+        }
+    }
+}
+
+
 
 
 // PREMIS 2018:

@@ -23,7 +23,7 @@
     },
     methods: {
       async archive () {
-        let res = await this.$confirm('Esteu segurs que voleu archivar aquest event?', { title: 'Esteu segurs?', buttonTrueText: 'Archivar' })
+        let res = await this.$confirm('Esteu segurs que voleu archivar aquest esdeveniment?', { title: 'Esteu segurs?', buttonTrueText: 'Archivar' })
         if (res) {
           this.archiveEvent()
         }
@@ -32,7 +32,7 @@
         this.archiving = true
         window.axios.post('/api/v1/archived_events/' + this.event.id).then(() => {
           this.archiving = false
-          this.$snackbar.showMessage('Event archivat correctament')
+          this.$snackbar.showMessage('Esdeveniment archivat correctament')
           this.$emit('archived')
         }).catch(() => {
           this.archiving = false
