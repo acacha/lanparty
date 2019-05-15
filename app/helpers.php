@@ -1375,6 +1375,20 @@ if (!function_exists('create_flags_2019')) {
           }
 }
 
+if (!function_exists('initialize_event_default_image')) {
+    function initialize_event_default_image()
+    {
+        if (!Storage::disk('local')->exists('public/event_images/default.png') && File::exists(base_path('tests/__fixtures__/avatar.png')) ){
+            Storage::disk('local')->put(
+                'public/event_images/default.png',
+                File::get(base_path('tests/__fixtures__/avatar.png'))
+            );
+        }
+    }
+}
+
+
+
 
 // PREMIS 2018:
 //INSERT INTO `prizes` VALUES

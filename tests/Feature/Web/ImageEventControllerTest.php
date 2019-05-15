@@ -15,6 +15,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
+use File;
 
 class ImageEventControllerTest extends TestCase
 {
@@ -56,7 +57,7 @@ class ImageEventControllerTest extends TestCase
         $event = factory(Event::class)->create();
         $user=$this->loginAsManager('web');
         $this->withoutExceptionHandling();
-//        $this->login();
+        initialize_event_default_image();
         $response = $this->get('/image/event/'.$event->id);
         $response->assertSuccessful();
         $this->assertEquals(storage_path('app/'.Event::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
