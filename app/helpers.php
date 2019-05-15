@@ -896,7 +896,11 @@ if (!function_exists('manager_permissions')) {
             'tickets.destroy',
             'numbers.store',
             'numbers.destroy',
-            'session.winners.destroy'
+            'session.winners.destroy',
+            'prize.show',
+            'prize.store',
+            'prize.destroy',
+            'prize.update',
         ];
     }
 }

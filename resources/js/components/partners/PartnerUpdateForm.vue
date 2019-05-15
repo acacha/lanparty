@@ -13,9 +13,22 @@
           xs12
           md8
         >
-        <v-text-field v-model="name"></v-text-field>
-        <v-text-field v-model="category"></v-text-field>
-        <session-select v-model="session"></session-select>
+        <v-text-field
+          v-model="name"
+          :error-messages="nameErrors"
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
+        ></v-text-field>
+        <v-combobox
+          v-model="category"
+          :items="itemsCategory"
+        ></v-combobox>
+        <session-select
+          v-model="session"
+          :error-messages="sessionErrors"
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
+        ></session-select>
         </v-flex>
         <v-flex
           xs12
@@ -48,8 +61,15 @@
 
 <script>
 import SessionSelect from '../SessionSelect'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
+  mixins: [validationMixin],
+  validations: {
+    name: { required },
+    session: { required }
+  },
   name: 'PartnerUpdateForm',
   components: {
     'session-select': SessionSelect
@@ -58,6 +78,12 @@ export default {
     return {
       name: this.partner.name,
       category: this.partner.category,
+      itemsCategory:
+        [
+          'Or',
+          'Plata',
+          'Bronze'
+        ],
       session: this.partner.session,
       loading: false,
       uploading: false
@@ -71,6 +97,22 @@ export default {
     uri: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    nameErrors () {
+      const errors = []
+      if (!this.$v.name.$dirty) {
+        return errors
+      } else { !this.$v.name.required && errors.push('El nom es obligatori.') }
+      return errors
+    },
+    sessionErrors () {
+      const errors = []
+      if (!this.$v.session.$dirty) {
+        return errors
+      } else { !this.$v.session.required && errors.push('La sessió es obligatori.') }
+      return errors
     }
   },
   methods: {

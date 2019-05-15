@@ -130,6 +130,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
   Route::delete('/partners/{partner}', '\\' . PartnersController::class . '@destroy');
   Route::post('/partners', '\\' . PartnersController::class . '@store');
   Route::put('/partners/{partner}', '\\' . PartnersController::class . '@update');
+  Route::put('/partners/inline/{partner}', '\\' . PartnersController::class . '@editName');
 
   Route::post('/prizes', '\\' . PrizesController::class . '@store');
   Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');

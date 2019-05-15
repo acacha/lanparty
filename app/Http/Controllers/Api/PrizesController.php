@@ -25,9 +25,7 @@ class PrizesController extends Controller
      */
     public function index(PrizesIndex $request)
     {
-//        return Prize::orderBy('created_at','desc')->get();
-        $prize = map_collection(Prize::orderBy('created_at','desc')->get());
-        return $prize;
+        return  map_collection(Prize::orderBy('created_at','desc')->get());
 
     }
     public function show(PrizesShow $request, Prize $prize)
@@ -37,6 +35,7 @@ class PrizesController extends Controller
     public function destroy(PrizesDestroy $request, Prize $prize)
     {
         $prize->delete();
+        return $prize;
     }
     public function store(PrizesStore $request)
     {
@@ -44,6 +43,7 @@ class PrizesController extends Controller
         $prize->name = $request->name;
         $prize->description = $request->description;
         $prize->notes = $request->notes;
+        $prize->value = $request->value;
         $prize->partner_id = $request->partner_id;
         $prize->user_id = $request->user_id;
         $prize->number_id = $request->number_id;
@@ -53,7 +53,14 @@ class PrizesController extends Controller
     }
     public function update(PrizesUpdate $request, Prize $prize)
     {
-        $prize->update($request->all());
+        $prize->name = $request->name;
+        $prize->description = $request->description;
+        $prize->notes = $request->notes;
+        $prize->value = $request->value;
+        $prize->partner_id = $request->partner_id;
+        $prize->user_id = $request->user_id;
+        $prize->number_id = $request->number_id;
+        $prize->multiple = $request->multiple;
         $prize->save();
         return $prize->map();
     }
