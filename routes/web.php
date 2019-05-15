@@ -32,6 +32,7 @@ Route::get('/', '\\' . WelcomeController::class . '@index');
 
 Route::get('/premis', '\\' . Premis::class . '@index');
 Route::get('/colaboradors', '\\' . Partners::class . '@show');
+Route::get('/partners', '\\' . Partners::class . '@show');
 
 Route::get('/ctf', '\\' . CaptureTheFlagController::class . '@show');
 Route::get('/ctfGroup/{id}', '\\' . CaptureTheFlagController::class . '@group');

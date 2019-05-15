@@ -39,19 +39,19 @@ class PartnersControllerTest extends TestCase
     }
 
     /** @test */
-    public function regular_user_cannot_see_partners_module()
-    {
-        $this->login('web');
-        $response = $this->json('GET','/manage/partners');
-        $response->assertStatus(403);
-    }
-
-    /** @test */
     public function guest_user_cannot_see_partners_module()
     {
         $response = $this->json('GET','/manage/partners');
         $response->assertStatus(401);
     }
 
+    /** @test */
+    public function partners_could_be_publicly_seen()
+    {
+        $response = $this->get('partners');
+        $response->assertSuccessful();
+        $response->assertViewIs('partners');
+        $response->assertViewHas('partners');
+    }
 
 }

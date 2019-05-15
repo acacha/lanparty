@@ -21,7 +21,6 @@ class PartnersControllerTest extends TestCase
     /** @test */
   public function partner_manager_can_show()
   {
-    $this->withoutExceptionHandling();
     $this->loginAsManager('api');
     $partner  = factory(Partner::class)->create();
 
