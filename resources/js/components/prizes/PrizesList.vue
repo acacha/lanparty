@@ -56,7 +56,7 @@
                                             <!--<v-icon color="primary">edit</v-icon>-->
                                         <!--</v-btn>-->
                                     <prizes-update @updated="updatePrize" :prize="prize"></prizes-update>
-                                    <prizes-delete :prize="prize" @deleted="removePrize"></prizes-delete>
+                                    <prizes-delete :uri="uri" :prize="prize" @deleted="removePrize"></prizes-delete>
                                     </td>
                             </template>
                         </v-data-table>
@@ -110,6 +110,10 @@
     props: {
       prizes: {
         type: Array,
+        required: true
+      },
+      uri: {
+        type: String,
         required: true
       }
     },
