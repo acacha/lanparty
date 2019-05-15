@@ -39,10 +39,41 @@
             >
               <tr>
                 <td>{{partner.id}}</td>
-                <td>{{partner.name}}</td>
+                <td>
+                  <v-edit-dialog
+                    :return-value.sync="partner.name"
+                    lazy
+                    @save="save(partner)"
+                    @cancel="cancel"
+                    @open="open(partner)"
+                    @close="close"
+                  >{{partner.name}}
+                    <template v-slot:input>
+                      <v-text-field
+                        v-model="partner.name"
+                        :rules="[max50chars]"
+                        label="Edit"
+                        single-line
+                        counter
+                      ></v-text-field>
+                    </template>
+                  </v-edit-dialog>
+                </td>
                 <td>{{partner.category}}</td>
-                <td>{{partner.avatar}}</td>
+                <td>
+                  <v-btn fab dark color="primary">
+                    <v-img v-if="partner.avatar" :src="partner.avatar"></v-img>
+                    <v-icon>add</v-icon>
+                  </v-btn>
+                </td>
                 <td>{{partner.session}}</td>
+                <td><span :title="partner.created_at_formatted">{{ partner.created_at_human}}</span></td>
+                <td><span :title="partner.updated_at_formatted">{{ partner.updated_at_human }}</span></td>
+                <td>
+                  <partner-show :partner="partner"></partner-show>
+                  <partner-update :partner="partner" @updated="updatePartner" :uri="uri"></partner-update>
+                  <partner-destroy :partner="partner" @removed="removePartner" :uri="uri"></partner-destroy>
+                </td>
               </tr>
             </template>
           </v-data-table>
@@ -52,10 +83,20 @@
 </template>
 
 <script>
+import PartnerShow from './PartnerShow'
+import PartnerDestroy from './PartnerDestroy'
+import PartnerUpdate from './PartnerUpdate'
+
 export default {
   name: 'PartnersList',
+  components: {
+    'partner-show': PartnerShow,
+    'partner-update': PartnerUpdate,
+    'partner-destroy': PartnerDestroy
+  },
   data () {
     return {
+      max50chars: v => v.length <= 50 || 'Input too long!',
       loading: false,
       dataPartners: this.partners,
       search: '',
@@ -65,6 +106,8 @@ export default {
         { text: 'CATEGORIA', value: 'category' },
         { text: 'AVATAR', value: 'avatar' },
         { text: 'SESSION', value: 'session' },
+        { text: 'CREAT', value: 'created_at_timestamp' },
+        { text: 'MODIFICAT', value: 'updated_at_timestamp' },
         { text: 'ACCIONS', sortable: false, value: 'ful1l_search' }
       ],
       pagination: {
@@ -108,6 +151,33 @@ export default {
       }).catch(() => {
         this.loading = false
       })
+    },
+    save (partner) {
+      this.loading = true
+      const changeName = {
+        name: partner.name,
+        category: partner.category,
+        session: partner.session
+      }
+      window.axios.put(this.uri + partner.id, changeName).then((response) => {
+        this.refresh()
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    cancel () {
+      this.$snackbar.showError('Canceled')
+    },
+    open (partner) {
+      this.$snackbar.showSnackBar('open dialog', 'info')
+      console.log(partner.id)
+      console.log(partner.name)
+      console.log(partner.category)
+      console.log(partner.session)
+    },
+    close () {
+      console.log('dialog closed')
     }
   }
 }

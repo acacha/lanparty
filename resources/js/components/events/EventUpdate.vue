@@ -4,7 +4,7 @@
                   @keydown.esc="dialog=false" max-width="600px">
             <v-toolbar color="primary" class="white--text">
                 <v-icon>edit</v-icon>
-                <v-card-title class="headline">Editar Event</v-card-title>
+                <v-card-title class="headline">Editar esdeveniment</v-card-title>
             </v-toolbar>
             <v-card>
                 <v-card-text>

@@ -41,6 +41,10 @@ return [
         ],
         [
             'name' => '2019',
+            'deleted_at' => Carbon::createFromDate(2019, 5, 15)
+        ],
+        [
+            'name' => '2020',
             'deleted_at' => null
         ]
     ]),
@@ -52,7 +56,7 @@ return [
     | Anys/sessions de la lanparty
     |
     */
-    'session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2019'),
+    'session' => env('LANPARTY_SESSION_CURRENT_SESSION', '2020'),
 
     /*
     |--------------------------------------------------------------------------

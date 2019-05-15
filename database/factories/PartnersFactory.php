@@ -18,6 +18,7 @@ $factory->define(App\Partner::class, function (Faker $faker) {
   $faker = Factory::create('es_ES');
     return [
         'name' => $faker->name,
-      'category' => $faker->randomElement(['Or', 'Plata','Bronze'])
+      'category' => $faker->randomElement(['Or', 'Plata','Bronze']),
+      'session' => 2019
     ];
 });

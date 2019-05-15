@@ -21,7 +21,7 @@
       @blur="$v.name.$touch()"
     ></v-combobox>
 
-    <session-select></session-select>
+    <session-select v-model="session"></session-select>
 
     <div class="text-xs-center">
       <v-btn @click="$emit('close')">
@@ -62,6 +62,7 @@ export default {
         'Plata',
         'Bronze'
       ],
+      session: '',
       loading: false
     }
   },
@@ -91,16 +92,19 @@ export default {
     reset () {
       this.name = ''
       this.category = ''
+      this.session = ''
     },
     add () {
       this.loading = true
       const partner = {
         'name': this.name,
-        'category': this.category
+        'category': this.category,
+        'session': this.session
       }
       window.axios.post(this.uri, partner).then(response => {
         this.$snackbar.showMessage('Col·laborador creat correctament')
         this.reset()
+        console.log(partner.session);
         this.$emit('created', response.data)
         this.loading = false
         this.$emit('close')
