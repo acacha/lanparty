@@ -4,6 +4,7 @@
             :items="sessions"
             label="Escolliu una sessió"
             :chips="chips"
+            :clearable="true"
     ></v-select>
 </template>
 
