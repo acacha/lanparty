@@ -102,12 +102,13 @@ class PrizesControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $this->loginAsSuperAdmin('api');
+
         $response = $this->json('POST','/api/v1/prizes/',[
             'name' => 'WII',
             'description' => 'bo',
             'notes' => 'bo',
             'partner_id' => 1,
-            'value' => 'w',
+            'value' => 1,
             'multiple' => true,
         ]);
 
@@ -119,15 +120,14 @@ class PrizesControllerTest extends TestCase
         $this->assertEquals('bo',$result->description);
         $this->assertEquals('bo',$result->notes);
         $this->assertEquals(1,$result->partner_id);
-        $this->assertEquals('w',$result->value);
+        $this->assertEquals(1,$result->value);
         $this->assertEquals(true,$result->multiple);
-
 
         $this->assertEquals('WII',$prize->name);
         $this->assertEquals('bo',$prize->description);
         $this->assertEquals('bo',$prize->notes);
         $this->assertEquals(1,$prize->partner_id);
-        $this->assertEquals('w',$prize->value);
+        $this->assertEquals(1,$prize->value);
         $this->assertEquals(true,$prize->multiple);
 
 

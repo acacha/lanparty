@@ -43,6 +43,7 @@ class PrizesController extends Controller
         $prize->name = $request->name;
         $prize->description = $request->description;
         $prize->notes = $request->notes;
+        $prize->value = $request->value;
         $prize->partner_id = $request->partner_id;
         $prize->user_id = $request->user_id;
         $prize->number_id = $request->number_id;
@@ -55,6 +56,7 @@ class PrizesController extends Controller
         $prize->name = $request->name;
         $prize->description = $request->description;
         $prize->notes = $request->notes;
+        $prize->value = $request->value;
         $prize->partner_id = $request->partner_id;
         $prize->user_id = $request->user_id;
         $prize->number_id = $request->number_id;
