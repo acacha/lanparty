@@ -29,6 +29,7 @@ class Partner extends Model
         return $this->hasMany(Prize::class);
     }
 
+
     /**
      * Find by name.
      *
@@ -49,13 +50,14 @@ class Partner extends Model
       'category' => $this->category,
       'avatar' => $this->avatar,
       'created_at' => $this->created_at,
-      'created_at_formatted' => $this->created_at_formatted,
-      'created_at_human' => $this->created_at_human,
+      'formatted_created_at' => $this->formatted_created_at,
+      'formatted_created_at_diff' => $this->formatted_created_at_diff,
       'created_at_timestamp'=>$this->created_at_timestamp,
       'updated_at' => $this->updated_at,
-      'updated_at_formatted' => $this->updated_at_formatted,
-      'updated_at_human' => $this->updated_at_human,
-      'updated_at_timestamp'=>$this->updated_at_timestamp
+      'formatted_updated_at' => $this->formatted_updated_at,
+      'formatted_updated_at_diff' => $this->formatted_updated_at_diff,
+      'updated_at_timestamp'=>$this->updated_at_timestamp,
+      'prizes' => $this->prizes
     ];
     }
 }
