@@ -15,7 +15,7 @@
             </v-toolbar>
             <v-card>
                 <v-card-text>
-                    <prize-update-form :prize="prize" @close="dialog=false" @updated="updated"></prize-update-form>
+                    <prize-update-form :prize="prize" :uri="uri" @close="dialog=false" @updated="updated"></prize-update-form>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -40,6 +40,10 @@ export default {
   props: {
     prize: {
       type: Object,
+      required: true
+    },
+    uri: {
+      type: String,
       required: true
     }
   },

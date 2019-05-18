@@ -39,23 +39,17 @@
                                 <td>{{ prize.id}}</td>
                                 <td class="text-xs-left">{{ prize.name}}</td>
                                 <td class="text-xs-left">{{ prize.description}}</td>
-                                <td class="text-xs-center">{{ prize.notes}}</td>
-                                <td class="text-xs-center">{{ prize.value}}</td>
-                                <td class="text-xs-center">{{ prize.partner_id}}</td>
-                                <td class="text-xs-center">{{ prize.user_id}}</td>
-                                <td class="text-xs-center">{{ prize.number_id}}</td>
-                                <td class="text-xs-center">{{ prize.multiple}}</td>
+                                <td class="text-xs-left">{{ prize.notes}}</td>
+                                <td class="text-xs-left">{{ prize.value}}</td>
+                                <td class="text-xs-left">{{ prize.partner_id}}</td>
+                                <td class="text-xs-left">{{ prize.user_id}}</td>
+                                <td class="text-xs-left">{{ prize.number_id}}</td>
                                 <td class="text-xs-center">
-                                        <!--<v-btn icon flat title="Mostrar la tag"-->
-                                        <!--&gt;-->
-                                            <!--<v-icon color="success">visibility</v-icon>-->
-                                        <!--</v-btn>-->
-                                    <!---->
-                                        <!--<v-btn  icon flat title="Editar la tag"-->
-                                        <!--&gt;-->
-                                            <!--<v-icon color="primary">edit</v-icon>-->
-                                        <!--</v-btn>-->
-                                    <prizes-update @updated="updatePrize" :prize="prize"></prizes-update>
+                                    <v-icon color="green"  v-if="prize.multiple == '1'">check_circle</v-icon>
+                                    <v-icon  color="red"  v-else>block</v-icon>
+                                </td>
+                                <td class="text-xs-left">
+                                    <prizes-update :uri="uri"  @updated="updatePrize" :prize="prize"></prizes-update>
                                     <prizes-delete :uri="uri" :prize="prize" @deleted="removePrize"></prizes-delete>
                                     </td>
                             </template>
