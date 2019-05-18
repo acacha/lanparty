@@ -49,6 +49,7 @@
                                     <v-icon  color="red"  v-else>block</v-icon>
                                 </td>
                                 <td class="text-xs-left">
+                                     <prizes-show :prize="prize"></prizes-show>
                                     <prizes-update :uri="uri"  @updated="updatePrize" :prize="prize"></prizes-update>
                                     <prizes-delete :uri="uri" :prize="prize" @deleted="removePrize"></prizes-delete>
                                     </td>
@@ -64,12 +65,14 @@
 <script>
   import PrizesDelete from "./PrizesDelete"
   import PrizesUpdate from "./PrizesUpdate"
+  import PrizesShow from "./PrizesShow"
 
   export default {
     name: 'PrizesManage',
     components: {
       'prizes-delete': PrizesDelete,
-      'prizes-update': PrizesUpdate
+      'prizes-update': PrizesUpdate,
+      'prizes-show': PrizesShow
     },
     data() {
       return {

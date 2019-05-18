@@ -3,16 +3,16 @@
     <v-container grid-list-md>
       <v-layout wrap>
         <v-flex xs12>
-          <v-text-field prepend-icon="videogame_asset" @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="name" label="Nom"></v-text-field>
+          <v-text-field prepend-icon="videogame_asset" :error-messages="nameErrors" @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="name" label="Nom"></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-text-field prepend-icon="description" v-model="description" label="Descripcio"></v-text-field>
+          <v-text-field prepend-icon="description" :error-messages="descriptionErrors" @input="$v.description.$touch()" @blur="$v.description.$touch()" v-model="description" label="Descripcio"></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-text-field prepend-icon="event_note" v-model="notes" label="Notes"></v-text-field>
+          <v-text-field prepend-icon="event_note" :error-messages="noteErrors" @input="$v.notes.$touch()" @blur="$v.notes.$touch()" v-model="notes" label="Notes"></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-text-field prepend-icon="poll" v-model="value" label="Valor"></v-text-field>
+          <v-text-field prepend-icon="poll" :error-messages="valueErrors" @input="$v.value.$touch()" @blur="$v.value.$touch()" v-model="value" label="Valor"></v-text-field>
         </v-flex>
         <v-flex xs12>
           <v-text-field prepend-icon="devices_other" v-model="partner_id" label="patrocinador"></v-text-field>
@@ -49,6 +49,9 @@ export default {
   mixins: [validationMixin],
   validations: {
     name: { required },
+    description: { required },
+    value: { required },
+    notes: { required },
   },
   name: 'PrizesCreateForm',
   data () {
@@ -77,6 +80,27 @@ export default {
       if (!this.$v.name.$dirty) {
         return errors
       } else { !this.$v.name.required && errors.push('El nom es obligatori.') }
+      return errors
+    },
+    descriptionErrors () {
+      const errors = []
+      if (!this.$v.description.$dirty) {
+        return errors
+      } else { !this.$v.description.required && errors.push('El camp description es obligatori.') }
+      return errors
+    },
+    noteErrors () {
+      const errors = []
+      if (!this.$v.notes.$dirty) {
+        return errors
+      } else { !this.$v.notes.required && errors.push('El camp nota es obligatori.') }
+      return errors
+    },
+    valueErrors () {
+      const errors = []
+      if (!this.$v.value.$dirty) {
+        return errors
+      } else { !this.$v.value.required && errors.push('El camp valor es obligatori.') }
       return errors
     }
   },
