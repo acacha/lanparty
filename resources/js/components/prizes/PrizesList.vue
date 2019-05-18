@@ -49,7 +49,7 @@
                                     <v-icon  color="red"  v-else>block</v-icon>
                                 </td>
                                 <td class="text-xs-left">
-                                     <prizes-show :prize="prize"></prizes-show>
+                                    <prizes-show :prize="prize"></prizes-show>
                                     <prizes-update :uri="uri"  @updated="updatePrize" :prize="prize"></prizes-update>
                                     <prizes-delete :uri="uri" :prize="prize" @deleted="removePrize"></prizes-delete>
                                     </td>
