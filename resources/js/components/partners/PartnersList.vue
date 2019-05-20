@@ -40,31 +40,18 @@
               <tr>
                 <td>{{partner.id}}</td>
                 <td>
-                  <v-edit-dialog
-                    :return-value.sync="partner.name"
-                    lazy
-                    @save="save(partner)"
-                    @cancel="cancel"
-                    @open="open(partner)"
-                    @close="close"
-                  >{{partner.name}}
-                    <template v-slot:input>
-                      <v-text-field
-                        v-model="partner.name"
-                        :rules="[max50chars]"
-                        label="Edit"
-                        single-line
-                        counter
-                      ></v-text-field>
-                    </template>
-                  </v-edit-dialog>
+                  <partner-edit-name-inline :partner="partner" :uri="uri" @change="refresh(false)"></partner-edit-name-inline>
                 </td>
                 <td>{{partner.category}}</td>
                 <td>
                     <partner-avatar :partner="partner"></partner-avatar>
                 </td>
                 <td>{{partner.session}}</td>
-                <!--<td>{{partner.prizes}}</td>-->
+                <td>
+                  <li v-for="prize in partner.prizes">
+                    {{prize.name}}
+                  </li>
+                </td>
                 <td><span :title="partner.formatted_created_at">{{ partner.formatted_created_at_diff}}</span></td>
                 <td><span :title="partner.formatted_updated_at">{{ partner.formatted_updated_at_diff }}</span></td>
                 <td>
@@ -84,7 +71,8 @@
 import PartnerShow from './PartnerShow'
 import PartnerDestroy from './PartnerDestroy'
 import PartnerUpdate from './PartnerUpdate'
-import PartnerAvatar from "./PartnerAvatar";
+import PartnerAvatar from './PartnerAvatar'
+import PartnerEditNameInline from './PartnerEditNameInline'
 
 export default {
   name: 'PartnersList',
@@ -92,11 +80,12 @@ export default {
     'partner-show': PartnerShow,
     'partner-update': PartnerUpdate,
     'partner-destroy': PartnerDestroy,
-    'partner-avatar':PartnerAvatar
+    'partner-avatar': PartnerAvatar,
+    'partner-edit-name-inline': PartnerEditNameInline
   },
   data () {
     return {
-      max50chars: v => v.length <= 50 || 'Input too long!',
+
       loading: false,
       dataPartners: this.partners,
       search: '',
@@ -106,7 +95,7 @@ export default {
         { text: 'CATEGORIA', value: 'category' },
         { text: 'AVATAR', value: 'avatar' },
         { text: 'SESSION', value: 'session' },
-        // { text: 'PREMIS', value: 'prizes' },
+        { text: 'PREMIS', value: 'prizes' },
         { text: 'CREAT', value: 'created_at_timestamp' },
         { text: 'MODIFICAT', value: 'updated_at_timestamp' },
         { text: 'ACCIONS', sortable: false, value: 'ful1l_search' }
@@ -152,33 +141,6 @@ export default {
       }).catch(() => {
         this.loading = false
       })
-    },
-    save (partner) {
-      this.loading = true
-      const changeName = {
-        name: partner.name,
-        category: partner.category,
-        session: partner.session
-      }
-      window.axios.put(this.uri + partner.id, changeName).then((response) => {
-        this.refresh()
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-      })
-    },
-    cancel () {
-      this.$snackbar.showError('Cancel·lat')
-    },
-    open (partner) {
-      this.$snackbar.showSnackBar('Editant nom', 'info')
-      console.log(partner.id)
-      console.log(partner.name)
-      console.log(partner.category)
-      console.log(partner.session)
-    },
-    close () {
-      console.log('dialog closed')
     }
   }
 }

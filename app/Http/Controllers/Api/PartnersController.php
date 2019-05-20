@@ -68,7 +68,6 @@ class PartnersController extends Controller
   {
    $partner->name = $request->name;
    $partner->save();
-
    return $partner->map();
   }
 }
