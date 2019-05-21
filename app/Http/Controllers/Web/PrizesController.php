@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Prizes\PrizesIndex;
 use App\Prize;
 use App\Partner;
+use App\User;
 
 
 /**
@@ -25,9 +26,10 @@ class PrizesController extends Controller
       //$prizes = Prize::with(['partner','user','number','number.user'])->get();
       $prizes = Prize::prizes();
       $partners = Partner::all();
+      $users = User::all();
 
         $uri = '/api/v1/prizes/';
-      return view('manage.prizes.index',compact('prizes','uri','partners'));
+      return view('manage.prizes.index',compact('prizes','uri','partners','users'));
 
     }
 }

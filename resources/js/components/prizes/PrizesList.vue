@@ -36,6 +36,8 @@
                         >
                             <v-progress-linear slot="progress" color="pink" indeterminate></v-progress-linear>
                             <template slot="items" slot-scope="{item: prize}">
+                            <tr>
+
                                 <td>{{ prize.id}}</td>
                                 <td class="text-xs-left" :title="prize.description" >{{ prize.name}}</td>
                                 <!--<td class="text-xs-left">{{ prize.description}}</td>-->
@@ -48,11 +50,12 @@
                                     <v-icon color="green"  v-if="prize.multiple == '1'">check_circle</v-icon>
                                     <v-icon  color="red"  v-else>block</v-icon>
                                 </td>
-                                <td class="text-xs-left">
-                                    <prizes-show :partners="partners" :prize="prize"></prizes-show>
-                                    <prizes-update :partners="partners" :uri="uri"  @updated="updatePrize" :prize="prize"></prizes-update>
+                                <td class="d-flex">
+                                    <prizes-show :partners="partners" :users="users" :prize="prize"></prizes-show>
+                                    <prizes-update :partners="partners" :uri="uri" :users="users" @updated="updatePrize" :prize="prize"></prizes-update>
                                     <prizes-delete :uri="uri" :prize="prize" @deleted="removePrize"></prizes-delete>
-                                    </td>
+                                 </td>
+                                </tr>
                             </template>
                         </v-data-table>
                     </v-card-text>
@@ -78,7 +81,7 @@
       return {
         search: '',
         pagination: {
-          rowsPerPage: 5
+          rowsPerPage: 10
         },
         createDialog: false,
         dataPrizes: this.prizes,
@@ -114,6 +117,10 @@
         required: true
       },
       partners: {
+        type: Array,
+        required: true
+      },
+      users: {
         type: Array,
         required: true
       }

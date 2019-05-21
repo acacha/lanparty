@@ -8,7 +8,7 @@
                         </v-toolbar>
                         <v-spacer></v-spacer>
                         <v-card-text>
-                          <prize-create-form :partners="partners" :uri="uri" @close="dialog =false" @created="created"></prize-create-form>
+                          <prize-create-form :users="users" :partners="partners" :uri="uri" @close="dialog =false" @created="created"></prize-create-form>
                         </v-card-text>
 
                     </v-card>
@@ -48,6 +48,10 @@
         required: true
       },
       partners: {
+        type: Array,
+        required: true
+      },
+      users: {
         type: Array,
         required: true
       }

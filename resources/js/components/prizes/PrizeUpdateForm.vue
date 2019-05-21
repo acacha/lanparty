@@ -5,7 +5,7 @@
         <v-text-field  v-model="notes" @input="$v.notes.$touch()" @blur="$v.notes.$touch()" :error-messages="noteErrors" label="Notes"></v-text-field >
         <v-text-field  v-model="value" @input="$v.value.$touch()" @blur="$v.value.$touch()" :error-messages="valueErrors" label="Valor"></v-text-field >
         <v-autocomplete  v-model="partner_id"  label="Patrocinador" :items="dataPartners" item-text="name" item-value="id"></v-autocomplete >
-        <v-text-field  v-model="user_id" label="Usuari"></v-text-field >
+        <v-autocomplete  v-model="user_id" label="Usuari" :items="dataUsers" item-text="name" item-value="id"></v-autocomplete >
         <v-text-field  v-model="number_id" label="Numero"></v-text-field >
         <v-checkbox v-model="multiple" label="Multiple"></v-checkbox>
         <div class="text-xs-center">
@@ -47,6 +47,7 @@ export default {
       loading: false,
       uploading: false,
       dataPartners: this.partners,
+      dataUsers: this.users,
     }
   },
   props: {
@@ -59,6 +60,10 @@ export default {
       required: true
     },
     partners: {
+      type: Array,
+      required: true
+    },
+    users: {
       type: Array,
       required: true
     }

@@ -15,7 +15,7 @@
             </v-toolbar>
             <v-card>
                 <v-card-text>
-                    <prize-update-form :prize="prize" :uri="uri" :partners="partners" @close="dialog=false" @updated="updated"></prize-update-form>
+                    <prize-update-form :prize="prize" :uri="uri" :users="users" :partners="partners" @close="dialog=false" @updated="updated"></prize-update-form>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -47,6 +47,10 @@ export default {
       required: true
     },
     partners: {
+      type: Array,
+      required: true
+    },
+    users: {
       type: Array,
       required: true
     }

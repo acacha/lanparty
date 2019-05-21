@@ -18,7 +18,7 @@
           <v-autocomplete  prepend-icon="devices_other" v-model="partner_id"  label="Patrocinador" :items="dataPartners" item-text="name" item-value="id"></v-autocomplete >
         </v-flex>
         <v-flex xs12>
-          <v-text-field prepend-icon="account_circle" v-model="user_id" label="Usuari"></v-text-field>
+          <v-autocomplete prepend-icon="account_circle" v-model="user_id" label="Usuari" :items="dataUsers" item-text="name" item-value="id"></v-autocomplete>
         </v-flex>
         <v-flex xs12>
           <v-text-field prepend-icon="filter_9_plus" v-model="number_id" label="Numero"></v-text-field>
@@ -66,7 +66,8 @@ export default {
       number_id:'',
       multiple: false,
       loading: false,
-      dataPartners: this.partners
+      dataPartners: this.partners,
+      dataUsers: this.users
     }
   },
   props: {
@@ -75,6 +76,10 @@ export default {
       required: true
     },
     partners: {
+      type: Array,
+      required: true
+    },
+    users: {
       type: Array,
       required: true
     }

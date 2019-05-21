@@ -414,6 +414,27 @@ if (!function_exists('initialize_prizes')) {
             'session' => $session
         ]);
     }
+    function initialize_users()
+    {
+        User::firstOrCreate([
+            'name' => 'Paco',
+            'email' => 'paco@gmail.com',
+            'password' => '123456',
+            'admin' => false
+        ]);
+        User::firstOrCreate([
+            'name' => 'Marc',
+            'email' => 'marc@gmail.com',
+            'password' => '123456',
+            'admin' => false
+        ]);
+        User::firstOrCreate([
+            'name' => 'Pol',
+            'email' => 'pol@gmail.com',
+            'password' => '123456',
+            'admin' => false
+        ]);
+    }
 }
 
 if (!function_exists('create_inscription_types')) {
@@ -630,7 +651,7 @@ if (!function_exists('seed_database')) {
         initialize_roles();
         initialize_partners();
         initialize_prizes();
-
+        initialize_users();
     }
 }
 
