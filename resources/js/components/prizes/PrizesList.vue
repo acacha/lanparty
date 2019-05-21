@@ -37,20 +37,20 @@
                             <v-progress-linear slot="progress" color="pink" indeterminate></v-progress-linear>
                             <template slot="items" slot-scope="{item: prize}">
                                 <td>{{ prize.id}}</td>
-                                <td class="text-xs-left">{{ prize.name}}</td>
-                                <td class="text-xs-left">{{ prize.description}}</td>
+                                <td class="text-xs-left" :title="prize.description" >{{ prize.name}}</td>
+                                <!--<td class="text-xs-left">{{ prize.description}}</td>-->
                                 <td class="text-xs-left">{{ prize.notes}}</td>
                                 <td class="text-xs-left">{{ prize.value}}</td>
-                                <td class="text-xs-left">{{ prize.partner_id}}</td>
-                                <td class="text-xs-left">{{ prize.user_id}}</td>
+                                <td class="text-xs-left">{{ prize.partner_name}}</td>
+                                <td class="text-xs-left">{{ prize.user_name}}</td>
                                 <td class="text-xs-left">{{ prize.number_id}}</td>
                                 <td class="text-xs-center">
                                     <v-icon color="green"  v-if="prize.multiple == '1'">check_circle</v-icon>
                                     <v-icon  color="red"  v-else>block</v-icon>
                                 </td>
                                 <td class="text-xs-left">
-                                    <prizes-show :prize="prize"></prizes-show>
-                                    <prizes-update :uri="uri"  @updated="updatePrize" :prize="prize"></prizes-update>
+                                    <prizes-show :partners="partners" :prize="prize"></prizes-show>
+                                    <prizes-update :partners="partners" :uri="uri"  @updated="updatePrize" :prize="prize"></prizes-update>
                                     <prizes-delete :uri="uri" :prize="prize" @deleted="removePrize"></prizes-delete>
                                     </td>
                             </template>
@@ -78,7 +78,7 @@
       return {
         search: '',
         pagination: {
-          rowsPerPage: 10
+          rowsPerPage: 5
         },
         createDialog: false,
         dataPrizes: this.prizes,
@@ -89,7 +89,7 @@
         headers: [
           {text: 'Id', value: 'id', align: 'left', sortable: true},
           {text: 'Nom', value: 'name', align: 'left', sortable: true},
-          {text: 'Description', value: 'description', align: 'left', sortable: true},
+          // {text: 'Description', value: 'description', align: 'left', sortable: true},
           {text: 'Notes', value: 'notes', align: 'left', sortable: true},
           {text: 'Valor', value: 'value', align: 'left', sortable: true},
           {text: 'Patrocinador', value: 'partner_id', align: 'left', sortable: true},
@@ -111,6 +111,10 @@
       },
       uri: {
         type: String,
+        required: true
+      },
+      partners: {
+        type: Array,
         required: true
       }
     },

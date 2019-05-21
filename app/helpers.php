@@ -152,7 +152,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Counter Strike',
             'value' => 5999,
             'partner_id' => Partner::findByName('Beep')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -220,7 +220,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Ae of Empires 2 HD',
             'value' => 12900,
             'partner_id' => Partner::findByName('PC Serveis')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -248,7 +248,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats League of Legends',
             'value' => 7500,
             'partner_id' => Partner::findByName('SecurityPla')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -258,7 +258,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats Counter Strike',
             'value' => 7500,
             'partner_id' => Partner::findByName('SecurityPla')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -268,7 +268,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => 'Guanyador concurs cartell LAN Party',
             'value' => 7500,
             'partner_id' => Partner::findByName('Altercom 21')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -315,7 +315,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificat Counter Strike',
             'value' => 8999,
             'partner_id' => Partner::findByName('Jabil')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -352,7 +352,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificat Concurs de hardware',
             'value' => 6000,
             'partner_id' => Partner::findByName('Electrotic')->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -380,7 +380,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1rs classificats League of Legends',
             'value' => 6500,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -390,7 +390,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '1r classificats Overwatch (6)+ 2 sorteig dissabte',
             'value' => 3000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -400,7 +400,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
 
@@ -410,7 +410,7 @@ if (!function_exists('initialize_prizes')) {
             'notes' => '2n classificats Overwatch (6)+ League of Legends(5)+ Counter Strike(3)',
             'value' => 1000,
             'partner_id' => Partner::findByName("Departament d'informàtica")->id,
-            'user_id' => 999999, // Ja assignat
+            'user_id' => 1, // Ja assignat
             'session' => $session
         ]);
     }

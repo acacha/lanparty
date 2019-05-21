@@ -84,7 +84,9 @@ class Prize extends Model
           'created_at_human' => $this->created_at_human,
           'updated_at' => $this->updated_at,
           'updated_at_formatted' => $this->updated_at_formatted,
-          'updated_at_human' => $this->updated_at_human
+          'updated_at_human' => $this->updated_at_human,
+           'partner_name' => optional($this->partner)->name,
+           'user_name' => optional($this->user)->name,
         ];
     }
 }

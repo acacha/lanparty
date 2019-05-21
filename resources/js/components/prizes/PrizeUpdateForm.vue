@@ -4,7 +4,7 @@
         <v-text-field  v-model="description" @input="$v.description.$touch()" @blur="$v.description.$touch()" :error-messages="descriptionErrors" label="Descripció"></v-text-field >
         <v-text-field  v-model="notes" @input="$v.notes.$touch()" @blur="$v.notes.$touch()" :error-messages="noteErrors" label="Notes"></v-text-field >
         <v-text-field  v-model="value" @input="$v.value.$touch()" @blur="$v.value.$touch()" :error-messages="valueErrors" label="Valor"></v-text-field >
-        <v-text-field  v-model="partner_id"  label="Patrocinador"></v-text-field >
+        <v-autocomplete  v-model="partner_id"  label="Patrocinador" :items="dataPartners" item-text="name" item-value="id"></v-autocomplete >
         <v-text-field  v-model="user_id" label="Usuari"></v-text-field >
         <v-text-field  v-model="number_id" label="Numero"></v-text-field >
         <v-checkbox v-model="multiple" label="Multiple"></v-checkbox>
@@ -45,7 +45,8 @@ export default {
       number_id: this.prize.number_id,
       multiple: this.prize.multiple,
       loading: false,
-      uploading: false
+      uploading: false,
+      dataPartners: this.partners,
     }
   },
   props: {
@@ -55,6 +56,10 @@ export default {
     },
     uri: {
       type: String,
+      required: true
+    },
+    partners: {
+      type: Array,
       required: true
     }
   },

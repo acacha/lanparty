@@ -14,7 +14,7 @@
       </v-toolbar>
       <v-card>
         <v-card-text>
-          <prize-show-form :prize="prize"></prize-show-form>
+          <prize-show-form :prize="prize" :partners="partners"></prize-show-form>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -40,6 +40,10 @@ export default {
   props: {
     prize: {
       type: Object,
+      required: true
+    },
+    partners: {
+      type: Array,
       required: true
     }
   }

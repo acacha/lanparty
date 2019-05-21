@@ -15,7 +15,7 @@
           <v-text-field prepend-icon="poll" :error-messages="valueErrors" @input="$v.value.$touch()" @blur="$v.value.$touch()" v-model="value" label="Valor"></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-text-field prepend-icon="devices_other" v-model="partner_id" label="patrocinador"></v-text-field>
+          <v-autocomplete  prepend-icon="devices_other" v-model="partner_id"  label="Patrocinador" :items="dataPartners" item-text="name" item-value="id"></v-autocomplete >
         </v-flex>
         <v-flex xs12>
           <v-text-field prepend-icon="account_circle" v-model="user_id" label="Usuari"></v-text-field>
@@ -65,12 +65,17 @@ export default {
       user_id:'',
       number_id:'',
       multiple: false,
-      loading: false
+      loading: false,
+      dataPartners: this.partners
     }
   },
   props: {
     uri: {
       type: String,
+      required: true
+    },
+    partners: {
+      type: Array,
       required: true
     }
   },

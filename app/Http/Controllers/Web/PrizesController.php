@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Prizes\PrizesIndex;
 use App\Prize;
+use App\Partner;
 
 
 /**
@@ -23,8 +24,10 @@ class PrizesController extends Controller
     {
       //$prizes = Prize::with(['partner','user','number','number.user'])->get();
       $prizes = Prize::prizes();
-      $uri = '/api/v1/prizes/';
-      return view('manage.prizes.index',compact('prizes','uri'));
+      $partners = Partner::all();
+
+        $uri = '/api/v1/prizes/';
+      return view('manage.prizes.index',compact('prizes','uri','partners'));
 
     }
 }
