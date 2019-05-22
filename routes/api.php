@@ -25,6 +25,7 @@ use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Api\PrizesController;
 
+use App\Http\Controllers\Web\ImageEventController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
@@ -143,6 +144,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
   Route::put('/events/{event}', '\\' . EventsController::class . '@update');
   Route::put('/events/{event}', '\\' . EventsController::class . '@update');
   Route::put('/events/inline/{event}', '\\' . EventsControllerInLine::class . '@update');
+  Route::post('/event/image', '\\'. ImageEventController::class . '@store');
 
   //UserManager
   Route::delete('/user/{user}/manager', '\\' . UsersManagersController::class . '@destroy');
