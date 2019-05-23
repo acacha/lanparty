@@ -2,7 +2,7 @@
     <span>
         <v-flex xs12 justify-center>
                 <v-card>
-                    <v-toolbar  dark color="success light">
+                    <v-toolbar  dark color="primary">
                         <v-icon style="margin-right: 1%">card_giftcard</v-icon>
                         <v-icon>sentiment_satisfied_alt</v-icon>
                         <v-toolbar-title>Premis</v-toolbar-title>
@@ -40,16 +40,14 @@
 
                                 <td>{{ prize.id}}</td>
                                 <td class="text-xs-left" :title="prize.description" >{{ prize.name}}</td>
-                                <!--<td class="text-xs-left">{{ prize.description}}</td>-->
                                 <td class="text-xs-left">{{ prize.notes}}</td>
                                 <td class="text-xs-left">{{ prize.value}}</td>
                                 <td class="text-xs-left">{{ prize.partner_name}}</td>
                                 <td class="text-xs-left">{{ prize.user_name}}</td>
                                 <td class="text-xs-left">{{ prize.number_id}}</td>
-                                <td class="text-xs-center">
-                                    <v-icon color="green"  v-if="prize.multiple == '1'">check_circle</v-icon>
-                                    <v-icon  color="red"  v-else>block</v-icon>
-                                </td>
+                                <td class="text-xs-left">{{prize.session}}</td>
+                                <td  class="text-xs-center" v-if="prize.multiple == '1'">Si</td>
+                                <td   class="text-xs-center" v-else>No</td>
                                 <td class="d-flex">
                                     <prizes-show :partners="partners" :users="users" :prize="prize"></prizes-show>
                                     <prizes-update :partners="partners" :uri="uri" :users="users" @updated="updatePrize" :prize="prize"></prizes-update>
@@ -81,7 +79,7 @@
       return {
         search: '',
         pagination: {
-          rowsPerPage: 10
+          rowsPerPage: 6
         },
         createDialog: false,
         dataPrizes: this.prizes,
@@ -98,6 +96,7 @@
           {text: 'Patrocinador', value: 'partner_id', align: 'left', sortable: true},
           {text: 'Usuari', value: 'user_id', align: 'left', sortable: true},
           {text: 'Numero', value: 'number_id', align: 'left', sortable: true},
+          { text: 'SESSION', value: 'session' },
           {text: 'Multiple', value: 'multiple', align: 'left', sortable: true},
           {text: 'Actions', align: 'left', sortable: false}
         ]

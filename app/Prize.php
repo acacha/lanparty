@@ -19,7 +19,7 @@ class Prize extends Model
     {
         return map_collection(Prize::all());
     }
-
+//
 
     /**
      * Get the partner that owns the prize.
@@ -67,6 +67,8 @@ class Prize extends Model
         return $query->where('number_id','!=', null);
     }
 
+
+
     public function map()   {
         return [
           'id' => $this->id,
@@ -87,6 +89,7 @@ class Prize extends Model
           'updated_at_human' => $this->updated_at_human,
            'partner_name' => optional($this->partner)->name,
            'user_name' => optional($this->user)->name,
+
         ];
     }
 }

@@ -6,6 +6,12 @@
         <v-text-field  v-model="value" @input="$v.value.$touch()" @blur="$v.value.$touch()" :error-messages="valueErrors" label="Valor"></v-text-field >
         <v-autocomplete  v-model="partner_id"  label="Patrocinador" :items="dataPartners" item-text="name" item-value="id"></v-autocomplete >
         <v-autocomplete  v-model="user_id" label="Usuari" :items="dataUsers" item-text="name" item-value="id"></v-autocomplete >
+        <session-select
+                v-model="session"
+                :error-messages="sessionErrors"
+                @input="$v.name.$touch()"
+                @blur="$v.name.$touch()"
+        ></session-select>
         <v-text-field  v-model="number_id" label="Numero"></v-text-field >
         <v-checkbox v-model="multiple" label="Multiple"></v-checkbox>
         <div class="text-xs-center">
@@ -23,6 +29,8 @@
 <script>
 
 import { validationMixin } from 'vuelidate'
+import SessionSelect from '../SessionSelect'
+
 import { required } from 'vuelidate/lib/validators'
 
 export default {
@@ -31,8 +39,12 @@ export default {
   validations: {
     name: { required },
     description: { required },
+    session: { required },
     value: { required },
     notes: { required },
+  },
+  components: {
+    'session-select': SessionSelect
   },
   data () {
     return {
@@ -44,6 +56,7 @@ export default {
       user_id: this.prize.user_id,
       number_id: this.prize.number_id,
       multiple: this.prize.multiple,
+      session: this.prize.session,
       loading: false,
       uploading: false,
       dataPartners: this.partners,
@@ -90,6 +103,13 @@ export default {
       } else { !this.$v.notes.required && errors.push('El camp nota es obligatori.') }
       return errors
     },
+    sessionErrors () {
+      const errors = []
+      if (!this.$v.session.$dirty) {
+        return errors
+      } else { !this.$v.session.required && errors.push('La sessió es obligatori.') }
+      return errors
+    },
     valueErrors () {
       const errors = []
       if (!this.$v.value.$dirty) {
@@ -109,6 +129,7 @@ export default {
         partner_id: this.partner_id,
         user_id: this.user_id,
         number_id: this.number_id,
+        session: this.session,
         multiple: this.multiple,
       }
       window.axios.put(this.uri + this.prize.id, newPrize).then((response) => {
