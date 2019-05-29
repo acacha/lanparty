@@ -23,6 +23,12 @@
         <v-flex xs12>
           <v-text-field prepend-icon="filter_9_plus" v-model="number_id" label="Numero"></v-text-field>
         </v-flex>
+        <session-select
+                v-model="session"
+                :error-messages="sessionErrors"
+                @input="$v.name.$touch()"
+                @blur="$v.name.$touch()"
+        ></session-select>
         <v-flex xs12>
           <v-checkbox v-model="multiple" label="Multiple"></v-checkbox>
         </v-flex>
@@ -44,6 +50,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
+import SessionSelect from '../SessionSelect'
 
 export default {
   mixins: [validationMixin],
@@ -51,7 +58,11 @@ export default {
     name: { required },
     description: { required },
     value: { required },
+    session: { required },
     notes: { required },
+  },
+  components: {
+    'session-select': SessionSelect
   },
   name: 'PrizesCreateForm',
   data () {
@@ -64,6 +75,7 @@ export default {
       partner_id:'',
       user_id:'',
       number_id:'',
+      session: '',
       multiple: false,
       loading: false,
       dataPartners: this.partners,
@@ -90,6 +102,13 @@ export default {
       if (!this.$v.name.$dirty) {
         return errors
       } else { !this.$v.name.required && errors.push('El nom es obligatori.') }
+      return errors
+    },
+    sessionErrors () {
+      const errors = []
+      if (!this.$v.session.$dirty) {
+        return errors
+      } else { !this.$v.session.required && errors.push('La sessió es obligatori.') }
       return errors
     },
     descriptionErrors () {
@@ -123,6 +142,7 @@ export default {
       this.partner_id = null
       this.user_id = null
       this.number_id = ''
+      this.session = ''
       this.multiple = false
     },
     add () {
@@ -135,6 +155,7 @@ export default {
         'partner_id': this.partner_id,
         'user_id': this.user_id,
         'number_id': this.number_id,
+        'session': this.session,
         'multiple': this.multiple
       }
       window.axios.post(this.uri + '/', prize).then((response) => {

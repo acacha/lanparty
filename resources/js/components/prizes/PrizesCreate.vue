@@ -2,7 +2,7 @@
     <span>
         <v-dialog v-model="dialog" max-width="600px">
                     <v-card>
-                        <v-toolbar dark color="pink">
+                        <v-toolbar dark color="primary">
                             <v-icon>card_giftcard</v-icon>
                             <v-toolbar-title>NOU PREMI</v-toolbar-title>
                         </v-toolbar>
