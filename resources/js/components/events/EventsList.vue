@@ -83,8 +83,7 @@
               {{ event.inscription_type_id }}
             </td>
             <td>
-              <img width="50" @click="selectFiles" ref="img_image" :src="event.image">
-              <input type="file" name="image" id="image-file-input" ref="image" accept="image/*" @change="upload">
+              <event-image-upload :event="event" @change="refresh(false)"></event-image-upload>
             </td>
             <td>
               <a :href="event.regulation" target="_blank">{{ event.name }}</a>
@@ -126,17 +125,20 @@ import EventDelete from './EventDelete'
 import EventUpdate from './EventUpdate'
 import EventShow from './EventShow'
 import SessionSelect from '../SessionSelect.vue'
+import EventImageUpload from './EventImageUpload'
 
 export default {
   name: 'EventsList',
   components: {
+    EventImageUpload,
     'event-publish': EventPublish,
     'event-archive': EventArchive,
     'event-unarchive': EventUnArchive,
     'event-delete': EventDelete,
     'event-update': EventUpdate,
     'event-show': EventShow,
-    'SessionSelect': SessionSelect
+    'SessionSelect': SessionSelect,
+    'event-image-upload': EventImageUpload
   },
   data () {
     return {
@@ -234,55 +236,7 @@ export default {
     },
     cancel () {
       this.$snackbar.showError('Cancelat!')
-    },
-    // Upload Image
-    preview () {
-      if (this.$refs.image.files && this.$refs.image.files[0]) {
-        let reader = new FileReader()
-        reader.onload = e => {
-          console.log(this.$refs.img_image)
-          this.$refs.img_image.setAttribute('src', e.target.result)
-        }
-        reader.readAsDataURL(this.$refs.image.files[0])
-      }
-    },
-    saveImage (formData) {
-      this.uploading = true
-      let config = {
-        onUploadProgress: progressEvent => {
-          this.percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        }
-      }
-      window.axios.post('/api/v1/event/image', formData, config)
-        .then(() => {
-          this.uploading = false
-          this.$snackbar.showMessage("La foto s'ha pujat correctament!")
-        })
-        .catch(error => {
-          console.log(error)
-          this.$snackbar.showError(error)
-          this.uploading = false
-        })
-    },
-    selectFiles () {
-      this.$refs.image.click()
-    },
-    upload () {
-      const formData = new FormData()
-      formData.append('image', this.$refs.image.files[0])
-      // Preview it
-      this.preview()
-      // save it
-      this.saveImage(formData)
     }
   }
 }
-
 </script>
-
-<style>
-  input[type=file] {
-    position: absolute;
-    left: -99999px;
-  }
-</style>

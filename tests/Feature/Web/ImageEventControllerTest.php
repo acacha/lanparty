@@ -27,7 +27,7 @@ class ImageEventControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         //see fylesystems.php
-        Storage::fake('local');
+        Storage::fake('public');
         $event = factory(Event::class)->create();
         $user=$this->loginAsManager('web');
         //pass array with photo and event id
@@ -36,8 +36,10 @@ class ImageEventControllerTest extends TestCase
             'event_id'=>$event->id
         ]);
         $response->assertRedirect();
-        //see fylesystems.php
-        Storage::disk('local')->assertExists($photoUrl = 'public/event_images/' . $event->id . '.jpg');
+//      $event = $event->fresh();
+//      dd($event->image);
+      //see fylesystems.php
+        Storage::disk('public')->assertExists($photoUrl='event_images/' . $event->id . '.jpg');
         $eventFresh=Event::where('id',  $event->id)->first();
 //        $photo = Photo::first();
 //        dd($photo->url);
@@ -60,7 +62,7 @@ class ImageEventControllerTest extends TestCase
         initialize_event_default_image();
         $response = $this->get('/image/event/'.$event->id);
         $response->assertSuccessful();
-        $this->assertEquals(storage_path('app/'.Event::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
+        $this->assertEquals(storage_path('app/public/'.Event::DEFAULT_PHOTO_PATH), $response->baseResponse->getFile()->getPathName());
         $response->assertSuccessful();
     }
     /** @test */
@@ -80,11 +82,11 @@ class ImageEventControllerTest extends TestCase
         $event = $event->fresh();
         $response = $this->get('/image/event/'.$event->id);
         $response->assertSuccessful();
-        Storage::disk('local')->assertExists($event->image);
+        Storage::disk('public')->assertExists($event->image);
 
 //        dd($event->image);
-        $this->assertEquals(storage_path('app/'.$event->image), $response->baseResponse->getFile()->getPathName());
-        $this->assertFileEquals(storage_path('app/'.$event->image), $response->baseResponse->getFile()->getPathName());
+        $this->assertEquals(storage_path('app/public/'.$event->image), $response->baseResponse->getFile()->getPathName());
+        $this->assertFileEquals(storage_path('app/public/'.$event->image), $response->baseResponse->getFile()->getPathName());
         $response->assertSuccessful();
     }
 }

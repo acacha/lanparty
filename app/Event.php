@@ -24,7 +24,7 @@ class Event extends Model
     protected $guarded = [];
     const DEFAULT_PHOTO = 'default.png';
 //    const PHOTOS_PATH = 'user_photos';
-    const DEFAULT_PHOTO_PATH = 'public/event_images/' . self::DEFAULT_PHOTO;
+    const DEFAULT_PHOTO_PATH = 'event_images/' . self::DEFAULT_PHOTO;
 
     /**
      * The attributes that should be mutated to dates.

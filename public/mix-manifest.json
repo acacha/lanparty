@@ -1,8 +1,5 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/push_message.js": "/js/push_message.js",
-    "/js/app.6c805fc587d3f84ca33e.hot-update.js": "/js/app.6c805fc587d3f84ca33e.hot-update.js",
-    "/js/app.9b2d55e65a25f0a49e91.hot-update.js": "/js/app.9b2d55e65a25f0a49e91.hot-update.js",
-    "/js/app.e6c7b5763c6fe22200ee.hot-update.js": "/js/app.e6c7b5763c6fe22200ee.hot-update.js",
-    "/js/app.cf7f9bf4991324136d7b.hot-update.js": "/js/app.cf7f9bf4991324136d7b.hot-update.js"
+    "/css/app.css": "/css/app.css",
+    "/js/push_message.js": "/js/push_message.js"
 }
