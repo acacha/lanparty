@@ -40,6 +40,7 @@ class ImageEventControllerTest extends TestCase
 //      dd($event->image);
       //see fylesystems.php
         Storage::disk('public')->assertExists($photoUrl='/event_images/' . $event->id . '.jpg');
+
         $eventFresh=Event::where('id',  $event->id)->first();
 //        $photo = Photo::first();
 //        dd($photo->url);

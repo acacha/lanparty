@@ -40,7 +40,6 @@ class PartnersController extends Controller
     $partner->name = $request->name;
     $partner->session = $request->session;
     $partner->category = $request->category;
-    $partner->avatar = $request->avatar;
     $partner->save();
 
     return $partner->map();
