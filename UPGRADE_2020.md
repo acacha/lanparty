@@ -12,6 +12,7 @@
 
 # Tasques a realitzar
 
+- Petits canvis cruds pendents
 - Actualitzar versió Laravel
 - Actualitzar versió Vuetify
 
