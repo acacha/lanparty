@@ -7,6 +7,7 @@ use App\Http\Controllers\ParticipantMessagesController;
 use App\Http\Controllers\ParticipantsHomePageController;
 use App\Http\Controllers\PartnersController as Partners;
 use App\Http\Controllers\Web\ImageEventController;
+use App\Http\Controllers\Web\PartnerAvatarController;
 use App\Http\Controllers\Web\PartnersController;
 use App\Http\Controllers\Web\PrizesController;
 use App\Http\Controllers\SorteigController;
@@ -70,7 +71,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/manage/managers', '\\' . ManagersController::class . '@index');
     Route::get('/manage/partners', '\\' . PartnersController::class . '@index');
-
+  Route::post('/avatar/partner', '\\' . PartnerAvatarController::class . '@store');
+  Route::get('/avatar/partner/{id}', '\\' . PartnerAvatarController::class . '@show');
 
     Route::get('/manage/users', '\\' . UsersController::class . '@index');
 

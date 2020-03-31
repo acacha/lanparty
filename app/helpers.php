@@ -1411,6 +1411,17 @@ if (!function_exists('initialize_event_default_image')) {
     }
 }
 
+if (!function_exists('initialize_partner_default_avatar')) {
+  function initialize_partner_default_avatar()
+  {
+    if (!Storage::disk('local')->exists('public/partner_avatar/default.png') && File::exists(base_path('tests/__fixtures__/partnerAvatar.png')) ){
+      Storage::disk('local')->put(
+        'public/partner_avatar/default.png',
+        File::get(base_path('tests/__fixtures__/partnerAvatar.png'))
+      );
+    }
+  }
+}
 
 
 

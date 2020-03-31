@@ -44,7 +44,7 @@
                 </td>
                 <td>{{partner.category}}</td>
                 <td>
-                    <partner-avatar :partner="partner"></partner-avatar>
+                    <partner-avatar :partner="partner" @change="refresh(false)"></partner-avatar>
                 </td>
                 <td>{{partner.session}}</td>
                 <td>

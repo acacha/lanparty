@@ -26,6 +26,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Api\PrizesController;
 
 use App\Http\Controllers\Web\ImageEventController;
+use App\Http\Controllers\Web\PartnerAvatarController;
 use App\Http\Controllers\WinnerController;
 use App\Http\Controllers\WinnersController;
 use Illuminate\Http\Request;
@@ -132,6 +133,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
   Route::post('/partners', '\\' . PartnersController::class . '@store');
   Route::put('/partners/{partner}', '\\' . PartnersController::class . '@update');
   Route::put('/partners/inline/{partner}', '\\' . PartnersController::class . '@editName');
+  Route::post('/partner/avatar', '\\'. PartnerAvatarController::class . '@store');
 
   Route::post('/prizes', '\\' . PrizesController::class . '@store');
   Route::get('/prizes/{prize}', '\\' . PrizesController::class . '@show');

@@ -15,7 +15,7 @@ class Partner extends Model
   use FormattedDates;
 
   const DEFAULT_AVATAR = 'default.png';
-  const DEFAULT_PHOTO_PATH = 'app/partnerAvatar'.self::DEFAULT_AVATAR;
+  const DEFAULT_AVATAR_PATH = 'partner_avatar/'.self::DEFAULT_AVATAR;
 
     protected $guarded = [];
 
