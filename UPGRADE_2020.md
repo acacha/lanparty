@@ -1,6 +1,19 @@
+# Pas 1:
+
+- Comprovar esta actual aplicació:
+- Testos automàtics (haurien de ser tot verds -> comprovat ok en local meu PC - Sergi Tur)
+- Laravel valet per provar domini local: http://lanparty.test/
+- Aconseguir copia fitxer .env . En local utilitzo sqlite
+- Testos manuals:
+  - Login i registre
+
+# Altres petis canvis:
+ - Landing page contibuidors
+
 # Tasques a realitzar
 
 - Actualitzar versió Laravel
+- Actualitzar versió Vuetify
 
 ## BACKUP
 
