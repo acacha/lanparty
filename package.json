@@ -43,7 +43,7 @@
         "gravatar": "^1.8.0",
         "jsdom": "^14.1.0",
         "jsdom-global": "^3.0.2",
-        "mocha": "^6.1.4",
+        "mocha": "^10.2.0",
         "mocha-webpack": "^1.1.0",
         "moment": "^2.24.0",
         "node-sass": "^4.12.0",
